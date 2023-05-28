@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Building
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,10 +44,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874426664033387176}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6298163403965779454
 MonoBehaviour:
@@ -115,8 +115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  wantedNetworkPos: {x: 0, y: 0, z: 0}
-  wantedNetworkRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8510112358408295226
 GameObject:
   m_ObjectHideFlags: 0

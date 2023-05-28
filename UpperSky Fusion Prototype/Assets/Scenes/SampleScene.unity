@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 177295611}
   - component: {fileID: 177295610}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Main Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 409636079}
   - component: {fileID: 409636078}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Connection Info (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -259,7 +259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8, y: -23}
+  m_AnchoredPosition: {x: -34, y: -23}
   m_SizeDelta: {x: 288.5583, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &409636078
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -531,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: lastTab
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: rotationSped
@@ -673,6 +673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1553013405}
+  - component: {fileID: 1553013406}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -695,6 +696,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553013406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553013404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5020e996fc10f1f4e8746512a35b9554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionInfoTMP: {fileID: 409636078}
 --- !u!1 &1813935681
 GameObject:
   m_ObjectHideFlags: 0
