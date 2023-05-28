@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  speed: 5
   buildingPrefab:
     RawGuidValue: e153c08dbf11546498e08420d478bb23
-  myCam: {fileID: 0}
+  unitPrefab:
+    RawGuidValue: 77dc00bee5086df42839f6917f398b48
 --- !u!114 &1454646102370662557
 MonoBehaviour:
   m_ObjectHideFlags: 0
