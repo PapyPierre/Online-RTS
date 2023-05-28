@@ -3,26 +3,22 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    public float speed;
-
     [SerializeField] private NetworkPrefabRef buildingPrefab;
-    [SerializeField] private Camera cam;
-    private NetworkCharacterControllerPrototype _cc;
+    private Camera cam;
     [Networked] private TickTimer Delay { get; set; }
 
-    private void Awake()
+    public override void Spawned()
     {
-        _cc = GetComponent<NetworkCharacterControllerPrototype>();
+        cam = Camera.main;
     }
 
     public override void FixedUpdateNetwork()
     {
+        transform.position = cam.transform.position;
+        
         if (GetInput(out NetworkInputData data))
-        {  
-            data.MoveDir.Normalize();
-            _cc.Move(speed * data.MoveDir * Runner.DeltaTime);
-            
-            if (Delay.ExpiredOrNotRunning(Runner))
+        {
+            if (Delay.ExpiredOrNotRunning(Runner) && Object.HasInputAuthority)
             {
                 if ((data.Buttons & NetworkInputData._mousebutton1) != 0)
                 {
@@ -38,11 +34,23 @@ public class PlayerController : NetworkBehaviour
     public void BuildAtCursorPos()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        
+
         if (Physics.Raycast(ray, out hit, 50000))
         {
-            Runner.Spawn(buildingPrefab, hit.point, Quaternion.identity, Object.InputAuthority);
+            Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
+            RPC_NetworkSpawn(buildingPrefab, spawnPos, Quaternion.identity);
         }
-        
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_NetworkSpawn(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation, RpcInfo info = default)
+    {
+        Runner.Spawn(prefab, position, rotation, Object.InputAuthority);
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.cyan);
     }
 }
+

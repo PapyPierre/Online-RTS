@@ -7,13 +7,27 @@ using UnityEngine.SceneManagement;
 
 public class NetworkBrain : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public static NetworkBrain instance;
+    
     [SerializeField] private NetworkPrefabRef _playerPrefab;
-
     private NetworkRunner _runner;
     private  Dictionary<PlayerRef, NetworkObject> _connectedPlayers = new ();
-    
+
     private bool _mouseButton0;
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError(name);
+        }
+        
+    }
+
     async void StartGame(GameMode mode)
     {
         // Create the Fusion runner and let it know that we will be providing user input
@@ -36,10 +50,10 @@ public class NetworkBrain : MonoBehaviour, INetworkRunnerCallbacks
        Debug.Log(player + " joined");
 
        if (_runner.IsServer)
-       {  
+       {
            Vector3 spawnPosition = new  Vector3(0,30,-50);
            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-           
+           Debug.Log(player);
            _connectedPlayers.Add(player, networkPlayerObject);
        }
     }
@@ -63,26 +77,6 @@ public class NetworkBrain : MonoBehaviour, INetworkRunnerCallbacks
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         var data = new NetworkInputData();
-        
-        if (Input.GetKey(KeyCode.Z))
-        {
-            data.MoveDir +=  Vector3.forward + Vector3.up;
-        }
-        
-        if (Input.GetKey(KeyCode.S))
-        {
-            data.MoveDir += Vector3.back - Vector3.up;
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            data.MoveDir += Vector3.left;
-        }
-      
-        if (Input.GetKey(KeyCode.D))
-        {
-            data.MoveDir += Vector3.right;
-        }
 
         if (_mouseButton0)
         {
@@ -95,6 +89,7 @@ public class NetworkBrain : MonoBehaviour, INetworkRunnerCallbacks
     
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnDisconnectedFromServer(NetworkRunner runner) { }
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
