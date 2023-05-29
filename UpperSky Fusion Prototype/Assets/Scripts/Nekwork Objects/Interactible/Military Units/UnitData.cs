@@ -36,10 +36,19 @@ namespace Nekwork_Objects.Interactible.Military_Units
         public int SupplyCost { get; private set; }
 
         
+        /// Movement Section -------------------------------------------------------------------------
+
+        [field:Header("Movement Data"), SerializeField] 
+        public float MovementSpeed { get; private set; }
+        
+        [field: SerializeField]
+        public float AllyUnitsPerceptionRadius { get; private set; }
+        
+        
         /// Combat Section -------------------------------------------------------------------------
-     
-        [field:Header("Combat Data"), SerializeField] 
-        public int HealthPoints { get; private set; }
+ 
+        [field:Header("Combat Data"), SerializeField]
+        public int MaxHealthPoints { get; private set; }
         
         [field: SerializeField]
         public int ArmorPoints { get; private set; }
@@ -72,14 +81,9 @@ namespace Nekwork_Objects.Interactible.Military_Units
         public UnitType TargetableUnitType { get; private set; }
         
 
-        // Other Data Section -------------------------------------------------------------------------
+        // Optional Data Section -------------------------------------------------------------------------
         
-        [field:Header("Other Data"), SerializeField]
-        public float MoveSpeed { get; private set; }
-        
-        //TODO ReactionType
-        
-        [field: SerializeField] 
+        [field:Header("Optional Data"), SerializeField]
         public int NumberOfTransportableTroops { get; private set; }
         
         [field: SerializeField] 
