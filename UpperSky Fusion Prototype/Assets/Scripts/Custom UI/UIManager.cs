@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -7,8 +8,11 @@ namespace Custom_UI
     {
         public static UIManager instance;
 
-        public TextMeshProUGUI connectionInfoTMP;
-
+        [Required()] public TextMeshProUGUI connectionInfoTMP;
+        [Required()] public TextMeshProUGUI materialsTMP;
+        [Required()] public TextMeshProUGUI orichalcTMP;
+        [Required()] public TextMeshProUGUI supplyTMP;
+        
         private void Awake()
         {
             if (instance != null)
@@ -18,6 +22,21 @@ namespace Custom_UI
             }
 
             instance = this;
+        }
+
+        public void UpdateMaterialsTMP(int newValue)
+        {
+            materialsTMP.text = newValue.ToString();
+        }
+        
+        public void UpdateOrichalcTMP(int newValue)
+        {
+            orichalcTMP.text = newValue.ToString();
+        }
+        
+        public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)
+        {
+            supplyTMP.text = newCurrentValue + "/" + newMaxValue;
         }
     }
 }

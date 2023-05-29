@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Custom_UI;
 using Fusion;
 using Fusion.Sockets;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,7 @@ namespace Network_Logic
     {
         private UIManager _uiManager;
 
-        [SerializeField] private NetworkPrefabRef _playerPrefab;
+        [SerializeField, Required()] private NetworkPrefabRef _playerPrefab;
         private NetworkRunner _runner;
         private  Dictionary<PlayerRef, NetworkObject> _connectedPlayers = new ();
 
