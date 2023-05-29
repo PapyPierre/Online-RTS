@@ -2,6 +2,7 @@ using Custom_UI;
 using Fusion;
 using NaughtyAttributes;
 using Nekwork_Objects.Interactible;
+using Nekwork_Objects.Interactible.Military_Units;
 using Network_Logic;
 using UnityEngine;
 
@@ -39,7 +40,7 @@ namespace Nekwork_Objects.Player
                 
                 if (data.number1Key != 0)
                 {
-                    Vector3 spawnPos = new Vector3(0, 2, 0);
+                    Vector3 spawnPos = new Vector3(0, UnitsManager.instance.flyingHeightOfAerianUnits -1, 0);
                     RPC_SpawnInteractibleNetworkObjects(
                         unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority);
                

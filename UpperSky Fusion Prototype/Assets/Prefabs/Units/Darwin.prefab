@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 5761484485597290140}
   - component: {fileID: 2645220574719709856}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Darwin
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  data: {fileID: 11400000, guid: 713b1a5f6d70dc946b2bb3173658ae23, type: 2}
+  currentHealthPoint: 0
   selectionCircle: {fileID: 9193866668383929244}
 --- !u!135 &2645220574719709856
 SphereCollider:
@@ -190,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 9193866668383929244}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3917103464985917232}
