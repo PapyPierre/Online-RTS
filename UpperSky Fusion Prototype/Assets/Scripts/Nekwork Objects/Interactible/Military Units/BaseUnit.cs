@@ -15,7 +15,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
         [SerializeField] private float currentHealthPoint;
 
         public Vector3 targetPosToMoveTo;
-        
+
         [SerializeField] private GameObject selectionCircle;
         
         #region private variables for calculus
@@ -55,8 +55,13 @@ namespace Nekwork_Objects.Interactible.Military_Units
 
         private void ManageBasicMovement()
         {
-            targetPosToMoveTo = _unitsManager.testTargetPos.position;
+            if (data.UnitType == UnitType.GroundUnit)
+            {
+                targetPosToMoveTo = new Vector3(targetPosToMoveTo.x, 0, targetPosToMoveTo.z);
+            }
+            
             if (Vector2.Distance(transform.position, targetPosToMoveTo) < 2) return;
+            
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetPosToMoveTo, 

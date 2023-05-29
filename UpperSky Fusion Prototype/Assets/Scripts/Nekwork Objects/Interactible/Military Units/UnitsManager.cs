@@ -18,9 +18,6 @@ namespace Nekwork_Objects.Interactible.Military_Units
         
         [Space] 
         public float flyingHeightOfAerianUnits;
-
-        public Transform testTargetPos;
-        
         #endregion
         
         private void Awake()

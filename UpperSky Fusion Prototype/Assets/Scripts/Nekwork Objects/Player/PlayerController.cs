@@ -1,9 +1,12 @@
+using System;
 using Custom_UI;
 using Fusion;
+using Gameplay;
 using NaughtyAttributes;
 using Nekwork_Objects.Interactible;
 using Nekwork_Objects.Interactible.Military_Units;
 using Network_Logic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Nekwork_Objects.Player
@@ -11,6 +14,8 @@ namespace Nekwork_Objects.Player
     public class PlayerController : NetworkBehaviour
     {
         private UIManager _uiManager;
+        private SelectionManager _selectionManager;
+        private UnitsManager _unitsManager;
         
         [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
         [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
@@ -20,12 +25,45 @@ namespace Nekwork_Objects.Player
 
         private bool _isConnected;
 
+        private void Start()
+        {
+            _selectionManager = SelectionManager.instance;
+            _unitsManager = UnitsManager.instance;
+        }
+
         public override void Spawned()
         {
             _cam = Camera.main;
             _uiManager = UIManager.instance;
             _uiManager.connectionInfoTMP.text = "Is connected";
             _isConnected = true;
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(1) && _selectionManager.currentlySelectedUnits.Count > 0)
+            {
+                foreach (var unit in _selectionManager.currentlySelectedUnits)
+                {
+                    if (unit.Object.InputAuthority == Runner)
+                    {
+                        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+
+                        if (Physics.Raycast(ray, out hit, 50000))
+                        {
+                            if (!hit.collider.CompareTag("Building") &&  !hit.collider.CompareTag("Unit"))
+                            {
+                                unit.targetPosToMoveTo = new Vector3(hit.point.x, 
+                                    _unitsManager.flyingHeightOfAerianUnits , hit.point.z);
+                            }
+                            else
+                            {
+                                Debug.LogWarning("cant move uniths there");
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void FixedUpdateNetwork()
