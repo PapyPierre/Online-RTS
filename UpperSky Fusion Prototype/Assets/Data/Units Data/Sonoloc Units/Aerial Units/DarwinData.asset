@@ -18,7 +18,7 @@ MonoBehaviour:
   <MaterialCost>k__BackingField: 10
   <OrichalcCost>k__BackingField: 0
   <SupplyCost>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 0
+  <MovementSpeed>k__BackingField: 5
   <AllyUnitsPerceptionRadius>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 0
   <ArmorPoints>k__BackingField: 0
