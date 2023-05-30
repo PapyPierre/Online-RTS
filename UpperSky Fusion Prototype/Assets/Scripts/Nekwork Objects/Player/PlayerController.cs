@@ -45,7 +45,7 @@ namespace Nekwork_Objects.Player
             {
                 foreach (var unit in _selectionManager.currentlySelectedUnits)
                 {
-                    if (unit.Object.InputAuthority == Runner)
+                    if (unit.Object.InputAuthority.IsValid)
                     {
                         Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
 

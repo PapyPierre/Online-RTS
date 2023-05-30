@@ -11,8 +11,10 @@ namespace Nekwork_Objects.Interactible.Military_Units
         private UnitsManager _unitsManager;
         
         [SerializeField, Expandable] private UnitData data;
-        
-        [SerializeField] private float currentHealthPoint;
+
+        private int _maxHealth;
+        [SerializeField, ProgressBar("Health", "_maxHealth", EColor.Red)] 
+        private int currentHealthPoint;
 
         public Vector3 targetPosToMoveTo;
 
@@ -29,6 +31,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
         
         private void Awake()
         {
+            _maxHealth = data.MaxHealthPoints;
             currentHealthPoint = data.MaxHealthPoints;
         }
         
@@ -55,7 +58,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
 
         private void ManageBasicMovement()
         {
-            if (data.UnitType == UnitType.GroundUnit)
+            if (data.Type == UnitType.GroundUnit)
             {
                 targetPosToMoveTo = new Vector3(targetPosToMoveTo.x, 0, targetPosToMoveTo.z);
             }
@@ -82,7 +85,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
             {
                 // Si l'untié verifié est cette unité, OU que l'unité vérifié n'a pas le même type que cette unité
                 // OU que l'unité vérifié n'appartient pas au même joueur => passé la vérification
-                if (this == otherUnit || otherUnit.data.UnitType != data.UnitType 
+                if (this == otherUnit || otherUnit.data.Type != data.Type 
                                  || otherUnit.Object.InputAuthority != Object.InputAuthority)
                 {
                     continue;

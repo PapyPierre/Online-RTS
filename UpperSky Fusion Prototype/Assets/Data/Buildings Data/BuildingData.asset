@@ -9,27 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 376ee65b3fce58a4a9cbce30b070ee7b, type: 3}
-  m_Name: DarwinData
+  m_Script: {fileID: 11500000, guid: facb2fb0ab48bda4886fd10b24b85513, type: 3}
+  m_Name: BuildingData
   m_EditorClassIdentifier: 
   <Name>k__BackingField: 
   <Description>k__BackingField: 
-  <Type>k__BackingField: 0
-  <MaterialCost>k__BackingField: 10
-  <OrichalcCost>k__BackingField: 0
-  <SupplyCost>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 0
-  <AllyUnitsPerceptionRadius>k__BackingField: 0
+  <MaterialCost>k__BackingField: 0
+  <BuildingTime>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 0
   <ArmorPoints>k__BackingField: 0
+  <UnlockedUnits>k__BackingField: {fileID: 0}
+  <GeneratedMaterialPerTick>k__BackingField: 0
+  <GeneratedOrichalcPerTick>k__BackingField: 0
+  <AditionnalMaxSupplies>k__BackingField: 0
+  <UnitFormationBonus>k__BackingField: 0
+  <BuildingConstructionBonus>k__BackingField: 0
+  <TechResearchBonus>k__BackingField: 0
+  <IsDefenseBuilding>k__BackingField: 0
   <DamagePerShootOnUnits>k__BackingField: 0
-  <DamagePerShootOnBuildings>k__BackingField: 0
   <DamageRangeOfVariation>k__BackingField: 0
   <ShootAccuracy>k__BackingField: 0
   <ArmorPenetration>k__BackingField: 0
   <ShotPerSeconds>k__BackingField: 0
   <ShootingRange>k__BackingField: 0
-  <VisionRange>k__BackingField: 0
   <TargetableUnitType>k__BackingField: 0
-  <NumberOfTransportableTroops>k__BackingField: 0
-  <TypeOfTransportableTroops>k__BackingField: 0
