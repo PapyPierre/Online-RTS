@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-namespace Nekwork_Objects.Islands
+namespace World
 {
-    public class IslandsManager : MonoBehaviour
+    public class WorldManager : MonoBehaviour
     {
-        public static IslandsManager instance;
+        public static WorldManager instance;
 
         public Dictionary<PlayerRef, int> playersIslandsCount;
         
         [field: SerializeField]
         public int MaxBuildingsPerIslands { get; private set; }
 
-        [SerializeField] private IslandTypesClass[] _islandTypes;
+        public IslandTypesClass[] islandTypes;
 
         private void Awake()
         {
@@ -30,12 +30,13 @@ namespace Nekwork_Objects.Islands
 
     public enum IslandTypesEnum
     {
-        Autumn,
-        Winter,
-        Spring,
-        Desert,
-        Jungle,
-        Toundra
+        Starting,
+        Basic,
+        Living,
+        Mythic,
+        JungleSanctuary,
+        DesertSanctuary,
+        MontainSanctuary
     }
     
     [Serializable]
