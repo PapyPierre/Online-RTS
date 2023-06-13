@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Fusion;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace World
@@ -44,5 +45,6 @@ namespace World
     {
         public IslandTypesEnum type;
         public Gradient colorGradient;
+        [MinMaxSlider(0,100)] public Vector2 rarity;
     }
 }

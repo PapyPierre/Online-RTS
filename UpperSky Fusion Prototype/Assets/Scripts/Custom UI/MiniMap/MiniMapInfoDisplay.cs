@@ -1,4 +1,4 @@
-using System;
+using NaughtyAttributes;
 using UnityEngine;
 using World;
 
@@ -12,7 +12,7 @@ namespace Custom_UI.MiniMap
 {
     public class MiniMapInfoDisplay : MonoBehaviour
     {
-        private WorldGenerator _worldGenerator;
+        [SerializeField, Required()] private WorldGenerator worldGenerator;
         
         [SerializeField, Header("Inner Border")]  private float innerBorderThickness;
         [SerializeField] private Color innerBorderColor;
@@ -20,28 +20,21 @@ namespace Custom_UI.MiniMap
         [SerializeField, Header("Outer Border")] private float outerBorderThickness;
         [SerializeField] private Color outerBorderColor;
 
-        private void Start()
-        {
-            _worldGenerator = WorldGenerator.instance;
-        }
-
         #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying) return;
-            
             Handles.color = innerBorderColor;
             Handles.DrawWireDisc(
                 transform.position, 
                 Vector3.up, 
-                _worldGenerator.innerBorderRadius, 
+                worldGenerator.innerBorderRadius, 
                 innerBorderThickness);
             
             Handles.color = outerBorderColor;
             Handles.DrawWireDisc(
                 transform.position, 
                 Vector3.up,
-                _worldGenerator.outerBorderRadius, 
+                worldGenerator.outerBorderRadius, 
                 outerBorderThickness);
         }
         #endif
