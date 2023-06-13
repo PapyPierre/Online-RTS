@@ -693,7 +693,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 5500
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -2196,7 +2196,6 @@ MonoBehaviour:
   innerBorderRadius: 250
   outerBorderRadius: 500
   numberOfPlayers: 4
-  numberOfIslands: 10
   minDistBetweenIslands: 60
   islandDistFormCenterRepartition:
     serializedVersion: 2
@@ -2231,7 +2230,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSpecialIslands: 3
   islandPrefab: {fileID: 5589878511487592379, guid: d9d3d4939f0a24142bf0a2d633ec002a,
     type: 3}
 --- !u!1 &2079793403
