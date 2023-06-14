@@ -1,15 +1,12 @@
-using System;
 using Custom_UI;
+using Entity.Units;
 using Fusion;
 using Gameplay;
 using NaughtyAttributes;
-using Nekwork_Objects.Interactible;
-using Nekwork_Objects.Interactible.Military_Units;
-using Network_Logic;
-using Unity.VisualScripting;
+using Network;
 using UnityEngine;
 
-namespace Nekwork_Objects.Player
+namespace Player
 {
     public class PlayerController : NetworkBehaviour
     {
@@ -21,7 +18,7 @@ namespace Nekwork_Objects.Player
         [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
         [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
 
-        private Camera _cam;
+        public Camera cam;
         [Networked] private TickTimer Delay { get; set; }
 
         private bool _isConnected;
@@ -29,13 +26,13 @@ namespace Nekwork_Objects.Player
         private void Start()
         {
             _selectionManager = SelectionManager.instance;
-            _unitsManager = UnitsManager.instance;
+            _unitsManager = UnitsManager.Instance;
         }
 
         public override void Spawned()
         {
-            _cam = Camera.main;
-            _networkManager = NetworkManager.instance;
+            cam = Camera.main;
+            _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
             _uiManager.connectionInfoTMP.text = "Is connected";
             _isConnected = true;
@@ -49,7 +46,7 @@ namespace Nekwork_Objects.Player
                 {
                     if (unit.Object.InputAuthority.IsValid)
                     {
-                        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+                        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
                         if (Physics.Raycast(ray, out hit, 50000))
                         {
@@ -72,7 +69,7 @@ namespace Nekwork_Objects.Player
         {
             if (!_isConnected) return;
          
-            transform.position = _cam.transform.position;
+            transform.position = cam.transform.position;
         
             if (GetInput(out NetworkInputData data))
             {
@@ -80,7 +77,7 @@ namespace Nekwork_Objects.Player
                 
                 if (data.number1Key != 0)
                 {
-                    Vector3 spawnPos = new Vector3(0, UnitsManager.instance.flyingHeightOfAerianUnits -1, 0);
+                    Vector3 spawnPos = new Vector3(0, UnitsManager.Instance.flyingHeightOfAerianUnits -1, 0);
                     _networkManager.RPC_SpawnNetworkObject(
                         unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                
@@ -102,7 +99,7 @@ namespace Nekwork_Objects.Player
         private RaycastHit hit;
         public void BuildAtCursorPos()
         {
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 50000))
             {
@@ -118,12 +115,10 @@ namespace Nekwork_Objects.Player
                 }
             }
         }
-
-      
-    
+        
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(_cam.transform.position, _cam.transform.forward, Color.cyan);
+            Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.cyan);
         }
     }
 }

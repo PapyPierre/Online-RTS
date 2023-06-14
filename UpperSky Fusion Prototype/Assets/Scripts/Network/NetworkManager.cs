@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using Custom_UI;
 using Fusion;
 using Fusion.Sockets;
-using NaughtyAttributes;
+using Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using World;
 
-namespace Network_Logic
+namespace Network
 {
     public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
-        public static NetworkManager instance;
+        public static NetworkManager Instance;
         private UIManager _uiManager;
 
         [SerializeField] private NetworkPrefabRef playerPrefab;
         private NetworkRunner _runner;
-        private  Dictionary<PlayerRef, NetworkObject> _connectedPlayers = new ();
+        [HideInInspector] public List<PlayerClass> ConnectedPlayers = new ();
 
         private bool _mouseButton0;
         private bool _keypad1;
@@ -24,13 +24,13 @@ namespace Network_Logic
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError(name);
                 return;
             }
         
-            instance = this;
+            Instance = this;
         }
         
         private void Start()
@@ -68,18 +68,31 @@ namespace Network_Logic
             {
                 Vector3 spawnPosition = new  Vector3(0,30,-50);
                 NetworkObject networkPlayerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
-                _connectedPlayers.Add(player, networkPlayerObject);
+                
+                PlayerClass newPlayer = new PlayerClass();
+                newPlayer.Ref = player;
+                newPlayer.NetworkObject = networkPlayerObject;
+                newPlayer.Controller = networkPlayerObject.GetComponent<PlayerController>();
+                ConnectedPlayers.Add(newPlayer
+                );
+                
+                if (ConnectedPlayers.Count == 2)
+                {
+                    WorldGenerator.Instance.GenerateWorld(2);
+                }
             }
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log(player + " left");
-        
-            if (_connectedPlayers.TryGetValue(player, out NetworkObject networkObject))
+
+            foreach (var playerClass in ConnectedPlayers)
             {
-                runner.Despawn(networkObject);
-                _connectedPlayers.Remove(player);
+                if (playerClass.Ref == player)
+                {
+                    playerClass.Disconnected = true;
+                }
             }
         }
     

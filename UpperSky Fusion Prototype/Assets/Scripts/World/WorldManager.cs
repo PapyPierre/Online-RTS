@@ -12,6 +12,8 @@ namespace World
 
         public Dictionary<PlayerRef, int> PlayersIslandsCount;
         
+        [HideInInspector] public List<Island.Island> allIslands = new();
+
         [field: SerializeField]
         public int MaxBuildingsPerIslands { get; private set; }
 

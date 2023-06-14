@@ -1,6 +1,6 @@
 using Fusion;
 using NaughtyAttributes;
-using Network_Logic;
+using Network;
 using TMPro;
 using UnityEngine;
 
@@ -33,7 +33,7 @@ namespace Custom_UI
 
         private void Start()
         {
-            _networkManager = NetworkManager.instance;
+            _networkManager = NetworkManager.Instance;
         }
 
         #region MainMenu Functions

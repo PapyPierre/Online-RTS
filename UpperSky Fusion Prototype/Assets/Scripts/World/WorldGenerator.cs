@@ -1,78 +1,71 @@
-using System.Collections.Generic;
 using Fusion;
-using NaughtyAttributes;
-using Nekwork_Objects.Islands;
-using Network_Logic;
+using Network;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-// Sciprt resonsable de la génération procedural du monde
+// Script responsible for procedural world generation
 
 namespace World
 {
     public class WorldGenerator : NetworkBehaviour
     {
-        public static WorldGenerator instance;
+        public static WorldGenerator Instance;
         private WorldManager _worldManager;
         private NetworkManager _networkManager;
-
-        [SerializeField] private bool autoGenerate;
 
         public float innerBorderRadius;
         public float outerBorderRadius;
 
-        public int numberOfPlayers;
-        private int numberOfIslands;
+        private int _numberOfPlayers;
+        private int _numberOfIslands;
         [SerializeField] private float minDistBetweenIslands;
         [SerializeField] private AnimationCurve islandDistFormCenterRepartition;
-        private int maxSpecialIslands;
+        private int _maxSpecialIslands;
         private int _currentlyPlacedSpecialIslands;
         
         [SerializeField] private NetworkPrefabRef islandPrefab;
-        private List<Island> _allIslands = new();
         
-
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError(name);
                 return;
             }
         
-            instance = this;
-        }
+            Instance = this;
+        } 
 
         public override void Spawned()
         {
             _worldManager = WorldManager.instance;
-            _networkManager = NetworkManager.instance;
-
-            if (Runner.IsServer && autoGenerate) GenerateWorld();
+            _networkManager = NetworkManager.Instance;
         }
-
-        [Button()]
-        private void GenerateWorld()
+        
+  
+        public void GenerateWorld(int nbOfPlayers)
         {
-            numberOfIslands = numberOfPlayers * 3;
-            maxSpecialIslands = numberOfPlayers - Mathf.RoundToInt(numberOfPlayers/4);
+            _numberOfPlayers = nbOfPlayers;
+            _numberOfIslands = _numberOfPlayers * 3;
+    
+            // ReSharper disable once PossibleLossOfFraction
+            _maxSpecialIslands = _numberOfPlayers - Mathf.RoundToInt(_numberOfPlayers/4);
 
             CheckForReset();
             
-            SpawnIsland(new Vector3(0, 0, innerBorderRadius), IslandTypesEnum.Starting);
             CalculatePlayersPosOnInnerBorder();
         }
 
         private void CheckForReset()
         {
-            if (_allIslands.Count > 0)
+            if (_worldManager.allIslands.Count > 0)
             {
-                foreach (var island in _allIslands)
+                foreach (var island in _worldManager.allIslands)
                 {
                     island.gameObject.SetActive(false);
                 }
                 
-                _allIslands.Clear();
+                _worldManager.allIslands.Clear();
                 _currentlyPlacedSpecialIslands = 0;
             }
         }
@@ -84,7 +77,7 @@ namespace World
             float innerBorderPerimeter = 2 * Mathf.PI * innerBorderRadius;
             
             // Calcule de la distance entre chaque joueur raporté sur le périmètre
-            float distancePerPlayer = innerBorderPerimeter / numberOfPlayers;
+            float distancePerPlayer = innerBorderPerimeter / _numberOfPlayers;
             
             // Calcule de l'angle en radian avec cette distance sur le périmètre du cercle
             float radianAngle = (distancePerPlayer / innerBorderPerimeter) * 2 * Mathf.PI;
@@ -97,10 +90,14 @@ namespace World
 
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
-            for (int i = 0; i < numberOfPlayers -1; i++)
+            SpawnIsland(new Vector3(0, 0, innerBorderRadius), IslandTypesEnum.Starting, 
+                _networkManager.ConnectedPlayers[0].Ref);
+
+            for (int i = 0; i < _numberOfPlayers -1; i++)
             {
                 transform.Rotate(Vector3.up, angle);
-                SpawnIsland(new Vector3(0, 0, innerBorderRadius), IslandTypesEnum.Starting);
+                SpawnIsland(new Vector3(0, 0, innerBorderRadius), IslandTypesEnum.Starting, 
+                    _networkManager.ConnectedPlayers[i + 1].Ref);
             }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
@@ -110,12 +107,12 @@ namespace World
 
         private void SpawnSecondsIslands()
         {
-            for (var index = 0; index < numberOfPlayers; index++)
+            for (var index = 0; index < _numberOfPlayers; index++)
             {
-                var island = _allIslands[index];
+                var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
-                Vector3 pos = new Vector3(islandPos.x + RandowMinDist(), islandPos.y, islandPos.z + RandowMinDist());
-                SpawnIsland(pos, IslandTypesEnum.Basic);
+                Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
+                SpawnIsland(pos, IslandTypesEnum.Basic, PlayerRef.None);
             }
 
             SpawnThirdsIslands();
@@ -123,18 +120,18 @@ namespace World
         
         private void SpawnThirdsIslands()
         {
-            for (var index = 0; index < numberOfPlayers; index++)
+            for (var index = 0; index < _numberOfPlayers; index++)
             {
-                var island = _allIslands[index];
+                var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
-                Vector3 pos = new Vector3(islandPos.x + RandowMinDist() *2, islandPos.y, islandPos.z + RandowMinDist() *2);
-                SpawnIsland(pos, IslandTypesEnum.Basic);
+                Vector3 pos = new Vector3(islandPos.x + RandomMinDist() *2, islandPos.y, islandPos.z + RandomMinDist() *2);
+                SpawnIsland(pos, IslandTypesEnum.Basic, PlayerRef.None);
             }
 
             SpawnOtherIslands();
         }
 
-        private float RandowMinDist()
+        private float RandomMinDist()
         {
             float a = Random.Range(0f, 1f);
             return a >= 0.5f ? -minDistBetweenIslands : minDistBetweenIslands;
@@ -142,24 +139,51 @@ namespace World
         
         private void SpawnOtherIslands()
         {
-            for (int i = 0; i < numberOfIslands; i++)
+            for (int i = 0; i < _numberOfIslands; i++)
             {
-                if (_currentlyPlacedSpecialIslands < maxSpecialIslands)
+                if (_currentlyPlacedSpecialIslands < _maxSpecialIslands)
                 {
                     int r = Random.Range(1, 101);
 
                     foreach (var islandTypes in  _worldManager.islandTypes)
                     {
                         if (!(r >= islandTypes.rarity.x) || !(r <= islandTypes.rarity.y)) continue;
-                        SpawnIsland(NewIslandPos(), islandTypes.type);
+                        SpawnIsland(NewIslandPos(), islandTypes.type, PlayerRef.None);
                         if (islandTypes.type != IslandTypesEnum.Basic) _currentlyPlacedSpecialIslands++;
                     }
                 }
-                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic);
+                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic, PlayerRef.None);
+            }
+            
+            TeleportPlayerToTheirIslands();
+        }
+
+        private void TeleportPlayerToTheirIslands()
+        {
+            foreach (var island in _worldManager.allIslands)
+            {
+                if (island.owner == PlayerRef.None) continue;
+                
+                
+                for (int i = 0; i < _networkManager.ConnectedPlayers.Count; i++)
+                {
+                    if (island.owner == _networkManager.ConnectedPlayers[i].Ref)
+                    {
+                        Vector3 islandPos = island.transform.position;
+                        
+                        Vector3 currentPlayerPos = _networkManager.ConnectedPlayers[i].Controller.cam.transform.position;
+
+                        currentPlayerPos = new Vector3(islandPos.x, currentPlayerPos.y, islandPos.z);
+
+                        _networkManager.ConnectedPlayers[i].Controller.cam.transform.position = currentPlayerPos;
+                        Debug.Log("read");
+
+                    }
+                }
             }
         }
 
-        private void SpawnIsland(Vector3 position, IslandTypesEnum type)
+        private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerRef owner)
         {
             NetworkObject island = _networkManager.RPC_SpawnNetworkObject(
                 islandPrefab, 
@@ -169,16 +193,17 @@ namespace World
                 Runner);
             
             island.transform.parent = transform;
-            Island islandComponent = island.GetComponent<Island>();
+            Island.Island islandComponent = island.GetComponent<Island.Island>();
+            islandComponent.owner = owner;
             islandComponent.NetworkType = type;
-            _allIslands.Add(islandComponent);
+            _worldManager.allIslands.Add(islandComponent);
         }
 
         private Vector3 NewIslandPos()
         {
             Vector3 possiblePos = CalculateNewRandomPos();
                 
-            foreach (var island in _allIslands)
+            foreach (var island in _worldManager.allIslands)
             {
                 if (Vector3.Distance(island.transform.position, possiblePos) < minDistBetweenIslands)
                 {
@@ -197,7 +222,7 @@ namespace World
             float x = distance * Mathf.Cos(angle);
             float z = distance * Mathf.Sin(angle);
             
-            return new Vector3(x, 0, z);;
+            return new Vector3(x, 0, z);
         }
     }
 }

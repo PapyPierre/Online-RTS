@@ -1,8 +1,8 @@
+using Entity.Units;
 using NaughtyAttributes;
-using Nekwork_Objects.Interactible.Military_Units;
 using UnityEngine;
 
-namespace Nekwork_Objects.Interactible.Buildings
+namespace Entity.Buildings
 {
     [CreateAssetMenu(fileName = "BuildingData", menuName = "Building/BuildingData", order = 1)]
     public class BuildingData : ScriptableObject

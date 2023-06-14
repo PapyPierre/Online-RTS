@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Nekwork_Objects.Interactible.Military_Units
+namespace Entity.Units
 {
     public class UnitsManager : MonoBehaviour
     {
-        public static UnitsManager instance;
+        public static UnitsManager Instance;
         
         public List<BaseUnit> allActiveUnits;
         
@@ -20,13 +20,13 @@ namespace Nekwork_Objects.Interactible.Military_Units
         
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError(name);
                 return;
             }
         
-            instance = this;
+            Instance = this;
         }
     }
 }

@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Nekwork_Objects.Interactible.Military_Units
+namespace Entity.Units
 {
     public enum UnitType
     {
@@ -50,12 +50,15 @@ namespace Nekwork_Objects.Interactible.Military_Units
 
         #region Movement Data
 
-        [field:Header("Movement Data"), SerializeField, 
-               ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
+        [field: Header("Movement Data"), SerializeField, 
+                ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float MovementSpeed { get; private set; }
         
-        [field: SerializeField]
+        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
         public float AllyUnitsPerceptionRadius { get; private set; }
+        
+        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
+        public float WeatherResistance { get; private set; }
 
         #endregion
       

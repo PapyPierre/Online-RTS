@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Entity.Buildings;
+using Entity.Units;
 using Fusion;
 using NaughtyAttributes;
-using Nekwork_Objects.Interactible.Buildings;
-using Nekwork_Objects.Interactible.Military_Units;
 using UnityEngine;
 
 namespace Gameplay

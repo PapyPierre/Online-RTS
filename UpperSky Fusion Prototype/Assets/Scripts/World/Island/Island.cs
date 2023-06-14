@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using Fusion;
 using UnityEngine;
-using World;
 
-namespace Nekwork_Objects.Islands
+namespace World.Island
 {
     public class Island : NetworkBehaviour
     {

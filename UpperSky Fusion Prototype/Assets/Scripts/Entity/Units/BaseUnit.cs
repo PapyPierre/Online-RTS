@@ -1,11 +1,10 @@
-using System;
 using Gameplay;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Nekwork_Objects.Interactible.Military_Units
+namespace Entity.Units
 {
-    public class BaseUnit : BaseInteractibleObjects
+    public class BaseUnit : BaseEntity
     {
         private SelectionManager _selectionManager;
         private UnitsManager _unitsManager;
@@ -42,7 +41,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
         
         public override void Spawned()
         {
-            _unitsManager = UnitsManager.instance;
+            _unitsManager = UnitsManager.Instance;
             _unitsManager.allActiveUnits.Add(this);
         }
         

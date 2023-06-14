@@ -1,6 +1,6 @@
 using Fusion;
 
-namespace Network_Logic
+namespace Network
 {
     public struct NetworkInputData : INetworkInput
     {
