@@ -11,9 +11,10 @@ namespace Network_Logic
 {
     public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
+        public static NetworkManager instance;
         private UIManager _uiManager;
 
-        [SerializeField, Required()] private NetworkPrefabRef _playerPrefab;
+        [SerializeField] private NetworkPrefabRef playerPrefab;
         private NetworkRunner _runner;
         private  Dictionary<PlayerRef, NetworkObject> _connectedPlayers = new ();
 
@@ -21,12 +22,23 @@ namespace Network_Logic
         private bool _keypad1;
         private bool _keypad2;
 
+        private void Awake()
+        {
+            if (instance != null)
+            {
+                Debug.LogError(name);
+                return;
+            }
+        
+            instance = this;
+        }
+        
         private void Start()
         {
-            _uiManager = UIManager.instance;
+            _uiManager = UIManager.Instance;
         }
 
-        async void StartGame(GameMode mode)
+        public async void StartGame(GameMode mode, string roomName)
         {
             // Create the Fusion runner and let it know that we will be providing user input
             _runner = gameObject.AddComponent<NetworkRunner>();
@@ -38,11 +50,14 @@ namespace Network_Logic
             await _runner.StartGame(new StartGameArgs() 
                 {
                     GameMode = mode,
-                    SessionName = "TestRoom",
-                    Scene = SceneManager.GetActiveScene().buildIndex,
+                    SessionName = roomName,
+                    Scene = 1,
                     SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
                 }
             );
+            
+            _uiManager.mainMenu.SetActive(false);
+            _uiManager.ressourcesLayout.SetActive(true);
         }
     
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -52,7 +67,7 @@ namespace Network_Logic
             if (_runner.IsServer)
             {
                 Vector3 spawnPosition = new  Vector3(0,30,-50);
-                NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+                NetworkObject networkPlayerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
                 _connectedPlayers.Add(player, networkPlayerObject);
             }
         }
@@ -125,20 +140,14 @@ namespace Network_Logic
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
         public void OnSceneLoadDone(NetworkRunner runner) { }
         public void OnSceneLoadStart(NetworkRunner runner) { }
-
-        private void OnGUI()
+        
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
+            PlayerRef owner, NetworkRunner runner, RpcInfo info = default)
         {
-            if (_runner == null)
-            {
-                if (GUI.Button(new Rect(0,0,200,40), "Host"))
-                {
-                    StartGame(GameMode.Host);
-                }
-                if (GUI.Button(new Rect(0,40,200,40), "Join"))
-                {
-                    StartGame(GameMode.Client);
-                }
-            }
+          return runner.Spawn(prefab, position, rotation, owner);
         }
+
+     
     }
 }

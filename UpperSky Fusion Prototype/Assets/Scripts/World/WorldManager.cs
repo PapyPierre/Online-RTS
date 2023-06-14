@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace World
 {
-    public class WorldManager : MonoBehaviour
+    public class WorldManager : NetworkBehaviour
     {
         public static WorldManager instance;
 
-        public Dictionary<PlayerRef, int> playersIslandsCount;
+        public Dictionary<PlayerRef, int> PlayersIslandsCount;
         
         [field: SerializeField]
         public int MaxBuildingsPerIslands { get; private set; }
@@ -31,6 +31,7 @@ namespace World
 
     public enum IslandTypesEnum
     {
+        Uninitialized,
         Starting,
         Basic,
         Living,

@@ -1,19 +1,22 @@
-using System;
 using System.Collections.Generic;
+using Fusion;
 using NaughtyAttributes;
 using Nekwork_Objects.Islands;
+using Network_Logic;
 using UnityEngine;
-using UnityEngine.Polybrush;
 using Random = UnityEngine.Random;
 
 // Sciprt resonsable de la génération procedural du monde
 
 namespace World
 {
-    public class WorldGenerator : MonoBehaviour
+    public class WorldGenerator : NetworkBehaviour
     {
         public static WorldGenerator instance;
         private WorldManager _worldManager;
+        private NetworkManager _networkManager;
+
+        [SerializeField] private bool autoGenerate;
 
         public float innerBorderRadius;
         public float outerBorderRadius;
@@ -25,7 +28,7 @@ namespace World
         private int maxSpecialIslands;
         private int _currentlyPlacedSpecialIslands;
         
-        [SerializeField] private Island islandPrefab;
+        [SerializeField] private NetworkPrefabRef islandPrefab;
         private List<Island> _allIslands = new();
         
 
@@ -40,9 +43,12 @@ namespace World
             instance = this;
         }
 
-        private void Start()
+        public override void Spawned()
         {
             _worldManager = WorldManager.instance;
+            _networkManager = NetworkManager.instance;
+
+            if (Runner.IsServer && autoGenerate) GenerateWorld();
         }
 
         [Button()]
@@ -155,9 +161,17 @@ namespace World
 
         private void SpawnIsland(Vector3 position, IslandTypesEnum type)
         {
-            Island island = Instantiate(islandPrefab, position, Quaternion.identity, transform);
-            island.type = type;
-            _allIslands.Add(island);
+            NetworkObject island = _networkManager.RPC_SpawnNetworkObject(
+                islandPrefab, 
+                position, 
+                Quaternion.identity,
+                Object.StateAuthority, 
+                Runner);
+            
+            island.transform.parent = transform;
+            Island islandComponent = island.GetComponent<Island>();
+            islandComponent.NetworkType = type;
+            _allIslands.Add(islandComponent);
         }
 
         private Vector3 NewIslandPos()

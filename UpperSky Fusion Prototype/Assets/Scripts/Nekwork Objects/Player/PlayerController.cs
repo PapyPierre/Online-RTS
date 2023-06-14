@@ -16,6 +16,7 @@ namespace Nekwork_Objects.Player
         private UIManager _uiManager;
         private SelectionManager _selectionManager;
         private UnitsManager _unitsManager;
+        private NetworkManager _networkManager;
         
         [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
         [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
@@ -34,7 +35,8 @@ namespace Nekwork_Objects.Player
         public override void Spawned()
         {
             _cam = Camera.main;
-            _uiManager = UIManager.instance;
+            _networkManager = NetworkManager.instance;
+            _uiManager = UIManager.Instance;
             _uiManager.connectionInfoTMP.text = "Is connected";
             _isConnected = true;
         }
@@ -79,8 +81,8 @@ namespace Nekwork_Objects.Player
                 if (data.number1Key != 0)
                 {
                     Vector3 spawnPos = new Vector3(0, UnitsManager.instance.flyingHeightOfAerianUnits -1, 0);
-                    RPC_SpawnInteractibleNetworkObjects(
-                        unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority);
+                    _networkManager.RPC_SpawnNetworkObject(
+                        unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                
                     data.number1Key = 0;
                 }
@@ -107,8 +109,8 @@ namespace Nekwork_Objects.Player
                 if (!hit.collider.CompareTag("Building") &&  !hit.collider.CompareTag("Unit"))
                 {
                     Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
-                    RPC_SpawnInteractibleNetworkObjects(
-                        buildingPrefab, spawnPos, Quaternion.identity, Object.InputAuthority);
+                     _networkManager.RPC_SpawnNetworkObject(
+                        buildingPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                 }
                 else
                 {
@@ -117,16 +119,7 @@ namespace Nekwork_Objects.Player
             }
         }
 
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_SpawnInteractibleNetworkObjects(
-            NetworkPrefabRef prefab, 
-            Vector3 position, 
-            Quaternion rotation,
-            PlayerRef owner,
-            RpcInfo info = default)
-        {
-           Runner.Spawn(prefab, position, rotation, owner);
-        }
+      
     
         private void OnDrawGizmos()
         {

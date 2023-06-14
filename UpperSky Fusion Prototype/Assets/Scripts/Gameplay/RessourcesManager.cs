@@ -80,7 +80,7 @@ namespace Gameplay
 
         private void Start()
         {
-            _uiManager = UIManager.instance;
+            _uiManager = UIManager.Instance;
             PlayerCurrentMaterials = playerMaterialsAtStart;
             PlayerCurrentOrichalc = playerOrichalcAtStart;
             PlayerCurrentSupply = playerSupplyAtStart;

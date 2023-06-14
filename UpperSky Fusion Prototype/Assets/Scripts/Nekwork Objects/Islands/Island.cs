@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Fusion;
 using UnityEngine;
 using World;
@@ -10,29 +12,35 @@ namespace Nekwork_Objects.Islands
         private WorldManager _worldManager;
         public PlayerRef owner;
         
-        public IslandTypesEnum type;
+        [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum NetworkType { get; set; }
+        
         [SerializeField] private MeshRenderer meshRenderer;
+        private static List<Color> possibleIslandColors = new ();
 
         public int buildingsCount;
         public int localOrichalRessources;
 
-        private void Start()
+        public override void Spawned()
         {
             _worldManager = WorldManager.instance;
-            ColorIsland();
-        }
-
-        private void ColorIsland()
-        {
-            meshRenderer.material.color = type switch
+            foreach (var islandTypesClass in _worldManager.islandTypes)
             {
-                IslandTypesEnum.Starting => _worldManager.islandTypes[0].colorGradient.Evaluate(0),
-                IslandTypesEnum.Basic => _worldManager.islandTypes[1].colorGradient.Evaluate(0),
-                IslandTypesEnum.Living => _worldManager.islandTypes[2].colorGradient.Evaluate(0),
-                IslandTypesEnum.Mythic => _worldManager.islandTypes[3].colorGradient.Evaluate(0),
-                IslandTypesEnum.JungleSanctuary => _worldManager.islandTypes[4].colorGradient.Evaluate(0),
-                IslandTypesEnum.DesertSanctuary => _worldManager.islandTypes[5].colorGradient.Evaluate(0),
-                IslandTypesEnum.MontainSanctuary => _worldManager.islandTypes[6].colorGradient.Evaluate(0),
+                possibleIslandColors.Add(islandTypesClass.colorGradient.Evaluate(0));
+            }
+        }
+        
+        private static void NetworkTypeChanged(Changed<Island> changed)
+        {
+            changed.Behaviour.meshRenderer.material.color = changed.Behaviour.NetworkType switch
+            {
+                IslandTypesEnum.Uninitialized => possibleIslandColors[0],
+                IslandTypesEnum.Starting => possibleIslandColors[1],
+                IslandTypesEnum.Basic => possibleIslandColors[2],
+                IslandTypesEnum.Living => possibleIslandColors[3],
+                IslandTypesEnum.Mythic => possibleIslandColors[4],
+                IslandTypesEnum.JungleSanctuary => possibleIslandColors[5],
+                IslandTypesEnum.DesertSanctuary => possibleIslandColors[6],
+                IslandTypesEnum.MontainSanctuary => possibleIslandColors[7],
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

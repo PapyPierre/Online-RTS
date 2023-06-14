@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Nekwork_Objects.Interactible.Military_Units
@@ -16,8 +15,7 @@ namespace Nekwork_Objects.Interactible.Military_Units
         public float cohesionWeight;
         public float alignmentWeight;
         
-        [Space, Required()] 
-        public float flyingHeightOfAerianUnits;
+        [Space] public float flyingHeightOfAerianUnits;
         #endregion
         
         private void Awake()
