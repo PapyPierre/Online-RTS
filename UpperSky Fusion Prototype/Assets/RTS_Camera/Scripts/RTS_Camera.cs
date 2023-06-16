@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace RTS_Cam
@@ -340,5 +341,11 @@ namespace RTS_Cam
         }
 
         #endregion
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawRay(transform.position, transform.forward * 5);
+        }
     }
 }

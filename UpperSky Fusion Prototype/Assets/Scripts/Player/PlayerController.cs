@@ -32,7 +32,6 @@ namespace Player
 
         public override void Spawned()
         {
-            cam = Camera.main;
             _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
             _uiManager.connectionInfoTMP.text = "Is connected";

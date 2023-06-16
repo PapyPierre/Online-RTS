@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - target
   - Building
   - Unit
-  - World
   layers:
   - Default
   - TransparentFX

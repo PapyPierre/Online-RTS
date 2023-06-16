@@ -1,7 +1,6 @@
-using System.Net.NetworkInformation;
+using System.Collections;
 using Fusion;
 using Network;
-using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +13,9 @@ namespace World
         private WorldManager _worldManager;
         private NetworkManager _networkManager;
 
+        [SerializeField] private NetworkPrefabRef worldCenterPrefab;
+        private Transform _worldCenter;
+        
         private int _numberOfPlayers;
         private int _numberOfIslands;
         private int _maxSpecialIslands;
@@ -34,6 +36,9 @@ namespace World
             _maxSpecialIslands = _numberOfPlayers - Mathf.RoundToInt(_numberOfPlayers/4);
 
             CheckForReset();
+
+         _worldCenter = _networkManager.RPC_SpawnNetworkObject(
+             worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
 
             CalculatePlayersPosOnInnerBorder();
         }
@@ -80,7 +85,7 @@ namespace World
            
             for (int i = 0; i < _numberOfPlayers -1; i++)
             {
-                transform.Rotate(Vector3.up, angle);
+                _worldCenter.Rotate(Vector3.up, angle);
                 NetworkObject networkObject2 = SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
                     IslandTypesEnum.Starting, _networkManager.connectedPlayers[i + 1].MyPlayerRef);
                 
@@ -92,18 +97,9 @@ namespace World
             // Randomly rotate all the position around the center by moving the parent of the posistions
             transform.Rotate(Vector3.up, Random.Range(0,359));
             
-            UpdatePlayersCam();
             SpawnSecondsIslands();
         }
 
-        private void UpdatePlayersCam()
-        {
-            foreach (var playerController in _networkManager.connectedPlayers)
-            {
-                playerController.cam.transform.position = playerController.transform.position;
-            }
-        }
-        
         private void SpawnSecondsIslands()
         {
             for (var index = 0; index < _numberOfPlayers; index++)
@@ -113,20 +109,7 @@ namespace World
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
                 SpawnIsland(pos, IslandTypesEnum.Basic, PlayerRef.None);
             }
-
-            SpawnThirdsIslands();
-        }
-        
-        private void SpawnThirdsIslands()
-        {
-            for (var index = 0; index < _numberOfPlayers; index++)
-            {
-                var island = _worldManager.allIslands[index];
-                Vector3 islandPos = island.transform.position;
-                Vector3 pos = new Vector3(islandPos.x + RandomMinDist() *2, islandPos.y, islandPos.z + RandomMinDist() *2);
-                SpawnIsland(pos, IslandTypesEnum.Basic, PlayerRef.None);
-            }
-
+            
             SpawnOtherIslands();
         }
 
@@ -160,7 +143,7 @@ namespace World
             NetworkObject islandObject = _networkManager.RPC_SpawnNetworkObject(
                 _worldManager.islandPrefab, position, Quaternion.identity, owner);
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
-            islandComponent.transform.parent = transform;
+            islandComponent.transform.parent = _worldCenter;
             islandComponent.owner = owner;
             islandComponent.ownerId = owner.PlayerId;
 

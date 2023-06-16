@@ -11,7 +11,7 @@ using UnityEditor;
 
 namespace Custom_UI.MiniMap
 {
-    public class MiniMapInfoDisplay : MonoBehaviour
+    public class MiniMap : MonoBehaviour
     {
         private WorldManager _worldManager;
         
@@ -26,7 +26,23 @@ namespace Custom_UI.MiniMap
             _worldManager = WorldManager.Instance;
         }
 
-        #if UNITY_EDITOR
+        private void FixedUpdate()
+        {
+            if (!Application.isPlaying) return;
+
+            Vector3 totalPos = Vector3.zero;
+            
+            foreach (var island in _worldManager.allIslands)
+            {
+                totalPos += island.transform.position;
+            }
+
+            Vector3 averagePos = totalPos / _worldManager.allIslands.Count;
+
+            transform.position = averagePos;
+        }
+
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
