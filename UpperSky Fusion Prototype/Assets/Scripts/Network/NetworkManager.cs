@@ -15,8 +15,8 @@ namespace Network
         private UIManager _uiManager;
 
         [SerializeField] private NetworkPrefabRef playerPrefab;
-        private NetworkRunner _runner;
-        [HideInInspector] public List<PlayerClass> ConnectedPlayers = new ();
+        [HideInInspector] public NetworkRunner runner;
+        [HideInInspector] public List<PlayerController> connectedPlayers = new ();
 
         private bool _mouseButton0;
         private bool _keypad1;
@@ -41,13 +41,13 @@ namespace Network
         public async void StartGame(GameMode mode, string roomName)
         {
             // Create the Fusion runner and let it know that we will be providing user input
-            _runner = gameObject.AddComponent<NetworkRunner>();
-            _runner.ProvideInput = true;
+            runner = gameObject.AddComponent<NetworkRunner>();
+            runner.ProvideInput = true;
         
             _uiManager.connectionInfoTMP.text = "Is connecting...";
 
             // Start or join (depends on gamemode) a session with a specific name
-            await _runner.StartGame(new StartGameArgs() 
+            await runner.StartGame(new StartGameArgs() 
                 {
                     GameMode = mode,
                     SessionName = roomName,
@@ -64,21 +64,20 @@ namespace Network
         {
             Debug.Log(player + " joined");
 
-            if (_runner.IsServer)
+            if (runner.IsServer)
             {
                 Vector3 spawnPosition = new  Vector3(0,30,-50);
-                NetworkObject networkPlayerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+                NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+
+                PlayerController playerController = playerObject.GetComponent<PlayerController>();
+                playerController.MyPlayerRef = player;
+                playerController.PlayerId = player.PlayerId;
+
+                connectedPlayers.Add(playerController);
                 
-                PlayerClass newPlayer = new PlayerClass();
-                newPlayer.Ref = player;
-                newPlayer.NetworkObject = networkPlayerObject;
-                newPlayer.Controller = networkPlayerObject.GetComponent<PlayerController>();
-                ConnectedPlayers.Add(newPlayer
-                );
-                
-                if (ConnectedPlayers.Count == 2)
+                if (connectedPlayers.Count == 2)
                 {
-                    WorldGenerator.Instance.GenerateWorld(2);
+                    WorldManager.Instance.CallWorldGeneration(2);
                 }
             }
         }
@@ -87,11 +86,11 @@ namespace Network
         {
             Debug.Log(player + " left");
 
-            foreach (var playerClass in ConnectedPlayers)
+            for (var index = 0; index < connectedPlayers.Count; index++)
             {
-                if (playerClass.Ref == player)
+                if (connectedPlayers[index].MyPlayerRef == player)
                 {
-                    playerClass.Disconnected = true;
+                    connectedPlayers[index].isConnected = true;
                 }
             }
         }
@@ -156,9 +155,10 @@ namespace Network
         
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
-            PlayerRef owner, NetworkRunner runner, RpcInfo info = default)
+            PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
         {
-          return runner.Spawn(prefab, position, rotation, owner);
+            if (networkRunner != null) return networkRunner.Spawn(prefab, position, rotation, owner);
+            else return runner.Spawn(prefab, position, rotation, owner);
         }
 
      

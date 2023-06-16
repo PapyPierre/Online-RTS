@@ -1,7 +1,6 @@
 using Custom_UI;
 using Entity.Units;
 using Fusion;
-using Gameplay;
 using NaughtyAttributes;
 using Network;
 using UnityEngine;
@@ -21,11 +20,13 @@ namespace Player
         public Camera cam;
         [Networked] private TickTimer Delay { get; set; }
 
-        private bool _isConnected;
-
+        public bool isConnected;
+        [Networked] public PlayerRef MyPlayerRef {get; set; }
+        [Networked] public int PlayerId {get;  set; }
+        
         private void Start()
         {
-            _selectionManager = SelectionManager.instance;
+            _selectionManager = SelectionManager.Instance;
             _unitsManager = UnitsManager.Instance;
         }
 
@@ -35,7 +36,7 @@ namespace Player
             _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
             _uiManager.connectionInfoTMP.text = "Is connected";
-            _isConnected = true;
+            isConnected = true;
         }
 
         private void Update()
@@ -67,9 +68,9 @@ namespace Player
 
         public override void FixedUpdateNetwork()
         {
-            if (!_isConnected) return;
+            if (!isConnected) return;
          
-            transform.position = cam.transform.position;
+           // transform.position = cam.transform.position;
         
             if (GetInput(out NetworkInputData data))
             {

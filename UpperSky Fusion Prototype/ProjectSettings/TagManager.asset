@@ -7,6 +7,7 @@ TagManager:
   - target
   - Building
   - Unit
+  - World
   layers:
   - Default
   - TransparentFX

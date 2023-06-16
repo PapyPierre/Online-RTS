@@ -46,8 +46,8 @@ Camera:
   m_GameObject: {fileID: 120296}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.019607844}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -68,7 +68,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -130,24 +130,24 @@ MonoBehaviour:
   targetingSettingsFoldout: 1
   inputSettingsFoldout: 1
   useFixedUpdate: 0
-  keyboardMovementSpeed: 5
+  keyboardMovementSpeed: 40
   screenEdgeMovementSpeed: 3
   followingSpeed: 5
-  rotationSped: 3
+  rotationSped: 45
   panningSpeed: 25
-  mouseRotationSpeed: 100
+  mouseRotationSpeed: 150
   autoHeight: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 55
-  maxHeight: 15
+  maxHeight: 35
   minHeight: 10
   heightDampening: 5
   keyboardZoomingSensitivity: 2
   scrollWheelZoomingSensitivity: 25
   limitMap: 1
-  limitX: 10
-  limitY: 10
+  limitX: 500
+  limitY: 500
   targetFollow: {fileID: 0}
   targetOffset: {x: 0, y: 0, z: 0}
   useScreenEdgeInput: 1

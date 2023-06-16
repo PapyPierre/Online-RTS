@@ -1,12 +1,10 @@
-using System;
 using Custom_UI;
 using UnityEngine;
 
 namespace Gameplay
 {
-    public class RessourcesManager : MonoBehaviour
+    public class PlayerRessources : MonoBehaviour
     {
-        public static RessourcesManager instance;
         private UIManager _uiManager;
 
         [SerializeField] private int playerMaterialsAtStart;
@@ -65,17 +63,6 @@ namespace Gameplay
                 _playerCurrentMaxSupply = value;
                 _uiManager.UpdateSupplyTMP(PlayerCurrentSupply, value);
             }
-        }
-
-        private void Awake()
-        {
-            if (instance != null)
-            {
-                Debug.LogError(name);
-                return;
-            }
-        
-            instance = this;
         }
 
         private void Start()

@@ -1,5 +1,6 @@
 using Gameplay;
 using NaughtyAttributes;
+using Player;
 using UnityEngine;
 
 namespace Entity.Units
@@ -36,7 +37,7 @@ namespace Entity.Units
         
         private void Start()
         {
-            _selectionManager = SelectionManager.instance;
+            _selectionManager = SelectionManager.Instance;
         }
         
         public override void Spawned()

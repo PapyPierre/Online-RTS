@@ -1082,7 +1082,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1922675064}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &492937225
 MonoBehaviour:
@@ -1741,7 +1741,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   serializedVersion: 4
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -2727,7 +2727,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1605516538}
   - component: {fileID: 1605516537}
-  - component: {fileID: 1605516539}
   m_Layer: 0
   m_Name: Selection Manager
   m_TagString: Untagged
@@ -2747,7 +2746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c35e5cda05646d40ab172b100de6c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
   mouseAboveThisUnit: {fileID: 0}
   currentlySelectedUnits: []
   mouseAboveThisBuilding: {fileID: 0}
@@ -2766,30 +2764,6 @@ Transform:
   m_Father: {fileID: 1922675064}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1605516539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605516536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
-  Flags: 2561
-  NetworkGuid:
-    RawGuidValue: 42303893e5de44e686f739d5979f8659
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 1605516537}
-  SimulationBehaviours: []
 --- !u!1 &1618032109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,7 +2774,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1618032110}
   - component: {fileID: 1618032111}
-  - component: {fileID: 1618032112}
+  - component: {fileID: 1618032113}
+  - component: {fileID: 1618032115}
+  - component: {fileID: 1618032114}
   m_Layer: 0
   m_Name: World Manager
   m_TagString: Untagged
@@ -2821,7 +2797,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1922675064}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1618032111
 MonoBehaviour:
@@ -2835,9 +2811,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d15a517670cab458be326f4d9e6a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
-  allIslands: []
-  <MaxBuildingsPerIslands>k__BackingField: 3
+  innerBorderRadius: 250
+  outerBorderRadius: 500
   islandTypes:
   - type: 0
     colorGradient:
@@ -3087,7 +3062,48 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     rarity: {x: 15, y: 19}
---- !u!114 &1618032112
+  islandPrefab:
+    RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
+  minDistBetweenIslands: 60
+  islandDistFormCenterRepartition:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <MaxBuildingsPerIslands>k__BackingField: 3
+  allIslands: []
+--- !u!114 &1618032113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618032109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a4395967751d24c92dc9e69f1c588d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1618032114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3106,11 +3122,39 @@ MonoBehaviour:
   AoiPositionSource: {fileID: 0}
   Flags: 2561
   NetworkGuid:
-    RawGuidValue: 7f887de920f34a0abe0e97d0fd01ecfb
+    RawGuidValue: 190e1b16110e4d819341a8d437ae710b
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 1618032111}
+  - {fileID: 1618032115}
   SimulationBehaviours: []
+--- !u!114 &1618032115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618032109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 3
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
 --- !u!1 &1632484540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3315,6 +3359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab:
     RawGuidValue: d13326297625af545b1cee88d5105995
+  runner: {fileID: 0}
+  connectedPlayers: []
 --- !u!4 &1813935683
 Transform:
   m_ObjectHideFlags: 0
@@ -3743,7 +3789,6 @@ Transform:
   - {fileID: 1553013405}
   - {fileID: 1605516538}
   - {fileID: 1296101094}
-  - {fileID: 2082652990}
   - {fileID: 1618032110}
   - {fileID: 492937224}
   m_Father: {fileID: 0}
@@ -4057,51 +4102,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993576341}
   m_CullTransparentMesh: 1
---- !u!1 &2082652989
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2082652990}
-  - component: {fileID: 2082652991}
-  m_Layer: 0
-  m_Name: Ressources Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2082652990
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082652989}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1922675064}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082652991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082652989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22b6d9074a064e340b833b8c3693d997, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMaterialsAtStart: 50
-  playerOrichalcAtStart: 0
-  playerSupplyAtStart: 0
-  playerMaxSupplyAtStart: 20

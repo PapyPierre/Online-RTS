@@ -8,7 +8,8 @@ namespace World.Island
     public class Island : NetworkBehaviour
     {
         private WorldManager _worldManager;
-        public PlayerRef owner;
+        [HideInInspector, Networked] public PlayerRef owner { get; set; }
+        [Networked] public int ownerId { get; set; } // For Debug
         
         [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum NetworkType { get; set; }
         
@@ -20,7 +21,7 @@ namespace World.Island
 
         public override void Spawned()
         {
-            _worldManager = WorldManager.instance;
+            _worldManager = WorldManager.Instance;
             foreach (var islandTypesClass in _worldManager.islandTypes)
             {
                 possibleIslandColors.Add(islandTypesClass.colorGradient.Evaluate(0));

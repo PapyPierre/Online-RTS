@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using Entity.Buildings;
 using Entity.Units;
-using Fusion;
 using NaughtyAttributes;
+using Network;
 using UnityEngine;
 
-namespace Gameplay
+namespace Player
 {
-   public class SelectionManager : NetworkBehaviour
+   public class SelectionManager : MonoBehaviour
    {
-      public static SelectionManager instance;
-
+      public static SelectionManager Instance;
+      private NetworkManager _networkManager;
+      
       #region Current Selection Infos
       [Foldout("Current Selection Infos"), ReadOnly] public BaseUnit mouseAboveThisUnit;
       [Foldout("Current Selection Infos"), ReadOnly] public List<BaseUnit> currentlySelectedUnits;
@@ -18,16 +19,21 @@ namespace Gameplay
       #endregion
 
       private bool _isMajKeyPressed;
-    
+      
       private void Awake()
       {
-         if (instance != null)
+         if (Instance != null)
          {
             Debug.LogError(name);
             return;
          }
 
-         instance = this;
+         Instance = this; 
+      }
+
+      private void Start()
+      {
+         _networkManager = NetworkManager.Instance;
       }
 
       private void Update()
@@ -47,7 +53,7 @@ namespace Gameplay
             {
                UnSelectAll();
             }
-            else if (mouseAboveThisUnit.Object.InputAuthority == Runner.LocalPlayer)
+            else if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
             {
                SelectUnit(mouseAboveThisUnit);
             }
@@ -60,7 +66,7 @@ namespace Gameplay
             }
             else if (mouseAboveThisUnit) // Si la souris hover une unité
             {
-               if (_isMajKeyPressed && mouseAboveThisUnit.Object.InputAuthority == Runner.LocalPlayer)
+               if (_isMajKeyPressed && mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
                {
                   SelectUnit(mouseAboveThisUnit);
                }
@@ -68,7 +74,7 @@ namespace Gameplay
                {
                   UnSelectAll();
       
-                  if (mouseAboveThisUnit.Object.InputAuthority == Runner.LocalPlayer)
+                  if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
                   {
                      SelectUnit(mouseAboveThisUnit);
                   }

@@ -6,28 +6,38 @@ using UnityEngine;
 
 namespace World
 {
-    public class WorldManager : NetworkBehaviour
+    public class WorldManager : MonoBehaviour
     {
-        public static WorldManager instance;
+        public static WorldManager Instance;
+        
+        [Header("Border Radius")]
+        public float innerBorderRadius;
+        public float outerBorderRadius;
 
-        public Dictionary<PlayerRef, int> PlayersIslandsCount;
+        [Header("Islands")]
+        public IslandTypesClass[] islandTypes;
+        public NetworkPrefabRef islandPrefab;
+        public float minDistBetweenIslands;
+        public AnimationCurve islandDistFormCenterRepartition;
+        [field: SerializeField] public int MaxBuildingsPerIslands { get; private set; }
         
         [HideInInspector] public List<Island.Island> allIslands = new();
-
-        [field: SerializeField]
-        public int MaxBuildingsPerIslands { get; private set; }
-
-        public IslandTypesClass[] islandTypes;
+        public Dictionary<PlayerRef, int> PlayersIslandsCount;
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError(name);
                 return;
             }
         
-            instance = this;
+            Instance = this;
+        }
+
+        public void CallWorldGeneration(int numberOfPlayers)
+        {
+            GetComponent<WorldGenerator>().GenerateWorld(numberOfPlayers);
         }
     }
 
