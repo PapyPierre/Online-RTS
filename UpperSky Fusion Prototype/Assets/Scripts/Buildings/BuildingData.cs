@@ -1,4 +1,4 @@
-using Entity.Units;
+using Custom_UI.InGame_UI;
 using Military_Units;
 using NaughtyAttributes;
 using UnityEngine;
@@ -17,6 +17,12 @@ namespace Buildings
         
         [field: TextArea(2, 5), SerializeField] 
         public string Description { get; private set; }
+        
+        [field: SerializeField]
+        public bool StartAsLocked { get; private set; }
+        
+        [field: TextArea(2, 5), SerializeField, ShowIf("StartAsLocked")] 
+        public string LockedDescription { get; private set; }
         
         [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int MaterialCost { get; private set; }
@@ -37,13 +43,16 @@ namespace Buildings
         #region Obtional Data
 
         [field: Header("Optional Data"), SerializeField] 
-        public BaseUnit UnlockedUnits { get; private set; }
+        public BuildingsManager.AllBuildingsEnum[] UnlockedBuildings { get; private set; }
         
         [field: SerializeField]
-        public int GeneratedMaterialPerTick { get; private set; }
+        public BaseUnit[] UnlockedUnits { get; private set; }
         
         [field: SerializeField]
-        public int GeneratedOrichalcPerTick { get; private set; }
+        public float GeneratedMaterialPerSeconds { get; private set; }
+        
+        [field: SerializeField]
+        public float GeneratedOrichalcPerSeconds { get; private set; }
         
         [field: SerializeField]
         public int AditionnalMaxSupplies { get; private set; }
@@ -85,7 +94,7 @@ namespace Buildings
         public float ShootingRange { get; private set; }
         
         [field: SerializeField, ShowIf("IsDefenseBuilding")] 
-        public GameManager.EntityType TargetableUnitType { get; private set; }
+        public GameManager.EntityType TargetableType { get; private set; }
 
         #endregion
         

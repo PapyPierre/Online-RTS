@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Entity.Units;
 using UnityEngine;
 
 namespace Military_Units

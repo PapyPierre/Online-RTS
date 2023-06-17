@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: facb2fb0ab48bda4886fd10b24b85513, type: 3}
-  m_Name: BuildingData
+  m_Name: MenuiserieData
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Description>k__BackingField: 
-  <MaterialCost>k__BackingField: 0
-  <BuildingTime>k__BackingField: 0
-  <MaxHealthPoints>k__BackingField: 0
-  <ArmorPoints>k__BackingField: 0
-  <UnlockedUnits>k__BackingField: {fileID: 0}
-  <GeneratedMaterialPerTick>k__BackingField: 0
-  <GeneratedOrichalcPerTick>k__BackingField: 0
+  <Name>k__BackingField: Carpentry
+  <Description>k__BackingField: Build a carpentry allows you to form units using
+    wood as the main material
+  <StartAsLocked>k__BackingField: 1
+  <LockedDescription>k__BackingField: 
+  <MaterialCost>k__BackingField: 120
+  <BuildingTime>k__BackingField: 30
+  <MaxHealthPoints>k__BackingField: 80
+  <ArmorPoints>k__BackingField: 10
+  <UnlockedBuildings>k__BackingField: 07000000
+  <UnlockedUnits>k__BackingField: []
+  <GeneratedMaterialPerSeconds>k__BackingField: 0
+  <GeneratedOrichalcPerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0
@@ -32,4 +36,4 @@ MonoBehaviour:
   <ArmorPenetration>k__BackingField: 0
   <ShotPerSeconds>k__BackingField: 0
   <ShootingRange>k__BackingField: 0
-  <TargetableUnitType>k__BackingField: 0
+  <TargetableType>k__BackingField: 0

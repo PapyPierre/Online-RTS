@@ -760,10 +760,10 @@ RectTransform:
   m_Father: {fileID: 1128235138}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -35}
-  m_SizeDelta: {x: 400, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286704666
 MonoBehaviour:
@@ -1705,6 +1705,7 @@ GameObject:
   - component: {fileID: 565007730}
   - component: {fileID: 565007729}
   - component: {fileID: 565007731}
+  - component: {fileID: 565007732}
   m_Layer: 5
   m_Name: Habitation Icon
   m_TagString: Untagged
@@ -1727,10 +1728,10 @@ RectTransform:
   m_Father: {fileID: 773441843}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 221, y: -35}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &565007729
 MonoBehaviour:
@@ -1826,6 +1827,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &565007732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565007727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 20e7ba9fbb52f0643abd2600ad40bb4c, type: 2}
 --- !u!1 &580816920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +1890,7 @@ GameObject:
   - component: {fileID: 677131669}
   - component: {fileID: 677131668}
   - component: {fileID: 677131670}
+  - component: {fileID: 677131671}
   m_Layer: 5
   m_Name: Fonderie Icon
   m_TagString: Untagged
@@ -1997,6 +2012,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &677131671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677131666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &721382886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2102,7 @@ GameObject:
   - component: {fileID: 737733765}
   - component: {fileID: 737733764}
   - component: {fileID: 737733766}
+  - component: {fileID: 737733767}
   m_Layer: 5
   m_Name: "Acad\xE9mie Icon"
   m_TagString: Untagged
@@ -2195,6 +2224,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &737733767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737733762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &752694749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2287,7 @@ GameObject:
   - component: {fileID: 762588177}
   - component: {fileID: 762588176}
   - component: {fileID: 762588178}
+  - component: {fileID: 762588179}
   m_Layer: 5
   m_Name: Exploitation Orichalque Icon
   m_TagString: Untagged
@@ -2267,10 +2310,10 @@ RectTransform:
   m_Father: {fileID: 773441843}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 128, y: -35}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762588176
 MonoBehaviour:
@@ -2366,6 +2409,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &762588179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762588174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 2e268fd08420abe429b1e21f2b75d016, type: 2}
 --- !u!1 &773441842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,7 +2684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &869101499
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2666,6 +2722,7 @@ GameObject:
   - component: {fileID: 872493953}
   - component: {fileID: 872493952}
   - component: {fileID: 872493954}
+  - component: {fileID: 872493955}
   m_Layer: 5
   m_Name: Canon Icon
   m_TagString: Untagged
@@ -2787,6 +2844,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &872493955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872493950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &918770959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2799,6 +2869,7 @@ GameObject:
   - component: {fileID: 918770962}
   - component: {fileID: 918770961}
   - component: {fileID: 918770963}
+  - component: {fileID: 918770964}
   m_Layer: 5
   m_Name: Mine Orichalque Icon
   m_TagString: Untagged
@@ -2920,6 +2991,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &918770964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918770959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &927976009
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,10 +3175,10 @@ RectTransform:
   m_Father: {fileID: 1128235138}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -155}
-  m_SizeDelta: {x: 400, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954337843
 MonoBehaviour:
@@ -3338,6 +3422,7 @@ GameObject:
   - component: {fileID: 1000306676}
   - component: {fileID: 1000306675}
   - component: {fileID: 1000306677}
+  - component: {fileID: 1000306678}
   m_Layer: 5
   m_Name: Manufacture Icon
   m_TagString: Untagged
@@ -3459,6 +3544,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1000306678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000306673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!850595691 &1004144228
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -3668,6 +3766,7 @@ GameObject:
   - component: {fileID: 1050040431}
   - component: {fileID: 1050040430}
   - component: {fileID: 1050040432}
+  - component: {fileID: 1050040433}
   m_Layer: 5
   m_Name: Menuiserie Icon
   m_TagString: Untagged
@@ -3690,10 +3789,10 @@ RectTransform:
   m_Father: {fileID: 2121695409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 35, y: -35}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1050040430
 MonoBehaviour:
@@ -3789,6 +3888,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1050040433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050040428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 8adc409871fe9f6469bfdbc9bd216f45, type: 2}
 --- !u!1 &1074642207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,7 +3916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1074642208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3877,6 +3989,7 @@ GameObject:
   - component: {fileID: 1126717257}
   - component: {fileID: 1126717256}
   - component: {fileID: 1126717258}
+  - component: {fileID: 1126717259}
   m_Layer: 5
   m_Name: "Centre Met\xE9o Icon"
   m_TagString: Untagged
@@ -3998,6 +4111,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1126717259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126717254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &1128235137
 GameObject:
   m_ObjectHideFlags: 0
@@ -4669,6 +4795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1362719795}
+  - component: {fileID: 1362719796}
   m_Layer: 0
   m_Name: Building Manager
   m_TagString: Untagged
@@ -4691,6 +4818,33 @@ Transform:
   m_Father: {fileID: 1922675064}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1362719796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362719794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbf25c7454f0d34da6432ddbeb803b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allBuildingsIcons:
+  - {fileID: 1733122581}
+  - {fileID: 762588179}
+  - {fileID: 565007732}
+  - {fileID: 1050040433}
+  - {fileID: 2040397095}
+  - {fileID: 677131671}
+  - {fileID: 1000306678}
+  - {fileID: 1983692170}
+  - {fileID: 872493955}
+  - {fileID: 918770964}
+  - {fileID: 1532033530}
+  - {fileID: 1126717259}
+  - {fileID: 1627609079}
+  - {fileID: 737733767}
 --- !u!1 &1370175040
 GameObject:
   m_ObjectHideFlags: 0
@@ -5219,6 +5373,7 @@ GameObject:
   - component: {fileID: 1532033528}
   - component: {fileID: 1532033527}
   - component: {fileID: 1532033529}
+  - component: {fileID: 1532033530}
   m_Layer: 5
   m_Name: Obusier Icon
   m_TagString: Untagged
@@ -5340,6 +5495,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1532033530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532033525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &1553013404
 GameObject:
   m_ObjectHideFlags: 0
@@ -5393,6 +5561,9 @@ MonoBehaviour:
   supplyTMP: {fileID: 537394506}
   buildMenu: {fileID: 484455144}
   techMenu: {fileID: 221935020}
+  infoboxBuilding: {fileID: 1519838681}
+  infoboxBuildingName: {fileID: 1404981042}
+  infoboxBuildingDescription: {fileID: 1733455513}
 --- !u!1 &1560700307
 GameObject:
   m_ObjectHideFlags: 0
@@ -6190,6 +6361,7 @@ GameObject:
   - component: {fileID: 1627609077}
   - component: {fileID: 1627609076}
   - component: {fileID: 1627609078}
+  - component: {fileID: 1627609079}
   m_Layer: 5
   m_Name: Usine Icon
   m_TagString: Untagged
@@ -6311,6 +6483,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1627609079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627609074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &1632484540
 GameObject:
   m_ObjectHideFlags: 0
@@ -6401,6 +6586,7 @@ GameObject:
   - component: {fileID: 1733122579}
   - component: {fileID: 1733122578}
   - component: {fileID: 1733122580}
+  - component: {fileID: 1733122581}
   m_Layer: 5
   m_Name: Foreuse Icon
   m_TagString: Untagged
@@ -6423,10 +6609,10 @@ RectTransform:
   m_Father: {fileID: 773441843}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 35, y: -35}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1733122578
 MonoBehaviour:
@@ -6522,6 +6708,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1733122581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733122576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d20c4df5c56c1a84bbda38e57f57105a, type: 2}
 --- !u!1 &1733455511
 GameObject:
   m_ObjectHideFlags: 0
@@ -7467,10 +7666,10 @@ RectTransform:
   m_Father: {fileID: 1128235138}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -275}
-  m_SizeDelta: {x: 400, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1926645098
 MonoBehaviour:
@@ -7617,6 +7816,7 @@ GameObject:
   - component: {fileID: 1983692168}
   - component: {fileID: 1983692167}
   - component: {fileID: 1983692169}
+  - component: {fileID: 1983692170}
   m_Layer: 5
   m_Name: Baliste Icon
   m_TagString: Untagged
@@ -7639,10 +7839,10 @@ RectTransform:
   m_Father: {fileID: 721382887}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 35, y: -35}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1983692167
 MonoBehaviour:
@@ -7738,6 +7938,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1983692170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983692165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 8ee1d14010baeb24dada55ada92ccf51, type: 2}
 --- !u!1 &1993576341
 GameObject:
   m_ObjectHideFlags: 0
@@ -7885,6 +8098,7 @@ GameObject:
   - component: {fileID: 2040397093}
   - component: {fileID: 2040397092}
   - component: {fileID: 2040397094}
+  - component: {fileID: 2040397095}
   m_Layer: 5
   m_Name: Tisserand Icon
   m_TagString: Untagged
@@ -8006,6 +8220,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2040397095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040397090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99bcaec38a09d4da34b0cc557ca8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &2121695408
 GameObject:
   m_ObjectHideFlags: 0

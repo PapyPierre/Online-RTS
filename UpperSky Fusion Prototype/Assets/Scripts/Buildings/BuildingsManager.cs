@@ -1,3 +1,4 @@
+using Custom_UI.InGame_UI;
 using UnityEngine;
 
 namespace Buildings
@@ -6,22 +7,24 @@ namespace Buildings
     {
         public static BuildingsManager Instance;
 
-        public enum AllBuildings
+        public BuildingIcon[] allBuildingsIcons;
+
+        public enum AllBuildingsEnum
         {
-            ExploitationOrichalque = 0, 
-            Habitation = 1,
-            Foreuse = 2,
-            CentreMeteo = 3,
-            Menuiserie = 4,
-            Tisserand = 5,
-            Fonderie = 6,
-            Academie = 7,
-            Baliste = 8,
-            Manufacture = 9,
-            Canon = 10,
-            Usine = 11,
-            MineOrichalque = 12,
-            Obusier = 13
+            Foreuse = 0,
+            ExploitationOrichalque = 1, 
+            Habitation = 2,
+            Menuiserie = 3,
+            Tisserand = 4,
+            Fonderie = 5,
+            Manufacture = 6,
+            Baliste = 7,
+            Canon = 8,
+            MineOrichalque = 9,
+            Obusier = 10,
+            CentreMeteo = 11,
+            Usine = 12,
+            Academie = 13
         }
         
         private void Awake()
@@ -34,5 +37,7 @@ namespace Buildings
         
             Instance = this;
         }
+        
+        
     }
 }

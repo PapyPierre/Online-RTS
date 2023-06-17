@@ -24,7 +24,11 @@ namespace Custom_UI
 
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject techMenu;
-        
+
+        [SerializeField, Required()] private GameObject infoboxBuilding;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxBuildingName;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxBuildingDescription;
+
         private void Awake()
         {
             if (Instance != null)
@@ -75,6 +79,15 @@ namespace Custom_UI
         #region InGame Functions
         public void ShowOrHideBuildMenu() => buildMenu.SetActive(!buildMenu.activeSelf);
         public void ShowOrHideTechMenu() => techMenu.SetActive(!techMenu.activeSelf);
+
+        public void ShowInfoboxBuilding(string buildingName, string buildingDescription)
+        {
+            infoboxBuilding.SetActive(true);
+            infoboxBuildingName.text = buildingName;
+            infoboxBuildingDescription.text = buildingDescription;
+        }
+        
+        public void HideInfoboxBuilding() => infoboxBuilding.SetActive(false);
 
         public void Build(int buildingIndex) // See EntityManager enum "AllBuildings" to know all buildings index
         {

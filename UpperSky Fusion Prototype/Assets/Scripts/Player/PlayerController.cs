@@ -1,6 +1,4 @@
 using Custom_UI;
-using Entity;
-using Entity.Units;
 using Fusion;
 using Military_Units;
 using NaughtyAttributes;
