@@ -1,10 +1,11 @@
 using Entity.Units;
+using Military_Units;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Entity.Buildings
+namespace Buildings
 {
-    [CreateAssetMenu(fileName = "BuildingData", menuName = "Building/BuildingData", order = 1)]
+    [CreateAssetMenu(fileName = "BuildingData", menuName = "Data/BuildingData", order = 1)]
     public class BuildingData : ScriptableObject
     {
         /// Main Data Section -------------------------------------------------------------------------
@@ -84,7 +85,7 @@ namespace Entity.Buildings
         public float ShootingRange { get; private set; }
         
         [field: SerializeField, ShowIf("IsDefenseBuilding")] 
-        public UnitType TargetableUnitType { get; private set; }
+        public GameManager.EntityType TargetableUnitType { get; private set; }
 
         #endregion
         

@@ -1,16 +1,9 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Entity.Units
+namespace Military_Units
 {
-    public enum UnitType
-    {
-        GroundUnit,
-        AerialUnit,
-        Both
-    }
-
-    [CreateAssetMenu(fileName = "UnitData", menuName = "Unit/UnitData", order = 1)]
+    [CreateAssetMenu(fileName = "UnitData", menuName = "Data/UnitData", order = 2)]
     public class UnitData : ScriptableObject
     {
         /// Main Info Section -------------------------------------------------------------------------
@@ -22,10 +15,6 @@ namespace Entity.Units
         
         [field: TextArea(2, 5), SerializeField] 
         public string Description { get; private set; }
-        
-        [field: SerializeField]
-        public UnitType Type { get; private set; }
-
         #endregion
         
         
@@ -100,7 +89,7 @@ namespace Entity.Units
         public float VisionRange { get; private set; }
         
         [field: SerializeField] 
-        public UnitType TargetableUnitType { get; private set; }
+        public GameManager.EntityType TargetableEntityType { get; private set; }
 
         #endregion
         
@@ -111,9 +100,6 @@ namespace Entity.Units
 
         [field:Header("Optional Data"), SerializeField]
         public int NumberOfTransportableTroops { get; private set; }
-        
-        [field: SerializeField] 
-        public UnitType TypeOfTransportableTroops { get; private set; }
 
         #endregion
         

@@ -26,23 +26,7 @@ namespace Custom_UI.MiniMap
             _worldManager = WorldManager.Instance;
         }
 
-        private void FixedUpdate()
-        {
-            if (!Application.isPlaying) return;
-
-            Vector3 totalPos = Vector3.zero;
-            
-            foreach (var island in _worldManager.allIslands)
-            {
-                totalPos += island.transform.position;
-            }
-
-            Vector3 averagePos = totalPos / _worldManager.allIslands.Count;
-
-            transform.position = averagePos;
-        }
-
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
@@ -62,6 +46,5 @@ namespace Custom_UI.MiniMap
                 outerBorderThickness);
         }
         #endif
-        
     }
 }

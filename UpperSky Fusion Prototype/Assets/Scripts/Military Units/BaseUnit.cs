@@ -1,11 +1,12 @@
-using Gameplay;
+using Fusion;
+using Military_Units;
 using NaughtyAttributes;
 using Player;
 using UnityEngine;
 
 namespace Entity.Units
 {
-    public class BaseUnit : BaseEntity
+    public class BaseUnit : NetworkBehaviour
     {
         private SelectionManager _selectionManager;
         private UnitsManager _unitsManager;
@@ -58,11 +59,6 @@ namespace Entity.Units
 
         private void ManageBasicMovement()
         {
-            if (data.Type == UnitType.GroundUnit)
-            {
-                targetPosToMoveTo = new Vector3(targetPosToMoveTo.x, 0, targetPosToMoveTo.z);
-            }
-            
             if (Vector2.Distance(transform.position, targetPosToMoveTo) < 2) return;
             
             transform.position = Vector3.MoveTowards(
@@ -85,8 +81,7 @@ namespace Entity.Units
             {
                 // Si l'untié verifié est cette unité, OU que l'unité vérifié n'a pas le même type que cette unité
                 // OU que l'unité vérifié n'appartient pas au même joueur => passé la vérification
-                if (this == otherUnit || otherUnit.data.Type != data.Type 
-                                 || otherUnit.Object.InputAuthority != Object.InputAuthority)
+                if (this == otherUnit || otherUnit.Object.InputAuthority != Object.InputAuthority)
                 {
                     continue;
                 }

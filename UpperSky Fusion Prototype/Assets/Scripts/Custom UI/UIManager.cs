@@ -11,14 +11,19 @@ namespace Custom_UI
         public static UIManager Instance;
         private NetworkManager _networkManager;
         
-        [Header("Main Menu Variables"), Required()] public GameObject mainMenu;
+        [Header("Main Menu Variables"), Required()] 
+        public GameObject mainMenu;
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
 
-        [Header("In Game Variables"), Required()] public GameObject ressourcesLayout;
+        [Header("In Game Variables"), Required()]
+        public GameObject inGameUI;
         [Required()] public TextMeshProUGUI materialsTMP;
         [Required()] public TextMeshProUGUI orichalcTMP;
         [Required()] public TextMeshProUGUI supplyTMP;
+
+        [SerializeField, Required()] private GameObject buildMenu;
+        [SerializeField, Required()] private GameObject techMenu;
         
         private void Awake()
         {
@@ -68,6 +73,31 @@ namespace Custom_UI
         #endregion
 
         #region InGame Functions
+        public void ShowOrHideBuildMenu() => buildMenu.SetActive(!buildMenu.activeSelf);
+        public void ShowOrHideTechMenu() => techMenu.SetActive(!techMenu.activeSelf);
+
+        public void Build(int buildingIndex) // See EntityManager enum "AllBuildings" to know all buildings index
+        {
+            switch (buildingIndex)
+            {
+                case 0 :  
+                    Debug.Log("Exploitation d'orichalque");
+                    break;
+                case 1 : 
+                    Debug.Log("Habitation");
+                    break;
+                case 2 : 
+                    Debug.Log("Foreuse");
+                    break;
+                case 4 : 
+                    Debug.Log("Menuiserie");
+                    break;
+                case 8 : 
+                    Debug.Log("Baliste");
+                    break;
+            }
+        }
+        
         public void UpdateMaterialsTMP(int newValue)
         {
             materialsTMP.text = newValue.ToString();

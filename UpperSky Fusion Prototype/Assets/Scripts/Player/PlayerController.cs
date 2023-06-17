@@ -1,6 +1,8 @@
 using Custom_UI;
+using Entity;
 using Entity.Units;
 using Fusion;
+using Military_Units;
 using NaughtyAttributes;
 using Network;
 using UnityEngine;
@@ -17,13 +19,17 @@ namespace Player
         [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
         [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
 
-        public Camera cam;
-        [Networked] private TickTimer Delay { get; set; }
+        [Header("Cameras")]
+        public Camera myCam;
 
+        [SerializeField, Required()] private GameObject minimapIndicator;
+        
+        [Header("Network")]
         public bool isConnected;
         [Networked] public PlayerRef MyPlayerRef {get; set; }
         [Networked] public int PlayerId {get;  set; }
-        
+        [Networked] private TickTimer Delay { get; set; }
+
         private void Start()
         {
             _selectionManager = SelectionManager.Instance;
@@ -36,6 +42,11 @@ namespace Player
             _uiManager = UIManager.Instance;
             _uiManager.connectionInfoTMP.text = "Is connected";
             isConnected = true;
+
+            if (Object.HasInputAuthority) minimapIndicator.SetActive(true);
+            else myCam.gameObject.SetActive(false);
+            
+            transform.Rotate(Vector3.up, 180);
         }
 
         private void Update()
@@ -46,14 +57,14 @@ namespace Player
                 {
                     if (unit.Object.InputAuthority.IsValid)
                     {
-                        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                        Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
                         if (Physics.Raycast(ray, out hit, 50000))
                         {
                             if (!hit.collider.CompareTag("Building") &&  !hit.collider.CompareTag("Unit"))
                             {
                                 unit.targetPosToMoveTo = new Vector3(hit.point.x, 
-                                    _unitsManager.flyingHeightOfAerianUnits , hit.point.z);
+                                    _unitsManager.flyingHeightOfUnits , hit.point.z);
                             }
                             else
                             {
@@ -77,7 +88,7 @@ namespace Player
                 
                 if (data.number1Key != 0)
                 {
-                    Vector3 spawnPos = new Vector3(0, UnitsManager.Instance.flyingHeightOfAerianUnits -1, 0);
+                    Vector3 spawnPos = new Vector3(0, UnitsManager.Instance.flyingHeightOfUnits -1, 0);
                     _networkManager.RPC_SpawnNetworkObject(
                         unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                
@@ -99,7 +110,7 @@ namespace Player
         private RaycastHit hit;
         public void BuildAtCursorPos()
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 50000))
             {
@@ -118,7 +129,7 @@ namespace Player
         
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.cyan);
+            Debug.DrawRay(myCam.transform.position, myCam.transform.forward, Color.cyan);
         }
     }
 }

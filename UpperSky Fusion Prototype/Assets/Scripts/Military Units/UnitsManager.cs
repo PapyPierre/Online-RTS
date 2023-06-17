@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using Entity.Units;
 using UnityEngine;
 
-namespace Entity.Units
+namespace Military_Units
 {
     public class UnitsManager : MonoBehaviour
     {
         public static UnitsManager Instance;
         
+        [Header("Units Params")]
         public List<BaseUnit> allActiveUnits;
         
         #region Boids Logic
@@ -15,8 +17,10 @@ namespace Entity.Units
         public float cohesionWeight;
         public float alignmentWeight;
         
-        [Space] public float flyingHeightOfAerianUnits;
+        [Space] public float flyingHeightOfUnits;
         #endregion
+        
+     
         
         private void Awake()
         {

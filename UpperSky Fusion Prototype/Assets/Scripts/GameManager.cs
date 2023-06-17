@@ -4,11 +4,18 @@ public class GameManager : MonoBehaviour
 {
   [SerializeField] private GameObject[] dontDestroyOnLoad;
 
-  private void Start()
+  public enum EntityType
   {
-    foreach (var go in dontDestroyOnLoad)
-    {
-      DontDestroyOnLoad(go);
-    }
+    Unit,
+    Building,
+    Both
   }
+  
+    private void Start()
+    {
+     foreach (var go in dontDestroyOnLoad)
+      {
+       DontDestroyOnLoad(go);
+     }
+  } 
 }

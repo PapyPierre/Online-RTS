@@ -56,8 +56,13 @@ namespace Network
                 }
             );
             
+            SetActiveInGameUI();
+        }
+
+        private void SetActiveInGameUI()
+        { 
             _uiManager.mainMenu.SetActive(false);
-            _uiManager.ressourcesLayout.SetActive(true);
+            _uiManager.inGameUI.SetActive(true);
         }
     
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
