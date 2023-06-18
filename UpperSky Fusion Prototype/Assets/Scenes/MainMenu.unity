@@ -1282,7 +1282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &484455145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1815,13 +1815,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553013406}
-        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 3
+      - m_Target: {fileID: 1362719796}
+        m_TargetAssemblyTypeName: Buildings.BuildingsManager, Assembly-CSharp
+        m_MethodName: BuildBlueprint
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 874426664033387176, guid: 66b502af91a6b7e44a2a3104da47b622,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2002,7 +2003,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2214,7 +2215,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2397,13 +2398,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553013406}
-        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 3
+      - m_Target: {fileID: 1362719796}
+        m_TargetAssemblyTypeName: Buildings.BuildingsManager, Assembly-CSharp
+        m_MethodName: BuildBlueprint
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 874426664033387176, guid: 37578ff957c351d4eaad637cdf627602,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2834,7 +2836,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2981,7 +2983,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3534,7 +3536,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3876,13 +3878,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553013406}
-        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 3
+      - m_Target: {fileID: 1362719796}
+        m_TargetAssemblyTypeName: Buildings.BuildingsManager, Assembly-CSharp
+        m_MethodName: BuildBlueprint
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 874426664033387176, guid: fdd5018d6f60f054e8d0582d002c841d,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4101,7 +4104,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5485,7 +5488,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6473,7 +6476,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6696,13 +6699,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553013406}
-        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 3
+      - m_Target: {fileID: 1362719796}
+        m_TargetAssemblyTypeName: Buildings.BuildingsManager, Assembly-CSharp
+        m_MethodName: BuildBlueprint
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 874426664033387176, guid: a5e4dfe3bdaf10f4c83bfe382f95ca21,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7022,8 +7026,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab:
     RawGuidValue: d13326297625af545b1cee88d5105995
-  runner: {fileID: 0}
+  myRunner: {fileID: 0}
   connectedPlayers: []
+  thisPlayer: {fileID: 0}
 --- !u!4 &1813935683
 Transform:
   m_ObjectHideFlags: 0
@@ -7926,13 +7931,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553013406}
-        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 3
+      - m_Target: {fileID: 1362719796}
+        m_TargetAssemblyTypeName: Buildings.BuildingsManager, Assembly-CSharp
+        m_MethodName: BuildBlueprint
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 874426664033387176, guid: e2e5cc4613a7f4142be5a1eb57e0c0a0,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 8
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8210,7 +8216,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
-        m_MethodName: Build
+        m_MethodName: CallForBuild
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

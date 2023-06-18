@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5589878511487592379}
   - component: {fileID: 2788370408579054134}
   - component: {fileID: 3256372751114468513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Island
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 3
-  type: 0
+  _ownerId: 0
+  _NetworkType: 0
   meshRenderer: {fileID: 6381564935541004967}
   buildingsCount: 0
   localOrichalRessources: 0
@@ -118,7 +119,7 @@ GameObject:
   - component: {fileID: 6381564935541004967}
   - component: {fileID: 6381564935541004964}
   - component: {fileID: 6381564935541004965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

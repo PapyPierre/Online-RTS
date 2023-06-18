@@ -53,7 +53,7 @@ namespace Player
             {
                UnSelectAll();
             }
-            else if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
+            else if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.myRunner.LocalPlayer)
             {
                SelectUnit(mouseAboveThisUnit);
             }
@@ -66,7 +66,7 @@ namespace Player
             }
             else if (mouseAboveThisUnit) // Si la souris hover une unité
             {
-               if (_isMajKeyPressed && mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
+               if (_isMajKeyPressed && mouseAboveThisUnit.Object.InputAuthority == _networkManager.myRunner.LocalPlayer)
                {
                   SelectUnit(mouseAboveThisUnit);
                }
@@ -74,7 +74,7 @@ namespace Player
                {
                   UnSelectAll();
       
-                  if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.runner.LocalPlayer)
+                  if (mouseAboveThisUnit.Object.InputAuthority == _networkManager.myRunner.LocalPlayer)
                   {
                      SelectUnit(mouseAboveThisUnit);
                   }

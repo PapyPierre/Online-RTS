@@ -14,8 +14,8 @@ namespace Player
         private UnitsManager _unitsManager;
         private NetworkManager _networkManager;
         
-        [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
-        [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
+      //  [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
+      //  [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
 
         [Header("Cameras")]
         public Camera myCam;
@@ -25,7 +25,6 @@ namespace Player
         [Header("Network")]
         public bool isConnected;
         [Networked] public PlayerRef MyPlayerRef {get; set; }
-        [Networked] public int PlayerId {get;  set; }
         [Networked] private TickTimer Delay { get; set; }
 
         private void Start()
@@ -41,14 +40,20 @@ namespace Player
             _uiManager.connectionInfoTMP.text = "Is connected";
             isConnected = true;
 
-            if (Object.HasInputAuthority) minimapIndicator.SetActive(true);
+            if (Object.HasInputAuthority)
+            {
+                _networkManager.thisPlayer = this;
+                minimapIndicator.SetActive(true);
+            }
             else myCam.gameObject.SetActive(false);
             
             transform.Rotate(Vector3.up, 180);
         }
-
+        
         private void Update()
         {
+            return;
+            
             if (Input.GetMouseButtonDown(1) && _selectionManager.currentlySelectedUnits.Count > 0)
             {
                 foreach (var unit in _selectionManager.currentlySelectedUnits)
@@ -57,12 +62,12 @@ namespace Player
                     {
                         Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
-                        if (Physics.Raycast(ray, out hit, 50000))
+                        if (Physics.Raycast(ray, out _hit, 50000))
                         {
-                            if (!hit.collider.CompareTag("Building") &&  !hit.collider.CompareTag("Unit"))
+                            if (!_hit.collider.CompareTag("Building") &&  !_hit.collider.CompareTag("Unit"))
                             {
-                                unit.targetPosToMoveTo = new Vector3(hit.point.x, 
-                                    _unitsManager.flyingHeightOfUnits , hit.point.z);
+                                unit.targetPosToMoveTo = new Vector3(_hit.point.x, 
+                                    _unitsManager.flyingHeightOfUnits , _hit.point.z);
                             }
                             else
                             {
@@ -76,9 +81,11 @@ namespace Player
 
         public override void FixedUpdateNetwork()
         {
+            return;
+            
             if (!isConnected) return;
-         
-           // transform.position = cam.transform.position;
+            
+            //transform.position = cam.transform.position;
         
             if (GetInput(out NetworkInputData data))
             {
@@ -87,10 +94,10 @@ namespace Player
                 if (data.number1Key != 0)
                 {
                     Vector3 spawnPos = new Vector3(0, UnitsManager.Instance.flyingHeightOfUnits -1, 0);
-                    _networkManager.RPC_SpawnNetworkObject(
-                        unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
+               //     _networkManager.RPC_SpawnNetworkObject(
+              //          unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                
-                    data.number1Key = 0;
+              //       data.number1Key = 0;
                 }
                 
                 if (Delay.ExpiredOrNotRunning(Runner))
@@ -105,18 +112,17 @@ namespace Player
             }
         }
 
-        private RaycastHit hit;
+        private RaycastHit _hit;
         public void BuildAtCursorPos()
         {
             Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 50000))
+            if (Physics.Raycast(ray, out _hit, 50000))
             {
-                if (!hit.collider.CompareTag("Building") &&  !hit.collider.CompareTag("Unit"))
+                if (!_hit.collider.CompareTag("Building") &&  !_hit.collider.CompareTag("Unit"))
                 {
-                    Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
-                     _networkManager.RPC_SpawnNetworkObject(
-                        buildingPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
+                    Vector3 spawnPos = new Vector3(_hit.point.x, _hit.point.y + 0.5f, _hit.point.z);
+              //       _networkManager.RPC_SpawnNetworkObject(buildingPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                 }
                 else
                 {

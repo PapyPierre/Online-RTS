@@ -1,4 +1,7 @@
+using System;
 using Custom_UI.InGame_UI;
+using Fusion;
+using Network;
 using UnityEngine;
 
 namespace Buildings
@@ -6,6 +9,7 @@ namespace Buildings
     public class BuildingsManager : MonoBehaviour
     {
         public static BuildingsManager Instance;
+        private NetworkManager _networkManager;
 
         public BuildingIcon[] allBuildingsIcons;
 
@@ -37,7 +41,20 @@ namespace Buildings
         
             Instance = this;
         }
-        
-        
+
+        private void Start()
+        {
+            _networkManager = NetworkManager.Instance;
+        }
+
+        public void BuildBlueprint(GameObject buildingBlueprint)
+        {
+            Instantiate(buildingBlueprint);
+        }
+
+        public void BuildBuilding(NetworkPrefabRef buildingPrefab, Vector3 pos, Quaternion rot, PlayerRef owner)
+        {
+            _networkManager.RPC_SpawnNetworkObject(buildingPrefab, pos, rot, owner);
+        }
     }
 }

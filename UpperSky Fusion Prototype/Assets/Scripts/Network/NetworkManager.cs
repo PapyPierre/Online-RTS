@@ -15,8 +15,11 @@ namespace Network
         private UIManager _uiManager;
 
         [SerializeField] private NetworkPrefabRef playerPrefab;
-        [HideInInspector] public NetworkRunner runner;
-        [HideInInspector] public List<PlayerController> connectedPlayers = new ();
+        [HideInInspector] public NetworkRunner myRunner;
+
+        [HideInInspector] public List<PlayerController> connectedPlayers = new();
+       // [HideInInspector]
+        public PlayerController thisPlayer;
 
         private bool _mouseButton0;
         private bool _keypad1;
@@ -36,18 +39,19 @@ namespace Network
         private void Start()
         {
             _uiManager = UIManager.Instance;
+            connectedPlayers = new List<PlayerController>();
         }
 
         public async void StartGame(GameMode mode, string roomName)
         {
             // Create the Fusion runner and let it know that we will be providing user input
-            runner = gameObject.AddComponent<NetworkRunner>();
-            runner.ProvideInput = true;
+            myRunner = gameObject.AddComponent<NetworkRunner>();
+            myRunner.ProvideInput = true;
         
             _uiManager.connectionInfoTMP.text = "Is connecting...";
 
             // Start or join (depends on gamemode) a session with a specific name
-            await runner.StartGame(new StartGameArgs() 
+            await myRunner.StartGame(new StartGameArgs() 
                 {
                     GameMode = mode,
                     SessionName = roomName,
@@ -76,10 +80,8 @@ namespace Network
 
                 PlayerController playerController = playerObject.GetComponent<PlayerController>();
                 playerController.MyPlayerRef = player;
-                playerController.PlayerId = player.PlayerId;
-
                 connectedPlayers.Add(playerController);
-                
+
                 if (connectedPlayers.Count == 2)
                 {
                     WorldManager.Instance.CallWorldGeneration(2);
@@ -163,7 +165,7 @@ namespace Network
             PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
         {
             if (networkRunner != null) return networkRunner.Spawn(prefab, position, rotation, owner);
-            else return runner.Spawn(prefab, position, rotation, owner);
+            else return connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
         }
 
      

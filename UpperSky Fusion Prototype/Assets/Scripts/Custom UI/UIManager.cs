@@ -89,28 +89,6 @@ namespace Custom_UI
         
         public void HideInfoboxBuilding() => infoboxBuilding.SetActive(false);
 
-        public void Build(int buildingIndex) // See EntityManager enum "AllBuildings" to know all buildings index
-        {
-            switch (buildingIndex)
-            {
-                case 0 :  
-                    Debug.Log("Exploitation d'orichalque");
-                    break;
-                case 1 : 
-                    Debug.Log("Habitation");
-                    break;
-                case 2 : 
-                    Debug.Log("Foreuse");
-                    break;
-                case 4 : 
-                    Debug.Log("Menuiserie");
-                    break;
-                case 8 : 
-                    Debug.Log("Baliste");
-                    break;
-            }
-        }
-        
         public void UpdateMaterialsTMP(int newValue)
         {
             materialsTMP.text = newValue.ToString();
