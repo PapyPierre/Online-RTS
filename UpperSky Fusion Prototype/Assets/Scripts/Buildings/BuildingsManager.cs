@@ -74,7 +74,7 @@ namespace Buildings
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
-            Debug.Log(allBuildingsPrefab[buildingIndex]);
+              // runner.Spawn(allBuildingsPrefab[buildingIndex], pos, rot, owner);
             _networkManager.RPC_SpawnNetworkObject(allBuildingsPrefab[buildingIndex], pos, rot, owner, runner);
         }
     }

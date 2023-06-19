@@ -16,10 +16,9 @@ namespace Network
 
         [SerializeField] private NetworkPrefabRef playerPrefab;
         [HideInInspector] public NetworkRunner myRunner;
-
+        
         [HideInInspector] public List<PlayerController> connectedPlayers = new();
-       // [HideInInspector]
-        public PlayerController thisPlayer;
+        [HideInInspector] public PlayerController thisPlayer;
 
         private bool _mouseButton0;
         private bool _keypad1;
@@ -160,14 +159,18 @@ namespace Network
         public void OnSceneLoadDone(NetworkRunner runner) { }
         public void OnSceneLoadStart(NetworkRunner runner) { }
         
-        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
             PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
         {
-            return networkRunner != null ? networkRunner.Spawn(prefab, position, rotation, owner) 
-                                         : myRunner.Spawn(prefab, position, rotation, owner);
-        }
 
-     
+
+            if (networkRunner != null)
+            {
+                Debug.Log(networkRunner);
+                return networkRunner.Spawn(prefab, position, rotation, owner);
+            }
+            else return myRunner.Spawn(prefab, position, rotation, owner);
+        }
     }
 }

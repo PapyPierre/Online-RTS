@@ -96,19 +96,20 @@ namespace Player
         
             if (GetInput(out NetworkInputData data))
             {
-                if (!Object.HasInputAuthority) return;
-
                 if (data.mouseLeftButton != 0)
                 {
-                    _buildingsManager.BuildBuilding(
-                        blueprintBuildingIndex,
-                        blueprintPos, blueprintRot,
-                        _networkManager.thisPlayer.MyPlayerRef, 
-                        Runner);
+                    if (hasBlueprintInHand)
+                    {
+                        _buildingsManager.BuildBuilding(
+                            blueprintBuildingIndex,
+                            blueprintPos, blueprintRot,
+                            Object.InputAuthority,
+                            Runner);
                     
-                    hasBlueprintInHand = false;
-                    blueprintBuildingIndex = -1;
-                    data.mouseLeftButton = 0;
+                        hasBlueprintInHand = false;
+                        blueprintBuildingIndex = -1;
+                        data.mouseLeftButton = 0;
+                    }
                 }
                 
                 /*
