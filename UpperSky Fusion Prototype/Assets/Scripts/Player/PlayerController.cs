@@ -1,3 +1,4 @@
+using Buildings;
 using Custom_UI;
 using Fusion;
 using Military_Units;
@@ -13,6 +14,9 @@ namespace Player
         private SelectionManager _selectionManager;
         private UnitsManager _unitsManager;
         private NetworkManager _networkManager;
+        private BuildingsManager _buildingsManager;
+
+        [HideInInspector] public PlayerRessources ressources;
         
       //  [SerializeField, Required()] private NetworkPrefabRef buildingPrefab;
       //  [SerializeField, Required()] private NetworkPrefabRef unitPrefab;
@@ -27,16 +31,21 @@ namespace Player
         [Networked] public PlayerRef MyPlayerRef {get; set; }
         [Networked] private TickTimer Delay { get; set; }
 
-        private void Start()
+        public bool hasBlueprintInHand;
+        public Vector3 blueprintPos;
+        public Quaternion blueprintRot;
+        public int blueprintBuildingIndex;
+        
+        public override void Spawned()
         {
             _selectionManager = SelectionManager.Instance;
             _unitsManager = UnitsManager.Instance;
-        }
-
-        public override void Spawned()
-        {
             _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
+            _buildingsManager = BuildingsManager.Instance;
+
+            ressources = GetComponent<PlayerRessources>();
+
             _uiManager.connectionInfoTMP.text = "Is connected";
             isConnected = true;
 
@@ -81,8 +90,6 @@ namespace Player
 
         public override void FixedUpdateNetwork()
         {
-            return;
-            
             if (!isConnected) return;
             
             //transform.position = cam.transform.position;
@@ -90,14 +97,28 @@ namespace Player
             if (GetInput(out NetworkInputData data))
             {
                 if (!Object.HasInputAuthority) return;
+
+                if (data.mouseLeftButton != 0)
+                {
+                    _buildingsManager.BuildBuilding(
+                        blueprintBuildingIndex,
+                        blueprintPos, blueprintRot,
+                        _networkManager.thisPlayer.MyPlayerRef, 
+                        Runner);
+                    
+                    hasBlueprintInHand = false;
+                    blueprintBuildingIndex = -1;
+                    data.mouseLeftButton = 0;
+                }
                 
+                /*
                 if (data.number1Key != 0)
                 {
                     Vector3 spawnPos = new Vector3(0, UnitsManager.Instance.flyingHeightOfUnits -1, 0);
-               //     _networkManager.RPC_SpawnNetworkObject(
-              //          unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
+                    _networkManager.RPC_SpawnNetworkObject(
+                        unitPrefab, spawnPos, Quaternion.identity, Object.InputAuthority, Runner);
                
-              //       data.number1Key = 0;
+                     data.number1Key = 0;
                 }
                 
                 if (Delay.ExpiredOrNotRunning(Runner))
@@ -109,6 +130,7 @@ namespace Player
                         data.number2Key = 0;
                     }
                 }
+                */
             }
         }
 

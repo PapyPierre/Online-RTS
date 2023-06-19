@@ -27,6 +27,9 @@ namespace Buildings
         [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int MaterialCost { get; private set; }
         
+        [field: SerializeField]
+        public int OrichalqueCost { get; private set; }
+        
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
         public float BuildingTime { get; private set; }
         

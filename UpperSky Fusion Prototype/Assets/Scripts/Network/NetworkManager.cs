@@ -160,12 +160,12 @@ namespace Network
         public void OnSceneLoadDone(NetworkRunner runner) { }
         public void OnSceneLoadStart(NetworkRunner runner) { }
         
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
             PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
         {
-            if (networkRunner != null) return networkRunner.Spawn(prefab, position, rotation, owner);
-            else return connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
+            return networkRunner != null ? networkRunner.Spawn(prefab, position, rotation, owner) 
+                                         : myRunner.Spawn(prefab, position, rotation, owner);
         }
 
      

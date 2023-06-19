@@ -1,7 +1,7 @@
-using System;
 using Custom_UI.InGame_UI;
 using Fusion;
 using Network;
+using Player;
 using UnityEngine;
 
 namespace Buildings
@@ -12,7 +12,10 @@ namespace Buildings
         private NetworkManager _networkManager;
 
         public BuildingIcon[] allBuildingsIcons;
-
+        [SerializeField] private GameObject[] allBuildingsBlueprints;
+        [SerializeField] private NetworkPrefabRef[] allBuildingsPrefab;
+        [SerializeField] private BuildingData[] allBuildingsDatas;
+        
         public enum AllBuildingsEnum
         {
             Foreuse = 0,
@@ -47,14 +50,32 @@ namespace Buildings
             _networkManager = NetworkManager.Instance;
         }
 
-        public void BuildBlueprint(GameObject buildingBlueprint)
+        public void BuildBlueprint(int buildingIndex)
         {
-            Instantiate(buildingBlueprint);
+            PlayerController player = _networkManager.thisPlayer;
+            var playerCurrentMat = player.ressources.CurrentMaterials;
+            var playerCurrentOri = player.ressources.CurrentOrichalque;
+            
+            var buildingMatCost = allBuildingsDatas[buildingIndex].MaterialCost;
+            var buildingOriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
+            
+            // Check if player have enough ressources to build this building
+            if (playerCurrentMat >= buildingMatCost && playerCurrentOri >= buildingOriCost)
+            {
+                Instantiate(allBuildingsBlueprints[buildingIndex]);
+            }
+            else Debug.Log("not enough ressources");
+           
         }
 
-        public void BuildBuilding(NetworkPrefabRef buildingPrefab, Vector3 pos, Quaternion rot, PlayerRef owner)
+        public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, PlayerRef owner, NetworkRunner runner)
         {
-            _networkManager.RPC_SpawnNetworkObject(buildingPrefab, pos, rot, owner);
+            PlayerController player = _networkManager.thisPlayer;
+            player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
+            player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
+            
+            Debug.Log(allBuildingsPrefab[buildingIndex]);
+            _networkManager.RPC_SpawnNetworkObject(allBuildingsPrefab[buildingIndex], pos, rot, owner, runner);
         }
     }
 }

@@ -1,7 +1,7 @@
 using Custom_UI;
 using UnityEngine;
 
-namespace Gameplay
+namespace Player
 {
     public class PlayerRessources : MonoBehaviour
     {
@@ -12,66 +12,67 @@ namespace Gameplay
         [SerializeField] private int playerSupplyAtStart;
         [SerializeField] private int playerMaxSupplyAtStart;
 
-        private int _playerCurrentMaterials;
-        private int _playerCurrentOrichalc;
-        private int _playerCurrentSupply;
-        private int _playerCurrentMaxSupply;
+        // Those vairables are properties define below
+        private int _currentMaterials;
+        private int _currentOrichalque;
+        private int _currentSupply;
+        private int _currentMaxSupply;
 
-        public int PlayerCurrentMaterials
+        public int CurrentMaterials   
         {
-            get => _playerCurrentMaterials;
+            get => _currentMaterials;
 
             set
             {
-                _playerCurrentMaterials = value;
+                _currentMaterials = value;
                 _uiManager.UpdateMaterialsTMP(value);
             }
         }
         
-        public int PlayerCurrentOrichalc
+        public int CurrentOrichalque
         {
-            get => _playerCurrentOrichalc;
+            get => _currentOrichalque;
 
             set
             {
-                _playerCurrentOrichalc = value;
+                _currentOrichalque = value;
                 _uiManager.UpdateOrichalcTMP(value);
             }
         }
         
-        public int PlayerCurrentSupply
+        public int CurrentSupply
         {
-            get => _playerCurrentSupply;
+            get => _currentSupply;
 
             set
             {
-                if (value > PlayerCurrentMaxSupply) Debug.LogError("not enough avaible supply");
+                if (value > CurrentMaxSupply) Debug.LogError("not enough avaible supply");
                 else
                 {
-                    _playerCurrentSupply = value;
-                    _uiManager.UpdateSupplyTMP(value, PlayerCurrentMaxSupply);
+                    _currentSupply = value;
+                    _uiManager.UpdateSupplyTMP(value, CurrentMaxSupply);
                 }
             }
         }
 
-        public int PlayerCurrentMaxSupply
+        public int CurrentMaxSupply
         {
-            get => _playerCurrentMaxSupply;
+            get => _currentMaxSupply;
 
             set
             {
-                _playerCurrentMaxSupply = value;
-                _uiManager.UpdateSupplyTMP(PlayerCurrentSupply, value);
+                _currentMaxSupply = value;
+                _uiManager.UpdateSupplyTMP(CurrentSupply, value);
             }
         }
 
         private void Start()
         {
             _uiManager = UIManager.Instance;
-            PlayerCurrentMaterials = playerMaterialsAtStart;
-            PlayerCurrentOrichalc = playerOrichalcAtStart;
-            PlayerCurrentSupply = playerSupplyAtStart;
-            PlayerCurrentMaxSupply = playerMaxSupplyAtStart;
+            CurrentMaterials = playerMaterialsAtStart;
+            CurrentOrichalque = playerOrichalcAtStart;
+            CurrentSupply = playerSupplyAtStart;
+            CurrentMaxSupply = playerMaxSupplyAtStart;
         }
     }
 }

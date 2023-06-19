@@ -36,7 +36,7 @@ namespace Custom_UI.InGame_UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _uiManager.ShowInfoboxBuilding(data.Name, _isLocked ? data.LockedDescription : data.Description);
+            _uiManager.ShowInfoboxBuilding(data, _isLocked);
         }
 
         public void OnPointerExit(PointerEventData eventData)

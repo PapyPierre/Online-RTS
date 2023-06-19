@@ -1,3 +1,4 @@
+using Buildings;
 using Fusion;
 using NaughtyAttributes;
 using Network;
@@ -25,9 +26,11 @@ namespace Custom_UI
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject techMenu;
 
-        [SerializeField, Required()] private GameObject infoboxBuilding;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxBuildingName;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxBuildingDescription;
+        [SerializeField, Required()] private GameObject buildingInfobox;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxName;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
 
         private void Awake()
         {
@@ -80,14 +83,24 @@ namespace Custom_UI
         public void ShowOrHideBuildMenu() => buildMenu.SetActive(!buildMenu.activeSelf);
         public void ShowOrHideTechMenu() => techMenu.SetActive(!techMenu.activeSelf);
 
-        public void ShowInfoboxBuilding(string buildingName, string buildingDescription)
+        public void ShowInfoboxBuilding(BuildingData buildingData, bool isLocked)
         {
-            infoboxBuilding.SetActive(true);
-            infoboxBuildingName.text = buildingName;
-            infoboxBuildingDescription.text = buildingDescription;
+            buildingInfobox.SetActive(true);
+            infoboxName.text = buildingData.Name;
+            infoboxDescr.text = isLocked ? buildingData.LockedDescription : buildingData.Description;
+            infoboxMatCost.text = buildingData.MaterialCost.ToString();
+            infoboxOriCost.text = buildingData.OrichalqueCost.ToString();
+
+            infoboxMatCost.color = 
+                _networkManager.thisPlayer.ressources.CurrentMaterials
+                >= buildingData.MaterialCost ? Color.white : Color.red;
+
+            infoboxOriCost.color = 
+                _networkManager.thisPlayer.ressources.CurrentOrichalque 
+                >= buildingData.OrichalqueCost ? Color.white : Color.red;
         }
         
-        public void HideInfoboxBuilding() => infoboxBuilding.SetActive(false);
+        public void HideInfoboxBuilding() => buildingInfobox.SetActive(false);
 
         public void UpdateMaterialsTMP(int newValue)
         {

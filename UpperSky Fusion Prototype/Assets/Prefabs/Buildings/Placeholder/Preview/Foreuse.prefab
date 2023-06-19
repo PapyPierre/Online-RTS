@@ -92,9 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8297680352280606113}
-  - component: {fileID: 6298163403965779454}
-  - component: {fileID: 2318281010202773554}
-  - component: {fileID: 2708547821528635465}
+  - component: {fileID: -2480457266456709954}
   m_Layer: 0
   m_Name: Foreuse
   m_TagString: Building
@@ -118,7 +116,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6298163403965779454
+--- !u!114 &-2480457266456709954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,65 +125,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 874426664033387176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: d162b4ec7a3abef4eb0dbe8c620557b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 0
-  AoiPositionSource: {fileID: 0}
-  Flags: 2305
-  NetworkGuid:
-    RawGuidValue: a5e4dfe3bdaf10f4c83bfe382f95ca21
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 2318281010202773554}
-  - {fileID: 2708547821528635465}
-  SimulationBehaviours: []
---- !u!114 &2318281010202773554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874426664033387176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 2
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 5681745997583731884}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
---- !u!114 &2708547821528635465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874426664033387176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ddee19683894c14f96082c8722ec1c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  data: {fileID: 11400000, guid: 8ee1d14010baeb24dada55ada92ccf51, type: 2}
-  currentHealthPoint: 0
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  buildingIndex: 0
 --- !u!1 &6773708421423456172
 GameObject:
   m_ObjectHideFlags: 0

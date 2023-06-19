@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  ressources: {fileID: 0}
   myCam: {fileID: 1824731382511807695}
   minimapIndicator: {fileID: 8541844832713808961}
   isConnected: 0
@@ -117,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b6d9074a064e340b833b8c3693d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaterialsAtStart: 50
-  playerOrichalcAtStart: 0
+  playerMaterialsAtStart: 500
+  playerOrichalcAtStart: 500
   playerSupplyAtStart: 0
   playerMaxSupplyAtStart: 20
 --- !u!1001 &1824731382509784551
