@@ -163,8 +163,7 @@ namespace Network
         public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
             PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
         {
-
-
+            Debug.Log(myRunner.GameMode);
             if (networkRunner != null)
             {
                 Debug.Log(networkRunner);

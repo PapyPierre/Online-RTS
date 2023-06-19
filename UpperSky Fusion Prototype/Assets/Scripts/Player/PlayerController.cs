@@ -54,7 +54,10 @@ namespace Player
                 _networkManager.thisPlayer = this;
                 minimapIndicator.SetActive(true);
             }
-            else myCam.gameObject.SetActive(false);
+            else
+            {
+                gameObject.SetActive(false);
+            }
             
             transform.Rotate(Vector3.up, 180);
         }

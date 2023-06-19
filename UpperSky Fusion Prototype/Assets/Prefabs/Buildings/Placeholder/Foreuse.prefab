@@ -127,7 +127,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874426664033387176}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6, y: 4, z: 6}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  data: {fileID: 11400000, guid: 8ee1d14010baeb24dada55ada92ccf51, type: 2}
+  data: {fileID: 11400000, guid: d20c4df5c56c1a84bbda38e57f57105a, type: 2}
   currentHealthPoint: 0
 --- !u!1 &6773708421423456172
 GameObject:
