@@ -56,7 +56,7 @@ namespace Player
             }
             else
             {
-                gameObject.SetActive(false);
+                myCam.gameObject.SetActive(false);
             }
             
             transform.Rotate(Vector3.up, 180);

@@ -74,7 +74,21 @@ namespace Buildings
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
-            _networkManager.RPC_SpawnNetworkObject(allBuildingsPrefab[buildingIndex], pos, rot, owner, runner);
+            RPC_SpawnNetworkObject(allBuildingsPrefab[buildingIndex], pos, rot, owner);
+        }
+        
+        public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
+            PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
+        {
+            Debug.Log(_networkManager.connectedPlayers[0].Runner.GameMode);
+
+            
+            if (networkRunner != null)
+            {
+                Debug.Log(networkRunner);
+                return networkRunner.Spawn(prefab, position, rotation, owner);
+            }
+            else return _networkManager.connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
         }
     }
 }

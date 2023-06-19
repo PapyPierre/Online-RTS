@@ -169,7 +169,7 @@ namespace Network
                 Debug.Log(networkRunner);
                 return networkRunner.Spawn(prefab, position, rotation, owner);
             }
-            else return myRunner.Spawn(prefab, position, rotation, owner);
+            else return connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
         }
     }
 }
