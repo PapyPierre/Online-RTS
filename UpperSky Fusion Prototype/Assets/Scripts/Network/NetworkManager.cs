@@ -9,7 +9,7 @@ using World;
 
 namespace Network
 {
-    public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
+    public class NetworkManager : NetworkBehaviour, INetworkRunnerCallbacks
     {
         public static NetworkManager Instance;
         private UIManager _uiManager;
@@ -158,18 +158,5 @@ namespace Network
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
         public void OnSceneLoadDone(NetworkRunner runner) { }
         public void OnSceneLoadStart(NetworkRunner runner) { }
-        
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
-            PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
-        {
-            Debug.Log(myRunner.GameMode);
-            if (networkRunner != null)
-            {
-                Debug.Log(networkRunner);
-                return networkRunner.Spawn(prefab, position, rotation, owner);
-            }
-            else return connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
-        }
     }
 }

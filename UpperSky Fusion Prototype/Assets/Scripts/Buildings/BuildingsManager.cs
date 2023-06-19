@@ -13,7 +13,7 @@ namespace Buildings
 
         public BuildingIcon[] allBuildingsIcons;
         [SerializeField] private GameObject[] allBuildingsBlueprints;
-        [SerializeField] private NetworkPrefabRef[] allBuildingsPrefab;
+        [SerializeField] public NetworkPrefabRef[] allBuildingsPrefab;
         [SerializeField] private BuildingData[] allBuildingsDatas;
         
         public enum AllBuildingsEnum
@@ -68,27 +68,13 @@ namespace Buildings
            
         }
 
-        public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, PlayerRef owner, NetworkRunner runner)
+        public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot)
         {
             PlayerController player = _networkManager.thisPlayer;
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
-            RPC_SpawnNetworkObject(allBuildingsPrefab[buildingIndex], pos, rot, owner);
-        }
-        
-        public NetworkObject RPC_SpawnNetworkObject(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
-            PlayerRef owner, NetworkRunner networkRunner = null, RpcInfo info = default)
-        {
-            Debug.Log(_networkManager.connectedPlayers[0].Runner.GameMode);
-
-            
-            if (networkRunner != null)
-            {
-                Debug.Log(networkRunner);
-                return networkRunner.Spawn(prefab, position, rotation, owner);
-            }
-            else return _networkManager.connectedPlayers[0].Runner.Spawn(prefab, position, rotation, owner);
+            _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);
         }
     }
 }

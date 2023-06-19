@@ -38,7 +38,7 @@ namespace World
 
             CheckForReset();
 
-         _worldCenter = _networkManager.RPC_SpawnNetworkObject(
+         _worldCenter = _networkManager.myRunner.Spawn(
              worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
 
             CalculatePlayersPosOnInnerBorder();
@@ -141,8 +141,8 @@ namespace World
 
         private NetworkObject SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerRef owner)
         {
-            NetworkObject islandObject = _networkManager.RPC_SpawnNetworkObject(
-                _worldManager.islandPrefab, position, Quaternion.identity, owner);
+            NetworkObject islandObject = _networkManager.myRunner.Spawn
+                (_worldManager.islandPrefab, position, Quaternion.identity, owner);
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.transform.parent = _worldCenter;
             islandComponent.owner = owner;
