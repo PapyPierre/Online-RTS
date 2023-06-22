@@ -28,7 +28,6 @@ namespace Buildings
             
             if (Physics.Raycast(ray, out _hit, 5000, _buildingsManager.terrainLayer))
             {
-                
                 transform.position = _hit.point;
             }
             
@@ -36,7 +35,7 @@ namespace Buildings
 
             Island island = _hit.collider.GetComponentInParent<Island>();
 
-            if (island.Owner.IsValid != _networkManager.thisPlayer)
+            if (island.Owner != _networkManager.thisPlayer)
             {
                 _isBuildPositionFree = false;
             }
@@ -61,7 +60,7 @@ namespace Buildings
                 }
 
                 island.buildingsCount++;
-                _buildingsManager.BuildBuilding(buildingIndex,  transform.position,  transform.rotation);
+                _buildingsManager.BuildBuilding(buildingIndex, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
 

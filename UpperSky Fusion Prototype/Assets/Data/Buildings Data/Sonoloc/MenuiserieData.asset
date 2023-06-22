@@ -16,16 +16,19 @@ MonoBehaviour:
   <Description>k__BackingField: Build a carpentry allows you to form units using
     wood as the main material
   <StartAsLocked>k__BackingField: 1
-  <LockedDescription>k__BackingField: 
+  <LockedDescription>k__BackingField: Require an residence to be build
   <MaterialCost>k__BackingField: 120
+  <OrichalqueCost>k__BackingField: 0
   <BuildingTime>k__BackingField: 30
   <MaxHealthPoints>k__BackingField: 80
   <ArmorPoints>k__BackingField: 10
   <UnlockedBuildings>k__BackingField: 07000000
   <UnlockedUnits>k__BackingField: []
+  <DoesGenerateRessources>k__BackingField: 0
   <GeneratedMaterialPerSeconds>k__BackingField: 0
-  <GeneratedOrichalcPerSeconds>k__BackingField: 0
+  <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
+  <HasTimingReduction>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0
   <TechResearchBonus>k__BackingField: 0

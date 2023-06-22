@@ -2,6 +2,7 @@ using System.Collections;
 using Custom_UI.MiniMap;
 using Fusion;
 using Network;
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -79,7 +80,7 @@ namespace World
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
            NetworkObject networkObject =  SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius),
-               IslandTypesEnum.Starting, _networkManager.connectedPlayers[0].MyPlayerRef);
+               IslandTypesEnum.Starting, _networkManager.connectedPlayers[0]);
 
            _networkManager.connectedPlayers[0].transform.parent = networkObject.transform;
            _networkManager.connectedPlayers[0].transform.localPosition = new Vector3(0, 5, 0);
@@ -88,7 +89,7 @@ namespace World
             {
                 _worldCenter.Rotate(Vector3.up, angle);
                 NetworkObject networkObject2 = SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                    IslandTypesEnum.Starting, _networkManager.connectedPlayers[i + 1].MyPlayerRef);
+                    IslandTypesEnum.Starting, _networkManager.connectedPlayers[i + 1]);
                 
                 _networkManager.connectedPlayers[i+1].transform.parent = networkObject2.transform;
                 _networkManager.connectedPlayers[i+1].transform.localPosition = new Vector3(0, 5, 0);
@@ -108,7 +109,7 @@ namespace World
                 var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
-                SpawnIsland(pos, IslandTypesEnum.Basic, PlayerRef.None);
+                SpawnIsland(pos, IslandTypesEnum.Basic);
             }
             
             SpawnOtherIslands();
@@ -131,18 +132,22 @@ namespace World
                     foreach (var islandTypes in  _worldManager.islandTypes)
                     {
                         if (!(r >= islandTypes.rarity.x) || !(r <= islandTypes.rarity.y)) continue;
-                        SpawnIsland(NewIslandPos(), islandTypes.type, PlayerRef.None);
+                        SpawnIsland(NewIslandPos(), islandTypes.type);
                         if (islandTypes.type != IslandTypesEnum.Basic) _currentlyPlacedSpecialIslands++;
                     }
                 }
-                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic, PlayerRef.None);
+                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic);
             }
         }
 
-        private NetworkObject SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerRef owner)
+        private NetworkObject SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
-            NetworkObject islandObject = _networkManager.myRunner.Spawn
-                (_worldManager.islandPrefab, position, Quaternion.identity, owner);
+            NetworkObject islandObject = _networkManager.myRunner.Spawn(
+                _worldManager.islandPrefab, 
+                position, 
+                Quaternion.identity,
+                owner != null ? owner.MyPlayerRef : PlayerRef.None);
+            
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.transform.parent = _worldCenter;
             islandComponent.Owner = owner;

@@ -23,7 +23,6 @@ namespace Player
 
         [SerializeField, Required()] private GameObject minimapIndicator;
         
-        
         [Networked] public PlayerRef MyPlayerRef {get; set; }
         [Networked] private TickTimer Delay { get; set; }
 

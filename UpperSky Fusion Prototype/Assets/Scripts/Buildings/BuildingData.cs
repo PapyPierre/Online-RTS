@@ -1,4 +1,3 @@
-using Custom_UI.InGame_UI;
 using Military_Units;
 using NaughtyAttributes;
 using UnityEngine;
@@ -8,7 +7,7 @@ namespace Buildings
     [CreateAssetMenu(fileName = "BuildingData", menuName = "Data/BuildingData", order = 1)]
     public class BuildingData : ScriptableObject
     {
-        /// Main Data Section -------------------------------------------------------------------------
+        /// Main Data Section ------------------------------------------------------------------------------------------
 
         #region Main Data
         
@@ -41,37 +40,55 @@ namespace Buildings
         
         #endregion
         
-        /// Optional Data Section -------------------------------------------------------------------------
+        /// Unlocked Buildigns & Units Section -------------------------------------------------------------------------
 
-        #region Obtional Data
+        #region Unlocked Buildigns & Units
 
-        [field: Header("Optional Data"), SerializeField] 
+        [field: Header("Unlocked Buildigns & Units"), SerializeField] 
         public BuildingsManager.AllBuildingsEnum[] UnlockedBuildings { get; private set; }
         
         [field: SerializeField]
         public BaseUnit[] UnlockedUnits { get; private set; }
         
-        [field: SerializeField]
+        #endregion
+        
+        /// Generated Ressources Section -------------------------------------------------------------------------------
+        
+        #region Generated Ressources
+
+        [field: Header("Generated Ressources"), SerializeField]
+        public bool DoesGenerateRessources { get; private set; }
+        
+        [field: SerializeField, ShowIf("DoesGenerateRessources")]
         public float GeneratedMaterialPerSeconds { get; private set; }
         
-        [field: SerializeField]
-        public float GeneratedOrichalcPerSeconds { get; private set; }
+        [field: SerializeField, ShowIf("DoesGenerateRessources")]
+        public float GeneratedOrichalquePerSeconds { get; private set; }
         
-        [field: SerializeField]
+        [field: SerializeField, ShowIf("DoesGenerateRessources")]
         public int AditionnalMaxSupplies { get; private set; }
         
-        [field: Tooltip("% du temps de formation soustrait"), Range(0,100), SerializeField]
+        #endregion
+        
+        /// Timing Reduction Section -----------------------------------------------------------------------------------
+
+        #region Timing Reduction
+
+        [field: Header("Timing Reduction"),  SerializeField]
+        public bool HasTimingReduction { get; private set; }
+        
+        [field: Tooltip("% du temps de formation soustrait"), Range(0,100), SerializeField, ShowIf("HasTimingReduction")]
         public int UnitFormationBonus { get; private set; }
         
-        [field: Tooltip("% du temps de construction soustrait"), Range(0,100), SerializeField]
+        [field: Tooltip("% du temps de construction soustrait"), Range(0,100), SerializeField, ShowIf("HasTimingReduction")]
         public int BuildingConstructionBonus { get; private set; }
         
-        [field: Tooltip("% du temps de recherche soustrait"), Range(0,100), SerializeField]
+        [field: Tooltip("% du temps de recherche soustrait"), Range(0,100), SerializeField, ShowIf("HasTimingReduction")]
         public int TechResearchBonus { get; private set; }
 
         #endregion
 
-        /// Defense Properties Section -------------------------------------------------------------------------
+        /// Defense Properties Section ---------------------------------------------------------------------------------
 
         #region Defense Properties
 
@@ -101,7 +118,7 @@ namespace Buildings
 
         #endregion
         
-        /// Callback Function For Inspector Purpose -------------------------------------------------------------------------
+        /// Function For Inspector Purpose -----------------------------------------------------------------------------
 
         private bool IntIsGreaterThanZero(int value)
         {

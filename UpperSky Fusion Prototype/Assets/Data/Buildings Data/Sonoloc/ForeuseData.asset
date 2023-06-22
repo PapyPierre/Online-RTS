@@ -24,9 +24,11 @@ MonoBehaviour:
   <ArmorPoints>k__BackingField: 15
   <UnlockedBuildings>k__BackingField: 
   <UnlockedUnits>k__BackingField: []
-  <GeneratedMaterialPerSeconds>k__BackingField: 2
-  <GeneratedOrichalcPerSeconds>k__BackingField: 0
+  <DoesGenerateRessources>k__BackingField: 1
+  <GeneratedMaterialPerSeconds>k__BackingField: 10
+  <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
+  <HasTimingReduction>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0
   <TechResearchBonus>k__BackingField: 0

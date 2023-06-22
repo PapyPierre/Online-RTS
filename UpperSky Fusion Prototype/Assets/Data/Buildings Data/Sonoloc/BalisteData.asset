@@ -15,17 +15,19 @@ MonoBehaviour:
   <Name>k__BackingField: Ballista
   <Description>k__BackingField: Use ballista to protect your islands
   <StartAsLocked>k__BackingField: 1
-  <DescriptionIfLocked>k__BackingField: You need to build first a carpentry in order
-    to build a ballista
+  <LockedDescription>k__BackingField: Require an carpentry to be build
   <MaterialCost>k__BackingField: 90
+  <OrichalqueCost>k__BackingField: 0
   <BuildingTime>k__BackingField: 30
   <MaxHealthPoints>k__BackingField: 80
   <ArmorPoints>k__BackingField: 10
-  <UnlockedBuildings>k__BackingField: []
+  <UnlockedBuildings>k__BackingField: 
   <UnlockedUnits>k__BackingField: []
+  <DoesGenerateRessources>k__BackingField: 0
   <GeneratedMaterialPerSeconds>k__BackingField: 0
-  <GeneratedOrichalcPerSeconds>k__BackingField: 0
+  <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
+  <HasTimingReduction>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0
   <TechResearchBonus>k__BackingField: 0

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 3
+  _Owner: {fileID: 0}
   _NetworkType: 0
   meshRenderer: {fileID: 6381564935541004967}
   buildingsCount: 0

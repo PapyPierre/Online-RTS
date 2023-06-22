@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Fusion;
+using Player;
 using UnityEngine;
 
 namespace World.Island
@@ -8,7 +9,7 @@ namespace World.Island
     public class Island : NetworkBehaviour
     {
         private WorldManager _worldManager;
-        [Networked] public PlayerRef Owner { get; set; }
+        [Networked] public PlayerController Owner { get; set; }
         
         [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum NetworkType { get; set; }
         
