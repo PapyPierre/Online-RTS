@@ -23,16 +23,10 @@ namespace Player
 
         [SerializeField, Required()] private GameObject minimapIndicator;
         
-        [Header("Network")]
-        public bool isConnected;
+        
         [Networked] public PlayerRef MyPlayerRef {get; set; }
         [Networked] private TickTimer Delay { get; set; }
 
-        public bool hasBlueprintInHand;
-        public Vector3 blueprintPos;
-        public Quaternion blueprintRot;
-        public int blueprintBuildingIndex;
-        
         public override void Spawned()
         {
             _selectionManager = SelectionManager.Instance;
@@ -44,7 +38,6 @@ namespace Player
             ressources = GetComponent<PlayerRessources>();
 
             _uiManager.connectionInfoTMP.text = "Is connected - " + Runner.GameMode;
-            isConnected = true;
 
             if (Object.HasInputAuthority)
             {
@@ -57,25 +50,6 @@ namespace Player
             }
             
             transform.Rotate(Vector3.up, 180);
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            if (!isConnected) return;
-            
-            if (GetInput(out NetworkInputData data))
-            {
-                if (data.mouseLeftButton != 0)
-                {
-                    if (hasBlueprintInHand)
-                    {
-                        _buildingsManager.BuildBuilding(blueprintBuildingIndex, blueprintPos, blueprintRot);
-                        hasBlueprintInHand = false;
-                        blueprintBuildingIndex = -1;
-                        data.mouseLeftButton = 0;
-                    }
-                }
-            }
         }
 
         private RaycastHit _hit;

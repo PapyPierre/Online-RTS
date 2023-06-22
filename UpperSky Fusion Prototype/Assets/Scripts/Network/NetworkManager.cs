@@ -91,14 +91,6 @@ namespace Network
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log(player + " left");
-
-            for (var index = 0; index < connectedPlayers.Count; index++)
-            {
-                if (connectedPlayers[index].MyPlayerRef == player)
-                {
-                    connectedPlayers[index].isConnected = true;
-                }
-            }
         }
     
         private void Update()

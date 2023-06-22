@@ -1,6 +1,7 @@
-using Fusion;
+using System;
 using Network;
 using UnityEngine;
+using World.Island;
 
 namespace Buildings
 {
@@ -8,39 +9,67 @@ namespace Buildings
     {
         private BuildingsManager _buildingsManager;
         private NetworkManager _networkManager;
-        
+
         private RaycastHit _hit;
-        private Vector3 _movePoint;
-        [SerializeField] private LayerMask terrainLayer;
+        private bool _isBuildPositionFree = true;
+   
         [SerializeField] private int buildingIndex;
+        [SerializeField] private Renderer[] renderers;
 
         private void Start()
         {        
             _networkManager = NetworkManager.Instance;
             _buildingsManager = BuildingsManager.Instance;
-            _networkManager.thisPlayer.hasBlueprintInHand = true;
-            _networkManager.thisPlayer.blueprintBuildingIndex = buildingIndex;
         }
 
         private void Update()
         {
             Ray ray = _networkManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
-
-            if (Physics.Raycast(ray, out _hit, 5000, terrainLayer))
+            
+            if (Physics.Raycast(ray, out _hit, 5000, _buildingsManager.terrainLayer))
             {
+                
                 transform.position = _hit.point;
             }
+            
+            if (_hit.collider is null) return;
 
-            _networkManager.thisPlayer.blueprintPos = transform.position;
-            _networkManager.thisPlayer.blueprintRot = transform.rotation;
+            Island island = _hit.collider.GetComponentInParent<Island>();
 
+            if (island.Owner.IsValid != _networkManager.thisPlayer)
+            {
+                _isBuildPositionFree = false;
+            }
+            else
+            {
+                _isBuildPositionFree = !Physics.Raycast(ray, out _hit, 5000, _buildingsManager.buildingLayer);
+            }
+            
+            foreach (var renderer in renderers)
+            {
+                renderer.material.color = _isBuildPositionFree ? 
+                    _buildingsManager.BlueprintPossibleBuildColor : _buildingsManager.BlueprintOverlapColor;
+            }
+
+            // Start construction
             if (Input.GetMouseButtonDown(0))
             {
-            //   _buildingsManager.BuildBuilding(buildingIndex, transform.position, transform.rotation, _networkManager.thisPlayer.MyPlayerRef);
-               Destroy(gameObject);
+                if (!_isBuildPositionFree)
+                {
+                    Debug.Log("can't build there");
+                    return;
+                }
+
+                island.buildingsCount++;
+                _buildingsManager.BuildBuilding(buildingIndex,  transform.position,  transform.rotation);
+                Destroy(gameObject);
+            }
+
+            // Cancel construction
+            if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(gameObject);
             }
         }
-        
-        
     }
 }

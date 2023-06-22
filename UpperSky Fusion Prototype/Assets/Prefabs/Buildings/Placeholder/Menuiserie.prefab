@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Menuiserie
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -47,8 +47,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 4, z: 4}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 8.25, y: 5.5, z: 6.5}
+  m_Center: {x: -0.5, y: 2.5, z: 0}
 --- !u!114 &6298163403965779454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681745997583731884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +159,10 @@ PrefabInstance:
     - target: {fileID: 1232766363669618, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
       propertyPath: m_Name
       value: rpgpp_lt_building_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232766363669618, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4998326679312090, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
       propertyPath: m_RootOrder

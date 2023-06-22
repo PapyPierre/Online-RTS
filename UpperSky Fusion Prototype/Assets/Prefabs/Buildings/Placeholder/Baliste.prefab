@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Baliste
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -47,8 +47,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.2012856, z: 2.6740313}
-  m_Center: {x: 0, y: 0.65417874, z: 0.1908403}
+  m_Size: {x: 5, y: 2, z: 5}
+  m_Center: {x: 0, y: 0.7, z: 0.25}
 --- !u!114 &6298163403965779454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681745997583731884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,9 +156,89 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5681745997583731884}
     m_Modifications:
+    - target: {fileID: 102818, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 102920, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 105084, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 130534, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 131184, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 144578, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 149472, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 151238, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 151790, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 153726, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 158868, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 166062, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 166970, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 167964, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
       propertyPath: m_Name
       value: Balista
+      objectReference: {fileID: 0}
+    - target: {fileID: 167964, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 174620, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 190306, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 191642, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 192870, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 193210, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 196862, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 465452, guid: 100af27711b3f4d4ebc48689ce804635, type: 3}
       propertyPath: m_RootOrder

@@ -5252,6 +5252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbf25c7454f0d34da6432ddbeb803b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 256
   allBuildingsIcons:
   - {fileID: 1733122581}
   - {fileID: 762588179}
@@ -5267,21 +5273,6 @@ MonoBehaviour:
   - {fileID: 1126717259}
   - {fileID: 1627609079}
   - {fileID: 737733767}
-  allBuildingsBlueprints:
-  - {fileID: 874426664033387176, guid: a5e4dfe3bdaf10f4c83bfe382f95ca21, type: 3}
-  - {fileID: 874426664033387176, guid: 37578ff957c351d4eaad637cdf627602, type: 3}
-  - {fileID: 874426664033387176, guid: 66b502af91a6b7e44a2a3104da47b622, type: 3}
-  - {fileID: 874426664033387176, guid: fdd5018d6f60f054e8d0582d002c841d, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 874426664033387176, guid: e2e5cc4613a7f4142be5a1eb57e0c0a0, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   allBuildingsPrefab:
   - RawGuidValue: 345b2f476a4940444b3b26a07da1d8db
   - RawGuidValue: ab7fff1f66e71cf4d9d41bd3729cd92b
@@ -5312,6 +5303,25 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  allBuildingsBlueprints:
+  - {fileID: 874426664033387176, guid: a5e4dfe3bdaf10f4c83bfe382f95ca21, type: 3}
+  - {fileID: 874426664033387176, guid: 37578ff957c351d4eaad637cdf627602, type: 3}
+  - {fileID: 874426664033387176, guid: 66b502af91a6b7e44a2a3104da47b622, type: 3}
+  - {fileID: 874426664033387176, guid: fdd5018d6f60f054e8d0582d002c841d, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 874426664033387176, guid: e2e5cc4613a7f4142be5a1eb57e0c0a0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <BlueprintPossibleBuildColor>k__BackingField: {r: 0.17777678, g: 0.8018868, b: 0.21938407,
+    a: 0.78431374}
+  <BlueprintOverlapColor>k__BackingField: {r: 0.9811321, g: 0.31748587, b: 0.31007475,
+    a: 0.78431374}
 --- !u!1 &1370175040
 GameObject:
   m_ObjectHideFlags: 0
@@ -7493,6 +7503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b795f35d9357f1c4080cc7f29f498ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   playerPrefab:
     RawGuidValue: d13326297625af545b1cee88d5105995
   myRunner: {fileID: 0}

@@ -1,3 +1,4 @@
+using Custom_UI;
 using Custom_UI.InGame_UI;
 using Fusion;
 using Network;
@@ -10,12 +11,21 @@ namespace Buildings
     {
         public static BuildingsManager Instance;
         private NetworkManager _networkManager;
+        private UIManager _uiManager;
+        
+        public LayerMask terrainLayer;
+        public LayerMask buildingLayer;
 
+        [Header("Buildings")]
         public BuildingIcon[] allBuildingsIcons;
-        [SerializeField] private GameObject[] allBuildingsBlueprints;
         [SerializeField] public NetworkPrefabRef[] allBuildingsPrefab;
         [SerializeField] private BuildingData[] allBuildingsDatas;
         
+        [Header("Blueprints")]
+        [SerializeField] private GameObject[] allBuildingsBlueprints;
+        [field: SerializeField] public Color BlueprintPossibleBuildColor { get; private set; }
+        [field: SerializeField] public Color BlueprintOverlapColor { get; private set; }
+
         public enum AllBuildingsEnum
         {
             Foreuse = 0,
@@ -48,6 +58,7 @@ namespace Buildings
         private void Start()
         {
             _networkManager = NetworkManager.Instance;
+            _uiManager = UIManager.Instance;
         }
 
         public void BuildBlueprint(int buildingIndex)
@@ -73,6 +84,9 @@ namespace Buildings
             PlayerController player = _networkManager.thisPlayer;
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
+            
+            _uiManager.ShowOrHideBuildMenu();
+            _uiManager.HideInfoboxBuilding();
             
             _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);
         }

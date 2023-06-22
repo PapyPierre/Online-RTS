@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6845920582984790092}
   - component: {fileID: 8845292378811250616}
   - component: {fileID: 1049917155283651097}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8297680352280606113}
   - component: {fileID: -2480457266456709954}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Foreuse
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -128,10 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d162b4ec7a3abef4eb0dbe8c620557b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayer:
-    serializedVersion: 2
-    m_Bits: 128
   buildingIndex: 0
+  renderers:
+  - {fileID: 6684962194024805899}
+  - {fileID: 5228036173145295923}
+  - {fileID: 1171483018958759438}
+  - {fileID: 7435864034095282867}
+  - {fileID: 1049917155283651097}
 --- !u!1 &6773708421423456172
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +146,7 @@ GameObject:
   - component: {fileID: 251842334075851134}
   - component: {fileID: 7743670702464811140}
   - component: {fileID: 1171483018958759438}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +229,7 @@ GameObject:
   - component: {fileID: 5162732007371835998}
   - component: {fileID: 8367915388965848278}
   - component: {fileID: 7435864034095282867}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815021592355223240}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +351,7 @@ GameObject:
   - component: {fileID: 6684962194024805899}
   - component: {fileID: 6617459319157886265}
   - component: {fileID: 5817384745322547048}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2910,7 +2913,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681745997583731884}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2947,7 +2950,7 @@ GameObject:
   - component: {fileID: 5228036173145295923}
   - component: {fileID: 7421675745251951018}
   - component: {fileID: 7237568871776128099}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

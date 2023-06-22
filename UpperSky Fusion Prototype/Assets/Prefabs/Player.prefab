@@ -105,7 +105,6 @@ MonoBehaviour:
   ressources: {fileID: 0}
   myCam: {fileID: 1824731382511807695}
   minimapIndicator: {fileID: 8541844832713808961}
-  isConnected: 0
 --- !u!114 &1998333603904257311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2056488, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 183
+      value: 439
       objectReference: {fileID: 0}
     - target: {fileID: 777893039752422764, guid: 407bd5cbe8c43334bb1b25c0f3826974,
         type: 3}

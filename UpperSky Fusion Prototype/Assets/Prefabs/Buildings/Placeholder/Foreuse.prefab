@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6845920582984790092}
   - component: {fileID: 8845292378811250616}
   - component: {fileID: 1049917155283651097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,11 +92,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8297680352280606113}
-  - component: {fileID: 8743517668235262842}
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
-  m_Layer: 0
+  - component: {fileID: 1149640112879888109}
+  m_Layer: 8
   m_Name: Foreuse
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -119,19 +119,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8743517668235262842
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874426664033387176}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6, y: 4, z: 6}
-  m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &6298163403965779454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +187,19 @@ MonoBehaviour:
   _interpolationDataSource: 0
   data: {fileID: 11400000, guid: d20c4df5c56c1a84bbda38e57f57105a, type: 2}
   currentHealthPoint: 0
+--- !u!135 &1149640112879888109
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6773708421423456172
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 251842334075851134}
   - component: {fileID: 7743670702464811140}
   - component: {fileID: 1171483018958759438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 5162732007371835998}
   - component: {fileID: 8367915388965848278}
   - component: {fileID: 7435864034095282867}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815021592355223240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 6684962194024805899}
   - component: {fileID: 6617459319157886265}
   - component: {fileID: 5817384745322547048}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2978,7 +2978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681745997583731884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3015,7 +3015,7 @@ GameObject:
   - component: {fileID: 5228036173145295923}
   - component: {fileID: 7421675745251951018}
   - component: {fileID: 7237568871776128099}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

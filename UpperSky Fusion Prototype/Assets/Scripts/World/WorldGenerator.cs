@@ -145,8 +145,7 @@ namespace World
                 (_worldManager.islandPrefab, position, Quaternion.identity, owner);
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.transform.parent = _worldCenter;
-            islandComponent.owner = owner;
-            islandComponent.ownerId = owner.PlayerId;
+            islandComponent.Owner = owner;
 
             islandComponent.NetworkType = type;
             _worldManager.allIslands.Add(islandComponent);

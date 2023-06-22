@@ -8,8 +8,7 @@ namespace World.Island
     public class Island : NetworkBehaviour
     {
         private WorldManager _worldManager;
-        [HideInInspector, Networked] public PlayerRef owner { get; set; }
-        [Networked] public int ownerId { get; set; } // For Debug
+        [Networked] public PlayerRef Owner { get; set; }
         
         [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum NetworkType { get; set; }
         
