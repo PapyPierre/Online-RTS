@@ -19,8 +19,8 @@ namespace Buildings
         [SerializeField, ProgressBar("Health", "_maxHealth", EColor.Red)] 
         private int currentHealthPoint;
 
-       [SerializeField] private float _tempMatToGenerate;
-       [SerializeField] private float _tempOrichalqueToGenerate;
+        private float _tempMatToGenerate;
+        private float _tempOrichalqueToGenerate;
         
         private void Awake()
         {
