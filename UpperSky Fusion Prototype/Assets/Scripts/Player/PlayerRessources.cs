@@ -36,7 +36,7 @@ namespace Player
             set
             {
                 _currentOrichalque = value;
-                _uiManager.UpdateOrichalcTMP(value);
+                _uiManager.UpdateOrichalqueTMP(value);
             }
         }
         

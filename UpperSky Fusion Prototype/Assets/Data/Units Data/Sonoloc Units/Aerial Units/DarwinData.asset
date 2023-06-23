@@ -12,24 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376ee65b3fce58a4a9cbce30b070ee7b, type: 3}
   m_Name: DarwinData
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Description>k__BackingField: 
-  <Type>k__BackingField: 0
-  <MaterialCost>k__BackingField: 10
-  <OrichalcCost>k__BackingField: 0
-  <SupplyCost>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 5
-  <AllyUnitsPerceptionRadius>k__BackingField: 0
-  <MaxHealthPoints>k__BackingField: 0
-  <ArmorPoints>k__BackingField: 0
-  <DamagePerShootOnUnits>k__BackingField: 0
-  <DamagePerShootOnBuildings>k__BackingField: 0
-  <DamageRangeOfVariation>k__BackingField: 0
-  <ShootAccuracy>k__BackingField: 0
-  <ArmorPenetration>k__BackingField: 0
-  <ShotPerSeconds>k__BackingField: 0
-  <ShootingRange>k__BackingField: 0
-  <VisionRange>k__BackingField: 0
-  <TargetableUnitType>k__BackingField: 0
+  <Name>k__BackingField: Darwin
+  <Description>k__BackingField: The Darwin is a light reconnaissance vessel
+  <StartAsLocked>k__BackingField: 0
+  <LockedDescription>k__BackingField: 
+  <MaterialCost>k__BackingField: 60
+  <OrichalqueCost>k__BackingField: 5
+  <MaxHealthPoints>k__BackingField: 60
+  <ArmorPoints>k__BackingField: 5
+  <SupplyCost>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 21300000, guid: 448073670b41b7b4db7ca0cdb10d8d82,
+    type: 3}
+  <MovementSpeed>k__BackingField: 10
+  <AllyUnitsPerceptionRadius>k__BackingField: 5
+  <WeatherResistance>k__BackingField: 0.1
+  <DamagePerShootOnUnits>k__BackingField: 6
+  <DamagePerShootOnBuildings>k__BackingField: 2
+  <DamageRangeOfVariation>k__BackingField: 1
+  <ShootAccuracy>k__BackingField: 80
+  <ArmorPenetration>k__BackingField: 5
+  <ShotPerSeconds>k__BackingField: 1
+  <ShootingRange>k__BackingField: 10
+  <VisionRange>k__BackingField: 15
+  <TargetableEntityType>k__BackingField: 2
   <NumberOfTransportableTroops>k__BackingField: 0
-  <TypeOfTransportableTroops>k__BackingField: 0

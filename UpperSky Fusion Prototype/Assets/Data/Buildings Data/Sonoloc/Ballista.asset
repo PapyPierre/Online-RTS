@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: facb2fb0ab48bda4886fd10b24b85513, type: 3}
+  m_Name: Ballista
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Ballista
+  <Description>k__BackingField: The ballista is an effective defense for your island
+    despite its low cost
+  <StartAsLocked>k__BackingField: 1
+  <LockedDescription>k__BackingField: The Baillista requires a carpentry in order
+    to be build
+  <MaterialCost>k__BackingField: 40
+  <OrichalqueCost>k__BackingField: 0
+  <MaxHealthPoints>k__BackingField: 70
+  <ArmorPoints>k__BackingField: 0
+  <ThisBuilding>k__BackingField: 6
+  <BuildingTime>k__BackingField: 5
+  <UnlockedBuildings>k__BackingField: 
+  <IsFormationBuilding>k__BackingField: 0
+  <DoesGenerateRessources>k__BackingField: 0
+  <GeneratedMaterialPerSeconds>k__BackingField: 0
+  <GeneratedOrichalquePerSeconds>k__BackingField: 0
+  <AditionnalMaxSupplies>k__BackingField: 0
+  <HasTimingReduction>k__BackingField: 0
+  <UnitFormationBonus>k__BackingField: 0
+  <BuildingConstructionBonus>k__BackingField: 0
+  <TechResearchBonus>k__BackingField: 0
+  <IsDefenseBuilding>k__BackingField: 1
+  <DamagePerShootOnUnits>k__BackingField: 10
+  <DamageRangeOfVariation>k__BackingField: 3
+  <ShootAccuracy>k__BackingField: 70
+  <ArmorPenetration>k__BackingField: 10
+  <ShotPerSeconds>k__BackingField: 1
+  <ShootingRange>k__BackingField: 10
+  <TargetableType>k__BackingField: 0

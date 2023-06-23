@@ -1,9 +1,16 @@
+using System;
 using Buildings;
+using Custom_UI.InGame_UI;
+using Entity;
+using Entity.Buildings;
+using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Network;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Custom_UI
 {
@@ -11,6 +18,8 @@ namespace Custom_UI
     {
         public static UIManager Instance;
         private NetworkManager _networkManager;
+        private UnitsManager _unitsManager;
+        private BuildingsManager _buildingsManager;
         
         [Header("Main Menu Variables"), Required()] 
         public GameObject mainMenu;
@@ -19,14 +28,19 @@ namespace Custom_UI
 
         [Header("In Game Variables"), Required()]
         public GameObject inGameUI;
-        [Required()] public TextMeshProUGUI materialsTMP;
-        [Required()] public TextMeshProUGUI orichalcTMP;
+        
+        [Required(), Space] public TextMeshProUGUI materialsTMP;
+        [Required()] public TextMeshProUGUI orichalqueTMP;
         [Required()] public TextMeshProUGUI supplyTMP;
 
-        [SerializeField, Required()] private GameObject buildMenu;
+        [SerializeField, Required(), Space] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject techMenu;
+        [SerializeField, Required()] private GameObject formationMenu;
+        [SerializeField, Required()] private GameObject formationQueue;
 
-        [SerializeField, Required()] private GameObject buildingInfobox;
+        [SerializeField, Space] private UnitsIcon[] unitsIconsInMenu;
+
+        [SerializeField, Required(), Space] private GameObject infobox;
         [SerializeField, Required()] private TextMeshProUGUI infoboxName;
         [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
         [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
@@ -46,6 +60,8 @@ namespace Custom_UI
         private void Start()
         {
             _networkManager = NetworkManager.Instance;
+            _unitsManager = UnitsManager.Instance;
+            _buildingsManager = BuildingsManager.Instance;
         }
 
         #region MainMenu Functions
@@ -82,34 +98,53 @@ namespace Custom_UI
         #region InGame Functions
         public void ShowOrHideBuildMenu() => buildMenu.SetActive(!buildMenu.activeSelf);
         public void ShowOrHideTechMenu() => techMenu.SetActive(!techMenu.activeSelf);
-
-        public void ShowInfoboxBuilding(BuildingData buildingData, bool isLocked)
+        public void ShowOrHideFormationMenu(BuildingsManager.AllBuildingsEnum formationBuiling)
         {
-            buildingInfobox.SetActive(true);
-            infoboxName.text = buildingData.Name;
-            infoboxDescr.text = isLocked ? buildingData.LockedDescription : buildingData.Description;
-            infoboxMatCost.text = buildingData.MaterialCost.ToString();
-            infoboxOriCost.text = buildingData.OrichalqueCost.ToString();
+            formationMenu.SetActive(!formationMenu.activeSelf);
+            
+            foreach (var unitsIcon in unitsIconsInMenu) unitsIcon.gameObject.SetActive(false);
+            
+            for (var i = 0; i < _buildingsManager.allBuildingsDatas[(int) formationBuiling].FormableUnits.Length; i++)
+            {          
+                unitsIconsInMenu[i].gameObject.SetActive(true);
+
+                var unit = _buildingsManager.allBuildingsDatas[(int) formationBuiling].FormableUnits[i];
+                        
+                unitsIconsInMenu[i].data = _unitsManager.allUnitsData[(int) unit];
+                unitsIconsInMenu[i].GetComponent<Image>().sprite = _unitsManager.allUnitsData[(int) unit].Icon;
+            }
+        }
+        
+        public void ShowOrHideFormationQueue() => formationQueue.SetActive(!formationQueue.activeSelf);
+
+        public void ShowInfobox(EntityData entityData, bool isLocked)
+        {
+            infobox.SetActive(true);
+            infoboxName.text = entityData.Name;
+            infoboxDescr.text = isLocked ? entityData.LockedDescription : entityData.Description;
+            
+            infoboxMatCost.text = entityData.MaterialCost.ToString();
+            infoboxOriCost.text = entityData.OrichalqueCost.ToString();
 
             infoboxMatCost.color = 
                 _networkManager.thisPlayer.ressources.CurrentMaterials
-                >= buildingData.MaterialCost ? Color.white : Color.red;
+                >= entityData.MaterialCost ? Color.white : Color.red;
 
             infoboxOriCost.color = 
                 _networkManager.thisPlayer.ressources.CurrentOrichalque 
-                >= buildingData.OrichalqueCost ? Color.white : Color.red;
+                >= entityData.OrichalqueCost ? Color.white : Color.red;
         }
-        
-        public void HideInfoboxBuilding() => buildingInfobox.SetActive(false);
+
+        public void HideInfobox() => infobox.SetActive(false);
 
         public void UpdateMaterialsTMP(int newValue)
         {
             materialsTMP.text = newValue.ToString();
         }
         
-        public void UpdateOrichalcTMP(int newValue)
+        public void UpdateOrichalqueTMP(int newValue)
         {
-            orichalcTMP.text = newValue.ToString();
+            orichalqueTMP.text = newValue.ToString();
         }
         
         public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)

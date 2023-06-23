@@ -1,5 +1,7 @@
 using Buildings;
 using Custom_UI;
+using Entity.Buildings;
+using Entity.Military_Units;
 using Fusion;
 using Military_Units;
 using NaughtyAttributes;
