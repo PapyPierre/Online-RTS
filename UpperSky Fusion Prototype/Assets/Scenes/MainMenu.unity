@@ -2634,7 +2634,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 568419548}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1553013406}
+        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
+        m_MethodName: AddUnitToFormationQueue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &568419548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2686,7 +2698,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  mySprite: {fileID: 0}
 --- !u!1 &580816920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,7 +2819,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 588362097}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1553013406}
+        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
+        m_MethodName: AddUnitToFormationQueue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &588362097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2860,7 +2883,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  mySprite: {fileID: 0}
 --- !u!1 &677131666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,14 +3713,14 @@ MonoBehaviour:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
         m_MethodName: ShowOrHideTechMenu
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &820910251
 MonoBehaviour:
@@ -7343,6 +7365,12 @@ MonoBehaviour:
   - {fileID: 568419550}
   - {fileID: 1843368591}
   - {fileID: 588362099}
+  unitsQueueImages:
+  - {fileID: 19128430}
+  - {fileID: 240955582}
+  - {fileID: 2085874930}
+  - {fileID: 361492474}
+  - {fileID: 1416926068}
   infobox: {fileID: 1519838681}
   infoboxName: {fileID: 1404981042}
   infoboxDescr: {fileID: 1733455513}
@@ -7646,14 +7674,14 @@ MonoBehaviour:
       - m_Target: {fileID: 1553013406}
         m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
         m_MethodName: ShowOrHideBuildMenu
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1599099487
 MonoBehaviour:
@@ -8936,7 +8964,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1746649881}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1553013406}
+        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
+        m_MethodName: AddUnitToFormationQueue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1746649881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8988,7 +9028,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  mySprite: {fileID: 0}
 --- !u!1 &1779895686
 GameObject:
   m_ObjectHideFlags: 0
@@ -9409,7 +9448,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1843368589}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1553013406}
+        m_TargetAssemblyTypeName: Custom_UI.UIManager, Assembly-CSharp
+        m_MethodName: AddUnitToFormationQueue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1843368589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9461,7 +9512,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  mySprite: {fileID: 0}
 --- !u!1 &1884712281
 GameObject:
   m_ObjectHideFlags: 0

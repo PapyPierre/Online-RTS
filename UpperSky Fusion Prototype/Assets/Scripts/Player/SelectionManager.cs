@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Buildings;
 using Entity.Buildings;
-using Military_Units;
+using Entity.Military_Units;
 using NaughtyAttributes;
 using Network;
 using UnityEngine;

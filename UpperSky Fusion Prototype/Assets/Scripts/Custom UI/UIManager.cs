@@ -1,5 +1,3 @@
-using System;
-using Buildings;
 using Custom_UI.InGame_UI;
 using Entity;
 using Entity.Buildings;
@@ -8,7 +6,6 @@ using Fusion;
 using NaughtyAttributes;
 using Network;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +36,8 @@ namespace Custom_UI
         [SerializeField, Required()] private GameObject formationQueue;
 
         [SerializeField, Space] private UnitsIcon[] unitsIconsInMenu;
+        [SerializeField] private Image[] unitsQueueImages;
+        private BaseBuilding _currentlyOpenFormationBuilding;
 
         [SerializeField, Required(), Space] private GameObject infobox;
         [SerializeField, Required()] private TextMeshProUGUI infoboxName;
@@ -96,12 +95,38 @@ namespace Custom_UI
         #endregion
 
         #region InGame Functions
-        public void ShowOrHideBuildMenu() => buildMenu.SetActive(!buildMenu.activeSelf);
-        public void ShowOrHideTechMenu() => techMenu.SetActive(!techMenu.activeSelf);
-        public void ShowOrHideFormationMenu(BuildingsManager.AllBuildingsEnum formationBuiling)
+
+        public void HideOpenedUI()
         {
-            formationMenu.SetActive(!formationMenu.activeSelf);
-            
+           ShowOrHideBuildMenu(false);   
+           ShowOrHideTechMenu(false);   
+           ShowOrHideFormationMenu(false);
+           ShowOrHideFormationQueue(false);
+           HideInfobox();
+        }
+        
+        public void ShowOrHideBuildMenu(bool active) => buildMenu.SetActive(active);
+        
+        public void ShowOrHideTechMenu(bool active) => techMenu.SetActive(active);
+
+        public void OpenFormationBuilding(BuildingsManager.AllBuildingsEnum formationBuiling,
+            BaseBuilding buildingInstance)
+        {
+            _currentlyOpenFormationBuilding = buildingInstance;
+            ShowOrHideFormationMenu(true, formationBuiling);
+            ShowOrHideFormationQueue(true);
+        }
+        
+        private void ShowOrHideFormationMenu(bool active, BuildingsManager.AllBuildingsEnum formationBuiling = 0)
+        {
+            formationMenu.SetActive(active);
+
+            if (!active)
+            {
+                _currentlyOpenFormationBuilding = null;
+                return;
+            }
+
             foreach (var unitsIcon in unitsIconsInMenu) unitsIcon.gameObject.SetActive(false);
             
             for (var i = 0; i < _buildingsManager.allBuildingsDatas[(int) formationBuiling].FormableUnits.Length; i++)
@@ -115,7 +140,48 @@ namespace Custom_UI
             }
         }
         
-        public void ShowOrHideFormationQueue() => formationQueue.SetActive(!formationQueue.activeSelf);
+        private void ShowOrHideFormationQueue(bool active)
+        { 
+            formationQueue.SetActive(active);
+            if (active) UpdateFormationQueueDisplay();
+        } 
+        
+        // Call from inspector
+        public void AddUnitToFormationQueue(int buttonIndex)
+        {
+            if (_currentlyOpenFormationBuilding is null)
+            {
+                Debug.LogError("didn't find building to form unit");
+                return;
+            }
+
+            int formationQueueCurrentCount = _currentlyOpenFormationBuilding.FormationQueue.Count;
+
+            if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
+            {
+                var unit = _currentlyOpenFormationBuilding.Data.FormableUnits[buttonIndex];
+                _currentlyOpenFormationBuilding.FormationQueue.Enqueue(unit);
+                UpdateFormationQueueDisplay();
+            }
+        }
+
+        private void UpdateFormationQueueDisplay()
+        {
+            if (_currentlyOpenFormationBuilding is null)
+            {
+                Debug.LogError("didn't find building to update formation queue display");
+                return;
+            }
+            
+            for (int i = 0; i < _currentlyOpenFormationBuilding.FormationQueue.Count; i++)
+            {
+                var queueCopy = _currentlyOpenFormationBuilding.FormationQueue.ToArray();
+                
+                unitsQueueImages[i].sprite = _unitsManager.allUnitsData[(int) queueCopy[i]].Icon;
+                
+                //TODO faire une class custom "FormationQueue" pour éviter de devoir faire une array temporaire ici (conseil de jacques)
+            }
+        }
 
         public void ShowInfobox(EntityData entityData, bool isLocked)
         {

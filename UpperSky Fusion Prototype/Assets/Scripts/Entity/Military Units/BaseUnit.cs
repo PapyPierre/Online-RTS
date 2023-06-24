@@ -1,10 +1,9 @@
-using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Player;
 using UnityEngine;
 
-namespace Military_Units
+namespace Entity.Military_Units
 {
     public class BaseUnit : NetworkBehaviour
     {

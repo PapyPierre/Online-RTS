@@ -1,10 +1,8 @@
-using System;
-using Entity.Buildings;
 using Network;
 using UnityEngine;
 using World.Island;
 
-namespace Buildings
+namespace Entity.Buildings
 {
     public class BuildingsBlueprint : MonoBehaviour
     {

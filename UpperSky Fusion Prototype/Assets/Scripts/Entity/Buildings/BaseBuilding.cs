@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Custom_UI;
+using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Network;
@@ -9,7 +11,7 @@ namespace Entity.Buildings
 {
     public class BaseBuilding : NetworkBehaviour
     {
-        [SerializeField, Expandable] private BuildingData data;
+        [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
         private BuildingsManager _buildingsManager;
         private NetworkManager _networkManager;
         private UIManager _uiManager;
@@ -23,12 +25,14 @@ namespace Entity.Buildings
         private float _tempMatToGenerate;
         private float _tempOrichalqueToGenerate;
 
-       private bool _mouseOverThisBuilding;
+        public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
+        
+        private bool _mouseOverThisBuilding;
         
         private void Awake()
         {
-            _maxHealth = data.MaxHealthPoints;
-            currentHealthPoint = data.MaxHealthPoints;
+            _maxHealth = Data.MaxHealthPoints;
+            currentHealthPoint = Data.MaxHealthPoints;
         }
         
         public override void Spawned()
@@ -52,28 +56,27 @@ namespace Entity.Buildings
 
             if (!PlayerIsOwner()) return;
             
-            if (data.UnlockedBuildings.Length > 0)
+            if (Data.UnlockedBuildings.Length > 0)
             {
                 UnlockBuildings();
             }
             
-            if (data.DoesGenerateRessources)
+            if (Data.DoesGenerateRessources)
             {
                 InvokeRepeating("GenerateRessourcesEachSecond", 1,1);
                 
                 //TODO eventually add a check for game max supply if there's one
-                _myIsland.Owner.ressources.CurrentMaxSupply += data.AditionnalMaxSupplies;
+                _myIsland.Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
         }
 
         private void Update()
         {
-            if (_mouseOverThisBuilding && data.IsFormationBuilding && PlayerIsOwner())
+            if (_mouseOverThisBuilding && Data.IsFormationBuilding && PlayerIsOwner())
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    _uiManager.ShowOrHideFormationMenu(data.ThisBuilding);
-                    _uiManager.ShowOrHideFormationQueue();
+                  _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
                 }
             }
         }
@@ -85,7 +88,7 @@ namespace Entity.Buildings
 
         private void UnlockBuildings()
         {
-            foreach (var building in data.UnlockedBuildings)
+            foreach (var building in Data.UnlockedBuildings)
             {
                 _buildingsManager.allBuildingsIcons[(int) building].Unlock();
             }
@@ -93,8 +96,8 @@ namespace Entity.Buildings
         
         private void GenerateRessourcesEachSecond()
         {
-            _tempMatToGenerate += data.GeneratedMaterialPerSeconds;
-            _tempOrichalqueToGenerate += data.GeneratedOrichalquePerSeconds;
+            _tempMatToGenerate += Data.GeneratedMaterialPerSeconds;
+            _tempOrichalqueToGenerate += Data.GeneratedOrichalquePerSeconds;
 
             if (_tempMatToGenerate >= 1 )
             {

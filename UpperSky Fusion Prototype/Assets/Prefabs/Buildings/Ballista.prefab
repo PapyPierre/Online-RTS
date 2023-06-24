@@ -115,7 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  data: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4,
+    type: 2}
   currentHealthPoint: 0
 --- !u!1 &8510112358408295226
 GameObject:

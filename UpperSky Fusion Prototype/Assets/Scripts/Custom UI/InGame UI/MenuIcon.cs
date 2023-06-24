@@ -11,7 +11,7 @@ namespace Custom_UI.InGame_UI
         protected UIManager UIManager;
         [Expandable] public EntityData data;
 
-        protected bool IsLocked;
+        private bool _isLocked;
         
         protected Button MyBtn;
 
@@ -23,19 +23,19 @@ namespace Custom_UI.InGame_UI
             if (data.StartAsLocked)
             {
                 MyBtn.interactable = false;
-                IsLocked = true;
+                _isLocked = true;
             }
         }
 
         public void Unlock()
         {
             MyBtn.interactable = true;
-            IsLocked = false;
+            _isLocked = false;
         }
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            UIManager.ShowInfobox(data, IsLocked);
+            UIManager.ShowInfobox(data, _isLocked);
         }
 
         public void OnPointerExit(PointerEventData eventData)

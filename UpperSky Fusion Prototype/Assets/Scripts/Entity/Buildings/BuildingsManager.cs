@@ -63,6 +63,7 @@ namespace Entity.Buildings
         public void BuildBlueprint(int buildingIndex)
         {
             PlayerController player = _networkManager.thisPlayer;
+                
             var playerCurrentMat = player.ressources.CurrentMaterials;
             var playerCurrentOri = player.ressources.CurrentOrichalque;
             
@@ -84,7 +85,7 @@ namespace Entity.Buildings
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
-            _uiManager.ShowOrHideBuildMenu();
+            _uiManager.ShowOrHideBuildMenu(false);
             _uiManager.HideInfobox();
             
             _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);

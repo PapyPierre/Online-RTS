@@ -1,9 +1,8 @@
-using Buildings;
+using System;
 using Custom_UI;
 using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
-using Military_Units;
 using NaughtyAttributes;
 using Network;
 using UnityEngine;
@@ -53,24 +52,14 @@ namespace Player
             transform.Rotate(Vector3.up, 180);
         }
 
-        private RaycastHit _hit;
-        public void BuildAtCursorPos()
+        private void Update()
         {
-            Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out _hit, 50000))
+            if (Input.GetMouseButtonDown(1))
             {
-                if (!_hit.collider.CompareTag("Building") &&  !_hit.collider.CompareTag("Unit"))
-                {
-                    Vector3 spawnPos = new Vector3(_hit.point.x, _hit.point.y + 0.5f, _hit.point.z);
-                }
-                else
-                {
-                    Debug.LogWarning("Can't build on another building");
-                }
+                _uiManager.HideOpenedUI();
             }
         }
-        
+
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public void RPC_SpawnNetworkObj(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation,
             RpcInfo info = default)
