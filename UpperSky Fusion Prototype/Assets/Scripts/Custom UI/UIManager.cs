@@ -32,7 +32,6 @@ namespace Custom_UI
         [Required()] public TextMeshProUGUI supplyTMP;
 
         [SerializeField, Required(), Space] private GameObject buildMenu;
-        [SerializeField, Required()] private GameObject techMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField, Required()] private GameObject formationQueue;
 
@@ -100,16 +99,24 @@ namespace Custom_UI
 
         public void HideOpenedUI()
         {
-           ShowOrHideBuildMenu(false);   
-           ShowOrHideTechMenu(false);   
+           ShowOrHideBuildMenu();
            ShowOrHideFormationMenu(false);
            ShowOrHideFormationQueue(false);
            HideInfobox();
         }
-        
-        public void ShowOrHideBuildMenu(bool active) => buildMenu.SetActive(active);
-        
-        public void ShowOrHideTechMenu(bool active) => techMenu.SetActive(active);
+
+        public void ShowOrHideBuildMenu()
+        {
+            buildMenu.SetActive(!buildMenu.activeSelf);
+
+            if (buildMenu.activeSelf)
+            {
+                CurrentlyOpenFormationBuilding = null;
+                ShowOrHideFormationMenu(false);
+                ShowOrHideFormationQueue(false);
+                HideInfobox();
+            }
+        }
 
         public void OpenFormationBuilding(BuildingsManager.AllBuildingsEnum formationBuiling,
             BaseBuilding buildingInstance)

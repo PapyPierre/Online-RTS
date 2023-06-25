@@ -85,7 +85,7 @@ namespace Entity.Buildings
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
-            _uiManager.ShowOrHideBuildMenu(false);
+            _uiManager.ShowOrHideBuildMenu();
             _uiManager.HideInfobox();
             
             _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);
