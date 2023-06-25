@@ -6,11 +6,12 @@ namespace Entity.Military_Units
     [CreateAssetMenu(fileName = "UnitData", menuName = "Data/UnitData", order = 2)]
     public class UnitData : EntityData
     {
-        /// Additional Cost Section -------------------------------------------------------------------------
+        /// Additional Data Section -------------------------------------------------------------------------
 
-        #region Additional Cost
+        #region Additional Data
 
-        [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
+        [field: Header("Additional Data"), SerializeField, 
+                ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int SupplyCost { get; private set; }
         
         [field: SerializeField, Required()]

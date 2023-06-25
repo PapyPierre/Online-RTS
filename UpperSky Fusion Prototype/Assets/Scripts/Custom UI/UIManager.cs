@@ -5,6 +5,7 @@ using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Network;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,8 @@ namespace Custom_UI
 
         [SerializeField, Space] private UnitsIcon[] unitsIconsInMenu;
         [SerializeField] private Image[] unitsQueueImages;
-        private BaseBuilding _currentlyOpenFormationBuilding;
+        [SerializeField] private Slider formationQueueSlider;
+        public BaseBuilding CurrentlyOpenFormationBuilding { get; private set; }
 
         [SerializeField, Required(), Space] private GameObject infobox;
         [SerializeField, Required()] private TextMeshProUGUI infoboxName;
@@ -112,7 +114,7 @@ namespace Custom_UI
         public void OpenFormationBuilding(BuildingsManager.AllBuildingsEnum formationBuiling,
             BaseBuilding buildingInstance)
         {
-            _currentlyOpenFormationBuilding = buildingInstance;
+            CurrentlyOpenFormationBuilding = buildingInstance;
             ShowOrHideFormationMenu(true, formationBuiling);
             ShowOrHideFormationQueue(true);
         }
@@ -123,7 +125,7 @@ namespace Custom_UI
 
             if (!active)
             {
-                _currentlyOpenFormationBuilding = null;
+                CurrentlyOpenFormationBuilding = null;
                 return;
             }
 
@@ -149,37 +151,104 @@ namespace Custom_UI
         // Call from inspector
         public void AddUnitToFormationQueue(int buttonIndex)
         {
-            if (_currentlyOpenFormationBuilding is null)
+            if (CurrentlyOpenFormationBuilding is null)
             {
                 Debug.LogError("didn't find building to form unit");
                 return;
             }
+            
+            PlayerController player = _networkManager.thisPlayer;
+                
+            var playerCurrentMat = player.ressources.CurrentMaterials;
+            var playerCurrentOri = player.ressources.CurrentOrichalque;
+            var playerCurrentSupply = player.ressources.CurrentSupply;
+            var playerCurrentMaxSupply = player.ressources.CurrentMaxSupply;
+            
+            var unit = CurrentlyOpenFormationBuilding.Data.FormableUnits[buttonIndex];
 
-            int formationQueueCurrentCount = _currentlyOpenFormationBuilding.FormationQueue.Count;
+            var unitMatCost = _unitsManager.allUnitsData[(int) unit].MaterialCost;
+            var unitOriCost =_unitsManager.allUnitsData[(int) unit].OrichalqueCost;
+            var unitSupplyCost = _unitsManager.allUnitsData[(int) unit].SupplyCost;
 
-            if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
+            if (unitSupplyCost + playerCurrentSupply > playerCurrentMaxSupply)
             {
-                var unit = _currentlyOpenFormationBuilding.Data.FormableUnits[buttonIndex];
-                _currentlyOpenFormationBuilding.FormationQueue.Enqueue(unit);
-                UpdateFormationQueueDisplay();
+                Debug.Log("not enough available supplies");
+                return;
             }
+            
+            // Check if player have enough ressources to build this building
+            if (playerCurrentMat >= unitMatCost && playerCurrentOri >= unitOriCost)
+            {
+                int formationQueueCurrentCount = CurrentlyOpenFormationBuilding.FormationQueue.Count;
+
+                if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
+                {
+                    player.ressources.CurrentMaterials -= unitMatCost;
+                    player.ressources.CurrentOrichalque -= unitOriCost;
+                    player.ressources.CurrentSupply += unitSupplyCost;
+                    
+                    CurrentlyOpenFormationBuilding.FormationQueue.Enqueue(unit);
+                    if (CurrentlyOpenFormationBuilding.FormationQueue.Count is 1)
+                    {
+                        CurrentlyOpenFormationBuilding.timeLeftToForm =
+                            _unitsManager.allUnitsData[(int) unit].ProductionTime;
+
+                    }
+                    UpdateFormationQueueDisplay();
+                }
+                else Debug.Log("Queue is full");
+            }
+            else Debug.Log("not enough ressources");
         }
 
-        private void UpdateFormationQueueDisplay()
+        public void UpdateFormationQueueDisplay()
         {
-            if (_currentlyOpenFormationBuilding is null)
+            if (CurrentlyOpenFormationBuilding is null)
             {
                 Debug.LogError("didn't find building to update formation queue display");
                 return;
             }
-            
-            for (int i = 0; i < _currentlyOpenFormationBuilding.FormationQueue.Count; i++)
+
+            foreach (var image in unitsQueueImages)
             {
-                var queueCopy = _currentlyOpenFormationBuilding.FormationQueue.ToArray();
+                image.sprite = null; //TODO mettre un sprite par default
+            }
+            
+            for (int i = 0; i < CurrentlyOpenFormationBuilding.FormationQueue.Count; i++)
+            {
+                var queueCopy = CurrentlyOpenFormationBuilding.FormationQueue.ToArray();
                 
                 unitsQueueImages[i].sprite = _unitsManager.allUnitsData[(int) queueCopy[i]].Icon;
                 
                 //TODO faire une class custom "FormationQueue" pour éviter de devoir faire une array temporaire ici (conseil de jacques)
+            }
+            
+            if (CurrentlyOpenFormationBuilding.FormationQueue.Count > 0)
+            {
+                CurrentlyOpenFormationBuilding.UpdateFormationQueueSliderWithNewValue();
+            }
+            else
+            {
+                UpdateFormationQueueSlider(0);
+            }
+        }
+
+        public void UpdateFormationQueueSlider(float newValue)
+        {
+            switch (newValue)
+            {
+                case < 0 or > 1:
+                    Debug.LogError(newValue + "is not in range of " + formationQueueSlider.name);
+                    return;
+                case 0:
+                    formationQueueSlider.value = 0;
+                    break;
+                default:
+                {
+                    var currentValue = formationQueueSlider.value;
+                    formationQueueSlider.value = Mathf.Lerp(currentValue, newValue, 0.5f);
+                    break;
+                }
             }
         }
 

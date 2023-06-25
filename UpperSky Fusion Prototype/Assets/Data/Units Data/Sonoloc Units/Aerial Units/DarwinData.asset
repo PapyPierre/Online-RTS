@@ -18,6 +18,7 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: 
   <MaterialCost>k__BackingField: 60
   <OrichalqueCost>k__BackingField: 5
+  <ProductionTime>k__BackingField: 10
   <MaxHealthPoints>k__BackingField: 60
   <ArmorPoints>k__BackingField: 5
   <SupplyCost>k__BackingField: 1

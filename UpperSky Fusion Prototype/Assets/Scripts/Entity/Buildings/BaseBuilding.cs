@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Custom_UI;
 using Entity.Military_Units;
@@ -15,6 +16,7 @@ namespace Entity.Buildings
         private BuildingsManager _buildingsManager;
         private NetworkManager _networkManager;
         private UIManager _uiManager;
+        private UnitsManager _unitsManager;
 
         private Island _myIsland;
 
@@ -26,7 +28,8 @@ namespace Entity.Buildings
         private float _tempOrichalqueToGenerate;
 
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
-        
+        public float timeLeftToForm;
+
         private bool _mouseOverThisBuilding;
         
         private void Awake()
@@ -40,6 +43,7 @@ namespace Entity.Buildings
             _buildingsManager = BuildingsManager.Instance;
             _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
+            _unitsManager = UnitsManager.Instance;
             
             var pos = transform.position;
             Ray ray = new Ray(new Vector3(pos.x, pos.y + 3, pos.z), -transform.up); 
@@ -68,15 +72,25 @@ namespace Entity.Buildings
                 //TODO eventually add a check for game max supply if there's one
                 _myIsland.Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
+
+            if (Data.IsFormationBuilding) StartCoroutine(CallEveryRealTimeSeconds());
         }
 
         private void Update()
         {
-            if (_mouseOverThisBuilding && Data.IsFormationBuilding && PlayerIsOwner())
+            if (Data.IsFormationBuilding)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (_mouseOverThisBuilding && PlayerIsOwner())
                 {
-                  _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
+                    }
+                }
+
+                if (FormationQueue.Count > 0)
+                {
+                    ManageFormation();
                 }
             }
         }
@@ -114,6 +128,53 @@ namespace Entity.Buildings
             }
         }
 
+        
+        private void ManageFormation()
+        {
+            if (timeLeftToForm <= 0)
+            {
+                timeLeftToForm = 100; // Par sécurité
+                FormFirstUnitInQueue();
+            }
+        }
+
+        private void FormFirstUnitInQueue()
+        {
+            // faire spawn la premier unité dans la queue
+            var prefab = _unitsManager.allUnitsPrefab[(int) FormationQueue.Dequeue()];
+            _networkManager.thisPlayer.RPC_SpawnNetworkObj(prefab, transform.position, Quaternion.identity);
+            if (FormationQueue.Count > 0)
+            {
+                timeLeftToForm = _unitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
+            }
+            _uiManager.UpdateFormationQueueDisplay();
+        }
+
+        private IEnumerator CallEveryRealTimeSeconds()
+        {
+            yield return new WaitForSecondsRealtime(1);
+            timeLeftToForm--;
+
+            if (FormationQueue.Count > 0)
+            {
+                if (_uiManager.CurrentlyOpenFormationBuilding == this)
+                {
+                    UpdateFormationQueueSliderWithNewValue();
+                }
+            }
+            
+            StartCoroutine(CallEveryRealTimeSeconds());
+        }
+
+        public void UpdateFormationQueueSliderWithNewValue()
+        {
+            var totalTimeToRun = _unitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
+            var timeSpendAlready = totalTimeToRun - timeLeftToForm;
+            var timeSpentOnTotalTime = timeSpendAlready / totalTimeToRun;
+            
+            _uiManager.UpdateFormationQueueSlider(timeSpentOnTotalTime);
+        }
+        
         private void OnMouseEnter()
         {
             _mouseOverThisBuilding = true;

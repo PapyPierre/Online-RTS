@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  data: {fileID: 11400000, guid: f4ad3b641a6910942bbb383963029d89, type: 2}
+  data: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046, type: 2}
   currentHealthPoint: 0
   targetPosToMoveTo: {x: 0, y: 0, z: 0}
   selectionCircle: {fileID: 9193866668383929244}

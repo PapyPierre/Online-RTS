@@ -27,6 +27,9 @@ namespace Entity
         [field: SerializeField]
         public int OrichalqueCost { get; private set; }
         
+        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
+        public float ProductionTime { get; private set; }
+        
         [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int MaxHealthPoints { get; private set; }
         

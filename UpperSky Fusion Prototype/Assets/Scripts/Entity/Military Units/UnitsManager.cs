@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 namespace Entity.Military_Units
@@ -7,6 +8,7 @@ namespace Entity.Military_Units
     {
         public static UnitsManager Instance;
 
+        public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
 
         public enum AllUnitsEnum

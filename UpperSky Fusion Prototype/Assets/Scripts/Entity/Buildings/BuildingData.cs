@@ -13,9 +13,6 @@ namespace Entity.Buildings
         
         [field: SerializeField] 
         public BuildingsManager.AllBuildingsEnum ThisBuilding { get; private set; }
-        
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
-        public float BuildingTime { get; private set; }
 
         [field: SerializeField] 
         public BuildingsManager.AllBuildingsEnum[] UnlockedBuildings { get; private set; }
