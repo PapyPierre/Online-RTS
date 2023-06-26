@@ -103,7 +103,7 @@ namespace Player
 
                   if (Physics.Raycast(ray, out hit, 5000))
                   {
-                     unit.MoveTo(hit.point);
+                     unit.OrderToMoveTo(hit.point);
                   }
                }
             }

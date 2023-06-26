@@ -55,7 +55,7 @@ namespace Entity.Military_Units
             if (targetPosIsSet) MoveToPosition();
         }
 
-        public void MoveTo(Vector3 positon)
+        public void OrderToMoveTo(Vector3 positon)
         {
             Vector3 correctedPos = new Vector3(positon.x, _unitsManager.flyingHeightOfUnits, positon.z);
             targetPosToMoveTo = correctedPos;
@@ -67,7 +67,7 @@ namespace Entity.Military_Units
             var step = data.MovementSpeed * Runner.DeltaTime;
             
             Vector3 newPos = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
-           Quaternion newRot = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
+           Quaternion newRot = Quaternion.LookRotation(newPos);
            
            _networkManager.thisPlayer.RPC_MoveNetworkObj(Object, newPos, newRot);
 
