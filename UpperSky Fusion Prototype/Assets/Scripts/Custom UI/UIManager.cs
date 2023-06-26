@@ -210,12 +210,8 @@ namespace Custom_UI
 
         public void UpdateFormationQueueDisplay()
         {
-            if (CurrentlyOpenFormationBuilding is null)
-            {
-                Debug.LogError("didn't find building to update formation queue display");
-                return;
-            }
-
+            if (CurrentlyOpenFormationBuilding is null) return;
+            
             foreach (var image in unitsQueueImages)
             {
                 image.sprite = null; //TODO mettre un sprite par default

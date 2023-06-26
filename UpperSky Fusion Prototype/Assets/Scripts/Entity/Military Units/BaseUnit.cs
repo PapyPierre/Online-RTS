@@ -1,5 +1,6 @@
 using Fusion;
 using NaughtyAttributes;
+using Network;
 using Player;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Entity.Military_Units
     {
         private SelectionManager _selectionManager;
         private UnitsManager _unitsManager;
+        private NetworkManager _networkManager;
         
         [SerializeField, Expandable] private UnitData data;
 
@@ -17,6 +19,7 @@ namespace Entity.Military_Units
         private int currentHealthPoint;
 
         public Vector3 targetPosToMoveTo;
+        public bool targetPosIsSet;
 
         [SerializeField] private GameObject selectionCircle;
         
@@ -24,9 +27,8 @@ namespace Entity.Military_Units
         private Vector3 _separationForce;
         private Vector3 _cohesionForce;
         private Vector3 _alignmentForce;
-        
+
         private Vector3 _velocity;
-        private Vector3 _force;
         #endregion
         
         private void Awake()
@@ -38,102 +40,38 @@ namespace Entity.Military_Units
         private void Start()
         {
             _selectionManager = SelectionManager.Instance;
+            _networkManager = NetworkManager.Instance;
         }
         
         public override void Spawned()
         {
             _unitsManager = UnitsManager.Instance;
             _unitsManager.allActiveUnits.Add(this);
-        }
-        
-        private void Update()
-        {
-            ManageBasicMovement();
-            
-            //  CalculateForces();
-            //  MoveForward();
-        }
-        
-        #region Movement Behaviour
-
-        private void ManageBasicMovement()
-        {
-            if (Vector2.Distance(transform.position, targetPosToMoveTo) < 2) return;
-            
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosToMoveTo, 
-                data.MovementSpeed * Time.deltaTime);
-            
-            transform.rotation = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
+            Debug.Log(Object.InputAuthority);
         }
 
-        private void CalculateForces() 
+        public override void FixedUpdateNetwork()
         {
-            Vector3 seperationSum = Vector3.zero;
-            Vector3 positionSum = Vector3.zero;
-            Vector3 headingSum = Vector3.zero;
-        
-            int unitsNearby = 0;
-
-            foreach (var otherUnit in _unitsManager.allActiveUnits)
-            {
-                // Si l'untié verifié est cette unité, OU que l'unité vérifié n'a pas le même type que cette unité
-                // OU que l'unité vérifié n'appartient pas au même joueur => passé la vérification
-                if (this == otherUnit || otherUnit.Object.InputAuthority != Object.InputAuthority)
-                {
-                    continue;
-                }
-
-                Transform otherUnitTransform = otherUnit.transform;
-                Vector3 otherUnitPos = otherUnitTransform.position;
-
-                float distToOtherUnit = Vector2.Distance(transform.position, otherUnitPos);
-                if (!(distToOtherUnit < data.AllyUnitsPerceptionRadius)) continue;
-                
-                seperationSum += -(otherUnitPos - transform.position) * (1f / Mathf.Max(distToOtherUnit, .0001f));
-                positionSum += otherUnitPos;
-                headingSum +=  otherUnit.transform.forward;
-                    
-                unitsNearby++;
-            }
-        
-            if (unitsNearby > 0) 
-            {
-                _separationForce = seperationSum / unitsNearby;
-                _cohesionForce   = (positionSum / unitsNearby) - transform.position;
-                _alignmentForce  = headingSum / unitsNearby;
-            }
-            else 
-            {
-                _separationForce = Vector3.zero;
-                _cohesionForce   = Vector3.zero;
-                _alignmentForce  = Vector3.zero;
-            }
+            if (targetPosIsSet) MoveToPosition();
         }
-        
-        private void MoveForward()
+
+        public void MoveTo(Vector3 positon)
         {
-            _force = _unitsManager.useWeights switch
-            {
-                true => _separationForce * -_unitsManager.separationWeight + _cohesionForce * _unitsManager.cohesionWeight +
-                        _alignmentForce * _unitsManager.alignmentWeight,
-                false => _separationForce + _cohesionForce + _alignmentForce
-            };
+            Vector3 correctedPos = new Vector3(positon.x, _unitsManager.flyingHeightOfUnits, positon.z);
+            targetPosToMoveTo = correctedPos;
+            targetPosIsSet = true;
+        }
+
+        private void MoveToPosition()
+        {
+            var step = data.MovementSpeed * Runner.DeltaTime;
             
-            Vector3 correctedForce = _force;
-            
-            ApplyVelocity(data.MovementSpeed, correctedForce);
+            Vector3 newPos = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
+           Quaternion newRot = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
+           
+           _networkManager.thisPlayer.RPC_MoveNetworkObj(Object, newPos, newRot);
+
         }
-        
-        private void ApplyVelocity(float speed, Vector3 force)
-        {
-            _velocity = targetPosToMoveTo - transform.position * speed + force * Time.deltaTime;
-            _velocity = _velocity.normalized * speed;
-            transform.position += _velocity * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(_velocity);
-        }
-        #endregion
         
         #region Selection
         private void OnMouseEnter()

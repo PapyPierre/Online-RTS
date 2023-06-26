@@ -11,11 +11,10 @@ namespace Player
    {
       public static SelectionManager Instance;
       private NetworkManager _networkManager;
-      
+
       #region Current Selection Infos
       [Foldout("Current Selection Infos"), ReadOnly] public BaseUnit mouseAboveThisUnit;
       [Foldout("Current Selection Infos"), ReadOnly] public List<BaseUnit> currentlySelectedUnits;
-      [Foldout("Current Selection Infos"), ReadOnly] public BaseBuilding mouseAboveThisBuilding;
       #endregion
 
       private bool _isMajKeyPressed;
@@ -80,10 +79,6 @@ namespace Player
                   }
                }
             }
-            else if (mouseAboveThisBuilding)
-            {
-               //TODO Si le bâtiments à un menu, l'ouvrir
-            }
          }
       }
       
@@ -99,9 +94,18 @@ namespace Player
             {
                //TODO Si l'unité qui est hover est ennemie, l'attaquer
             }
-            else if (mouseAboveThisBuilding)
+            else
             {
-               //TODO Si le bâtiments qui est hover est ennemie, l'attaquer
+               foreach (var unit in currentlySelectedUnits)
+               {        
+                  Ray ray = _networkManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
+                  RaycastHit hit;
+
+                  if (Physics.Raycast(ray, out hit, 5000))
+                  {
+                     unit.MoveTo(hit.point);
+                  }
+               }
             }
          } 
       }

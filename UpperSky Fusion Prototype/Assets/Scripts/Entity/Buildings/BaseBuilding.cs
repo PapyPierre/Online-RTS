@@ -142,11 +142,16 @@ namespace Entity.Buildings
         {
             // faire spawn la premier unité dans la queue
             var prefab = _unitsManager.allUnitsPrefab[(int) FormationQueue.Dequeue()];
-            _networkManager.thisPlayer.RPC_SpawnNetworkObj(prefab, transform.position, Quaternion.identity);
+            
+            Vector3 myPos = transform.position;
+            Vector3 spawnPos = new Vector3(myPos.x, _unitsManager.flyingHeightOfUnits, myPos.z);
+            _networkManager.thisPlayer.RPC_SpawnNetworkObj(prefab, spawnPos, Quaternion.identity);
+            
             if (FormationQueue.Count > 0)
             {
                 timeLeftToForm = _unitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
             }
+            
             _uiManager.UpdateFormationQueueDisplay();
         }
 

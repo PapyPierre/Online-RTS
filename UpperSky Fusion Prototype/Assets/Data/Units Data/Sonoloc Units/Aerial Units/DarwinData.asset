@@ -25,7 +25,7 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: 448073670b41b7b4db7ca0cdb10d8d82,
     type: 3}
   <MovementSpeed>k__BackingField: 10
-  <AllyUnitsPerceptionRadius>k__BackingField: 5
+  <AllyUnitsPerceptionRadius>k__BackingField: 1
   <WeatherResistance>k__BackingField: 0.1
   <DamagePerShootOnUnits>k__BackingField: 6
   <DamagePerShootOnBuildings>k__BackingField: 2

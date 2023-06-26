@@ -42,7 +42,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8950515510027146334}
-  - component: {fileID: 2650081772584040523}
   - component: {fileID: 1195354757100965561}
   - component: {fileID: 7970463162795438652}
   - component: {fileID: 5761484485597290140}
@@ -70,19 +69,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2650081772584040523
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6109549920716369441}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1195354757100965561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +138,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046, type: 2}
   currentHealthPoint: 0
   targetPosToMoveTo: {x: 0, y: 0, z: 0}
+  targetPosIsSet: 0
   selectionCircle: {fileID: 9193866668383929244}
 --- !u!135 &2645220574719709856
 SphereCollider:
@@ -161,10 +148,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6109549920716369441}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9193866668383929244
 GameObject:
@@ -277,6 +264,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de9e2a785b868224d85057d15c437c80,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: de9e2a785b868224d85057d15c437c80,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: de9e2a785b868224d85057d15c437c80,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: de9e2a785b868224d85057d15c437c80,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -324,6 +326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: de9e2a785b868224d85057d15c437c80,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: de9e2a785b868224d85057d15c437c80,
         type: 3}

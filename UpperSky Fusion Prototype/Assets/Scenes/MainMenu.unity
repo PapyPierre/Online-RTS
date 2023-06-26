@@ -6452,11 +6452,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046, type: 2}
   - {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
   allActiveUnits: []
-  useWeights: 0
-  separationWeight: 100
-  cohesionWeight: 14
-  alignmentWeight: 10
-  flyingHeightOfUnits: 0
+  useWeights: 1
+  separationWeight: 20
+  cohesionWeight: 0
+  alignmentWeight: 0
+  unitsPerceptionRadius: 10
+  flyingHeightOfUnits: 10
 --- !u!1 &1333248998
 GameObject:
   m_ObjectHideFlags: 0
@@ -7007,7 +7008,6 @@ MonoBehaviour:
   - {fileID: 874426664033387176, guid: 37578ff957c351d4eaad637cdf627602, type: 3}
   - {fileID: 874426664033387176, guid: 66b502af91a6b7e44a2a3104da47b622, type: 3}
   - {fileID: 874426664033387176, guid: fdd5018d6f60f054e8d0582d002c841d, type: 3}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 874426664033387176, guid: e2e5cc4613a7f4142be5a1eb57e0c0a0, type: 3}
@@ -8231,7 +8231,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseAboveThisUnit: {fileID: 0}
   currentlySelectedUnits: []
-  mouseAboveThisBuilding: {fileID: 0}
 --- !u!4 &1605516538
 Transform:
   m_ObjectHideFlags: 0

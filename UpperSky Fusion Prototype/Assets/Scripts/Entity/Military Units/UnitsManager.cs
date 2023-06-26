@@ -31,7 +31,8 @@ namespace Entity.Military_Units
         public float cohesionWeight;
         public float alignmentWeight;
         
-        [Space] public float flyingHeightOfUnits;
+        public float unitsPerceptionRadius;
+        public float flyingHeightOfUnits;
         #endregion
 
         private void Awake()

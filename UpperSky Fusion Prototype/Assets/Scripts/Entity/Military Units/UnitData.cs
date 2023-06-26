@@ -27,10 +27,7 @@ namespace Entity.Military_Units
         [field: Header("Movement Data"), SerializeField, 
                 ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float MovementSpeed { get; private set; }
-        
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
-        public float AllyUnitsPerceptionRadius { get; private set; }
-        
+
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
         public float WeatherResistance { get; private set; }
 

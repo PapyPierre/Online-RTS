@@ -21,8 +21,6 @@ namespace Network
         [HideInInspector] public PlayerController thisPlayer;
 
         private bool _mouseButton0;
-        private bool _keypad1;
-        private bool _keypad2;
 
         private void Awake()
         {
@@ -99,16 +97,6 @@ namespace Network
             {
                 _mouseButton0 = true;
             }
-            
-            if (Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                _keypad1 = true;
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Keypad2))
-            {
-                _keypad2 = true;
-            }
         }
     
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -120,18 +108,6 @@ namespace Network
                 data.mouseLeftButton = 0b01;
             }
             _mouseButton0 = false;
-
-            if (_keypad1)
-            {
-                data.number1Key = 0b01;
-            }
-            _keypad1 = false;
-            
-            if (_keypad2)
-            {
-                data.number2Key = 0b01;
-            }
-            _keypad2 = false;
 
             input.Set(data);
         }

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 326462534572214549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.9827, y: 1.6079271, z: 8.5177}
+  m_LocalScale: {x: 0.99999994, y: 0.8109784, z: 4.2960105}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5039122611564032700}
@@ -238,7 +238,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8950515510027146334}
-  - component: {fileID: 2650081772584040523}
   - component: {fileID: 1195354757100965561}
   - component: {fileID: 7970463162795438652}
   - component: {fileID: 5761484485597290140}
@@ -266,19 +265,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2650081772584040523
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6109549920716369441}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1195354757100965561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +334,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
   currentHealthPoint: 0
   targetPosToMoveTo: {x: 0, y: 0, z: 0}
+  targetPosIsSet: 0
   selectionCircle: {fileID: 9193866668383929244}
 --- !u!135 &2645220574719709856
 SphereCollider:
@@ -357,10 +344,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6109549920716369441}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6720093931045292201
 GameObject:
