@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326462534572214549}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 0.8109784, z: 4.2960105}
   m_ConstrainProportionsScale: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2921072806240970673}
   m_Father: {fileID: 3917103464985917232}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &2668875017313219621
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -333,7 +333,10 @@ MonoBehaviour:
   _interpolationDataSource: 0
   data: {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
   currentHealthPoint: 0
+  currentPos: {x: 0, y: 0, z: 0}
+  netPos: {x: 0, y: 0, z: 0}
   targetPosToMoveTo: {x: 0, y: 0, z: 0}
+  currentDir: {x: 0, y: 0, z: 0}
   targetPosIsSet: 0
   selectionCircle: {fileID: 9193866668383929244}
 --- !u!135 &2645220574719709856
@@ -344,7 +347,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6109549920716369441}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2
@@ -473,8 +476,8 @@ Transform:
   m_GameObject: {fileID: 9193866668383929244}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.94, y: 4.94, z: 0.49400002}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3917103464985917232}
   m_RootOrder: 1

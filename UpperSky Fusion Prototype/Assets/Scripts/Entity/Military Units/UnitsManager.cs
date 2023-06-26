@@ -30,7 +30,9 @@ namespace Entity.Military_Units
         public float separationWeight;
         public float cohesionWeight;
         public float alignmentWeight;
-        
+
+        public float distToTargetToTryStop;
+        public float distToTargetToStop;
         public float unitsPerceptionRadius;
         public float flyingHeightOfUnits;
         #endregion

@@ -59,8 +59,7 @@ namespace Player
         {
             Runner.Spawn(prefab, position, rotation, Object.InputAuthority);
         }
-        
-        
+
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         public void RPC_MoveNetworkObj(NetworkObject obj, Vector3 newPosition, Quaternion newRotation, 
             RpcInfo info = default)

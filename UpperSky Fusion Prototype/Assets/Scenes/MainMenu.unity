@@ -6453,10 +6453,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
   allActiveUnits: []
   useWeights: 1
-  separationWeight: 20
+  separationWeight: 3000
   cohesionWeight: 0
   alignmentWeight: 0
-  unitsPerceptionRadius: 10
+  distToTargetToTryStop: 3
+  distToTargetToStop: 6
+  unitsPerceptionRadius: 5
   flyingHeightOfUnits: 10
 --- !u!1 &1333248998
 GameObject:
