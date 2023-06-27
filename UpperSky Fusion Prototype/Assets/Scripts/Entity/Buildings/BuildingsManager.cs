@@ -25,6 +25,8 @@ namespace Entity.Buildings
         [SerializeField] private GameObject[] allBuildingsBlueprints;
         [field: SerializeField] public Color BlueprintPossibleBuildColor { get; private set; }
         [field: SerializeField] public Color BlueprintOverlapColor { get; private set; }
+        
+        [HideInInspector] public bool haveBlueprintInHand;
 
         public enum AllBuildingsEnum
         {
@@ -62,6 +64,8 @@ namespace Entity.Buildings
 
         public void BuildBlueprint(int buildingIndex)
         {
+            if (haveBlueprintInHand) return;
+
             PlayerController player = _networkManager.thisPlayer;
                 
             var playerCurrentMat = player.ressources.CurrentMaterials;
@@ -74,9 +78,9 @@ namespace Entity.Buildings
             if (playerCurrentMat >= buildingMatCost && playerCurrentOri >= buildingOriCost)
             {
                 Instantiate(allBuildingsBlueprints[buildingIndex]);
+                haveBlueprintInHand = true;
             }
             else Debug.Log("not enough ressources");
-           
         }
 
         public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot)
@@ -89,6 +93,7 @@ namespace Entity.Buildings
             _uiManager.HideInfobox();
             
             _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);
+            haveBlueprintInHand = false;
         }
     }
 }

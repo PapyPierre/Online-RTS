@@ -12,8 +12,12 @@ namespace Player
     {
         private UIManager _uiManager;
         private NetworkManager _networkManager;
+        private UnitsManager _unitsManager;
         
         [HideInInspector] public PlayerRessources ressources;
+        
+        [HideInInspector] public BaseUnit mouseAboveThisUnit;
+        private bool _isMajKeyPressed;
 
         [Header("Cameras")]
         public Camera myCam;
@@ -27,6 +31,7 @@ namespace Player
         {
             _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
+            _unitsManager = UnitsManager.Instance;
 
             ressources = GetComponent<PlayerRessources>();
 
@@ -47,10 +52,73 @@ namespace Player
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (_networkManager.thisPlayer != this) return;
+            
+            _isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            
+            if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
+       
+            if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
+        } 
+        
+        private void OnLeftButtonClick()
+        {
+         if (_unitsManager.currentlySelectedUnits.Count is 0) // Si aucune unité n'est sélectionné 
+         {
+             if (mouseAboveThisUnit != null)
+             {
+                 if (mouseAboveThisUnit.Owner == this)
+                 {
+                     _unitsManager.SelectUnit(mouseAboveThisUnit);
+                 }
+             }
+         }
+         else // Si au moins une unité est selectionné
+         {
+             if (mouseAboveThisUnit)  // Si la souris hover une unité
             {
-                _uiManager.HideOpenedUI();
+               if (_isMajKeyPressed && mouseAboveThisUnit.Owner == this)
+               {
+                   _unitsManager.SelectUnit(mouseAboveThisUnit);
+               }
+               else
+               {
+                   _unitsManager.UnSelectAllUnits();
+      
+                  if (mouseAboveThisUnit.Owner == this)
+                  {
+                      _unitsManager.SelectUnit(mouseAboveThisUnit);
+                  }
+               }
             }
+         }
+        }
+
+        private void OnRightButtonClick()
+        { 
+            _uiManager.HideOpenedUI();
+            
+            //TODO Si y'a des unités allié selectionné et qu'on clique dans du vide, déplacé les untiés à cette position
+            //TODO Si des unités allié sont selectionné et qu'on clique sur une untié/batiment ennemie, les unités selectionné attaque l'unité cliquer 
+            //TODO Sinon, ne rien faire
+      
+            if (_unitsManager.currentlySelectedUnits.Count > 0) // Si au moins une unité est sélectionné 
+            {
+                if (mouseAboveThisUnit)
+                {
+                    //TODO Si l'unité qui est hover est ennemie, l'attaquer
+                }
+                else
+                {
+                    Ray ray = _networkManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit, 5000))
+                    {
+                        _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits, hit.point);
+                    }
+                }
+            } 
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]

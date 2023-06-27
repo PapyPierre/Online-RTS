@@ -66,6 +66,7 @@ namespace Entity.Buildings
             // Cancel construction
             if (Input.GetMouseButtonDown(1))
             {
+                _buildingsManager.haveBlueprintInHand = false;
                 Destroy(gameObject);
             }
         }

@@ -9,7 +9,7 @@ using World;
 
 namespace Network
 {
-    public class NetworkManager : NetworkBehaviour, INetworkRunnerCallbacks
+    public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         public static NetworkManager Instance;
         private UIManager _uiManager;

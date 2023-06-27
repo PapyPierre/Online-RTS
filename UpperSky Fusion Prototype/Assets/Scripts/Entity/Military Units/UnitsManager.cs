@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Fusion;
+using Network;
 using UnityEngine;
 
 namespace Entity.Military_Units
@@ -7,10 +9,19 @@ namespace Entity.Military_Units
     public class UnitsManager : MonoBehaviour
     {
         public static UnitsManager Instance;
+        private NetworkManager _networkManager;
 
         public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
 
+        [SerializeField] private NetworkPrefabRef unitGroupPrefab;
+
+        [Space] public List<BaseUnit> allActiveUnits;
+        public List<BaseUnit> currentlySelectedUnits;
+        
+        public List<BaseUnit> tempUnitsToMove;
+        public Vector3 tempTargetPos;
+        
         public enum AllUnitsEnum
         {
           Darwin = 0, 
@@ -22,20 +33,8 @@ namespace Entity.Military_Units
           Oppenheimer = 6
         }
         
-        [Header("Units Params")]
-        public List<BaseUnit> allActiveUnits;
-        
-        #region Boids Logic
-        public bool useWeights;
-        public float separationWeight;
-        public float cohesionWeight;
-        public float alignmentWeight;
-
-        public float distToTargetToTryStop;
         public float distToTargetToStop;
-        public float unitsPerceptionRadius;
         public float flyingHeightOfUnits;
-        #endregion
 
         private void Awake()
         {
@@ -46,6 +45,47 @@ namespace Entity.Military_Units
             }
         
             Instance = this;
+        }
+
+        private void Start()
+        {
+            _networkManager = NetworkManager.Instance;
+        }
+
+        public void SelectUnit(BaseUnit unit)
+        {
+            currentlySelectedUnits.Add(unit); 
+            unit.SetActiveSelectionCircle(true);
+        }
+      
+        public void UnSelectAllUnits()
+        {
+            foreach (var unit in currentlySelectedUnits)
+            {
+                unit.SetActiveSelectionCircle(false);
+            }
+      
+            currentlySelectedUnits.Clear();
+        }
+        
+        public void OrderToMoveUnitsTo(List<BaseUnit> unitsToMove, Vector3 positon)
+        {
+            Vector3 correctedPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
+            var targetPosToMoveTo = correctedPos;
+
+            var selectedUnitsCenter = Vector3.zero;
+
+            foreach (var unit in  unitsToMove)
+            {
+                selectedUnitsCenter += unit.transform.position;
+            }
+
+            selectedUnitsCenter /= unitsToMove.Count;
+     
+            tempTargetPos = targetPosToMoveTo;
+            tempUnitsToMove = unitsToMove;
+            
+            _networkManager.thisPlayer.RPC_SpawnNetworkObj(unitGroupPrefab, selectedUnitsCenter, Quaternion.identity);
         }
     }
 }

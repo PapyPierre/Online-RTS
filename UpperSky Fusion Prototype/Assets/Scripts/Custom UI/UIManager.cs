@@ -98,8 +98,8 @@ namespace Custom_UI
         #region InGame Functions
 
         public void HideOpenedUI()
-        {
-           ShowOrHideBuildMenu();
+        { 
+            if (buildMenu.activeSelf) ShowOrHideBuildMenu();
            ShowOrHideFormationMenu(false);
            ShowOrHideFormationQueue(false);
            HideInfobox();

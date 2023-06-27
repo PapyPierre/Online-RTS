@@ -85,6 +85,7 @@ namespace Entity.Buildings
                     if (Input.GetMouseButtonDown(0))
                     {
                         _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
+                        _unitsManager.UnSelectAllUnits();
                     }
                 }
 
@@ -128,7 +129,6 @@ namespace Entity.Buildings
             }
         }
 
-        
         private void ManageFormation()
         {
             if (timeLeftToForm <= 0)
@@ -188,11 +188,6 @@ namespace Entity.Buildings
         private void OnMouseExit()
         {
             _mouseOverThisBuilding = false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawRay(transform.position, -transform.up * 10);
         }
     }
 }
