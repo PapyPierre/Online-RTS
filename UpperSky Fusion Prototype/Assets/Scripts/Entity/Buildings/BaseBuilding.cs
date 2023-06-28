@@ -4,7 +4,6 @@ using Custom_UI;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
-using Network;
 using UnityEngine;
 using World.Island;
 
@@ -14,7 +13,7 @@ namespace Entity.Buildings
     {
         [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
         private BuildingsManager _buildingsManager;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
         private UIManager _uiManager;
         private UnitsManager _unitsManager;
 
@@ -41,7 +40,7 @@ namespace Entity.Buildings
         public override void Spawned()
         {
             _buildingsManager = BuildingsManager.Instance;
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
             _uiManager = UIManager.Instance;
             _unitsManager = UnitsManager.Instance;
             
@@ -98,7 +97,7 @@ namespace Entity.Buildings
 
         private bool PlayerIsOwner()
         {
-            return _myIsland.Owner == _networkManager.thisPlayer;
+            return _myIsland.Owner == _gameManager.thisPlayer;
         }
 
         private void UnlockBuildings()
@@ -145,7 +144,7 @@ namespace Entity.Buildings
             
             Vector3 myPos = transform.position;
             Vector3 spawnPos = new Vector3(myPos.x, _unitsManager.flyingHeightOfUnits, myPos.z);
-            _networkManager.thisPlayer.RPC_SpawnNetworkObj(prefab, spawnPos, Quaternion.identity);
+            _gameManager.thisPlayer.Runner.Spawn(prefab, spawnPos, Quaternion.identity,  _gameManager.thisPlayer.Object.StateAuthority);
             
             if (FormationQueue.Count > 0)
             {

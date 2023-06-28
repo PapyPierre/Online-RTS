@@ -282,7 +282,8 @@ public class NetworkDebugStart : Fusion.Behaviour {
   }
 
   [BehaviourButtonAction("Start Shared Client", true, false, conditionMember: nameof(IsShutdown))]
-  public virtual void StartSharedClient() {
+  public virtual void StartSharedClient()
+  {
     if (TryGetSceneRef(out var sceneRef)) {
       StartCoroutine(StartWithClients(GameMode.Shared, sceneRef, 1));
     }

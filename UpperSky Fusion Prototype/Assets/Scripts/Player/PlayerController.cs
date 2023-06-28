@@ -1,18 +1,22 @@
 using Custom_UI;
-using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
-using Network;
 using UnityEngine;
+using World;
 
 namespace Player
 {
     public class PlayerController : NetworkBehaviour
     {
         private UIManager _uiManager;
-        private NetworkManager _networkManager;
         private UnitsManager _unitsManager;
+        private GameManager _gameManager;
+        private WorldManager _worldManager;
+
+        [Networked] private bool HasBeenTpToStartingIsland{ get; set; }
+
+        public int playerId; // = à index dans ConnectedPlayers + 1 
         
         [HideInInspector] public PlayerRessources ressources;
         
@@ -23,41 +27,41 @@ namespace Player
         public Camera myCam;
 
         [SerializeField, Required()] private GameObject minimapIndicator;
-        
-        [Networked] public PlayerRef MyPlayerRef {get; set; }
-        [Networked] private TickTimer Delay { get; set; }
 
         public override void Spawned()
         {
-            _networkManager = NetworkManager.Instance;
             _uiManager = UIManager.Instance;
             _unitsManager = UnitsManager.Instance;
-
+            _gameManager = GameManager.Instance;
+            _worldManager = WorldManager.Instance;
+            
             ressources = GetComponent<PlayerRessources>();
-
-            _uiManager.connectionInfoTMP.text = "Is connected - " + Runner.GameMode;
+            
+            _gameManager.ConnectPlayer(this);
 
             if (Object.HasInputAuthority)
-            {
-                _networkManager.thisPlayer = this;
+            {        
+                _uiManager.connectionInfoTMP.text = 
+                    "Player " + playerId + " connected in " + Runner.GameMode + " Mode";
+                
                 minimapIndicator.SetActive(true);
             }
-            else
-            {
-                myCam.gameObject.SetActive(false);
-            }
+            else myCam.gameObject.SetActive(false);
             
             transform.Rotate(Vector3.up, 180);
         }
 
         private void Update()
         {
-            if (_networkManager.thisPlayer != this) return;
+            if (!Object.HasInputAuthority) return;
             
+            if (_gameManager.connectedPlayers[^1].HasBeenTpToStartingIsland
+                && !HasBeenTpToStartingIsland && HasStateAuthority) TeleportToStartingIsland();
+
             _isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
             if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
-       
+            
             if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
         } 
         
@@ -110,7 +114,7 @@ namespace Player
                 }
                 else
                 {
-                    Ray ray = _networkManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
+                    Ray ray = myCam.ScreenPointToRay((Input.mousePosition));
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, 5000))
@@ -121,19 +125,18 @@ namespace Player
             } 
         }
 
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_SpawnNetworkObj(NetworkPrefabRef prefab, Vector3 position, Quaternion rotation, 
-            RpcInfo info = default)
+        public void TeleportToStartingIsland()
         {
-            Runner.Spawn(prefab, position, rotation, Object.InputAuthority);
-        }
-
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        public void RPC_MoveNetworkObj(NetworkObject obj, Vector3 newPosition, Quaternion newRotation, 
-            RpcInfo info = default)
-        {
-            obj.transform.position = Vector3.Lerp(obj.transform.position,newPosition, 0.5f);
-            obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, newRotation, 0.5f);
+            foreach (var island in _worldManager.allIslands)
+            {
+                if (island.Owner == this)
+                {
+                    var islandPos = island.transform.position;
+                    transform.position = new Vector3(islandPos.x, 10, islandPos.z);
+                    HasBeenTpToStartingIsland = true;
+                    break;
+                }
+            }
         }
         
         private void OnDrawGizmos()

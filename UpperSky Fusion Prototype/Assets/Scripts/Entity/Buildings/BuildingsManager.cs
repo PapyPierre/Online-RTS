@@ -1,7 +1,6 @@
 using Custom_UI;
 using Custom_UI.InGame_UI;
 using Fusion;
-using Network;
 using Player;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Entity.Buildings
     public class BuildingsManager : MonoBehaviour
     {
         public static BuildingsManager Instance;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
         private UIManager _uiManager;
         
         public LayerMask terrainLayer;
@@ -58,7 +57,7 @@ namespace Entity.Buildings
 
         private void Start()
         {
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
             _uiManager = UIManager.Instance;
         }
 
@@ -66,7 +65,7 @@ namespace Entity.Buildings
         {
             if (haveBlueprintInHand) return;
 
-            PlayerController player = _networkManager.thisPlayer;
+            PlayerController player = _gameManager.thisPlayer;
                 
             var playerCurrentMat = player.ressources.CurrentMaterials;
             var playerCurrentOri = player.ressources.CurrentOrichalque;
@@ -85,14 +84,16 @@ namespace Entity.Buildings
 
         public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot)
         {
-            PlayerController player = _networkManager.thisPlayer;
+            PlayerController player = _gameManager.thisPlayer;
             player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
             player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
             
             _uiManager.ShowOrHideBuildMenu();
             _uiManager.HideInfobox();
             
-            _networkManager.thisPlayer.RPC_SpawnNetworkObj(allBuildingsPrefab[buildingIndex], pos, rot);
+            _gameManager.thisPlayer.Runner.Spawn
+                (allBuildingsPrefab[buildingIndex], pos, rot, _gameManager.thisPlayer.Object.InputAuthority);
+            
             haveBlueprintInHand = false;
         }
     }

@@ -1,4 +1,3 @@
-using Network;
 using UnityEngine;
 using World.Island;
 
@@ -7,7 +6,7 @@ namespace Entity.Buildings
     public class BuildingsBlueprint : MonoBehaviour
     {
         private BuildingsManager _buildingsManager;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
 
         private RaycastHit _hit;
         private bool _isBuildPositionFree = true;
@@ -17,13 +16,13 @@ namespace Entity.Buildings
 
         private void Start()
         {        
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
             _buildingsManager = BuildingsManager.Instance;
         }
 
         private void Update()
         {
-            Ray ray = _networkManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
+            Ray ray = _gameManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
             
             if (Physics.Raycast(ray, out _hit, 5000, _buildingsManager.terrainLayer))
             {
@@ -34,7 +33,7 @@ namespace Entity.Buildings
 
             Island island = _hit.collider.GetComponentInParent<Island>();
 
-            if (island.Owner != _networkManager.thisPlayer)
+            if (island.Owner != _gameManager.thisPlayer)
             {
                 _isBuildPositionFree = false;
             }

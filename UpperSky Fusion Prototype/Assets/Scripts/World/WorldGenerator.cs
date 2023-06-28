@@ -1,7 +1,4 @@
-using System.Collections;
-using Custom_UI.MiniMap;
 using Fusion;
-using Network;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -13,7 +10,7 @@ namespace World
     public class WorldGenerator : MonoBehaviour
     {
         private WorldManager _worldManager;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
 
         [SerializeField] private NetworkPrefabRef worldCenterPrefab;
         private Transform _worldCenter;
@@ -26,7 +23,7 @@ namespace World
         private void Start()
         {
             _worldManager = GetComponent<WorldManager>();
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
         }
         
         public void GenerateWorld(int nbOfPlayers)
@@ -39,7 +36,7 @@ namespace World
 
             CheckForReset();
 
-         _worldCenter = _networkManager.myRunner.Spawn(
+         _worldCenter = _gameManager.thisPlayer.Runner.Spawn(
              worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
 
             CalculatePlayersPosOnInnerBorder();
@@ -79,22 +76,16 @@ namespace World
 
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
-           NetworkObject networkObject =  SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius),
-               IslandTypesEnum.Starting, _networkManager.connectedPlayers[0]);
-
-           _networkManager.connectedPlayers[0].transform.parent = networkObject.transform;
-           _networkManager.connectedPlayers[0].transform.localPosition = new Vector3(0, 5, 0);
+           SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
+               IslandTypesEnum.Starting, _gameManager.connectedPlayers[0]);
            
-            for (int i = 0; i < _numberOfPlayers -1; i++)
-            {
+           for (int i = 0; i < _numberOfPlayers -1; i++) 
+           {
                 _worldCenter.Rotate(Vector3.up, angle);
-                NetworkObject networkObject2 = SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                    IslandTypesEnum.Starting, _networkManager.connectedPlayers[i + 1]);
                 
-                _networkManager.connectedPlayers[i+1].transform.parent = networkObject2.transform;
-                _networkManager.connectedPlayers[i+1].transform.localPosition = new Vector3(0, 5, 0);
-
-            }
+              SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
+                  IslandTypesEnum.Starting, _gameManager.connectedPlayers[i + 1]);
+           }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
             transform.Rotate(Vector3.up, Random.Range(0,359));
@@ -138,22 +129,22 @@ namespace World
                 }
                 else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic);
             }
+
+            _gameManager.thisPlayer.TeleportToStartingIsland(); // Other players teleport themselves later
         }
 
         private NetworkObject SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
-            NetworkObject islandObject = _networkManager.myRunner.Spawn(
+            NetworkObject islandObject = _gameManager.thisPlayer.Runner.Spawn(
                 _worldManager.islandPrefab, 
                 position, 
                 Quaternion.identity,
-                owner != null ? owner.MyPlayerRef : PlayerRef.None);
+                owner != null ? owner.Object.StateAuthority : PlayerRef.None);
             
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.transform.parent = _worldCenter;
             islandComponent.Owner = owner;
-
-            islandComponent.NetworkType = type;
-            _worldManager.allIslands.Add(islandComponent);
+            islandComponent.Type = type;
 
             return islandObject;
         }

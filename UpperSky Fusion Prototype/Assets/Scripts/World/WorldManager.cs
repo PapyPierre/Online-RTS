@@ -24,6 +24,7 @@ namespace World
         [HideInInspector] public List<Island.Island> allIslands = new();
         public Dictionary<PlayerRef, int> PlayersIslandsCount;
 
+
         private void Awake()
         {
             if (Instance != null)

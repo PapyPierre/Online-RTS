@@ -134,7 +134,7 @@ MonoBehaviour:
   ObjectInterest: 1
   DefaultInterestGroups: []
   DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 0
+  AllowStateAuthorityOverride: 1
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
@@ -188,6 +188,7 @@ MonoBehaviour:
   <Data>k__BackingField: {fileID: 11400000, guid: d1e579db73ece624e8c1adc55e857c9f,
     type: 2}
   currentHealthPoint: 0
+  timeLeftToForm: 0
 --- !u!135 &1149640112879888109
 SphereCollider:
   m_ObjectHideFlags: 0

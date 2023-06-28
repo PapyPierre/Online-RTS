@@ -2,9 +2,7 @@ using Custom_UI.InGame_UI;
 using Entity;
 using Entity.Buildings;
 using Entity.Military_Units;
-using Fusion;
 using NaughtyAttributes;
-using Network;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -15,9 +13,9 @@ namespace Custom_UI
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance;
-        private NetworkManager _networkManager;
         private UnitsManager _unitsManager;
         private BuildingsManager _buildingsManager;
+        private GameManager _gameManager;
         
         [Header("Main Menu Variables"), Required()] 
         public GameObject mainMenu;
@@ -46,6 +44,8 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
         [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
 
+        public PlayerSpawner PlayerSpawner;
+
         private void Awake()
         {
             if (Instance != null)
@@ -59,17 +59,19 @@ namespace Custom_UI
 
         private void Start()
         {
-            _networkManager = NetworkManager.Instance;
             _unitsManager = UnitsManager.Instance;
             _buildingsManager = BuildingsManager.Instance;
+            _gameManager = GameManager.Instance;
         }
 
         #region MainMenu Functions
-        public void StartGameAsHost()
+        public void JoinGame()
         {
-            if (inputFieldRoomName.text.Length > 0)
+            if ( inputFieldRoomName.text.Length > 0)
             {
-                _networkManager.StartGame(GameMode.Host, inputFieldRoomName.text);
+                PlayerSpawner.SpawnPlayers(inputFieldRoomName.text);
+                mainMenu.SetActive(false);
+                inGameUI.SetActive(true);
             }
             else
             {
@@ -77,22 +79,7 @@ namespace Custom_UI
             }
         }
 
-        public void StartGameAsClient()
-        { 
-            if (inputFieldRoomName.text.Length > 0)
-            {
-                _networkManager.StartGame(GameMode.Client, inputFieldRoomName.text);
-            }
-            else
-            {
-                Debug.Log("Need a room name");
-            }
-        }
-
-        public void QuitGame()
-        {
-            Application.Quit();
-        }
+        public void QuitGame() => Application.Quit();
         #endregion
 
         #region InGame Functions
@@ -164,7 +151,7 @@ namespace Custom_UI
                 return;
             }
             
-            PlayerController player = _networkManager.thisPlayer;
+            PlayerController player = _gameManager.thisPlayer;
                 
             var playerCurrentMat = player.ressources.CurrentMaterials;
             var playerCurrentOri = player.ressources.CurrentOrichalque;
@@ -265,11 +252,11 @@ namespace Custom_UI
             infoboxOriCost.text = entityData.OrichalqueCost.ToString();
 
             infoboxMatCost.color = 
-                _networkManager.thisPlayer.ressources.CurrentMaterials
+                _gameManager.thisPlayer.ressources.CurrentMaterials
                 >= entityData.MaterialCost ? Color.white : Color.red;
 
             infoboxOriCost.color = 
-                _networkManager.thisPlayer.ressources.CurrentOrichalque 
+                _gameManager.thisPlayer.ressources.CurrentOrichalque 
                 >= entityData.OrichalqueCost ? Color.white : Color.red;
         }
 

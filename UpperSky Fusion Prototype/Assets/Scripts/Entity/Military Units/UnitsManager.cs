@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Fusion;
-using Network;
 using UnityEngine;
 
 namespace Entity.Military_Units
@@ -9,7 +7,7 @@ namespace Entity.Military_Units
     public class UnitsManager : MonoBehaviour
     {
         public static UnitsManager Instance;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
 
         public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
@@ -18,10 +16,7 @@ namespace Entity.Military_Units
 
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
-        
-        public List<BaseUnit> tempUnitsToMove;
-        public Vector3 tempTargetPos;
-        
+
         public enum AllUnitsEnum
         {
           Darwin = 0, 
@@ -49,7 +44,7 @@ namespace Entity.Military_Units
 
         private void Start()
         {
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
         }
 
         public void SelectUnit(BaseUnit unit)
@@ -70,8 +65,7 @@ namespace Entity.Military_Units
         
         public void OrderToMoveUnitsTo(List<BaseUnit> unitsToMove, Vector3 positon)
         {
-            Vector3 correctedPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
-            var targetPosToMoveTo = correctedPos;
+            Vector3 targetPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
 
             var selectedUnitsCenter = Vector3.zero;
 
@@ -81,11 +75,11 @@ namespace Entity.Military_Units
             }
 
             selectedUnitsCenter /= unitsToMove.Count;
-     
-            tempTargetPos = targetPosToMoveTo;
-            tempUnitsToMove = unitsToMove;
+
+            var netObj = _gameManager.thisPlayer.Runner.Spawn(unitGroupPrefab, selectedUnitsCenter, Quaternion.identity, 
+                _gameManager.thisPlayer.Object.StateAuthority);
             
-            _networkManager.thisPlayer.RPC_SpawnNetworkObj(unitGroupPrefab, selectedUnitsCenter, Quaternion.identity);
+            netObj.GetComponent<UnitGroup>().Init(targetPos, unitsToMove);
         }
     }
 }

@@ -1,6 +1,5 @@
 using Fusion;
 using NaughtyAttributes;
-using Network;
 using Player;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace Entity.Military_Units
     public class BaseUnit : NetworkBehaviour
     {
         private UnitsManager _unitsManager;
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
         
         public PlayerController Owner { get; private set; }
         
@@ -30,19 +29,19 @@ namespace Entity.Military_Units
 
         public override void Spawned()
         {
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
             _unitsManager.allActiveUnits.Add(this);
 
-            if (Object.HasInputAuthority) Owner = _networkManager.thisPlayer;
+            if (Object.HasInputAuthority) Owner = _gameManager.thisPlayer;
         }
 
         #region Selection
         private void OnMouseEnter()
         {
-            _networkManager.thisPlayer.mouseAboveThisUnit = this;
+            _gameManager.thisPlayer.mouseAboveThisUnit = this;
         
-            if (Owner == _networkManager.thisPlayer)
+            if (Owner == _gameManager.thisPlayer)
             {
                 SetActiveSelectionCircle(true);
             }
@@ -50,9 +49,9 @@ namespace Entity.Military_Units
         
         private void OnMouseExit()
         {
-            _networkManager.thisPlayer.mouseAboveThisUnit = null;
+            _gameManager.thisPlayer.mouseAboveThisUnit = null;
         
-            if (!_unitsManager.currentlySelectedUnits.Contains(this) && Owner == _networkManager.thisPlayer)
+            if (!_unitsManager.currentlySelectedUnits.Contains(this) && Owner == _gameManager.thisPlayer)
             {
                 SetActiveSelectionCircle(false);
             }

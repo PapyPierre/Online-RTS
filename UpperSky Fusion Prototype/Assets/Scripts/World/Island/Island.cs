@@ -11,7 +11,7 @@ namespace World.Island
         private WorldManager _worldManager;
         [Networked] public PlayerController Owner { get; set; }
         
-        [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum NetworkType { get; set; }
+        [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum Type { get; set; }
         
         [SerializeField] private MeshRenderer meshRenderer;
         private static List<Color> possibleIslandColors = new ();
@@ -26,22 +26,12 @@ namespace World.Island
             {
                 possibleIslandColors.Add(islandTypesClass.colorGradient.Evaluate(0));
             }
+            _worldManager.allIslands.Add(this);
         }
         
         private static void NetworkTypeChanged(Changed<Island> changed)
         {
-            changed.Behaviour.meshRenderer.material.color = changed.Behaviour.NetworkType switch
-            {
-                IslandTypesEnum.Uninitialized => possibleIslandColors[0],
-                IslandTypesEnum.Starting => possibleIslandColors[1],
-                IslandTypesEnum.Basic => possibleIslandColors[2],
-                IslandTypesEnum.Living => possibleIslandColors[3],
-                IslandTypesEnum.Mythic => possibleIslandColors[4],
-                IslandTypesEnum.JungleSanctuary => possibleIslandColors[5],
-                IslandTypesEnum.DesertSanctuary => possibleIslandColors[6],
-                IslandTypesEnum.MontainSanctuary => possibleIslandColors[7],
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            changed.Behaviour.meshRenderer.material.color = possibleIslandColors[(int) changed.Behaviour.Type];
         }
     }
 }

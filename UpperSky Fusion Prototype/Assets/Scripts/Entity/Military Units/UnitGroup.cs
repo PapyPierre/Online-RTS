@@ -1,37 +1,37 @@
 using System.Collections.Generic;
 using Fusion;
-using Network;
 using UnityEngine;
 
 namespace Entity.Military_Units
 {
     public class UnitGroup : NetworkBehaviour
     {
-        private NetworkManager _networkManager;
+        private GameManager _gameManager;
         private UnitsManager _unitsManager;
         
         // Serialized for debug only
         [SerializeField] private Vector3 _targetPos;
         [SerializeField] private  List<BaseUnit> _unitsInGroup = new ();
-        [SerializeField]private float _groupSpeed;
+        [SerializeField] private float _groupSpeed;
         
         private bool _readyToGo;
 
         public override void Spawned()
         {
-            _networkManager = NetworkManager.Instance;
+            _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
-            
-            _targetPos = _unitsManager.tempTargetPos;
-            _unitsManager.tempTargetPos = Vector3.zero;
-            
-            foreach (var unit in  _unitsManager.tempUnitsToMove)
+        }
+
+        public void Init(Vector3 targetPos, List<BaseUnit> unitsToMove)
+        {
+            _targetPos = targetPos;
+            foreach (var unit in  unitsToMove)
             {
                 unit.transform.parent = transform;
                 _unitsInGroup.Add(unit);
             }
             
-            _unitsManager.tempUnitsToMove.Clear();
+            _unitsManager.currentlySelectedUnits = _unitsInGroup;
             
             _groupSpeed = 100;
             
@@ -52,10 +52,12 @@ namespace Entity.Military_Units
         {
             var step = _groupSpeed * Runner.DeltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _targetPos, step);
-            transform.rotation = Quaternion.LookRotation(_targetPos - transform.position);
 
-            _networkManager.thisPlayer.RPC_MoveNetworkObj(Object, transform.position, transform.rotation);
-            
+            foreach (var unit in _unitsInGroup)
+            {
+               unit.transform.rotation = Quaternion.LookRotation(_targetPos - transform.position);
+            }
+
             if (Vector3.Distance(transform.position,  _targetPos) < _unitsManager.distToTargetToStop)
             {
                 transform.DetachChildren();
