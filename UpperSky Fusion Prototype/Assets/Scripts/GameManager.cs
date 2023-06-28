@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
         if (Instance != null)
         {
             Debug.LogError(name);
-            Destroy(gameObject);
             return;
         }
         

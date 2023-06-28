@@ -78,7 +78,7 @@ namespace Entity.Military_Units
 
             var netObj = _gameManager.thisPlayer.Runner.Spawn(unitGroupPrefab, selectedUnitsCenter, Quaternion.identity, 
                 _gameManager.thisPlayer.Object.StateAuthority);
-            
+
             netObj.GetComponent<UnitGroup>().Init(targetPos, unitsToMove);
         }
     }

@@ -6,38 +6,46 @@ namespace Entity.Military_Units
 {
     public class UnitGroup : NetworkBehaviour
     {
-        private GameManager _gameManager;
         private UnitsManager _unitsManager;
         
         // Serialized for debug only
-        [SerializeField] private Vector3 _targetPos;
-        [SerializeField] private  List<BaseUnit> _unitsInGroup = new ();
-        [SerializeField] private float _groupSpeed;
+        [SerializeField] private Vector3 targetPos;
+        [SerializeField] private  List<BaseUnit> unitsInGroup = new ();
+        [SerializeField] private float groupSpeed;
         
         private bool _readyToGo;
 
         public override void Spawned()
         {
-            _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
         }
 
-        public void Init(Vector3 targetPos, List<BaseUnit> unitsToMove)
+        public void Init(Vector3 destination, List<BaseUnit> unitsToMove)
         {
-            _targetPos = targetPos;
+            targetPos = destination;
+            
+            GameObject tempObj = null;
+
             foreach (var unit in  unitsToMove)
             {
+                if (unit.transform.parent != null)
+                {
+                    tempObj = unit.transform.parent.gameObject;
+                }
+
                 unit.transform.parent = transform;
-                _unitsInGroup.Add(unit);
-            }
+                unitsInGroup.Add(unit);
+            } 
             
-            _unitsManager.currentlySelectedUnits = _unitsInGroup;
+            if (tempObj != null) Destroy(tempObj);
+
+            _unitsManager.currentlySelectedUnits = unitsInGroup;
             
-            _groupSpeed = 100;
+            groupSpeed = 100;
             
-            foreach (var unit in _unitsInGroup)
+            foreach (var unit in unitsInGroup)
             {
-                if (unit.Data.MovementSpeed < _groupSpeed) _groupSpeed = unit.Data.MovementSpeed;
+                if (unit.Data.MovementSpeed < groupSpeed) groupSpeed = unit.Data.MovementSpeed;
             }
             
             _readyToGo = true;
@@ -50,15 +58,15 @@ namespace Entity.Military_Units
 
         private void MoveGroupToDesieredPos()
         {
-            var step = _groupSpeed * Runner.DeltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, _targetPos, step);
+            var step = groupSpeed * Runner.DeltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 
-            foreach (var unit in _unitsInGroup)
+            foreach (var unit in unitsInGroup)
             {
-               unit.transform.rotation = Quaternion.LookRotation(_targetPos - transform.position);
+               unit.transform.rotation = Quaternion.LookRotation(targetPos - transform.position);
             }
 
-            if (Vector3.Distance(transform.position,  _targetPos) < _unitsManager.distToTargetToStop)
+            if (Vector3.Distance(transform.position,  targetPos) < _unitsManager.distToTargetToStop)
             {
                 transform.DetachChildren();
                 Destroy(gameObject);

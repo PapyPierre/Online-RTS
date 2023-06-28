@@ -1,3 +1,4 @@
+using System;
 using Custom_UI.InGame_UI;
 using Entity;
 using Entity.Buildings;
@@ -21,6 +22,8 @@ namespace Custom_UI
         public GameObject mainMenu;
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
+        [Required()] public TextMeshProUGUI fpsTMP;
+        [SerializeField, Required()] private PlayerSpawner playerSpawner;
 
         [Header("In Game Variables"), Required()]
         public GameObject inGameUI;
@@ -43,9 +46,7 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
         [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
         [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
-
-        public PlayerSpawner PlayerSpawner;
-
+        
         private void Awake()
         {
             if (Instance != null)
@@ -64,12 +65,42 @@ namespace Custom_UI
             _gameManager = GameManager.Instance;
         }
 
+        private void Update()
+        {
+            DisplayFps();
+        }
+
+        private void DisplayFps()
+        {
+            var fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
+            fpsTMP.text = fps.ToString();
+
+            switch (fps)
+            {
+                case < 15:
+                    fpsTMP.color = Color.red;
+                    break;
+                case >= 15 and < 24:
+                    fpsTMP.color = Color.red + Color.yellow;
+                    break;   
+                case >= 24 and < 30:
+                    fpsTMP.color = Color.yellow;
+                    break;
+                case >= 30 and < 60:
+                    fpsTMP.color = Color.yellow + Color.green;
+                    break;
+                case >= 60:
+                    fpsTMP.color = Color.green;
+                    break;
+            }
+        }
+
         #region MainMenu Functions
         public void JoinGame()
         {
             if ( inputFieldRoomName.text.Length > 0)
             {
-                PlayerSpawner.SpawnPlayers(inputFieldRoomName.text);
+                playerSpawner.SpawnPlayers(inputFieldRoomName.text);
                 mainMenu.SetActive(false);
                 inGameUI.SetActive(true);
             }

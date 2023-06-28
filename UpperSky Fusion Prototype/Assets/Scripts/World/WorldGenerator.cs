@@ -133,7 +133,7 @@ namespace World
             _gameManager.thisPlayer.TeleportToStartingIsland(); // Other players teleport themselves later
         }
 
-        private NetworkObject SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
+        private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
             NetworkObject islandObject = _gameManager.thisPlayer.Runner.Spawn(
                 _worldManager.islandPrefab, 
@@ -145,8 +145,6 @@ namespace World
             islandComponent.transform.parent = _worldCenter;
             islandComponent.Owner = owner;
             islandComponent.Type = type;
-
-            return islandObject;
         }
 
         private Vector3 NewIslandPos()

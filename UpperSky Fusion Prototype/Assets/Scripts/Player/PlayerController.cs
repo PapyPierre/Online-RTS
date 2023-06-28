@@ -141,7 +141,8 @@ namespace Player
         
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(myCam.transform.position, myCam.transform.forward, Color.cyan);
+            var camTransform = myCam.transform;
+            Debug.DrawRay(camTransform.position, camTransform.forward, Color.cyan);
         }
     }
 }
