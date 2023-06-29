@@ -1,20 +1,19 @@
 using UnityEngine;
 
-namespace Custom_UI
+namespace Custom_UI.InGame_UI
 {
     public class LookAtCamera : MonoBehaviour
     {
-        private Transform _cameraTransform;
+        private Transform _camTransform;
 
         private void Start()
         {
-            _cameraTransform = Camera.main.transform;
+            if (Camera.main != null) _camTransform = Camera.main.transform;
         }
 
         private void LateUpdate()
         {
-            var rotation = _cameraTransform.rotation;
-           // transform.LookAt(transform.position + rotation * Vector3.forward, rotation * Vector3.up);
+            transform.LookAt(transform.position + _camTransform.forward);
         }
     }
 }

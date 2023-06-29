@@ -34,7 +34,7 @@ namespace Entity
         public int MaxHealthPoints { get; private set; }
         
         [field: SerializeField]
-        public int ArmorPoints { get; private set; }
+        public int MaxArmorPoints { get; private set; }
         #endregion
         
         /// Function For Inspector Purpose -----------------------------------------------------------------------------

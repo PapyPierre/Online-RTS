@@ -29,11 +29,8 @@ MonoBehaviour:
   <WeatherResistance>k__BackingField: 0.1
   <DamagePerShootOnUnits>k__BackingField: 6
   <DamagePerShootOnBuildings>k__BackingField: 2
-  <DamageRangeOfVariation>k__BackingField: 1
-  <ShootAccuracy>k__BackingField: 80
   <ArmorPenetration>k__BackingField: 5
-  <ShotPerSeconds>k__BackingField: 1
+  <RealodTime>k__BackingField: 1
   <ShootingRange>k__BackingField: 10
   <VisionRange>k__BackingField: 15
   <TargetableEntityType>k__BackingField: 2
-  <NumberOfTransportableTroops>k__BackingField: 0

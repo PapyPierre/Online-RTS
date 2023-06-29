@@ -102,11 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  playerId: 0
   ressources: {fileID: 0}
-  hideUILayer:
-    serializedVersion: 2
-    m_Bits: 129
-  haveBlueprintInHand: 0
+  mouseAboveThisUnit: {fileID: 0}
   myCam: {fileID: 1824731382511807695}
   minimapIndicator: {fileID: 8541844832713808961}
 --- !u!114 &1998333603904257311
@@ -132,6 +130,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1454646102370662546}
     m_Modifications:
+    - target: {fileID: -2256469730682162800, guid: 407bd5cbe8c43334bb1b25c0f3826974,
+        type: 3}
+      propertyPath: m_Antialiasing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2256469730682162800, guid: 407bd5cbe8c43334bb1b25c0f3826974,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 120296, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: m_Name
       value: RTS_Camera

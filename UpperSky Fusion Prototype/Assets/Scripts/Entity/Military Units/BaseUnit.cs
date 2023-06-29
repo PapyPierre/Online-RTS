@@ -1,3 +1,5 @@
+using System.Collections;
+using Custom_UI.InGame_UI;
 using Fusion;
 using NaughtyAttributes;
 using Player;
@@ -11,21 +13,21 @@ namespace Entity.Military_Units
         private GameManager _gameManager;
         
         public PlayerController Owner { get; private set; }
-        
-        [field: SerializeField, Expandable] public UnitData Data { get; private set; }
-
-        private int _maxHealth;
-        [SerializeField, ProgressBar("Health", "_maxHealth", EColor.Red)] 
-        private int currentHealthPoint;
-
-       
         [SerializeField] private GameObject selectionCircle;
 
-        private void Awake()
-        {
-            _maxHealth = Data.MaxHealthPoints;
-            currentHealthPoint = Data.MaxHealthPoints;
-        }
+        [field: SerializeField, Expandable] public UnitData Data { get; private set; }
+        
+        [field: SerializeField] [Networked] private float CurrentHealthPoint { get; set; }
+        [SerializeField] private StatBar healthBar;
+        
+        [field: SerializeField] [Networked] private float CurrentArmor { get; set; }
+        [SerializeField] private StatBar armorBar;
+        
+        // Serialized for debug
+        public BaseUnit targetedUnit;
+        public bool targetedUnitIsInRange;
+        
+        private bool _isReadyToShoot = true;
 
         public override void Spawned()
         {
@@ -34,6 +36,88 @@ namespace Entity.Military_Units
             _unitsManager.allActiveUnits.Add(this);
 
             if (Object.HasInputAuthority) Owner = _gameManager.thisPlayer;
+            
+            SetUpHealtAndArmor();
+        }
+
+        private void Update()
+        {
+            // For Debug
+            if (Input.GetKeyDown(KeyCode.Keypad0))
+            {
+                if (HasStateAuthority)
+                {
+                  TakeDamage(10, 2);   
+                }
+            }
+
+            CheckIfTargetInRange();
+            ShootAtEnemy();
+        }
+
+        private void SetUpHealtAndArmor()
+        {
+            CurrentHealthPoint = Data.MaxHealthPoints;
+            healthBar.Init(Data.MaxHealthPoints);
+            
+            CurrentArmor = Data.MaxArmorPoints;
+            armorBar.Init(Data.MaxArmorPoints);
+        }
+
+        public void TakeDamage(float damageOnHealth, float damageOnArmor)
+        {
+            Debug.Log("took damage");
+            
+            CurrentHealthPoint -= damageOnHealth;
+            CurrentArmor -= damageOnArmor;
+            
+            if (CurrentHealthPoint <= 0) Kill();
+            else
+            {
+                healthBar.UpdateBar(CurrentHealthPoint);
+                armorBar.UpdateBar(CurrentArmor);
+            }
+        }
+
+        private void Kill()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void CheckIfTargetInRange()
+        {
+            if (targetedUnit is not null)
+            {
+                targetedUnitIsInRange =
+                    Vector3.Distance(transform.position, targetedUnit.transform.position) <= Data.ShootingRange;
+            }
+            else targetedUnitIsInRange = false;
+        }
+
+        private void ShootAtEnemy()
+        {
+            if (targetedUnit is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
+
+            var damageOnUnits = Data.DamagePerShootOnUnits; 
+            var armorPenetration = Data.ArmorPenetration;
+            
+            Debug.Log(damageOnUnits + " : " + armorPenetration); // return 6 : 5
+            
+            float damageOnHealth = armorPenetration / 100 * damageOnUnits;
+            float damageOnArmor = (100 - armorPenetration) / 100 * damageOnUnits;
+            
+            //BUG ICI
+            Debug.Log(damageOnHealth + " : " + damageOnArmor); // return 0 : 0
+
+            targetedUnit.TakeDamage(damageOnHealth, damageOnArmor);
+            _isReadyToShoot = false;
+            StartCoroutine(Reload());
+        }
+
+        private IEnumerator Reload()
+        {
+            yield return new WaitForSecondsRealtime(Data.RealodTime);
+            _isReadyToShoot = true;
         }
 
         #region Selection

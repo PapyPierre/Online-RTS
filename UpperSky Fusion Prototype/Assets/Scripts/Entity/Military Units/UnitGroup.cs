@@ -37,7 +37,7 @@ namespace Entity.Military_Units
                 unitsInGroup.Add(unit);
             } 
             
-            if (tempObj != null) Destroy(tempObj);
+            if (tempObj != null) tempObj.SetActive(false);
 
             _unitsManager.currentlySelectedUnits = unitsInGroup;
             
@@ -58,6 +58,14 @@ namespace Entity.Military_Units
 
         private void MoveGroupToDesieredPos()
         {
+            foreach (var unit in unitsInGroup)
+            {
+                if (unit.targetedUnitIsInRange)
+                {
+                    unit.transform.parent = null;
+                }
+            }
+            
             var step = groupSpeed * Runner.DeltaTime;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 
@@ -69,7 +77,7 @@ namespace Entity.Military_Units
             if (Vector3.Distance(transform.position,  targetPos) < _unitsManager.distToTargetToStop)
             {
                 transform.DetachChildren();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

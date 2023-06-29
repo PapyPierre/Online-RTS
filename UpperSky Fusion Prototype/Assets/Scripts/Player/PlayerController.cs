@@ -47,8 +47,6 @@ namespace Player
                 minimapIndicator.SetActive(true);
             }
             else myCam.gameObject.SetActive(false);
-            
-            transform.Rotate(Vector3.up, 180);
         }
 
         private void Update()
@@ -101,19 +99,30 @@ namespace Player
         private void OnRightButtonClick()
         { 
             _uiManager.HideOpenedUI();
-            
-            //TODO Si y'a des unités allié selectionné et qu'on clique dans du vide, déplacé les untiés à cette position
-            //TODO Si des unités allié sont selectionné et qu'on clique sur une untié/batiment ennemie, les unités selectionné attaque l'unité cliquer 
-            //TODO Sinon, ne rien faire
-      
+
             if (_unitsManager.currentlySelectedUnits.Count > 0) // Si au moins une unité est sélectionné 
             {
                 if (mouseAboveThisUnit)
                 {
-                    //TODO Si l'unité qui est hover est ennemie, l'attaquer
+                    //Si l'unité qui est hover est ennemie, l'attaquer
+                    if (mouseAboveThisUnit.Owner != this)
+                    {
+                        foreach (var unit in  _unitsManager.currentlySelectedUnits)
+                        {
+                            unit.targetedUnit = mouseAboveThisUnit;
+                        }
+                        
+                        _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits,
+                            mouseAboveThisUnit.transform.position);
+                    }
                 }
                 else
                 {
+                    foreach (var unit in  _unitsManager.currentlySelectedUnits)
+                    {
+                        unit.targetedUnit = null;
+                    }
+                    
                     Ray ray = myCam.ScreenPointToRay((Input.mousePosition));
                     RaycastHit hit;
 
@@ -133,6 +142,7 @@ namespace Player
                 {
                     var islandPos = island.transform.position;
                     transform.position = new Vector3(islandPos.x, 10, islandPos.z);
+                    transform.LookAt(Vector3.zero);
                     HasBeenTpToStartingIsland = true;
                     break;
                 }
