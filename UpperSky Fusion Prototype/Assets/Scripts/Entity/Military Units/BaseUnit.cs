@@ -12,7 +12,7 @@ namespace Entity.Military_Units
         private UnitsManager _unitsManager;
         private GameManager _gameManager;
         
-        public PlayerController Owner { get; private set; }
+        [field: SerializeField] [Networked] public PlayerController Owner { get; set; }
         [SerializeField] private GameObject selectionCircle;
 
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
@@ -28,15 +28,13 @@ namespace Entity.Military_Units
         public bool targetedUnitIsInRange;
         
         private bool _isReadyToShoot = true;
-
+        
         public override void Spawned()
         {
             _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
             _unitsManager.allActiveUnits.Add(this);
 
-            if (Object.HasInputAuthority) Owner = _gameManager.thisPlayer;
-            
             SetUpHealtAndArmor();
         }
 
@@ -66,8 +64,6 @@ namespace Entity.Military_Units
 
         public void TakeDamage(float damageOnHealth, float damageOnArmor)
         {
-            Debug.Log("took damage");
-            
             CurrentHealthPoint -= damageOnHealth;
             CurrentArmor -= damageOnArmor;
             
@@ -98,16 +94,11 @@ namespace Entity.Military_Units
         {
             if (targetedUnit is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
 
-            var damageOnUnits = Data.DamagePerShootOnUnits; 
-            var armorPenetration = Data.ArmorPenetration;
-            
-            Debug.Log(damageOnUnits + " : " + armorPenetration); // return 6 : 5
-            
-            float damageOnHealth = armorPenetration / 100 * damageOnUnits;
-            float damageOnArmor = (100 - armorPenetration) / 100 * damageOnUnits;
-            
-            //BUG ICI
-            Debug.Log(damageOnHealth + " : " + damageOnArmor); // return 0 : 0
+            int damageOnUnits = Data.DamagePerShootOnUnits; 
+            int armorPenetration = Data.ArmorPenetration;
+
+            float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
+            float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
             targetedUnit.TakeDamage(damageOnHealth, damageOnArmor);
             _isReadyToShoot = false;

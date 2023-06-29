@@ -144,7 +144,10 @@ namespace Entity.Buildings
             
             Vector3 myPos = transform.position;
             Vector3 spawnPos = new Vector3(myPos.x, _unitsManager.flyingHeightOfUnits, myPos.z);
-            _gameManager.thisPlayer.Runner.Spawn(prefab, spawnPos, Quaternion.identity,  _gameManager.thisPlayer.Object.StateAuthority);
+            var obj = _gameManager.thisPlayer.Runner.Spawn(prefab, spawnPos, Quaternion.identity, 
+                _gameManager.thisPlayer.Object.StateAuthority);
+
+            obj.GetComponent<BaseUnit>().Owner = _myIsland.Owner;
             
             if (FormationQueue.Count > 0)
             {
