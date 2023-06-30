@@ -9,19 +9,15 @@ using World.Island;
 
 namespace Entity.Buildings
 {
-    public class BaseBuilding : NetworkBehaviour
+    public class BaseBuilding : BaseEntity
     {
         [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
+
+        
         private BuildingsManager _buildingsManager;
-        private GameManager _gameManager;
         private UIManager _uiManager;
-        private UnitsManager _unitsManager;
 
         private Island _myIsland;
-
-        private int _maxHealth;
-        [SerializeField, ProgressBar("Health", "_maxHealth", EColor.Red)] 
-        private int currentHealthPoint;
 
         private float _tempMatToGenerate;
         private float _tempOrichalqueToGenerate;
@@ -30,20 +26,15 @@ namespace Entity.Buildings
         public float timeLeftToForm;
 
         private bool _mouseOverThisBuilding;
-        
-        private void Awake()
-        {
-            _maxHealth = Data.MaxHealthPoints;
-            currentHealthPoint = Data.MaxHealthPoints;
-        }
-        
+
         public override void Spawned()
         {
+            base.Spawned(); 
+            SetUpHealtAndArmor(Data);
+
             _buildingsManager = BuildingsManager.Instance;
-            _gameManager = GameManager.Instance;
             _uiManager = UIManager.Instance;
-            _unitsManager = UnitsManager.Instance;
-            
+
             var pos = transform.position;
             Ray ray = new Ray(new Vector3(pos.x, pos.y + 3, pos.z), -transform.up); 
             RaycastHit hit;
@@ -84,7 +75,7 @@ namespace Entity.Buildings
                     if (Input.GetMouseButtonDown(0))
                     {
                         _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
-                        _unitsManager.UnSelectAllUnits();
+                        UnitsManager.UnSelectAllUnits();
                     }
                 }
 
@@ -97,7 +88,7 @@ namespace Entity.Buildings
 
         private bool PlayerIsOwner()
         {
-            return _myIsland.Owner == _gameManager.thisPlayer;
+            return _myIsland.Owner == GameManager.thisPlayer;
         }
 
         private void UnlockBuildings()
@@ -140,18 +131,17 @@ namespace Entity.Buildings
         private void FormFirstUnitInQueue()
         {
             // faire spawn la premier unité dans la queue
-            var prefab = _unitsManager.allUnitsPrefab[(int) FormationQueue.Dequeue()];
+            var prefab = UnitsManager.allUnitsPrefab[(int) FormationQueue.Dequeue()];
             
             Vector3 myPos = transform.position;
-            Vector3 spawnPos = new Vector3(myPos.x, _unitsManager.flyingHeightOfUnits, myPos.z);
-            var obj = _gameManager.thisPlayer.Runner.Spawn(prefab, spawnPos, Quaternion.identity, 
-                _gameManager.thisPlayer.Object.StateAuthority);
+            Vector3 spawnPos = new Vector3(myPos.x, UnitsManager.flyingHeightOfUnits, myPos.z);
+            NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
             obj.GetComponent<BaseUnit>().Owner = _myIsland.Owner;
             
             if (FormationQueue.Count > 0)
             {
-                timeLeftToForm = _unitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
+                timeLeftToForm = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
             }
             
             _uiManager.UpdateFormationQueueDisplay();
@@ -175,7 +165,7 @@ namespace Entity.Buildings
 
         public void UpdateFormationQueueSliderWithNewValue()
         {
-            var totalTimeToRun = _unitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
+            var totalTimeToRun = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
             var timeSpendAlready = totalTimeToRun - timeLeftToForm;
             var timeSpentOnTotalTime = timeSpendAlready / totalTimeToRun;
             

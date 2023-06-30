@@ -108,21 +108,21 @@ MonoBehaviour:
   targetingSettingsFoldout: 1
   inputSettingsFoldout: 1
   useFixedUpdate: 0
-  keyboardMovementSpeed: 40
-  screenEdgeMovementSpeed: 3
+  keyboardMovementSpeed: 110
+  screenEdgeMovementSpeed: 170
   followingSpeed: 5
-  rotationSped: 45
-  panningSpeed: 25
+  rotationSped: 80
+  panningSpeed: 100
   mouseRotationSpeed: 150
-  autoHeight: 1
+  autoHeight: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 55
-  maxHeight: 35
+  maxHeight: 80
   minHeight: 10
   heightDampening: 5
-  keyboardZoomingSensitivity: 2
-  scrollWheelZoomingSensitivity: 25
+  keyboardZoomingSensitivity: 1.5
+  scrollWheelZoomingSensitivity: -80
   limitMap: 1
   limitX: 500
   limitY: 500

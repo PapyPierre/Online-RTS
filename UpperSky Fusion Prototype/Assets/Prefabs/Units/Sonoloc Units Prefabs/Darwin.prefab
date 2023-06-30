@@ -233,12 +233,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _Owner: {fileID: 0}
   selectionCircle: {fileID: 9193866668383929244}
   <Data>k__BackingField: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046,
     type: 2}
-  currentHealthPoint: 0
+  _CurrentHealth: 0
   healthBar: {fileID: 7389328165389186511}
-  currentArmor: 0
+  _CurrentArmor: 0
   armorBar: {fileID: 2901251400569896489}
   targetedUnit: {fileID: 0}
   targetedUnitIsInRange: 0

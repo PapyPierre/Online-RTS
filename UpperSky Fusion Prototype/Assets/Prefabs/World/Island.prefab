@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 3
   _Owner: {fileID: 0}
-  _NetworkType: 0
+  _Type: 0
   meshRenderer: {fileID: 6381564935541004967}
   buildingsCount: 0
   localOrichalRessources: 0
@@ -133,10 +133,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6381564935541004987}
-  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: -15.4, y: -0.5, z: 15}
-  m_LocalScale: {x: 30, y: 30, z: 30}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 30, y: 50, z: 30}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7061718524731237223}
   m_RootOrder: 0
