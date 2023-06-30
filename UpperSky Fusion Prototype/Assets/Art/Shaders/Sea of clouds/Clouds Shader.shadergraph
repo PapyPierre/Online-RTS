@@ -40,9 +40,6 @@
             "m_Id": "45ee90d8902944828336bd89f0e1eadb"
         },
         {
-            "m_Id": "fb726229564e4e1092aae656becb7d65"
-        },
-        {
             "m_Id": "6c2a71b088384f66b123afa99a5b04c6"
         },
         {
@@ -9386,9 +9383,6 @@
             "m_Id": "45ee90d8902944828336bd89f0e1eadb"
         },
         {
-            "m_Id": "fb726229564e4e1092aae656becb7d65"
-        },
-        {
             "m_Id": "6c2a71b088384f66b123afa99a5b04c6"
         },
         {
@@ -9542,33 +9536,6 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
-    }
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "fb726229564e4e1092aae656becb7d65",
-    "m_Guid": {
-        "m_GuidSerialized": "a5d040c7-aaed-42fc-8740-cbe12bace014"
-    },
-    "m_Name": "Emission Strenght",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Emission Strenght",
-    "m_DefaultReferenceName": "_Emission_Strenght",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 2,
-    "m_Hidden": false,
-    "m_Value": 1.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
     }
 }
 
