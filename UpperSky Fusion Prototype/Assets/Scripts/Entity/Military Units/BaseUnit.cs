@@ -16,13 +16,24 @@ namespace Entity.Military_Units
         [SerializeField] private GameObject selectionCircle;
 
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
+
+        #region Networked Health & Health Bar
+        [field: SerializeField] [Networked(OnChanged = nameof(CurrentHealthChanged))]
+        private float CurrentHealth { get; set; }
         
-        [field: SerializeField] [Networked] private float CurrentHealthPoint { get; set; }
         [SerializeField] private StatBar healthBar;
+        private static void CurrentHealthChanged(Changed<BaseUnit> changed) 
+            => changed.Behaviour.healthBar.UpdateBar(changed.Behaviour.CurrentHealth);
+        #endregion
         
-        [field: SerializeField] [Networked] private float CurrentArmor { get; set; }
+        #region Networked Armor & Armor Bar
+        [field: SerializeField] [Networked(OnChanged = nameof(CurrentArmorChanged))]
+        private float CurrentArmor { get; set; }
         [SerializeField] private StatBar armorBar;
-        
+        private static void CurrentArmorChanged(Changed<BaseUnit> changed) 
+            => changed.Behaviour.armorBar.UpdateBar(changed.Behaviour.CurrentArmor);
+        #endregion
+
         // Serialized for debug
         public BaseUnit targetedUnit;
         public bool targetedUnitIsInRange;
@@ -45,7 +56,7 @@ namespace Entity.Military_Units
             {
                 if (HasStateAuthority)
                 {
-                  TakeDamage(10, 2);   
+                  RPC_TakeDamage(10, 2);   
                 }
             }
 
@@ -55,24 +66,29 @@ namespace Entity.Military_Units
 
         private void SetUpHealtAndArmor()
         {
-            CurrentHealthPoint = Data.MaxHealthPoints;
+            CurrentHealth = Data.MaxHealthPoints;
             healthBar.Init(Data.MaxHealthPoints);
             
             CurrentArmor = Data.MaxArmorPoints;
             armorBar.Init(Data.MaxArmorPoints);
         }
 
-        public void TakeDamage(float damageOnHealth, float damageOnArmor)
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor)
         {
-            CurrentHealthPoint -= damageOnHealth;
-            CurrentArmor -= damageOnArmor;
+            // The code inside here will run on the client which owns this object (has state and input authority).
+
+            CurrentHealth -= damageOnHealth;
             
-            if (CurrentHealthPoint <= 0) Kill();
+            if (CurrentArmor - damageOnArmor >= 0) CurrentArmor -= damageOnArmor;
             else
-            {
-                healthBar.UpdateBar(CurrentHealthPoint);
-                armorBar.UpdateBar(CurrentArmor);
+            {     
+                var x = damageOnArmor - CurrentArmor;
+                CurrentHealth -= x;
+                CurrentArmor = 0;
             }
+            
+            if (CurrentHealth <= 0) Kill();
         }
 
         private void Kill()
@@ -100,7 +116,7 @@ namespace Entity.Military_Units
             float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
             float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
-            targetedUnit.TakeDamage(damageOnHealth, damageOnArmor);
+            targetedUnit.RPC_TakeDamage(damageOnHealth, damageOnArmor);
             _isReadyToShoot = false;
             StartCoroutine(Reload());
         }

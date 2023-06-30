@@ -148,7 +148,7 @@ namespace Player
                 }
             }
         }
-        
+
         private void OnDrawGizmos()
         {
             var camTransform = myCam.transform;
