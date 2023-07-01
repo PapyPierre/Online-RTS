@@ -2980,7 +2980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
 --- !u!1 &597259892
 GameObject:
@@ -8856,7 +8856,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &1799386819
 MeshCollider:
