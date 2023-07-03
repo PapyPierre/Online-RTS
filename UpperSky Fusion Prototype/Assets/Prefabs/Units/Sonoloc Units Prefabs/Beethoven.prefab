@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2864470486596446180}
   - component: {fileID: 2668875017313219621}
   - component: {fileID: 4510898709521574537}
-  - component: {fileID: 1608346777721884524}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -86,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1608346777721884524
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 326462534572214549}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2798725076067583124
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +129,6 @@ GameObject:
   - component: {fileID: 2921072806240970673}
   - component: {fileID: 5986314237523320504}
   - component: {fileID: 7817655214969173934}
-  - component: {fileID: 6783265106481934286}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -216,19 +201,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6783265106481934286
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2934951091380231307}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5041651456253078624
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,15 +401,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _Owner: {fileID: 0}
   selectionCircle: {fileID: 9193866668383929244}
+  _CurrentHealth: 0
+  healthBar: {fileID: 1144968813908750980}
+  _CurrentArmor: 0
+  armorBar: {fileID: 5443930881133200454}
   <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
     type: 2}
-  currentHealthPoint: 0
-  healthBar: {fileID: 1144968813908750980}
-  currentArmor: 0
-  armorBar: {fileID: 5443930881133200454}
   targetedUnit: {fileID: 0}
   targetedUnitIsInRange: 0
+  meshToColor:
+  - {fileID: 3814354066289944227}
+  isColonizer: 0
+  isCamouflaged: 0
+  currentRegeneration: 0
+  currentAcid: 0
+  currentParasite: 0
 --- !u!135 &2645220574719709856
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -462,9 +442,8 @@ GameObject:
   - component: {fileID: 5039122611564032700}
   - component: {fileID: 5795134756954492223}
   - component: {fileID: 3814354066289944227}
-  - component: {fileID: 5997114978460144673}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -535,19 +514,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5997114978460144673
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720093931045292201}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9193866668383929244
 GameObject:
   m_ObjectHideFlags: 0

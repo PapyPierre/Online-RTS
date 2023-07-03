@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NaughtyAttributes;
+using Player;
 using UnityEditor;
 using UnityEngine;
 using World;
@@ -17,6 +19,8 @@ namespace Entity.Military_Units
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
 
+        [SerializeField] private List<MeshRenderer> meshToColor;
+
         [Header("Status")] 
         public bool isColonizer;
         public bool isCamouflaged; //TODO
@@ -31,6 +35,22 @@ namespace Entity.Military_Units
             UnitsManager.allActiveUnits.Add(this);
             SetUpHealtAndArmor(Data);
             SetUpStatus();
+        }
+
+        public void Colorize()
+        {
+            for (var i = 0; i < GameManager.Instance.connectedPlayers.Count; i++)
+            {
+                PlayerController player = GameManager.Instance.connectedPlayers[i];
+                if (player == Owner)
+                {
+                    foreach (var meshRenderer in meshToColor)
+                    {
+                        meshRenderer.material.color = WorldManager.Instance.playersColors[i];
+                    }
+                    return;
+                }
+            }
         }
 
         private void SetUpStatus()

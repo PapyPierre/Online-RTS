@@ -138,6 +138,7 @@ namespace Entity.Buildings
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
             obj.GetComponent<BaseUnit>().Owner = _myIsland.Owner;
+            obj.GetComponent<BaseUnit>().Colorize();
             
             if (FormationQueue.Count > 0)
             {
