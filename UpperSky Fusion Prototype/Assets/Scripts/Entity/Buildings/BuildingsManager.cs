@@ -20,12 +20,16 @@ namespace Entity.Buildings
         public NetworkPrefabRef[] allBuildingsPrefab;
         public BuildingData[] allBuildingsDatas;
         
+        [field: SerializeField, Space] public int MaxBuildingsPerIslands { get; private set; }
+
         [Header("Blueprints")]
         [SerializeField] private GameObject[] allBuildingsBlueprints;
         [field: SerializeField] public Color BlueprintPossibleBuildColor { get; private set; }
         [field: SerializeField] public Color BlueprintOverlapColor { get; private set; }
         
         [HideInInspector] public bool haveBlueprintInHand;
+        
+
 
         public enum AllBuildingsEnum
         {

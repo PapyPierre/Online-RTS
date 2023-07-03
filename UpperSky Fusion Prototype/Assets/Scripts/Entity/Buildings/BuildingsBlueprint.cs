@@ -33,7 +33,8 @@ namespace Entity.Buildings
 
             Island island = _hit.collider.GetComponentInParent<Island>();
 
-            if (island.Owner != _gameManager.thisPlayer)
+            if (island.Owner != _gameManager.thisPlayer
+                || island.buildingsCount >= _buildingsManager.MaxBuildingsPerIslands)
             {
                 _isBuildPositionFree = false;
             }

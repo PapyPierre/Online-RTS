@@ -19,7 +19,6 @@ namespace World
         public NetworkPrefabRef islandPrefab;
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
-        [field: SerializeField] public int MaxBuildingsPerIslands { get; private set; }
         
         [HideInInspector] public List<Island.Island> allIslands = new();
 

@@ -6817,7 +6817,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <MaxBuildingsPerIslands>k__BackingField: 3
   allIslands: []
   playersColors:
   - {r: 0, g: 0.69423604, b: 1, a: 1}
@@ -11259,6 +11258,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  <MaxBuildingsPerIslands>k__BackingField: 3
   allBuildingsBlueprints:
   - {fileID: 874426664033387176, guid: a5e4dfe3bdaf10f4c83bfe382f95ca21, type: 3}
   - {fileID: 874426664033387176, guid: 37578ff957c351d4eaad637cdf627602, type: 3}
