@@ -47,6 +47,11 @@ namespace Entity
             armorBar.Init(data.MaxArmorPoints);
         }
         
+        protected bool PlayerIsOwner()
+        {
+            return Owner == GameManager.thisPlayer;
+        }
+        
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor)
         {

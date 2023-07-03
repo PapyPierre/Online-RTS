@@ -1,3 +1,4 @@
+using Entity.Buildings;
 using Fusion;
 using Player;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace World
     {
         private WorldManager _worldManager;
         private GameManager _gameManager;
+        private BuildingsManager _buildingsManager;
 
         [SerializeField] private NetworkPrefabRef worldCenterPrefab;
         private Transform _worldCenter;
@@ -24,6 +26,7 @@ namespace World
         {
             _worldManager = GetComponent<WorldManager>();
             _gameManager = GameManager.Instance;
+            _buildingsManager = BuildingsManager.Instance;
         }
         
         public void GenerateWorld(int nbOfPlayers)
@@ -140,7 +143,9 @@ namespace World
                 position, 
                 Quaternion.identity,
                 owner != null ? owner.Object.StateAuthority : PlayerRef.None);
-            
+
+            if (owner != null) _buildingsManager.BuildBuilding(13, position, Quaternion.identity);
+
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.transform.parent = _worldCenter;
             islandComponent.Owner = owner;

@@ -11,8 +11,7 @@ namespace Entity.Military_Units
 {
     public class BaseUnit : BaseEntity
     {
-        private WorldManager _worldManager;
-        
+
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
         
         [HideInInspector] public BaseUnit targetedUnit;
@@ -31,7 +30,6 @@ namespace Entity.Military_Units
         public override void Spawned()
         {
             base.Spawned();
-            _worldManager = WorldManager.Instance;
             UnitsManager.allActiveUnits.Add(this);
             SetUpHealtAndArmor(Data);
             SetUpStatus();
@@ -105,7 +103,7 @@ namespace Entity.Military_Units
         {
             GameManager.thisPlayer.mouseAboveThisUnit = this;
         
-            if (Owner == GameManager.thisPlayer)
+            if (PlayerIsOwner())
             {
                 SetActiveSelectionCircle(true);
             }

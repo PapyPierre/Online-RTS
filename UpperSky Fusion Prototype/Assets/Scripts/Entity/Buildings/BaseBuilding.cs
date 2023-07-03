@@ -4,66 +4,49 @@ using Custom_UI;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
+using Player;
 using UnityEngine;
-using World.Island;
 
 namespace Entity.Buildings
 {
     public class BaseBuilding : BaseEntity
     {
         [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
-
         
         private BuildingsManager _buildingsManager;
         private UIManager _uiManager;
-
-        private Island _myIsland;
 
         private float _tempMatToGenerate;
         private float _tempOrichalqueToGenerate;
 
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
-        public float timeLeftToForm;
+        [HideInInspector] public float timeLeftToForm;
 
         private bool _mouseOverThisBuilding;
 
         public override void Spawned()
         {
             base.Spawned(); 
+            
             SetUpHealtAndArmor(Data);
 
             _buildingsManager = BuildingsManager.Instance;
             _uiManager = UIManager.Instance;
+        }
 
-            var pos = transform.position;
-            Ray ray = new Ray(new Vector3(pos.x, pos.y + 3, pos.z), -transform.up); 
-            RaycastHit hit;
-
-            Physics.Raycast(ray, out hit, 5000, _buildingsManager.terrainLayer);
-            if (hit.collider is null)
-            {
-                Debug.LogError("Building didn't detect his island");
-                return;
-            }
+        public void Init(PlayerController owner)
+        {
+            Owner = owner;
             
-            _myIsland = hit.collider.GetComponentInParent<Island>();
-
-            if (!PlayerIsOwner()) return;
+            if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
-            if (Data.UnlockedBuildings.Length > 0)
+            if (Data.DoesGenerateRessources && Data.AditionnalMaxSupplies > 0)
             {
-                UnlockBuildings();
-            }
-            
-            if (Data.DoesGenerateRessources)
-            {
-                InvokeRepeating("GenerateRessourcesEachSecond", 1,1);
-                
                 //TODO eventually add a check for game max supply if there's one
-                _myIsland.Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
+                Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
 
-            if (Data.IsFormationBuilding) StartCoroutine(CallEveryRealTimeSeconds());
+            StartCoroutine(CallEveryRealTimeSeconds());
         }
 
         private void Update()
@@ -86,11 +69,17 @@ namespace Entity.Buildings
             }
         }
 
-        private bool PlayerIsOwner()
+        // ReSharper disable once FunctionRecursiveOnAllPaths
+        private IEnumerator CallEveryRealTimeSeconds()
         {
-            return _myIsland.Owner == GameManager.thisPlayer;
+            yield return new WaitForSecondsRealtime(1);
+            
+            if (Data.DoesGenerateRessources) GenerateRessources();
+            if (Data.IsFormationBuilding) UpdateFormation();
+            
+            StartCoroutine(CallEveryRealTimeSeconds());
         }
-
+        
         private void UnlockBuildings()
         {
             foreach (var building in Data.UnlockedBuildings)
@@ -99,7 +88,7 @@ namespace Entity.Buildings
             }
         }
         
-        private void GenerateRessourcesEachSecond()
+        private void GenerateRessources()
         {
             _tempMatToGenerate += Data.GeneratedMaterialPerSeconds;
             _tempOrichalqueToGenerate += Data.GeneratedOrichalquePerSeconds;
@@ -107,14 +96,14 @@ namespace Entity.Buildings
             if (_tempMatToGenerate >= 1 )
             {
                 int x = Mathf.FloorToInt(_tempMatToGenerate);
-                _myIsland.Owner.ressources.CurrentMaterials += x;
+                Owner.ressources.CurrentMaterials += x;
                 _tempMatToGenerate -= x;
             }
 
             if (_tempOrichalqueToGenerate >= 1)
             {
                 int y = Mathf.FloorToInt(_tempOrichalqueToGenerate);
-                _myIsland.Owner.ressources.CurrentOrichalque += y;
+                Owner.ressources.CurrentOrichalque += y;
                 _tempOrichalqueToGenerate -= y;
             }
         }
@@ -137,7 +126,7 @@ namespace Entity.Buildings
             Vector3 spawnPos = new Vector3(myPos.x, UnitsManager.flyingHeightOfUnits, myPos.z);
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
-            obj.GetComponent<BaseUnit>().Owner = _myIsland.Owner;
+            obj.GetComponent<BaseUnit>().Owner = Owner;
             obj.GetComponent<BaseUnit>().Colorize();
             
             if (FormationQueue.Count > 0)
@@ -147,10 +136,9 @@ namespace Entity.Buildings
             
             _uiManager.UpdateFormationQueueDisplay();
         }
-
-        private IEnumerator CallEveryRealTimeSeconds()
+        
+        private void UpdateFormation()
         {
-            yield return new WaitForSecondsRealtime(1);
             timeLeftToForm--;
 
             if (FormationQueue.Count > 0)
@@ -160,8 +148,6 @@ namespace Entity.Buildings
                     UpdateFormationQueueSliderWithNewValue();
                 }
             }
-            
-            StartCoroutine(CallEveryRealTimeSeconds());
         }
 
         public void UpdateFormationQueueSliderWithNewValue()

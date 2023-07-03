@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ namespace Custom_UI.InGame_UI
          {
              _slider = GetComponent<Slider>();
              _slider.maxValue = maxValue;
+             _slider.value = maxValue;
              UpdateBar(maxValue);
          }
          
@@ -22,7 +24,7 @@ namespace Custom_UI.InGame_UI
          }
 
          private void Update()
-         { 
+         {
              _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, Time.deltaTime * updateSpeed);
          }
     }

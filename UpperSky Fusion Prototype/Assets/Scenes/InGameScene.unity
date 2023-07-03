@@ -11230,6 +11230,7 @@ MonoBehaviour:
   - {fileID: 307936024}
   - {fileID: 1144897605}
   - {fileID: 1907353855}
+  - {fileID: 1907353855}
   allBuildingsPrefab:
   - RawGuidValue: 345b2f476a4940444b3b26a07da1d8db
   - RawGuidValue: ab7fff1f66e71cf4d9d41bd3729cd92b
@@ -11244,6 +11245,7 @@ MonoBehaviour:
   - RawGuidValue: 00000000000000000000000000000000
   - RawGuidValue: 00000000000000000000000000000000
   - RawGuidValue: 00000000000000000000000000000000
+  - RawGuidValue: a7cd3f85ec3d1d74e9f72a20d25b380a
   allBuildingsDatas:
   - {fileID: 11400000, guid: d1e579db73ece624e8c1adc55e857c9f, type: 2}
   - {fileID: 11400000, guid: f437ab40b73e22945a4d7a2c19e27f04, type: 2}
@@ -11258,6 +11260,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 11400000, guid: 0ab1220b03be9344cad1b3262e1c1714, type: 2}
   <MaxBuildingsPerIslands>k__BackingField: 3
   allBuildingsBlueprints:
   - {fileID: 874426664033387176, guid: a5e4dfe3bdaf10f4c83bfe382f95ca21, type: 3}
@@ -11267,6 +11270,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 874426664033387176, guid: e2e5cc4613a7f4142be5a1eb57e0c0a0, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

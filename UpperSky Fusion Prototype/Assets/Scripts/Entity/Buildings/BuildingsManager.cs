@@ -28,8 +28,6 @@ namespace Entity.Buildings
         [field: SerializeField] public Color BlueprintOverlapColor { get; private set; }
         
         [HideInInspector] public bool haveBlueprintInHand;
-        
-
 
         public enum AllBuildingsEnum
         {
@@ -45,7 +43,8 @@ namespace Entity.Buildings
             Obusier = 9,
             CentreMeteo = 10,
             Usine = 11,
-            Academie = 12
+            Academie = 12,
+            SiègeDuCommandement = 13
         }
         
         private void Awake()
@@ -87,17 +86,23 @@ namespace Entity.Buildings
         }
 
         public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot)
-        {
+        {          
             PlayerController player = _gameManager.thisPlayer;
-            player.ressources.CurrentMaterials -= allBuildingsDatas[buildingIndex].MaterialCost;
-            player.ressources.CurrentOrichalque -= allBuildingsDatas[buildingIndex].OrichalqueCost;
-            
+
+            var matCost = allBuildingsDatas[buildingIndex].MaterialCost;
+            if (matCost > 0) player.ressources.CurrentMaterials -= matCost;
+
+            var oriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
+            if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
+
             _uiManager.ShowOrHideBuildMenu();
             _uiManager.HideInfobox();
-            
-            _gameManager.thisPlayer.Runner.Spawn
+
+            NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, _gameManager.thisPlayer.Object.InputAuthority);
             
+            obj.GetComponent<BaseBuilding>().Init(player);
+           
             haveBlueprintInHand = false;
         }
     }

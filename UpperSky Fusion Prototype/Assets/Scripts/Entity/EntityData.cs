@@ -21,13 +21,13 @@ namespace Entity
         [field: TextArea(2, 5), SerializeField, ShowIf("StartAsLocked")] 
         public string LockedDescription { get; private set; }
         
-        [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
+        [field: SerializeField]
         public int MaterialCost { get; private set; }
         
         [field: SerializeField]
         public int OrichalqueCost { get; private set; }
         
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
+        [field: SerializeField]
         public float ProductionTime { get; private set; }
         
         [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
