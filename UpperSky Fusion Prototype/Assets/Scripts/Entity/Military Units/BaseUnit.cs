@@ -1,22 +1,45 @@
+using System;
 using System.Collections;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
+using World;
 
 namespace Entity.Military_Units
 {
     public class BaseUnit : BaseEntity
     {
+        private WorldManager _worldManager;
+        
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
         
         [HideInInspector] public BaseUnit targetedUnit;
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
-        
+
+        [Header("Status")] 
+        public bool isColonizer;
+        public bool isCamouflaged; //TODO
+        [SerializeField] private float currentRegeneration; //TODO
+        [SerializeField] private float currentAcid; //TODO
+        [SerializeField] private float currentParasite; //TODO
+
         public override void Spawned()
         {
             base.Spawned();
+            _worldManager = WorldManager.Instance;
             UnitsManager.allActiveUnits.Add(this);
             SetUpHealtAndArmor(Data);
+            SetUpStatus();
+        }
+
+        private void SetUpStatus()
+        {
+            isColonizer = Data.IsBaseColonizer;
+            isCamouflaged = Data.IsBaseCamouflaged;
+            currentRegeneration = Data.BaseRegeneration;
+            currentAcid = Data.BaseAcid;
+            currentParasite = Data.BaseParasite;
         }
 
         private void Update()
@@ -83,5 +106,13 @@ namespace Entity.Military_Units
             selectionCircle.SetActive(value);
         }
         #endregion
+
+        #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(transform.position,Vector3.up, UnitsManager.distUnitToIslandToColonise);
+        }
+        #endif
     }
 }

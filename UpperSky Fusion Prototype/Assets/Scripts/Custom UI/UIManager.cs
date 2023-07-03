@@ -23,6 +23,7 @@ namespace Custom_UI
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
         [Required()] public TextMeshProUGUI fpsTMP;
+        [Required()] public TextMeshProUGUI pingTMP;
         [SerializeField, Required()] private PlayerSpawner playerSpawner;
 
         [Header("In Game Variables"), Required()]
@@ -68,12 +69,13 @@ namespace Custom_UI
         private void Update()
         {
             DisplayFps();
+            if (_gameManager.gameIsStarted) DisplayPlayerPing();
         }
 
         private void DisplayFps()
         {
             var fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
-            fpsTMP.text = fps.ToString();
+            fpsTMP.text = fps + " FPS";
 
             switch (fps)
             {
@@ -91,6 +93,31 @@ namespace Custom_UI
                     break;
                 case >= 60:
                     fpsTMP.color = Color.green;
+                    break;
+            }
+        }
+        
+        private void DisplayPlayerPing()
+        {
+            var ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(_gameManager.thisPlayer.Object.StateAuthority);
+            pingTMP.text = Mathf.RoundToInt((float) ping) + " ms";
+
+            switch (ping)
+            {
+                case < 15:
+                    pingTMP.color = Color.green;
+                    break;
+                case >= 15 and < 40:
+                    pingTMP.color = Color.green + Color.yellow;
+                    break;   
+                case >= 40 and < 80:
+                    pingTMP.color = Color.yellow;
+                    break;
+                case >= 80 and < 130:
+                    pingTMP.color = Color.yellow + Color.red;
+                    break;
+                case >= 130:
+                    pingTMP.color = Color.red;
                     break;
             }
         }

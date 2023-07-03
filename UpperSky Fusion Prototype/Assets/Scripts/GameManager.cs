@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerController> connectedPlayers;
 
+    public bool gameIsStarted;
+
     public enum EntityType
      {
          Unit,
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
              if (connectedPlayers.Count == expectedNumberOfPlayers)
              {
                  _worldManager.CallWorldGeneration(expectedNumberOfPlayers);
+                 gameIsStarted = true;
              }
          }
      }

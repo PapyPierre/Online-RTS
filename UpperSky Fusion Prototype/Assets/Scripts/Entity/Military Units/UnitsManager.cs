@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using World;
+using World.Island;
 
 namespace Entity.Military_Units
 {
@@ -8,6 +10,7 @@ namespace Entity.Military_Units
     {
         public static UnitsManager Instance;
         private GameManager _gameManager;
+        private WorldManager _worldManager;
 
         public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
@@ -16,7 +19,7 @@ namespace Entity.Military_Units
 
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
-
+        
         public enum AllUnitsEnum
         {
           Darwin = 0, 
@@ -30,6 +33,8 @@ namespace Entity.Military_Units
         
         public float distToTargetToStop;
         public float flyingHeightOfUnits;
+
+        public float distUnitToIslandToColonise;
 
         private void Awake()
         {
@@ -45,7 +50,9 @@ namespace Entity.Military_Units
         private void Start()
         {
             _gameManager = GameManager.Instance;
+            _worldManager = WorldManager.Instance;
         }
+        
 
         public void SelectUnit(BaseUnit unit)
         {
@@ -55,12 +62,21 @@ namespace Entity.Military_Units
       
         public void UnSelectAllUnits()
         {
-            foreach (var unit in currentlySelectedUnits)
+            foreach (BaseUnit unit in currentlySelectedUnits)
             {
                 unit.SetActiveSelectionCircle(false);
             }
       
             currentlySelectedUnits.Clear();
+            HideIslandsColoniseBtn();
+        }
+
+        private void HideIslandsColoniseBtn()
+        {
+            foreach (Island island in _worldManager.allIslands)
+            {
+                if (island.coloniseBtn.activeSelf) island.coloniseBtn.SetActive(false);
+            }
         }
         
         public void OrderToMoveUnitsTo(List<BaseUnit> unitsToMove, Vector3 positon)

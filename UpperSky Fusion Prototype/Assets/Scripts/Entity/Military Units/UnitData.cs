@@ -28,7 +28,7 @@ namespace Entity.Military_Units
                 ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float MovementSpeed { get; private set; }
         
-        [field: Header("Movement Data"), SerializeField, 
+        [field: SerializeField, 
                 ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float AngularSpeed { get; private set; }
 
@@ -62,6 +62,27 @@ namespace Entity.Military_Units
         
         [field: SerializeField] 
         public GameManager.EntityType TargetableEntityType { get; private set; }
+
+        #endregion
+        
+        /// Base Status Section -------------------------------------------------------------------------
+
+        #region Base Status
+
+        [field: Header("Base Unit Status"),  SerializeField]
+        public bool IsBaseColonizer { get; private set; }
+        
+        [field: SerializeField] 
+        public bool IsBaseCamouflaged { get; private set; }
+        
+        [field: SerializeField] 
+        public float BaseRegeneration { get; private set; }
+       
+        [field: SerializeField] 
+        public float BaseAcid { get; private set; }
+        
+        [field: SerializeField] 
+        public float BaseParasite { get; private set; }
 
         #endregion
 

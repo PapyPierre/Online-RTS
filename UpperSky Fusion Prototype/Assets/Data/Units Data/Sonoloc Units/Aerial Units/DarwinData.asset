@@ -20,7 +20,7 @@ MonoBehaviour:
   <OrichalqueCost>k__BackingField: 1
   <ProductionTime>k__BackingField: 1
   <MaxHealthPoints>k__BackingField: 60
-  <ArmorPoints>k__BackingField: 5
+  <MaxArmorPoints>k__BackingField: 0
   <SupplyCost>k__BackingField: 1
   <Icon>k__BackingField: {fileID: 21300000, guid: 448073670b41b7b4db7ca0cdb10d8d82,
     type: 3}
@@ -34,3 +34,8 @@ MonoBehaviour:
   <ShootingRange>k__BackingField: 10
   <VisionRange>k__BackingField: 15
   <TargetableEntityType>k__BackingField: 2
+  <IsBaseColonizer>k__BackingField: 1
+  <IsBaseCamouflaged>k__BackingField: 0
+  <BaseRegeneration>k__BackingField: 0
+  <BaseAcid>k__BackingField: 0
+  <BaseParasite>k__BackingField: 0

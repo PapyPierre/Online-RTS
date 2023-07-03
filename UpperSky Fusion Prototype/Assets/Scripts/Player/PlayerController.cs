@@ -78,21 +78,21 @@ namespace Player
          else // Si au moins une unité est selectionné
          {
              if (mouseAboveThisUnit)  // Si la souris hover une unité
-            {
-               if (_isMajKeyPressed && mouseAboveThisUnit.Owner == this)
-               {
-                   _unitsManager.SelectUnit(mouseAboveThisUnit);
-               }
-               else
-               {
-                   _unitsManager.UnSelectAllUnits();
+             {
+                 if (_isMajKeyPressed && mouseAboveThisUnit.Owner == this)
+                 {
+                     _unitsManager.SelectUnit(mouseAboveThisUnit);
+                 }
+                 else
+                 {
+                     _unitsManager.UnSelectAllUnits();
       
-                  if (mouseAboveThisUnit.Owner == this)
-                  {
-                      _unitsManager.SelectUnit(mouseAboveThisUnit);
-                  }
-               }
-            }
+                     if (mouseAboveThisUnit.Owner == this)
+                     {
+                         _unitsManager.SelectUnit(mouseAboveThisUnit);
+                     }
+                 }
+             }
          }
         }
 

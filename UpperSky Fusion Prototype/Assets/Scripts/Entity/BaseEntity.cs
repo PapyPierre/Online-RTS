@@ -1,3 +1,4 @@
+using System;
 using Custom_UI.InGame_UI;
 using Entity.Military_Units;
 using Fusion;
@@ -36,7 +37,7 @@ namespace Entity
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
         }
-        
+
         protected void SetUpHealtAndArmor(EntityData data)
         {
             CurrentHealth = data.MaxHealthPoints;
@@ -64,7 +65,7 @@ namespace Entity
             if (CurrentHealth <= 0) DestroyEntity();
         }
         
-        private void DestroyEntity()
+        public void DestroyEntity()
         {
             gameObject.SetActive(false);
         }
