@@ -77,14 +77,14 @@ namespace World
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
            SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-               IslandTypesEnum.Starting, _gameManager.connectedPlayers[0]);
+               IslandTypesEnum.Basic, _gameManager.connectedPlayers[0]);
            
            for (int i = 0; i < _numberOfPlayers -1; i++) 
            {
                 _worldCenter.Rotate(Vector3.up, angle);
                 
               SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                  IslandTypesEnum.Starting, _gameManager.connectedPlayers[i + 1]);
+                  IslandTypesEnum.Basic, _gameManager.connectedPlayers[i + 1]);
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions

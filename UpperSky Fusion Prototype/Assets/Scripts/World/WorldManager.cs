@@ -22,8 +22,9 @@ namespace World
         [field: SerializeField] public int MaxBuildingsPerIslands { get; private set; }
         
         [HideInInspector] public List<Island.Island> allIslands = new();
-        public Dictionary<PlayerRef, int> PlayersIslandsCount;
 
+        [Header("Players")] 
+        public List<Color> playersColors;
 
         private void Awake()
         {
@@ -45,7 +46,6 @@ namespace World
     public enum IslandTypesEnum
     {
         Uninitialized,
-        Starting,
         Basic,
         Living,
         Mythic,
@@ -58,7 +58,6 @@ namespace World
     public class IslandTypesClass
     {
         public IslandTypesEnum type;
-        public Gradient colorGradient;
         [MinMaxSlider(0,100)] public Vector2 rarity;
     }
 }

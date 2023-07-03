@@ -67,7 +67,17 @@ namespace Entity
         
         public void DestroyEntity()
         {
-            gameObject.SetActive(false);
+            if (this is BaseUnit)
+            {
+                BaseUnit thisUnit = GetComponent<BaseUnit>();
+                
+                if (UnitsManager.currentlySelectedUnits.Contains(thisUnit))
+                {
+                    UnitsManager.currentlySelectedUnits.Remove(thisUnit);
+                }
+            }
+
+            Runner.Despawn(Object);
         }
     }
 }

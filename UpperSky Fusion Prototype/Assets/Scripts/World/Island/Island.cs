@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Entity.Military_Units;
 using Fusion;
@@ -13,14 +12,12 @@ namespace World.Island
         private GameManager _gameManager;
         private UnitsManager _unitsManager;
         
-        [Networked] public PlayerController Owner { get; set; }
+        [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
         
-        [Networked(OnChanged = nameof(NetworkTypeChanged))] public IslandTypesEnum Type { get; set; }
+        [Networked] public IslandTypesEnum Type { get; set; }
         
         [SerializeField] private MeshRenderer meshRenderer;
         public GameObject coloniseBtn;
-
-        private static List<Color> possibleIslandColors = new ();
 
         public int buildingsCount;
         public int localOrichalRessources;
@@ -30,11 +27,7 @@ namespace World.Island
             _worldManager = WorldManager.Instance;
             _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
-
-            foreach (var islandTypesClass in _worldManager.islandTypes)
-            {
-                possibleIslandColors.Add(islandTypesClass.colorGradient.Evaluate(0));
-            }
+            
             _worldManager.allIslands.Add(this);
             coloniseBtn.SetActive(false);
         }
@@ -67,18 +60,25 @@ namespace World.Island
             return false;
         }
         
-        private static void NetworkTypeChanged(Changed<Island> changed)
+        private static void OwnerChanged(Changed<Island> changed)
         {
-            changed.Behaviour.meshRenderer.material.color = possibleIslandColors[(int) changed.Behaviour.Type];
+            if (changed.Behaviour.Owner == null) return;
+
+            for (var i = 0; i < GameManager.Instance.connectedPlayers.Count; i++)
+            {
+                PlayerController player = GameManager.Instance.connectedPlayers[i];
+                if (player == changed.Behaviour.Owner)
+                {
+                    changed.Behaviour.meshRenderer.material.color = WorldManager.Instance.playersColors[i];
+                    return;
+                }
+            }
         }
 
         // Call from inspector
         public void Colonise()
         {
-            Object.RequestStateAuthority();
-            Owner = _gameManager.thisPlayer;
-            
-            //TODO Color in player color
+            RPC_ModifyOwner(_gameManager.thisPlayer);
 
             foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
             {
@@ -88,6 +88,13 @@ namespace World.Island
                     break;
                 }
             }
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_ModifyOwner(PlayerController newOwner)
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+            Owner = newOwner;
         }
     }
 }
