@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Entity.Military_Units;
 using Fusion;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace World.Island
 {
-    public class Island : NetworkBehaviour
+    public class Island : NetworkBehaviour, IStateAuthorityChanged
     {
         private WorldManager _worldManager;
         private GameManager _gameManager;
@@ -18,8 +19,9 @@ namespace World.Island
         
         [SerializeField] private MeshRenderer meshRenderer;
         public GameObject coloniseBtn;
+        private bool _colonise;
 
-        public int buildingsCount;
+        [Networked] public int BuildingsCount { get; set; }
         public int localOrichalRessources;
 
         public override void Spawned()
@@ -27,9 +29,24 @@ namespace World.Island
             _worldManager = WorldManager.Instance;
             _gameManager = GameManager.Instance;
             _unitsManager = UnitsManager.Instance;
-            
+
             _worldManager.allIslands.Add(this);
             coloniseBtn.SetActive(false);
+            
+            if (Owner is not null)
+            {
+                if (Owner == _gameManager.thisPlayer)
+                {
+                    Object.RequestStateAuthority();
+                }
+            }
+        }
+
+        public void Init(Transform parent, PlayerController owner, IslandTypesEnum type)
+        {
+            transform.parent = parent;
+            Owner = owner;
+            Type = type;
         }
 
         private void FixedUpdate() // Fixed for optimisation
@@ -39,16 +56,15 @@ namespace World.Island
 
         private bool CheckForColonizerUnits()
         {
-            if (_unitsManager.currentlySelectedUnits.Count is 0 || buildingsCount > 0) return false;
+            if (_unitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0) return false;
 
             foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
             {
                 if (unit.isColonizer && unit.Owner != Owner)
                 {
-                    var correctedPos = new Vector3(transform.position.x, 0, transform.position.z);
-                    var unitCorrectedPos = new Vector3(unit.transform.position.x, 0, unit.transform.position.z);
-
-                    var distToUnit = Vector3.Distance(correctedPos, unitCorrectedPos);
+                    var distToUnit = Vector3.Distance(
+                        CustomHelper.ReturnPosInTopDown(transform.position), 
+                        CustomHelper.ReturnPosInTopDown(unit.transform.position));
                     
                     if (distToUnit <= _unitsManager.distUnitToIslandToColonise)
                     {
@@ -74,27 +90,41 @@ namespace World.Island
                 }
             }
         }
-
+        
         // Call from inspector
-        public void Colonise()
+        public void CallForColonise()
         {
-            RPC_ModifyOwner(_gameManager.thisPlayer);
+            _colonise = true;
 
-            foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
+            if (Object.HasStateAuthority)
             {
-                if (unit.isColonizer)
-                {
-                    unit.DestroyEntity();
-                    break;
-                }
+                Colonise();
             }
+            else Object.RequestStateAuthority();
         }
         
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_ModifyOwner(PlayerController newOwner)
+        public void StateAuthorityChanged()
         {
-            // The code inside here will run on the client which owns this object (has state and input authority).
-            Owner = newOwner;
+            Colonise();
+        }
+
+        private void Colonise()
+        {
+            if (_colonise)
+            { 
+                Owner = _gameManager.thisPlayer;
+
+                foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
+                {
+                    if (unit.isColonizer)
+                    {
+                        unit.DestroyEntity();
+                        break;
+                    }
+                }
+
+                _colonise = false;
+            }
         }
     }
 }

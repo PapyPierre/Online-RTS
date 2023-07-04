@@ -1,32 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
-using RTS_Cam;
 
-[RequireComponent(typeof(RTS_Camera))]
-public class TargetSelector : MonoBehaviour 
+namespace Package_Placeholder.RTS_Camera.Demo
 {
-    private RTS_Camera cam;
-    private new Camera camera;
-    public string targetsTag;
-
-    private void Start()
+    [RequireComponent(typeof(RTS_Cam.RTS_Camera))]
+    public class TargetSelector : MonoBehaviour 
     {
-        cam = gameObject.GetComponent<RTS_Camera>();
-        camera = gameObject.GetComponent<Camera>();
-    }
+        private RTS_Cam.RTS_Camera _cam;
+        private Camera _camera;
+        public string targetsTag;
 
-    private void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
+        private void Start()
         {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+            _cam = gameObject.GetComponent<RTS_Cam.RTS_Camera>();
+            _camera = gameObject.GetComponent<Camera>();
+        }
+
+        private void Update()
+        {
+            if(Input.GetMouseButtonDown(0))
             {
-                if (hit.transform.CompareTag(targetsTag))
-                    cam.SetTarget(hit.transform);
-                else
-                    cam.ResetTarget();
+                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if(Physics.Raycast(ray, out hit))
+                {
+                    if (hit.transform.CompareTag(targetsTag))
+                        _cam.SetTarget(hit.transform);
+                    else
+                        _cam.ResetTarget();
+                }
             }
         }
     }

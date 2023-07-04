@@ -6,15 +6,18 @@ using Fusion;
 using NaughtyAttributes;
 using Player;
 using UnityEngine;
+using World.Island;
 
 namespace Entity.Buildings
 {
     public class BaseBuilding : BaseEntity
     {
-        [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
-        
         private BuildingsManager _buildingsManager;
         private UIManager _uiManager;
+        
+        [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
+
+        public bool isOpen;
 
         private float _tempMatToGenerate;
         private float _tempOrichalqueToGenerate;
@@ -22,7 +25,7 @@ namespace Entity.Buildings
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
         [HideInInspector] public float timeLeftToForm;
 
-        private bool _mouseOverThisBuilding;
+        public Island myIsland;
 
         public override void Spawned()
         {
@@ -34,9 +37,10 @@ namespace Entity.Buildings
             _uiManager = UIManager.Instance;
         }
 
-        public void Init(PlayerController owner)
+        public void Init(PlayerController owner, Island island)
         {
             Owner = owner;
+            myIsland = island;
             
             if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
@@ -53,10 +57,11 @@ namespace Entity.Buildings
         {
             if (Data.IsFormationBuilding)
             {
-                if (_mouseOverThisBuilding && PlayerIsOwner())
+                if (MouseAboveThisEntity() && PlayerIsOwner())
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
+                        isOpen = true;
                         _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
                         UnitsManager.UnSelectAllUnits();
                     }
@@ -127,8 +132,7 @@ namespace Entity.Buildings
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
             obj.GetComponent<BaseUnit>().Owner = Owner;
-            obj.GetComponent<BaseUnit>().Colorize();
-            
+
             if (FormationQueue.Count > 0)
             {
                 timeLeftToForm = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
@@ -143,7 +147,7 @@ namespace Entity.Buildings
 
             if (FormationQueue.Count > 0)
             {
-                if (_uiManager.CurrentlyOpenFormationBuilding == this)
+                if (_uiManager.CurrentlyOpenBuilding == this)
                 {
                     UpdateFormationQueueSliderWithNewValue();
                 }
@@ -159,14 +163,21 @@ namespace Entity.Buildings
             _uiManager.UpdateFormationQueueSlider(timeSpentOnTotalTime);
         }
         
-        private void OnMouseEnter()
+        protected override void OnMouseEnter()
         {
-            _mouseOverThisBuilding = true;
+            base.OnMouseEnter();
+            
+            if (PlayerIsOwner() && Data.IsFormationBuilding)
+            {
+                SetActiveSelectionCircle(true);
+            }
         }
-
-        private void OnMouseExit()
+        
+        protected override void OnMouseExit()
         {
-            _mouseOverThisBuilding = false;
+            base.OnMouseExit();
+            
+            if (PlayerIsOwner() && !isOpen) SetActiveSelectionCircle(false);
         }
     }
 }

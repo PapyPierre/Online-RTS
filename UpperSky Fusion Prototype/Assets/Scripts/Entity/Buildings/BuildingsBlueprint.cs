@@ -34,7 +34,7 @@ namespace Entity.Buildings
             Island island = _hit.collider.GetComponentInParent<Island>();
 
             if (island.Owner != _gameManager.thisPlayer
-                || island.buildingsCount >= _buildingsManager.MaxBuildingsPerIslands)
+                || island.BuildingsCount >= _buildingsManager.MaxBuildingsPerIslands)
             {
                 _isBuildPositionFree = false;
             }
@@ -57,9 +57,8 @@ namespace Entity.Buildings
                     Debug.Log("can't build there");
                     return;
                 }
-
-                island.buildingsCount++;
-                _buildingsManager.BuildBuilding((int) thisBuilding, transform.position, transform.rotation);
+                
+                _buildingsManager.BuildBuilding((int) thisBuilding, transform.position, transform.rotation, island);
                 Destroy(gameObject);
             }
 

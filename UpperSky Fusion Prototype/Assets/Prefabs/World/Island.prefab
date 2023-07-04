@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5589878511487592379}
         m_TargetAssemblyTypeName: World.Island.Island, Assembly-CSharp
-        m_MethodName: Colonise
+        m_MethodName: CallForColonise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

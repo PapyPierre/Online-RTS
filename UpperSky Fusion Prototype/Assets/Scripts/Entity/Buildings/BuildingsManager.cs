@@ -3,6 +3,7 @@ using Custom_UI.InGame_UI;
 using Fusion;
 using Player;
 using UnityEngine;
+using World.Island;
 
 namespace Entity.Buildings
 {
@@ -85,7 +86,7 @@ namespace Entity.Buildings
             else Debug.Log("not enough ressources");
         }
 
-        public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot)
+        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, Island island)
         {          
             PlayerController player = _gameManager.thisPlayer;
 
@@ -95,15 +96,19 @@ namespace Entity.Buildings
             var oriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
 
+            island.BuildingsCount++;
+
             _uiManager.ShowOrHideBuildMenu();
             _uiManager.HideInfobox();
 
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, _gameManager.thisPlayer.Object.InputAuthority);
             
-            obj.GetComponent<BaseBuilding>().Init(player);
+            obj.GetComponent<BaseBuilding>().Init(player, island);
            
             haveBlueprintInHand = false;
+            
+            return obj;
         }
     }
 }

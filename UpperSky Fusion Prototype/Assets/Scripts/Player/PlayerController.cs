@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Custom_UI;
+using Entity;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
@@ -20,7 +22,7 @@ namespace Player
         
         [HideInInspector] public PlayerRessources ressources;
         
-        [HideInInspector] public BaseUnit mouseAboveThisUnit;
+        [HideInInspector] public BaseEntity mouseAboveThisEntity;
         private bool _isMajKeyPressed;
 
         [Header("Cameras")]
@@ -67,29 +69,35 @@ namespace Player
         {
          if (_unitsManager.currentlySelectedUnits.Count is 0) // Si aucune unité n'est sélectionné 
          {
-             if (mouseAboveThisUnit != null)
+             if (mouseAboveThisEntity)
              {
-                 if (mouseAboveThisUnit.Owner == this)
+                 if (mouseAboveThisEntity is BaseUnit unit)
                  {
-                     _unitsManager.SelectUnit(mouseAboveThisUnit);
+                     if (mouseAboveThisEntity.Owner == this)
+                     {
+                         _unitsManager.SelectUnit(unit);
+                     }
                  }
              }
          }
          else // Si au moins une unité est selectionné
          {
-             if (mouseAboveThisUnit)  // Si la souris hover une unité
+             if (mouseAboveThisEntity)  // Si la souris hover une unité
              {
-                 if (_isMajKeyPressed && mouseAboveThisUnit.Owner == this)
+                 if (mouseAboveThisEntity is BaseUnit unit)
                  {
-                     _unitsManager.SelectUnit(mouseAboveThisUnit);
-                 }
-                 else
-                 {
-                     _unitsManager.UnSelectAllUnits();
-      
-                     if (mouseAboveThisUnit.Owner == this)
+                     if (_isMajKeyPressed && mouseAboveThisEntity.Owner == this)
                      {
-                         _unitsManager.SelectUnit(mouseAboveThisUnit);
+                         _unitsManager.SelectUnit(unit);
+                     }
+                     else
+                     {
+                         _unitsManager.UnSelectAllUnits();
+      
+                         if (mouseAboveThisEntity.Owner == this)
+                         {
+                             _unitsManager.SelectUnit(unit);
+                         }
                      }
                  }
              }
@@ -102,25 +110,25 @@ namespace Player
 
             if (_unitsManager.currentlySelectedUnits.Count > 0) // Si au moins une unité est sélectionné 
             {
-                if (mouseAboveThisUnit)
+                if (mouseAboveThisEntity)
                 {
                     //Si l'unité qui est hover est ennemie, l'attaquer
-                    if (mouseAboveThisUnit.Owner != this)
+                    if (mouseAboveThisEntity.Owner != this)
                     {
                         foreach (var unit in  _unitsManager.currentlySelectedUnits)
                         {
-                            unit.targetedUnit = mouseAboveThisUnit;
+                            unit.targetedEntity = mouseAboveThisEntity;
                         }
                         
                         _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits,
-                            mouseAboveThisUnit.transform.position);
+                            mouseAboveThisEntity.transform.position);
                     }
                 }
                 else
                 {
                     foreach (var unit in  _unitsManager.currentlySelectedUnits)
                     {
-                        unit.targetedUnit = null;
+                        unit.targetedEntity = null;
                     }
                     
                     Ray ray = myCam.ScreenPointToRay((Input.mousePosition));

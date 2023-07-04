@@ -1,9 +1,11 @@
-using System;
+using System.Collections.Generic;
 using Custom_UI.InGame_UI;
+using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
 using Player;
 using UnityEngine;
+using World;
 
 namespace Entity
 {
@@ -12,8 +14,9 @@ namespace Entity
         protected UnitsManager UnitsManager;
         protected GameManager GameManager;
 
-        [field: SerializeField] [Networked] public PlayerController Owner { get; set; }
+        [field: SerializeField] [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
         [SerializeField] protected GameObject selectionCircle;
+        [SerializeField] private  List<MeshRenderer> meshToColor;
 
         #region Networked Health & Health Bar
         [field: SerializeField] [Networked(OnChanged = nameof(CurrentHealthChanged))]
@@ -37,6 +40,24 @@ namespace Entity
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
         }
+        
+        private static void OwnerChanged(Changed<BaseEntity> changed)
+        {
+            if (changed.Behaviour.Owner == null) return;
+            
+            for (var i = 0; i < GameManager.Instance.connectedPlayers.Count; i++)
+            {
+                PlayerController player = GameManager.Instance.connectedPlayers[i]; 
+                if (player == changed.Behaviour.Owner)
+                { 
+                    foreach (var meshRenderer in changed.Behaviour.meshToColor)
+                    {
+                        meshRenderer.material.color = WorldManager.Instance.playersColors[i];
+                    }
+                    return;
+                }
+            }
+        }
 
         protected void SetUpHealtAndArmor(EntityData data)
         {
@@ -52,8 +73,13 @@ namespace Entity
             return Owner == GameManager.thisPlayer;
         }
         
+        protected bool MouseAboveThisEntity()
+        {
+            return GameManager.thisPlayer.mouseAboveThisEntity == this;
+        }
+        
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor)
+        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor, BaseUnit shooter)
         {
             // The code inside here will run on the client which owns this object (has state and input authority).
 
@@ -66,23 +92,49 @@ namespace Entity
                 CurrentHealth -= x;
                 CurrentArmor = 0;
             }
-            
-            if (CurrentHealth <= 0) DestroyEntity();
+
+            if (CurrentHealth <= 0)
+            {
+                shooter.targetedEntity = null;
+                shooter.targetedUnitIsInRange = false;
+                DestroyEntity();
+            }
         }
         
         public void DestroyEntity()
         {
-            if (this is BaseUnit)
+            if (MouseAboveThisEntity()) GameManager.thisPlayer.mouseAboveThisEntity = null;
+
+            if (this is BaseUnit unit)
             {
-                BaseUnit thisUnit = GetComponent<BaseUnit>();
-                
-                if (UnitsManager.currentlySelectedUnits.Contains(thisUnit))
+                if (UnitsManager.currentlySelectedUnits.Contains(unit))
                 {
-                    UnitsManager.currentlySelectedUnits.Remove(thisUnit);
+                    UnitsManager.currentlySelectedUnits.Remove(unit);
                 }
+            }
+            else if (this is BaseBuilding building)
+            {
+                building.myIsland.BuildingsCount--; //Possible erreur car pas la state authority, alors faire une RPC
             }
 
             Runner.Despawn(Object);
         }
+        
+        #region Selection
+        protected virtual void OnMouseEnter()
+        {
+            GameManager.thisPlayer.mouseAboveThisEntity = this;
+        }
+        
+        protected virtual void OnMouseExit()
+        {
+            GameManager.thisPlayer.mouseAboveThisEntity = null;
+        }
+        
+        public void SetActiveSelectionCircle(bool value)
+        {
+            selectionCircle.SetActive(value);
+        }
+        #endregion
     }
 }

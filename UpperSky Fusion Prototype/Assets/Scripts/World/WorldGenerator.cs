@@ -144,12 +144,14 @@ namespace World
                 Quaternion.identity,
                 owner != null ? owner.Object.StateAuthority : PlayerRef.None);
 
-            if (owner != null) _buildingsManager.BuildBuilding(13, position, Quaternion.identity);
-
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
-            islandComponent.transform.parent = _worldCenter;
-            islandComponent.Owner = owner;
-            islandComponent.Type = type;
+            islandComponent.Init(_worldCenter,owner,type);
+
+            if (owner != null)
+            {
+                var hq = _buildingsManager.BuildBuilding(13, position, Quaternion.identity, islandComponent);
+                hq.transform.parent = _worldCenter;
+            }
         }
 
         private Vector3 NewIslandPos()
