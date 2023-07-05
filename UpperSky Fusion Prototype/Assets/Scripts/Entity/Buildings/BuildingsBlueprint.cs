@@ -1,3 +1,6 @@
+using System.Collections;
+using Custom_UI;
+using Custom_UI.InGame_UI;
 using UnityEngine;
 using World.Island;
 
@@ -7,9 +10,14 @@ namespace Entity.Buildings
     {
         private BuildingsManager _buildingsManager;
         private GameManager _gameManager;
+        private UIManager _uiManager;
 
         private RaycastHit _hit;
         private bool _isBuildPositionFree = true;
+
+        private Island _islandToBuildOn;
+        private bool _isBuilding;
+       [SerializeField] private ProductionBar productionBar;
    
         [SerializeField] private BuildingsManager.AllBuildingsEnum thisBuilding;
         [SerializeField] private Renderer[] renderers;
@@ -18,9 +26,35 @@ namespace Entity.Buildings
         {        
             _gameManager = GameManager.Instance;
             _buildingsManager = BuildingsManager.Instance;
+            productionBar.gameObject.SetActive(false);
+            _uiManager = UIManager.Instance;
         }
 
         private void Update()
+        {
+            if (!_isBuilding) MoveAndColorBlueprint();
+
+            // Start construction
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!_isBuildPositionFree)
+                {
+                    Debug.Log("can't build there");
+                    return;
+                }
+
+                if (!_isBuilding) StartCoroutine(StartBuilding());
+            }
+
+            // Cancel construction
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (_isBuilding) return;
+                CancelBlueprint();
+            }
+        }
+
+        private void MoveAndColorBlueprint()
         {
             Ray ray = _gameManager.thisPlayer.myCam.ScreenPointToRay((Input.mousePosition));
             
@@ -31,10 +65,10 @@ namespace Entity.Buildings
             
             if (_hit.collider is null) return;
 
-            Island island = _hit.collider.GetComponentInParent<Island>();
+            _islandToBuildOn = _hit.collider.GetComponentInParent<Island>();
 
-            if (island.Owner != _gameManager.thisPlayer
-                || island.BuildingsCount >= _buildingsManager.MaxBuildingsPerIslands)
+            if (_islandToBuildOn.Owner != _gameManager.thisPlayer
+                || _islandToBuildOn.BuildingsCount >= _buildingsManager.MaxBuildingsPerIslands)
             {
                 _isBuildPositionFree = false;
             }
@@ -43,31 +77,31 @@ namespace Entity.Buildings
                 _isBuildPositionFree = !Physics.Raycast(ray, out _hit, 5000, _buildingsManager.buildingLayer);
             }
             
-            foreach (var renderer in renderers)
+            foreach (var renderer1 in renderers)
             {
-                renderer.material.color = _isBuildPositionFree ? 
+                renderer1.material.color = _isBuildPositionFree ? 
                     _buildingsManager.BlueprintPossibleBuildColor : _buildingsManager.BlueprintOverlapColor;
             }
+        }
 
-            // Start construction
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (!_isBuildPositionFree)
-                {
-                    Debug.Log("can't build there");
-                    return;
-                }
-                
-                _buildingsManager.BuildBuilding((int) thisBuilding, transform.position, transform.rotation, island);
-                Destroy(gameObject);
-            }
+        private IEnumerator StartBuilding()
+        {
+            _isBuilding = true;
+            float buildingTime = _buildingsManager.allBuildingsDatas[(int) thisBuilding].ProductionTime;
+            productionBar.gameObject.SetActive(true);
+            productionBar.Init(buildingTime);
+            _uiManager.ShowOrHideBuildMenu();
+            _uiManager.HideInfobox();
+            yield return new WaitForSeconds(buildingTime);
+            _buildingsManager.BuildBuilding((int) thisBuilding, transform.position, transform.rotation, _islandToBuildOn);
+            _isBuilding = false;
+            Destroy(gameObject);
+        }
 
-            // Cancel construction
-            if (Input.GetMouseButtonDown(1))
-            {
-                _buildingsManager.haveBlueprintInHand = false;
-                Destroy(gameObject);
-            }
+        private void CancelBlueprint()
+        {
+            _buildingsManager.haveBlueprintInHand = false;
+            Destroy(gameObject);
         }
     }
 }

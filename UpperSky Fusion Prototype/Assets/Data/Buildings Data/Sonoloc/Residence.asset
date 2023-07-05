@@ -19,12 +19,13 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: 
   <MaterialCost>k__BackingField: 60
   <OrichalqueCost>k__BackingField: 0
+  <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 80
-  <ArmorPoints>k__BackingField: 0
+  <MaxArmorPoints>k__BackingField: 0
   <ThisBuilding>k__BackingField: 2
-  <BuildingTime>k__BackingField: 10
   <UnlockedBuildings>k__BackingField: 03000000
   <IsFormationBuilding>k__BackingField: 0
+  <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
   <GeneratedMaterialPerSeconds>k__BackingField: 0
   <GeneratedOrichalquePerSeconds>k__BackingField: 0

@@ -118,6 +118,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
   selectionCircle: {fileID: 6580781098733035726}
+  meshToColor: []
   _CurrentHealth: 0
   healthBar: {fileID: 7655233838947754540}
   _CurrentArmor: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
     type: 2}
   isOpen: 0
   timeLeftToForm: 0
+  myIsland: {fileID: 0}
 --- !u!1 &2580673168563823367
 GameObject:
   m_ObjectHideFlags: 0

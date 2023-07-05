@@ -111,6 +111,8 @@ namespace Entity
                 {
                     UnitsManager.currentlySelectedUnits.Remove(unit);
                 }
+
+                GameManager.thisPlayer.ressources.CurrentSupply -= unit.Data.SupplyCost;
             }
             else if (this is BaseBuilding building)
             {

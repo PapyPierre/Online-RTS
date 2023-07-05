@@ -19,6 +19,7 @@ namespace Custom_UI
         
         [Header("Main Menu Variables"), Required()] 
         public GameObject mainMenu;
+        [SerializeField] private GameObject menuCamera;
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
         [Required()] public TextMeshProUGUI fpsTMP;
@@ -128,6 +129,7 @@ namespace Custom_UI
             {
                 playerSpawner.SpawnPlayers(inputFieldRoomName.text);
                 mainMenu.SetActive(false);
+                menuCamera.SetActive(false);
                 inGameUI.SetActive(true);
             }
             else
@@ -288,7 +290,7 @@ namespace Custom_UI
                 UpdateFormationQueueSlider(0);
             }
         }
-
+        
         public void UpdateFormationQueueSlider(float newValue)
         {
             switch (newValue)

@@ -20,9 +20,9 @@ MonoBehaviour:
     to be build
   <MaterialCost>k__BackingField: 40
   <OrichalqueCost>k__BackingField: 0
-  <ProductionTime>k__BackingField: 1
+  <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 70
-  <ArmorPoints>k__BackingField: 0
+  <MaxArmorPoints>k__BackingField: 0
   <ThisBuilding>k__BackingField: 6
   <UnlockedBuildings>k__BackingField: 
   <IsFormationBuilding>k__BackingField: 0

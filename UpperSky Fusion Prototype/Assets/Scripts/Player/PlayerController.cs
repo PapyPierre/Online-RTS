@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using Custom_UI;
 using Entity;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 using World;
 
@@ -15,6 +15,7 @@ namespace Player
         private UnitsManager _unitsManager;
         private GameManager _gameManager;
         private WorldManager _worldManager;
+        private RectangleSelection _rectangleSelection;
 
         [Networked] private bool HasBeenTpToStartingIsland{ get; set; }
 
@@ -36,6 +37,7 @@ namespace Player
             _unitsManager = UnitsManager.Instance;
             _gameManager = GameManager.Instance;
             _worldManager = WorldManager.Instance;
+            _rectangleSelection = RectangleSelection.Instance;
             
             ressources = GetComponent<PlayerRessources>();
             
@@ -62,46 +64,62 @@ namespace Player
             
             if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
             
+            if (Input.GetMouseButton(0)) OnLeftButtonHold();
+            
+            if (Input.GetMouseButtonUp(0)) OnLeftButtonUp();
+                
             if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
         } 
         
         private void OnLeftButtonClick()
         {
-         if (_unitsManager.currentlySelectedUnits.Count is 0) // Si aucune unité n'est sélectionné 
-         {
-             if (mouseAboveThisEntity)
-             {
-                 if (mouseAboveThisEntity is BaseUnit unit)
+            _rectangleSelection.OnLeftButtonDown_RectSelection();
+
+            if (_unitsManager.currentlySelectedUnits.Count is 0) // Si aucune unité n'est sélectionné 
+            {
+                 if (mouseAboveThisEntity)
                  {
-                     if (mouseAboveThisEntity.Owner == this)
+                     if (mouseAboveThisEntity is BaseUnit unit)
                      {
-                         _unitsManager.SelectUnit(unit);
-                     }
-                 }
-             }
-         }
-         else // Si au moins une unité est selectionné
-         {
-             if (mouseAboveThisEntity)  // Si la souris hover une unité
-             {
-                 if (mouseAboveThisEntity is BaseUnit unit)
-                 {
-                     if (_isMajKeyPressed && mouseAboveThisEntity.Owner == this)
-                     {
-                         _unitsManager.SelectUnit(unit);
-                     }
-                     else
-                     {
-                         _unitsManager.UnSelectAllUnits();
-      
                          if (mouseAboveThisEntity.Owner == this)
                          {
                              _unitsManager.SelectUnit(unit);
                          }
                      }
                  }
-             }
-         }
+            }
+            else // Si au moins une unité est selectionné
+            {
+                if (mouseAboveThisEntity)  // Si la souris hover une unité
+                {
+                    if (mouseAboveThisEntity is BaseUnit unit)
+                    {
+                        if (_isMajKeyPressed && mouseAboveThisEntity.Owner == this)
+                        {
+                            _unitsManager.SelectUnit(unit);
+                        }
+                        else
+                        {
+                            _unitsManager.UnSelectAllUnits();
+      
+                            if (mouseAboveThisEntity.Owner == this)
+                            {
+                                _unitsManager.SelectUnit(unit);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OnLeftButtonHold()
+        {
+            _rectangleSelection.OnLeftButtonHold_RectSelection();
+        }
+
+        private void OnLeftButtonUp()
+        {
+            _rectangleSelection.OnLeftButtonUp_RectSelection(myCam);
         }
 
         private void OnRightButtonClick()

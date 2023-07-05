@@ -98,9 +98,6 @@ namespace Entity.Buildings
 
             island.BuildingsCount++;
 
-            _uiManager.ShowOrHideBuildMenu();
-            _uiManager.HideInfobox();
-
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, _gameManager.thisPlayer.Object.InputAuthority);
             

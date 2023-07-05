@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 1277738903980074552}
   - component: {fileID: 3443202259229210024}
   - component: {fileID: 3206066284467844723}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,9 +308,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8950515510027146334}
   - component: {fileID: 1195354757100965561}
-  - component: {fileID: 7970463162795438652}
   - component: {fileID: 5761484485597290140}
   - component: {fileID: 2645220574719709856}
+  - component: {fileID: 7154742858225517015}
+  - component: {fileID: -3788620058330907333}
   m_Layer: 0
   m_Name: Beethoven
   m_TagString: Unit
@@ -357,10 +358,10 @@ MonoBehaviour:
     RawGuidValue: 1ba7242da4a9c70448ae318fae062075
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 7970463162795438652}
   - {fileID: 5761484485597290140}
+  - {fileID: -3788620058330907333}
   SimulationBehaviours: []
---- !u!114 &7970463162795438652
+--- !u!114 &5761484485597290140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,7 +370,66 @@ MonoBehaviour:
   m_GameObject: {fileID: 6109549920716369441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: c5daac6da56694f4fa8004186343b309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _Owner: {fileID: 0}
+  selectionCircle: {fileID: 9193866668383929244}
+  meshToColor:
+  - {fileID: 3814354066289944227}
+  _CurrentHealth: 0
+  healthBar: {fileID: 1144968813908750980}
+  _CurrentArmor: 0
+  armorBar: {fileID: 5443930881133200454}
+  <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
+    type: 2}
+  targetedEntity: {fileID: 0}
+  targetedUnitIsInRange: 0
+  isColonizer: 0
+  isCamouflaged: 0
+  currentRegeneration: 0
+  currentAcid: 0
+  currentParasite: 0
+--- !u!135 &2645220574719709856
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109549920716369441}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7154742858225517015
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109549920716369441}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &-3788620058330907333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109549920716369441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1710889294, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
@@ -388,49 +448,6 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
---- !u!114 &5761484485597290140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6109549920716369441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5daac6da56694f4fa8004186343b309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  _Owner: {fileID: 0}
-  selectionCircle: {fileID: 9193866668383929244}
-  _CurrentHealth: 0
-  healthBar: {fileID: 1144968813908750980}
-  _CurrentArmor: 0
-  armorBar: {fileID: 5443930881133200454}
-  <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
-    type: 2}
-  targetedUnit: {fileID: 0}
-  targetedUnitIsInRange: 0
-  meshToColor:
-  - {fileID: 3814354066289944227}
-  isColonizer: 0
-  isCamouflaged: 0
-  currentRegeneration: 0
-  currentAcid: 0
-  currentParasite: 0
---- !u!135 &2645220574719709856
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6109549920716369441}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6720093931045292201
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,10 +632,35 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3672333238029140559, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914759065227742636, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7156675771770775030, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156675771770775030, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7453837780040660990, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840453673626113177, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8511589639318175335, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
@@ -767,10 +809,35 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3672333238029140559, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914759065227742636, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7156675771770775030, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_Name
       value: ArmorBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156675771770775030, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7453837780040660990, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840453673626113177, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8203128904746351794, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
