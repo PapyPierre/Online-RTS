@@ -53,13 +53,10 @@ namespace Entity.Military_Units
         
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float RealodTime { get; private set; }
-        
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
+
+        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
         public float ShootingRange { get; private set; }
-        
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
-        public float VisionRange { get; private set; }
-        
+
         [field: SerializeField] 
         public GameManager.EntityType TargetableEntityType { get; private set; }
 

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8297680352280606113}
   - component: {fileID: 90765806400018113}
+  - component: {fileID: -7748743382615566053}
+  - component: {fileID: -3912940584542762410}
   m_Layer: 2
   m_Name: Baliste Preview
   m_TagString: Building
@@ -50,6 +52,35 @@ MonoBehaviour:
   thisBuilding: 6
   renderers:
   - {fileID: 7309726382234918657}
+--- !u!65 &-7748743382615566053
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-3912940584542762410
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5865933718332622716
 GameObject:
   m_ObjectHideFlags: 0

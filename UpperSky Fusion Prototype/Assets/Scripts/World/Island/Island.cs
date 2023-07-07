@@ -1,5 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using AOSFogWar.Used_Scripts;
+using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
 using Player;
@@ -17,12 +18,15 @@ namespace World.Island
         
         [Networked] public IslandTypesEnum Type { get; set; }
         
+        [SerializeField] private GameObject graphObject;
+        [SerializeField] private GameObject canvas;
+
         [SerializeField] private MeshRenderer meshRenderer;
         public GameObject coloniseBtn;
         private bool _colonise;
 
+        [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
         [Networked] public int BuildingsCount { get; set; }
-        public int localOrichalRessources;
 
         public override void Spawned()
         {
@@ -32,7 +36,7 @@ namespace World.Island
 
             _worldManager.allIslands.Add(this);
             coloniseBtn.SetActive(false);
-            
+
             if (Owner is not null)
             {
                 if (Owner == _gameManager.thisPlayer)
@@ -40,6 +44,8 @@ namespace World.Island
                     Object.RequestStateAuthority();
                 }
             }
+            
+            GetComponent<FogAgent_Island>().Init(graphObject, canvas);
         }
 
         public void Init(Transform parent, PlayerController owner, IslandTypesEnum type)
@@ -96,10 +102,7 @@ namespace World.Island
         {
             _colonise = true;
 
-            if (Object.HasStateAuthority)
-            {
-                Colonise();
-            }
+            if (Object.HasStateAuthority) Colonise();
             else Object.RequestStateAuthority();
         }
         

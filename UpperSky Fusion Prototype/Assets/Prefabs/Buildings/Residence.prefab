@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
+  - component: {fileID: -3380950026181699153}
   m_Layer: 8
   m_Name: Residence
   m_TagString: Building
@@ -118,14 +119,34 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
   selectionCircle: {fileID: 3504463032142398215}
+  meshToColor: []
   _CurrentHealth: 0
   healthBar: {fileID: 5502966399250953895}
   _CurrentArmor: 0
   armorBar: {fileID: 4837738909836354158}
+  graphObject: {fileID: 8510112358408295226}
+  canvas: {fileID: 6012755007448821012}
   <Data>k__BackingField: {fileID: 11400000, guid: 47c128cd75a8e7b40bc9a2a8d9619aaa,
     type: 2}
   isOpen: 0
   timeLeftToForm: 0
+  myIsland: {fileID: 0}
+  isStartBuilding: 0
+--- !u!114 &-3380950026181699153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  keepVisible: 1
+  additionalRadius: 0
 --- !u!1 &3504463032142398215
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +618,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.022169784
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
@@ -764,7 +785,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.022169784
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}

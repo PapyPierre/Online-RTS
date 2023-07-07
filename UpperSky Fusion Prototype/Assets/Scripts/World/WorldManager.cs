@@ -14,7 +14,9 @@ namespace World
         public float innerBorderRadius;
         public float outerBorderRadius;
 
-        [Header("Islands")]
+        [Header("Islands"), SerializeField]
+        private int numberOfIslandsPerPlayer; 
+        [SerializeField] private int maxSpecialIslandsPerPlayer;
         public IslandTypesClass[] islandTypes;
         public NetworkPrefabRef islandPrefab;
         public float minDistBetweenIslands;
@@ -38,7 +40,7 @@ namespace World
 
         public void CallWorldGeneration(int numberOfPlayers)
         {
-            GetComponent<WorldGenerator>().GenerateWorld(numberOfPlayers);
+            GetComponent<WorldGenerator>().GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
         }
     }
 

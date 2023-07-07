@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private WorldManager _worldManager;
 
-    [HideInInspector] public PlayerController thisPlayer;
+    // Seiralized for debug
+    public PlayerController thisPlayer;
+    
     [SerializeField] private int expectedNumberOfPlayers;
 
     public List<PlayerController> connectedPlayers;

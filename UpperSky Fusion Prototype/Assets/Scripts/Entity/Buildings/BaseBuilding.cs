@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using AOSFogWar;
+using AOSFogWar.Used_Scripts;
 using Custom_UI;
 using Entity.Military_Units;
 using Fusion;
@@ -17,7 +19,7 @@ namespace Entity.Buildings
         
         [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
 
-        public bool isOpen;
+        [HideInInspector] public bool isOpen;
 
         private float _tempMatToGenerate;
         private float _tempOrichalqueToGenerate;
@@ -25,7 +27,9 @@ namespace Entity.Buildings
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
         [HideInInspector] public float timeLeftToForm;
 
-        public Island myIsland;
+        [HideInInspector] public Island myIsland;
+
+        public bool isStartBuilding;
 
         public override void Spawned()
         {
@@ -37,10 +41,19 @@ namespace Entity.Buildings
             _uiManager = UIManager.Instance;
         }
 
-        public void Init(PlayerController owner, Island island)
+        public void Init(Island buildOnThisIsland, bool startBuilding = false)
         {
-            Owner = owner;
-            myIsland = island;
+            Owner = buildOnThisIsland.Owner;
+            myIsland = buildOnThisIsland;
+            isStartBuilding = startBuilding;
+            
+            if (PlayerIsOwner())
+            {
+                if (!HasStateAuthority) Object.RequestStateAuthority();
+                var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
+                FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
+            }
+            else if (isStartBuilding) RPC_StartBuildingInit();
             
             if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
@@ -52,6 +65,16 @@ namespace Entity.Buildings
 
             StartCoroutine(CallEveryRealTimeSeconds());
         }
+        
+        [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
+        public void RPC_StartBuildingInit()
+        {
+            // The code inside here will run on the client which has input authority.
+
+            var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
+            FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
+        }
+        
 
         private void Update()
         {
@@ -131,8 +154,8 @@ namespace Entity.Buildings
             Vector3 spawnPos = new Vector3(myPos.x, UnitsManager.flyingHeightOfUnits, myPos.z);
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
-            obj.GetComponent<BaseUnit>().Owner = Owner;
-
+            obj.GetComponent<BaseUnit>().Init(Owner);
+            
             if (FormationQueue.Count > 0)
             {
                 timeLeftToForm = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;

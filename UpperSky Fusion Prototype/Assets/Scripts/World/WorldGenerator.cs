@@ -18,8 +18,10 @@ namespace World
         private Transform _worldCenter;
         
         private int _numberOfPlayers;
-        private int _numberOfIslands;
+        private int _numberOfIslandsPerPlayer;
         private int _maxSpecialIslands;
+        
+        private int _currentlyPlacedIslands;
         private int _currentlyPlacedSpecialIslands;
 
         private void Start()
@@ -29,18 +31,16 @@ namespace World
             _buildingsManager = BuildingsManager.Instance;
         }
         
-        public void GenerateWorld(int nbOfPlayers)
+        public void GenerateWorld(int nbOfPlayers, int nbOfIslandsPerPlayer, int maxSpecialIslandsPerPlayer)
         {
             _numberOfPlayers = nbOfPlayers;
-            _numberOfIslands = _numberOfPlayers * 3;
-    
-            // ReSharper disable once PossibleLossOfFraction
-            _maxSpecialIslands = _numberOfPlayers - Mathf.RoundToInt(_numberOfPlayers/4);
+            _numberOfIslandsPerPlayer = nbOfIslandsPerPlayer;
+            _maxSpecialIslands = maxSpecialIslandsPerPlayer * nbOfPlayers;
 
             CheckForReset();
 
-         _worldCenter = _gameManager.thisPlayer.Runner.Spawn(
-             worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
+            _worldCenter = _gameManager.thisPlayer.Runner.Spawn(
+                worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
 
             CalculatePlayersPosOnInnerBorder();
         }
@@ -117,7 +117,8 @@ namespace World
         
         private void SpawnOtherIslands()
         {
-            for (int i = 0; i < _numberOfIslands; i++)
+            int numberOfIslandToSpawn = _numberOfIslandsPerPlayer * _numberOfPlayers - _currentlyPlacedIslands;
+            for (int i = 0; i < numberOfIslandToSpawn; i++)
             {
                 if (_currentlyPlacedSpecialIslands < _maxSpecialIslands)
                 {
@@ -149,9 +150,11 @@ namespace World
 
             if (owner != null)
             {
-                var hq = _buildingsManager.BuildBuilding(13, position, Quaternion.identity, islandComponent);
-                hq.transform.parent = _worldCenter;
+                var hq = _buildingsManager.BuildBuilding(13, position, Quaternion.identity, islandComponent, true);
+                hq.transform.parent = islandComponent.transform;
             }
+            
+            _currentlyPlacedIslands++;
         }
 
         private Vector3 NewIslandPos()

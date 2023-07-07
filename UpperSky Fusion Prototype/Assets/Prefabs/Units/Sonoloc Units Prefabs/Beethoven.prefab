@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 2645220574719709856}
   - component: {fileID: 7154742858225517015}
   - component: {fileID: -3788620058330907333}
+  - component: {fileID: 1528447591526391597}
   m_Layer: 0
   m_Name: Beethoven
   m_TagString: Unit
@@ -382,6 +383,8 @@ MonoBehaviour:
   healthBar: {fileID: 1144968813908750980}
   _CurrentArmor: 0
   armorBar: {fileID: 5443930881133200454}
+  graphObject: {fileID: 2798725076067583124}
+  canvas: {fileID: 5041651456253078624}
   <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
     type: 2}
   targetedEntity: {fileID: 0}
@@ -448,6 +451,20 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &1528447591526391597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109549920716369441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  additionalRadius: 0
 --- !u!1 &6720093931045292201
 GameObject:
   m_ObjectHideFlags: 0

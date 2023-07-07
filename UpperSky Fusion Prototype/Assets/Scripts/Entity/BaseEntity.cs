@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using AOSFogWar;
+using AOSFogWar.Used_Scripts;
 using Custom_UI.InGame_UI;
 using Entity.Buildings;
 using Entity.Military_Units;
@@ -13,10 +15,15 @@ namespace Entity
     {
         protected UnitsManager UnitsManager;
         protected GameManager GameManager;
+        protected FogOfWar FogOfWar;
 
+        protected int FogRevealerIndex;
+
+        #region Ownership
         [field: SerializeField] [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
         [SerializeField] protected GameObject selectionCircle;
         [SerializeField] private  List<MeshRenderer> meshToColor;
+        #endregion
 
         #region Networked Health & Health Bar
         [field: SerializeField] [Networked(OnChanged = nameof(CurrentHealthChanged))]
@@ -35,10 +42,15 @@ namespace Entity
             => changed.Behaviour.armorBar.UpdateBar(changed.Behaviour.CurrentArmor);
         #endregion
 
+        [SerializeField] private GameObject graphObject;
+        [SerializeField] private GameObject canvas;
+
         public override void Spawned()
         {
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
+            FogOfWar = FogOfWar.Instance;
+            GetComponent<FogAgent>().Init(graphObject, canvas);
         }
         
         private static void OwnerChanged(Changed<BaseEntity> changed)
@@ -54,7 +66,6 @@ namespace Entity
                     {
                         meshRenderer.material.color = WorldManager.Instance.playersColors[i];
                     }
-                    return;
                 }
             }
         }
@@ -118,6 +129,8 @@ namespace Entity
             {
                 building.myIsland.BuildingsCount--; //Possible erreur car pas la state authority, alors faire une RPC
             }
+            
+            FogOfWar.RemoveFogRevealer(FogRevealerIndex);
 
             Runner.Despawn(Object);
         }

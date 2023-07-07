@@ -35,6 +35,9 @@ namespace Entity
         
         [field: SerializeField]
         public int MaxArmorPoints { get; private set; }
+        
+        [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")] 
+        public int SightRange { get; private set; }
         #endregion
         
         /// Function For Inspector Purpose -----------------------------------------------------------------------------

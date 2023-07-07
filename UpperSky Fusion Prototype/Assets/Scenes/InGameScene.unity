@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5666122, g: 0.574374, b: 0.5924849, a: 1}
+  m_AmbientSkyColor: {r: 0.5647059, g: 0.57254905, b: 0.5921569, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -594,6 +594,8 @@ MonoBehaviour:
   infoboxDescr: {fileID: 1679743243}
   infoboxMatCost: {fileID: 624356223}
   infoboxOriCost: {fileID: 630578320}
+  floatingText: {fileID: 5196983855412101582, guid: 2a8144bd2c74b694287037e66178d97e,
+    type: 3}
 --- !u!4 &49968403
 Transform:
   m_ObjectHideFlags: 0
@@ -2261,7 +2263,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.6
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2273,7 +2275,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -2304,7 +2306,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5500
+  m_ColorTemperature: 5861
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -4762,7 +4764,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &843633204
 GameObject:
@@ -6410,7 +6412,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 400
+  orthographic size: 300
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -6495,6 +6497,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &1142280753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142280755}
+  - component: {fileID: 1142280754}
+  m_Layer: 0
+  m_Name: FogWar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1142280754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142280753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5de54c084f472845b61ee9a97cb8a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogRevealers: []
+  levelMidPoint: {fileID: 1799386822}
+  fogRefreshRate: 1
+  fogPlaneHeight: 10
+  updateFogPlaneHeightInRealTime: 0
+  fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
+  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 1}
+  fogPlaneAlpha: 0.9
+  fogLerpSpeed: 1
+  fogPlaneTextureLerpTarget: {fileID: 0}
+  fogPlaneTextureLerpBuffer: {fileID: 0}
+  levelDataToLoad: {fileID: 4900000, guid: 9056310c403e79c4684d58503aaf6bc7, type: 3}
+  saveDataOnScan: 1
+  levelNameToSave: InGameScene
+  levelDimensionX: 100
+  levelDimensionY: 100
+  unitScale: 6
+  scanSpacingPerUnit: 0.25
+  rayStartHeight: 5
+  rayMaxDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  ignoreTriggers: 1
+  drawGizmos: 0
+  logOutOfRange: 0
+--- !u!4 &1142280755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142280753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1144897600
 GameObject:
   m_ObjectHideFlags: 0
@@ -6777,8 +6849,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d15a517670cab458be326f4d9e6a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  innerBorderRadius: 200
-  outerBorderRadius: 400
+  innerBorderRadius: 100
+  outerBorderRadius: 250
+  numberOfIslandsPerPlayer: 6
+  maxSpecialIslandsPerPlayer: 2
   islandTypes:
   - type: 0
     rarity: {x: 0, y: 0}
@@ -6792,7 +6866,7 @@ MonoBehaviour:
     rarity: {x: 0, y: 0}
   islandPrefab:
     RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
-  minDistBetweenIslands: 60
+  minDistBetweenIslands: 50
   islandDistFormCenterRepartition:
     serializedVersion: 2
     m_Curve:
@@ -6819,8 +6893,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   allIslands: []
   playersColors:
-  - {r: 0.28114986, g: 0.735849, b: 0.60093826, a: 1}
-  - {r: 0.8773585, g: 0.50319093, b: 0.21933962, a: 1}
+  - {r: 0.2270826, g: 0.5943396, b: 0.48352927, a: 1}
+  - {r: 0.754717, g: 0.4556782, b: 0.23139909, a: 1}
   - {r: 0, g: 0.69423604, b: 1, a: 1}
   - {r: 0.7169812, g: 0, b: 0, a: 1}
   - {r: 0.05296313, g: 0.49056602, b: 0.030081892, a: 1}
@@ -8826,8 +8900,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799386818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -26, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 0.56689, y: 0.56689, z: 0.56689}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -9249,11 +9323,11 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2097385003}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 128, y: -35}
+  m_AnchoredPosition: {x: 221, y: -35}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834016031
@@ -10939,12 +11013,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090124502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2090124505
 MonoBehaviour:
@@ -10969,7 +11043,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -11052,8 +11126,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 789830451}
-  - {fileID: 1834016030}
   - {fileID: 2119663115}
+  - {fileID: 1834016030}
   m_Father: {fileID: 954271919}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11119,11 +11193,11 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2097385003}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 221, y: -35}
+  m_AnchoredPosition: {x: 128, y: -35}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2119663116
@@ -11344,8 +11418,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  <BlueprintPossibleBuildColor>k__BackingField: {r: 0.17777678, g: 0.8018868, b: 0.21938407,
-    a: 0.78431374}
-  <BlueprintOverlapColor>k__BackingField: {r: 0.9811321, g: 0.31748587, b: 0.31007475,
-    a: 0.78431374}
+  <BlueprintValidPosColor>k__BackingField: {r: 0.28826985, g: 0.7735849, b: 0.4728132,
+    a: 0.39215687}
+  <BlueprintUnvalidPosColor>k__BackingField: {r: 0.8867924, g: 0.32208967, b: 0.32208967,
+    a: 0.39215687}
   haveBlueprintInHand: 0

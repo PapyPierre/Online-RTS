@@ -47,6 +47,9 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
         [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
         [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
+
+        [Header("Other Variables"), Required()]
+        public GameObject floatingText;
         
         private void Awake()
         {
@@ -337,6 +340,15 @@ namespace Custom_UI
         public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)
         {
             supplyTMP.text = newCurrentValue + "/" + newMaxValue;
+        }
+
+        public void PopFloatingText(Transform parent, string text, Color color)
+        {
+            TextMeshPro infoText = Instantiate(floatingText, parent.position, Quaternion.identity, parent)
+                .GetComponent<TextMeshPro>();
+            
+            infoText.text = text;
+            infoText.color = color;
         }
         #endregion
     }

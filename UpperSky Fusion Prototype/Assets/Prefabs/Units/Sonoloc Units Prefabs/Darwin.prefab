@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 2645220574719709856}
   - component: {fileID: -787848360031729415}
   - component: {fileID: -3062574406705469871}
+  - component: {fileID: 3414334891509212082}
   m_Layer: 0
   m_Name: Darwin
   m_TagString: Unit
@@ -220,6 +221,8 @@ MonoBehaviour:
   healthBar: {fileID: 7389328165389186511}
   _CurrentArmor: 0
   armorBar: {fileID: 2901251400569896489}
+  graphObject: {fileID: 2798725076067583124}
+  canvas: {fileID: 400207877351046348}
   <Data>k__BackingField: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046,
     type: 2}
   targetedEntity: {fileID: 0}
@@ -286,6 +289,20 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &3414334891509212082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109549920716369441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  additionalRadius: 0
 --- !u!1 &9193866668383929244
 GameObject:
   m_ObjectHideFlags: 0

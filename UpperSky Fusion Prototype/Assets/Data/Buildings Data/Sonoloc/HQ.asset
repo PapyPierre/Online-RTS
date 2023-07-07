@@ -21,6 +21,7 @@ MonoBehaviour:
   <ProductionTime>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 500
   <MaxArmorPoints>k__BackingField: 100
+  <SightRange>k__BackingField: 50
   <ThisBuilding>k__BackingField: 13
   <UnlockedBuildings>k__BackingField: 
   <IsFormationBuilding>k__BackingField: 0
@@ -33,11 +34,11 @@ MonoBehaviour:
   <UnitFormationBonus>k__BackingField: 5
   <BuildingConstructionBonus>k__BackingField: 5
   <TechResearchBonus>k__BackingField: 5
-  <IsDefenseBuilding>k__BackingField: 0
-  <DamagePerShootOnUnits>k__BackingField: 0
+  <IsDefenseBuilding>k__BackingField: 1
+  <DamagePerShootOnUnits>k__BackingField: 10
   <DamageRangeOfVariation>k__BackingField: 0
-  <ShootAccuracy>k__BackingField: 0
-  <ArmorPenetration>k__BackingField: 0
-  <ShotPerSeconds>k__BackingField: 0
-  <ShootingRange>k__BackingField: 0
+  <ShootAccuracy>k__BackingField: 90
+  <ArmorPenetration>k__BackingField: 10
+  <ShotPerSeconds>k__BackingField: 1
+  <ShootingRange>k__BackingField: 10
   <TargetableType>k__BackingField: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
+  - component: {fileID: 7072893243073000247}
   m_Layer: 8
   m_Name: Gisement
   m_TagString: Building
@@ -118,14 +119,34 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
   selectionCircle: {fileID: 2045607727328466542}
+  meshToColor: []
   _CurrentHealth: 0
   healthBar: {fileID: 979726985529218272}
   _CurrentArmor: 0
   armorBar: {fileID: 8649570919360671079}
+  graphObject: {fileID: 8510112358408295226}
+  canvas: {fileID: 7789516549915033726}
   <Data>k__BackingField: {fileID: 11400000, guid: f437ab40b73e22945a4d7a2c19e27f04,
     type: 2}
   isOpen: 0
   timeLeftToForm: 0
+  myIsland: {fileID: 0}
+  isStartBuilding: 0
+--- !u!114 &7072893243073000247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  keepVisible: 1
+  additionalRadius: 0
 --- !u!1 &2045607727328466542
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +720,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.027562872
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
@@ -964,7 +985,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.027562872
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}

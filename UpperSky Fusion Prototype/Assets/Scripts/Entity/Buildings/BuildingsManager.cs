@@ -25,8 +25,8 @@ namespace Entity.Buildings
 
         [Header("Blueprints")]
         [SerializeField] private GameObject[] allBuildingsBlueprints;
-        [field: SerializeField] public Color BlueprintPossibleBuildColor { get; private set; }
-        [field: SerializeField] public Color BlueprintOverlapColor { get; private set; }
+        [field: SerializeField] public Color BlueprintValidPosColor { get; private set; }
+        [field: SerializeField] public Color BlueprintUnvalidPosColor { get; private set; }
         
         [HideInInspector] public bool haveBlueprintInHand;
 
@@ -86,7 +86,8 @@ namespace Entity.Buildings
             else Debug.Log("not enough ressources");
         }
 
-        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, Island island)
+        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, Island island, 
+            bool isStartBuilding = false)
         {          
             PlayerController player = _gameManager.thisPlayer;
 
@@ -96,12 +97,15 @@ namespace Entity.Buildings
             var oriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
 
-            island.BuildingsCount++;
-
-            NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
-                (allBuildingsPrefab[buildingIndex], pos, rot, _gameManager.thisPlayer.Object.InputAuthority);
+            if (!isStartBuilding) island.BuildingsCount++;
             
-            obj.GetComponent<BaseBuilding>().Init(player, island);
+            NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
+                (allBuildingsPrefab[buildingIndex], pos, rot, island.Object.InputAuthority);
+
+            BaseBuilding building = obj.GetComponent<BaseBuilding>();
+            
+            building.Init(island, isStartBuilding);
+            island.buildingOnThisIsland.Add(building);
            
             haveBlueprintInHand = false;
             

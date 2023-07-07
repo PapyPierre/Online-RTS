@@ -93,6 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8297680352280606113}
   - component: {fileID: -2480457266456709954}
+  - component: {fileID: 8353684548572567072}
+  - component: {fileID: 4040639910636511703}
   m_Layer: 2
   m_Name: Foreuse
   m_TagString: Building
@@ -137,6 +139,36 @@ MonoBehaviour:
   - {fileID: 1171483018958759438}
   - {fileID: 7435864034095282867}
   - {fileID: 1049917155283651097}
+  _propsInRange: []
+--- !u!65 &8353684548572567072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4040639910636511703
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1711010314967853646
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +456,7 @@ Transform:
   m_GameObject: {fileID: 8040873788366760670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.5, y: 0, z: -3.3}
-  m_LocalScale: {x: 1.74, y: 1.74, z: 1.74}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1235085372561447995}

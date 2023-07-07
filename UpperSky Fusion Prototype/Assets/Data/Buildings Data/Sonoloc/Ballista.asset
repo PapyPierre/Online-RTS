@@ -23,6 +23,7 @@ MonoBehaviour:
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 70
   <MaxArmorPoints>k__BackingField: 0
+  <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 6
   <UnlockedBuildings>k__BackingField: 
   <IsFormationBuilding>k__BackingField: 0

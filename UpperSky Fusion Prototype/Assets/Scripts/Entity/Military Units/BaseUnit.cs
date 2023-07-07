@@ -1,5 +1,9 @@
 using System.Collections;
+using AOSFogWar;
+using AOSFogWar.Used_Scripts;
+using Fusion;
 using NaughtyAttributes;
+using Player;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,7 +31,18 @@ namespace Entity.Military_Units
             SetUpHealtAndArmor(Data);
             SetUpStatus();
         }
-        
+
+        public void Init(PlayerController owner)
+        {
+            Owner = owner;
+            
+            if (PlayerIsOwner())
+            {
+                var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
+                FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
+            }
+        }
+
         private void SetUpStatus()
         {
             isColonizer = Data.IsBaseColonizer;
@@ -113,6 +128,8 @@ namespace Entity.Military_Units
         #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
+            if (!Application.isPlaying) return;
+
             Handles.color = Color.green;
             Handles.DrawWireDisc(transform.position,Vector3.up, UnitsManager.distUnitToIslandToColonise);
         }

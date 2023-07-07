@@ -16,15 +16,16 @@ MonoBehaviour:
   <Description>k__BackingField: "\rThe carpenter works the wood in order to construct
     buildings and form units"
   <StartAsLocked>k__BackingField: 1
-  <LockedDescription>k__BackingField: Carpentry requires a residence in order in
+  <LockedDescription>k__BackingField: Carpentry requires a residence in order to
     be build
   <MaterialCost>k__BackingField: 50
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 50
   <MaxArmorPoints>k__BackingField: 0
+  <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 3
-  <UnlockedBuildings>k__BackingField: 06000000
+  <UnlockedBuildings>k__BackingField: 0100000006000000
   <IsFormationBuilding>k__BackingField: 1
   <FormableUnits>k__BackingField: 0000000001000000
   <DoesGenerateRessources>k__BackingField: 0

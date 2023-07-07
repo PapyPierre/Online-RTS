@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8297680352280606113}
   - component: {fileID: -3595092097720621731}
+  - component: {fileID: -142479513064567699}
+  - component: {fileID: -1609027901466814281}
   m_Layer: 2
   m_Name: Habitation Preview
   m_TagString: Building
@@ -51,6 +53,35 @@ MonoBehaviour:
   renderers:
   - {fileID: 4930463833605221662}
   - {fileID: 3132581180365009499}
+--- !u!65 &-142479513064567699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-1609027901466814281
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5240361809440843468
 GameObject:
   m_ObjectHideFlags: 0

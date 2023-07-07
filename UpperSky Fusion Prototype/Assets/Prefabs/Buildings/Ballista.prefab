@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
+  - component: {fileID: 3986954249374926806}
   m_Layer: 8
   m_Name: Ballista
   m_TagString: Building
@@ -123,11 +124,29 @@ MonoBehaviour:
   healthBar: {fileID: 7655233838947754540}
   _CurrentArmor: 0
   armorBar: {fileID: 498075204572105222}
+  graphObject: {fileID: 8510112358408295226}
+  canvas: {fileID: 2580673168563823367}
   <Data>k__BackingField: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4,
     type: 2}
   isOpen: 0
   timeLeftToForm: 0
   myIsland: {fileID: 0}
+  isStartBuilding: 0
+--- !u!114 &3986954249374926806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  keepVisible: 1
+  additionalRadius: 0
 --- !u!1 &2580673168563823367
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,12 +451,12 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.02099222
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.07037113
+      value: 0.055248372
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
@@ -599,12 +618,12 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037621815
+      value: 0.02099222
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.07037113
+      value: 0.055248372
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
@@ -654,7 +673,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.076663
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
