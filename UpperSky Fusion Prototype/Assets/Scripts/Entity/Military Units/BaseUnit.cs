@@ -16,6 +16,8 @@ namespace Entity.Military_Units
         [HideInInspector] public BaseEntity targetedEntity;
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
+
+        [HideInInspector] public UnitGroup currentGroup;
         
         [Header("Status")] 
         public bool isColonizer;
@@ -60,7 +62,7 @@ namespace Entity.Military_Units
 
         private void CheckIfTargetInRange()
         {
-            if (targetedEntity is not null)
+            if (targetedEntity != null)
             {
                 var distToTarget = Vector3.Distance(
                     CustomHelper.ReturnPosInTopDown(transform.position),

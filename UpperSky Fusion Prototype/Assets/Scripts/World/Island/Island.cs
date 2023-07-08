@@ -5,6 +5,7 @@ using Entity.Military_Units;
 using Fusion;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace World.Island
 {
@@ -13,20 +14,20 @@ namespace World.Island
         private WorldManager _worldManager;
         private GameManager _gameManager;
         private UnitsManager _unitsManager;
-        
+
+        [field: Header("Networked Properties")]
         [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
-        
         [Networked] public IslandTypesEnum Type { get; set; }
+        [Networked] public int BuildingsCount { get; set; }
         
+        [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
+
+        [Header("Components")]
         [SerializeField] private GameObject graphObject;
         [SerializeField] private GameObject canvas;
-
+        [SerializeField] private Image minimapIcon;
         [SerializeField] private MeshRenderer meshRenderer;
         public GameObject coloniseBtn;
-        private bool _colonise;
-
-        [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
-        [Networked] public int BuildingsCount { get; set; }
 
         public override void Spawned()
         {
@@ -36,14 +37,6 @@ namespace World.Island
 
             _worldManager.allIslands.Add(this);
             coloniseBtn.SetActive(false);
-
-            if (Owner is not null)
-            {
-                if (Owner == _gameManager.thisPlayer)
-                {
-                    Object.RequestStateAuthority();
-                }
-            }
             
             GetComponent<FogAgent_Island>().Init(graphObject, canvas);
         }
@@ -53,9 +46,18 @@ namespace World.Island
             transform.parent = parent;
             Owner = owner;
             Type = type;
+
+            if (Owner is not null)
+            {
+                if (Owner == _gameManager.thisPlayer)
+                {
+                    Object.RequestStateAuthority();
+                }
+            }
         }
 
-        private void FixedUpdate() // Fixed for optimisation
+        // Fixed for optimisation
+        private void FixedUpdate()
         {
             coloniseBtn.SetActive(CheckForColonizerUnits());
         }
@@ -85,23 +87,14 @@ namespace World.Island
         private static void OwnerChanged(Changed<Island> changed)
         {
             if (changed.Behaviour.Owner == null) return;
-
-            for (var i = 0; i < GameManager.Instance.connectedPlayers.Count; i++)
-            {
-                PlayerController player = GameManager.Instance.connectedPlayers[i];
-                if (player == changed.Behaviour.Owner)
-                {
-                    changed.Behaviour.meshRenderer.material.color = WorldManager.Instance.playersColors[i];
-                    return;
-                }
-            }
+            
+            changed.Behaviour.meshRenderer.material.color = changed.Behaviour.Owner.myColor;
+            changed.Behaviour.minimapIcon.color = changed.Behaviour.Owner.myColor;
         }
         
         // Call from inspector
         public void CallForColonise()
         {
-            _colonise = true;
-
             if (Object.HasStateAuthority) Colonise();
             else Object.RequestStateAuthority();
         }
@@ -113,20 +106,15 @@ namespace World.Island
 
         private void Colonise()
         {
-            if (_colonise)
-            { 
-                Owner = _gameManager.thisPlayer;
+            Owner = _gameManager.thisPlayer;
 
-                foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
+            foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
+            {
+                if (unit.isColonizer) 
                 {
-                    if (unit.isColonizer)
-                    {
-                        unit.DestroyEntity();
-                        break;
-                    }
+                    unit.DestroyEntity();
+                    break;
                 }
-
-                _colonise = false;
             }
         }
     }

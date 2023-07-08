@@ -1,11 +1,12 @@
 using Custom_UI;
 using Entity;
+using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
-using Unity.VisualScripting;
 using UnityEngine;
 using World;
+using World.Island;
 
 namespace Player
 {
@@ -16,14 +17,16 @@ namespace Player
         private GameManager _gameManager;
         private WorldManager _worldManager;
         private RectangleSelection _rectangleSelection;
-
+        private BuildingsManager _buildingsManager;
+        
         [Networked] private bool HasBeenTpToStartingIsland{ get; set; }
 
-        public int playerId; // = à index dans ConnectedPlayers + 1 
+        public int myId; // = à index dans ConnectedPlayers + 1 
+        public Color myColor;
         
         [HideInInspector] public PlayerRessources ressources;
         
-        [HideInInspector] public BaseEntity mouseAboveThisEntity;
+       [SerializeField, ReadOnly] public BaseEntity mouseAboveThisEntity;
         private bool _isMajKeyPressed;
 
         [Header("Cameras")]
@@ -38,15 +41,17 @@ namespace Player
             _gameManager = GameManager.Instance;
             _worldManager = WorldManager.Instance;
             _rectangleSelection = RectangleSelection.Instance;
-            
+            _buildingsManager = BuildingsManager.Instance;
+                
             ressources = GetComponent<PlayerRessources>();
             
             _gameManager.ConnectPlayer(this);
+            myColor = _worldManager.playersColors[myId -1];
 
             if (Object.HasInputAuthority)
             {        
                 _uiManager.connectionInfoTMP.text = 
-                    "Player " + playerId + " connected in " + Runner.GameMode + " Mode";
+                    "Player " + myId + " connected in " + Runner.GameMode + " Mode";
                 
                 minimapIndicator.SetActive(true);
             }
@@ -169,10 +174,20 @@ namespace Player
                     var islandPos = island.transform.position;
                     transform.position = new Vector3(islandPos.x, 10, islandPos.z);
                     transform.LookAt(Vector3.zero);
+                    
+                    SpawnStartBuilding(island);
+                    
                     HasBeenTpToStartingIsland = true;
                     break;
                 }
-            }
+            }   
+        }
+        
+        private void SpawnStartBuilding(Island startingIsland)
+        {
+            var startBuilding = _buildingsManager.BuildBuilding(13, startingIsland.transform.position,
+                Quaternion.identity, startingIsland, true);
+            startBuilding.transform.parent = startingIsland.transform;
         }
 
         private void OnDrawGizmos()

@@ -53,6 +53,7 @@ MonoBehaviour:
   renderers:
   - {fileID: 4930463833605221662}
   - {fileID: 3132581180365009499}
+  _propsInRange: []
 --- !u!65 &-142479513064567699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -462,7 +463,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: f5540b545b587194f8571c122a7508a8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.10152653
+      value: 0.0557736
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: f5540b545b587194f8571c122a7508a8,
         type: 3}

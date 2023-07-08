@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
      public void ConnectPlayer(PlayerController player)
      {
          connectedPlayers.Add(player);
-         player.playerId = connectedPlayers.Count;
+         player.myId = connectedPlayers.Count;
 
          if (player.HasInputAuthority) 
          {

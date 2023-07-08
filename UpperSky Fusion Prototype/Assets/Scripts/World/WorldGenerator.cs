@@ -147,12 +147,6 @@ namespace World
 
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.Init(_worldCenter,owner,type);
-
-            if (owner != null)
-            {
-                var hq = _buildingsManager.BuildBuilding(13, position, Quaternion.identity, islandComponent, true);
-                hq.transform.parent = islandComponent.transform;
-            }
             
             _currentlyPlacedIslands++;
         }

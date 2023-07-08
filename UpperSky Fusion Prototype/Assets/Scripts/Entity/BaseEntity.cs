@@ -56,17 +56,10 @@ namespace Entity
         private static void OwnerChanged(Changed<BaseEntity> changed)
         {
             if (changed.Behaviour.Owner == null) return;
-            
-            for (var i = 0; i < GameManager.Instance.connectedPlayers.Count; i++)
+
+            foreach (var meshRenderer in changed.Behaviour.meshToColor)
             {
-                PlayerController player = GameManager.Instance.connectedPlayers[i]; 
-                if (player == changed.Behaviour.Owner)
-                { 
-                    foreach (var meshRenderer in changed.Behaviour.meshToColor)
-                    {
-                        meshRenderer.material.color = WorldManager.Instance.playersColors[i];
-                    }
-                }
+                meshRenderer.material.color = changed.Behaviour.Owner.myColor;
             }
         }
 
@@ -118,18 +111,18 @@ namespace Entity
 
             if (this is BaseUnit unit)
             {
-                if (UnitsManager.currentlySelectedUnits.Contains(unit))
-                {
-                    UnitsManager.currentlySelectedUnits.Remove(unit);
-                }
+                if (UnitsManager.currentlySelectedUnits.Contains(unit)) UnitsManager.currentlySelectedUnits.Remove(unit);
+                
+                if (unit.currentGroup is not null) unit.currentGroup.RemoveUnitFromGroup(unit);
 
                 GameManager.thisPlayer.ressources.CurrentSupply -= unit.Data.SupplyCost;
             }
             else if (this is BaseBuilding building)
             {
                 building.myIsland.BuildingsCount--; //Possible erreur car pas la state authority, alors faire une RPC
+                building.myIsland.buildingOnThisIsland.Remove(building);
             }
-            
+
             FogOfWar.RemoveFogRevealer(FogRevealerIndex);
 
             Runner.Despawn(Object);

@@ -1,3 +1,4 @@
+using System.Collections;
 using Custom_UI.InGame_UI;
 using Entity;
 using Entity.Buildings;
@@ -22,6 +23,8 @@ namespace Custom_UI
         [SerializeField] private GameObject menuCamera;
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
+        private int _fps;
+        private double _ping;
         [Required()] public TextMeshProUGUI fpsTMP;
         [Required()] public TextMeshProUGUI pingTMP;
         [SerializeField, Required()] private PlayerSpawner playerSpawner;
@@ -67,20 +70,39 @@ namespace Custom_UI
             _unitsManager = UnitsManager.Instance;
             _buildingsManager = BuildingsManager.Instance;
             _gameManager = GameManager.Instance;
+
+            StartCoroutine(UpdateInfoDisplay());
         }
 
         private void Update()
         {
-            DisplayFps();
-            if (_gameManager.gameIsStarted) DisplayPlayerPing();
+            ComputeFps();
+            if (_gameManager.gameIsStarted) ComputePlayerPing();
+        }
+        
+        private IEnumerator UpdateInfoDisplay()
+        {
+            while (true)
+            {
+                DisplayFps();
+                if (_gameManager.gameIsStarted) DisplayPlayerPing();
+                
+                yield return new WaitForSecondsRealtime(0.5f);
+            }
+        }
+
+        private void ComputeFps() => _fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
+        
+        private void ComputePlayerPing()
+        { 
+            _ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(_gameManager.thisPlayer.Object.StateAuthority);
         }
 
         private void DisplayFps()
         {
-            var fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
-            fpsTMP.text = fps + " FPS";
+            fpsTMP.text = _fps + " FPS";
 
-            switch (fps)
+            switch (_fps)
             {
                 case < 15:
                     fpsTMP.color = Color.red;
@@ -102,10 +124,9 @@ namespace Custom_UI
         
         private void DisplayPlayerPing()
         {
-            var ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(_gameManager.thisPlayer.Object.StateAuthority);
-            pingTMP.text = Mathf.RoundToInt((float) ping) + " ms";
+            pingTMP.text = Mathf.RoundToInt((float) _ping) + " ms";
 
-            switch (ping)
+            switch (_ping)
             {
                 case < 15:
                     pingTMP.color = Color.green;

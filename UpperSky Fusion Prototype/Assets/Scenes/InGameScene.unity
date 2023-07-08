@@ -2983,7 +2983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
 --- !u!1 &597259892
@@ -6893,7 +6893,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   allIslands: []
   playersColors:
-  - {r: 0.2270826, g: 0.5943396, b: 0.48352927, a: 1}
+  - {r: 0.5308582, g: 0.6037736, b: 0.36169454, a: 1}
   - {r: 0.754717, g: 0.4556782, b: 0.23139909, a: 1}
   - {r: 0, g: 0.69423604, b: 1, a: 1}
   - {r: 0.7169812, g: 0, b: 0, a: 1}

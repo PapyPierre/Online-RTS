@@ -129,6 +129,8 @@ namespace AOSFogWar.Used_Scripts
         [Serializable]
         public class FogRevealer
         {
+            public bool haveBeenDestroyed;
+            
             public FogRevealer(Transform revealerTransform, int sightRange, bool updateOnlyOnMove)
             {
                 this.revealerTransform = revealerTransform;
@@ -381,8 +383,10 @@ namespace AOSFogWar.Used_Scripts
 
             foreach (FogRevealer fogRevealer in fogRevealers)
             {
-                if (fogRevealer.UpdateOnlyOnMove == false) break;
+                if (fogRevealer.haveBeenDestroyed) continue;
 
+                if (fogRevealer.UpdateOnlyOnMove == false) break;
+                
                 Vector2Int currentLevelCoordinates = fogRevealer.GetCurrentLevelCoordinates(this);
 
                 if (currentLevelCoordinates != fogRevealer.LastSeenAt)
@@ -407,6 +411,8 @@ namespace AOSFogWar.Used_Scripts
 
             foreach (FogRevealer fogRevealer in fogRevealers)
             {
+                if (fogRevealer.haveBeenDestroyed) continue;
+                
                 fogRevealer.GetCurrentLevelCoordinates(this);
 
                 Shadowcaster.ProcessLevelData(
@@ -547,7 +553,7 @@ namespace AOSFogWar.Used_Scripts
         {
             if (fogRevealers.Count > revealerIndex && revealerIndex > -1)
             {
-                fogRevealers.RemoveAt(revealerIndex);
+                fogRevealers[revealerIndex].haveBeenDestroyed = true;
             }
             else
             {

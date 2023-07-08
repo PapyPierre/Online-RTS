@@ -62,7 +62,7 @@ namespace Entity.Buildings
                 //TODO eventually add a check for game max supply if there's one
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
-
+            
             StartCoroutine(CallEveryRealTimeSeconds());
         }
         
@@ -101,7 +101,7 @@ namespace Entity.Buildings
         private IEnumerator CallEveryRealTimeSeconds()
         {
             yield return new WaitForSecondsRealtime(1);
-            
+
             if (Data.DoesGenerateRessources) GenerateRessources();
             if (Data.IsFormationBuilding) UpdateFormation();
             
