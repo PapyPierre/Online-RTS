@@ -64,7 +64,7 @@ namespace World.Island
 
         private bool CheckForColonizerUnits()
         {
-            if (_unitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0) return false;
+            if (_unitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner is not null) return false;
 
             foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
             {
@@ -74,10 +74,7 @@ namespace World.Island
                         CustomHelper.ReturnPosInTopDown(transform.position), 
                         CustomHelper.ReturnPosInTopDown(unit.transform.position));
                     
-                    if (distToUnit <= _unitsManager.distUnitToIslandToColonise)
-                    {
-                        return true;
-                    }
+                    if (distToUnit <= _unitsManager.distUnitToIslandToColonise) return true;
                 }
             }
             

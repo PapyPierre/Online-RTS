@@ -198,10 +198,10 @@ MonoBehaviour:
   canvas: {fileID: 7791223017978377089}
   <Data>k__BackingField: {fileID: 11400000, guid: d1e579db73ece624e8c1adc55e857c9f,
     type: 2}
-  isOpen: 0
-  timeLeftToForm: 0
   myIsland: {fileID: 0}
   isStartBuilding: 0
+  isOpen: 0
+  timeLeftToForm: 0
 --- !u!135 &1149640112879888109
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -601,8 +601,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8040873788366760670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5, y: 0, z: -3.3}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: -2, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1235085372561447995}

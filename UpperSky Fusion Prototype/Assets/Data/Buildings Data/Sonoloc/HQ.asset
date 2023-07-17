@@ -36,9 +36,6 @@ MonoBehaviour:
   <TechResearchBonus>k__BackingField: 5
   <IsDefenseBuilding>k__BackingField: 1
   <DamagePerShootOnUnits>k__BackingField: 10
-  <DamageRangeOfVariation>k__BackingField: 0
-  <ShootAccuracy>k__BackingField: 90
   <ArmorPenetration>k__BackingField: 10
-  <ShotPerSeconds>k__BackingField: 1
+  <RealodTime>k__BackingField: 1
   <ShootingRange>k__BackingField: 10
-  <TargetableType>k__BackingField: 0

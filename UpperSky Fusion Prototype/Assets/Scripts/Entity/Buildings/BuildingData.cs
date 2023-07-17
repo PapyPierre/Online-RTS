@@ -70,24 +70,12 @@ namespace Entity.Buildings
 
         [field: SerializeField, ShowIf("IsDefenseBuilding")]
         public int DamagePerShootOnUnits { get; private set; }
-        
-        [field: Tooltip("Range de modulation des dégâts à chaque tirs"), SerializeField, ShowIf("IsDefenseBuilding")]
-        public int DamageRangeOfVariation { get; private set; }
-        
-        [field: Tooltip("% des tirs qui atteint leurs cibles"), Range(0,100), SerializeField, ShowIf("IsDefenseBuilding")]
-        public int ShootAccuracy { get; private set; }
-        
+
         [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField, ShowIf("IsDefenseBuilding")]
         public int ArmorPenetration { get; private set; }
         
-        [field: SerializeField, ShowIf("IsDefenseBuilding")] 
-        public float ShotPerSeconds { get; private set; }
-        
-        [field: SerializeField, ShowIf("IsDefenseBuilding")] 
-        public float ShootingRange { get; private set; }
-        
-        [field: SerializeField, ShowIf("IsDefenseBuilding")] 
-        public GameManager.EntityType TargetableType { get; private set; }
+        [field: SerializeField, ShowIf("IsDefenseBuilding"), ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
+        public float RealodTime { get; private set; }
 
         #endregion
         

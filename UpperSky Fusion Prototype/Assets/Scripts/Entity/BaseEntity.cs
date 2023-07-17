@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AOSFogWar;
 using AOSFogWar.Used_Scripts;
 using Custom_UI.InGame_UI;
 using Entity.Buildings;
@@ -7,7 +6,6 @@ using Entity.Military_Units;
 using Fusion;
 using Player;
 using UnityEngine;
-using World;
 
 namespace Entity
 {
@@ -41,6 +39,8 @@ namespace Entity
         private static void CurrentArmorChanged(Changed<BaseEntity> changed) 
             => changed.Behaviour.armorBar.UpdateBar(changed.Behaviour.CurrentArmor);
         #endregion
+        
+        public BaseEntity TargetedEntity { get; set; }
 
         [SerializeField] private GameObject graphObject;
         [SerializeField] private GameObject canvas;
@@ -83,7 +83,7 @@ namespace Entity
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor, BaseUnit shooter)
+        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor, BaseEntity shooter)
         {
             // The code inside here will run on the client which owns this object (has state and input authority).
 
@@ -99,8 +99,9 @@ namespace Entity
 
             if (CurrentHealth <= 0)
             {
-                shooter.targetedEntity = null;
-                shooter.targetedUnitIsInRange = false;
+                shooter.TargetedEntity = null;
+                if (shooter is BaseUnit unit) unit.targetedUnitIsInRange = false;
+                
                 DestroyEntity();
             }
         }
@@ -121,6 +122,8 @@ namespace Entity
             {
                 building.myIsland.BuildingsCount--; //Possible erreur car pas la state authority, alors faire une RPC
                 building.myIsland.buildingOnThisIsland.Remove(building);
+
+                if (building.isStartBuilding) GameManager.KillPlayer(Owner);
             }
 
             FogOfWar.RemoveFogRevealer(FogRevealerIndex);

@@ -51,6 +51,10 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
         [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
 
+        [SerializeField, Required(), Space] private GameObject endGamePanel;
+        [SerializeField, Required()] private TextMeshProUGUI winTMP;
+        [SerializeField, Required()] private TextMeshProUGUI loseTMP;
+
         [Header("Other Variables"), Required()]
         public GameObject floatingText;
         
@@ -361,6 +365,18 @@ namespace Custom_UI
         public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)
         {
             supplyTMP.text = newCurrentValue + "/" + newMaxValue;
+        }
+
+        public void ShowWinText()
+        {
+            endGamePanel.SetActive(true);
+            winTMP.gameObject.SetActive(true);
+        }
+        
+        public void ShowLoseText()
+        {
+            endGamePanel.SetActive(true);
+            loseTMP.gameObject.SetActive(true);
         }
 
         public void PopFloatingText(Transform parent, string text, Color color)

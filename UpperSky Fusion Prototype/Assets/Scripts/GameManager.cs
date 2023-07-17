@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int expectedNumberOfPlayers;
 
     public List<PlayerController> connectedPlayers;
+    private List<PlayerController> playersStillAlive = new();
 
     public bool gameIsStarted;
+    public bool gameIsFinished;
 
     public enum EntityType
      {
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
      public void ConnectPlayer(PlayerController player)
      {
          connectedPlayers.Add(player);
+         playersStillAlive.Add(player);
          player.myId = connectedPlayers.Count;
 
          if (player.HasInputAuthority) 
@@ -57,5 +60,18 @@ public class GameManager : MonoBehaviour
          }
      }
      
-   
+     public void KillPlayer(PlayerController defeatedPlayer)
+     {
+         defeatedPlayer.RPC_OutOfGame();
+         playersStillAlive.Remove(defeatedPlayer);
+
+         if (playersStillAlive.Count is 1) EndGame(playersStillAlive[0]);
+     }
+     
+     private void EndGame(PlayerController winner)
+     {
+         gameIsFinished = true;
+         Time.timeScale = 0;
+         winner.RPC_Win();
+     }
 }

@@ -20,6 +20,8 @@ namespace Player
         private BuildingsManager _buildingsManager;
         
         [Networked] private bool HasBeenTpToStartingIsland{ get; set; }
+        
+        [Networked] public bool IsOutOfGame { get; set; }
 
         public int myId; // = à index dans ConnectedPlayers + 1 
         public Color myColor;
@@ -140,7 +142,7 @@ namespace Player
                     {
                         foreach (var unit in  _unitsManager.currentlySelectedUnits)
                         {
-                            unit.targetedEntity = mouseAboveThisEntity;
+                            unit.TargetedEntity = mouseAboveThisEntity;
                         }
                         
                         _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits,
@@ -151,7 +153,7 @@ namespace Player
                 {
                     foreach (var unit in  _unitsManager.currentlySelectedUnits)
                     {
-                        unit.targetedEntity = null;
+                        unit.TargetedEntity = null;
                     }
                     
                     Ray ray = myCam.ScreenPointToRay((Input.mousePosition));
@@ -188,6 +190,23 @@ namespace Player
             var startBuilding = _buildingsManager.BuildBuilding(13, startingIsland.transform.position,
                 Quaternion.identity, startingIsland, true);
             startBuilding.transform.parent = startingIsland.transform;
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_OutOfGame()
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+            IsOutOfGame = true;
+            
+            _uiManager.ShowLoseText();
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_Win()
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+
+            _uiManager.ShowWinText();
         }
 
         private void OnDrawGizmos()

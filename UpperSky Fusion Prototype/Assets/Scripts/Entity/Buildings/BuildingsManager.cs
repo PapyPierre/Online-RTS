@@ -33,19 +33,18 @@ namespace Entity.Buildings
         public enum AllBuildingsEnum
         {
             Foreuse = 0,
-            ExploitationOrichalque = 1, 
+            Gisement = 1, 
             Habitation = 2,
             Menuiserie = 3,
             Tisserand = 4,
             Fonderie = 5,
-            Baliste = 6,
-            Canon = 7,
-            MineOrichalque = 8,
-            Obusier = 9,
-            CentreMeteo = 10,
-            Usine = 11,
-            Academie = 12,
-            SiègeDuCommandement = 13
+            Canon = 6,
+            MineOrichalque = 7,
+            Obusier = 8,
+            CentreMeteo = 9,
+            Usine = 10,
+            Academie = 11,
+            SiègeDuCommandement = 12
         }
         
         private void Awake()

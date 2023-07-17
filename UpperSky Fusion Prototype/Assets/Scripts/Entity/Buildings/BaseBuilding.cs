@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar;
@@ -19,17 +20,22 @@ namespace Entity.Buildings
         
         [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
 
-        [HideInInspector] public bool isOpen;
-
-        private float _tempMatToGenerate;
-        private float _tempOrichalqueToGenerate;
-
-        public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
-        [HideInInspector] public float timeLeftToForm;
-
         [HideInInspector] public Island myIsland;
 
         public bool isStartBuilding;
+        
+        // Génération de ressources
+        private float _tempMatToGenerate;
+        private float _tempOrichalqueToGenerate;
+
+        // Formation d'unités
+        [HideInInspector] public bool isOpen;
+        public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
+        [HideInInspector] public float timeLeftToForm;
+
+        // Defense
+        private List<BaseUnit> _enemyInRange = new();
+        private bool _isReadyToShoot = true;
 
         public override void Spawned()
         {
@@ -90,11 +96,69 @@ namespace Entity.Buildings
                     }
                 }
 
-                if (FormationQueue.Count > 0)
+                if (FormationQueue.Count > 0) ManageFormation();
+            }
+
+            if (Data.IsDefenseBuilding && TargetedEntity is not null) ShootAtTarget();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!Data.IsDefenseBuilding) return;
+            
+            if (other.CompareTag("Unit"))
+            {
+                var unit = other.GetComponent<BaseUnit>();
+                if (unit.Owner == Owner) return;
+                
+                _enemyInRange.Add(unit);
+                TargetedEntity ??= unit;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!Data.IsDefenseBuilding) return;
+
+            if (other.CompareTag("Unit"))
+            {
+                var unit = other.GetComponent<BaseUnit>();
+                if (unit.Owner == Owner) return;
+
+                if (_enemyInRange.Contains(unit)) _enemyInRange.Remove(unit);
+
+                if (unit == TargetedEntity)
                 {
-                    ManageFormation();
+                    if (_enemyInRange.Count > 0)
+                    {
+                        TargetedEntity = _enemyInRange[0];
+                    }
+                    else TargetedEntity = null;
                 }
             }
+        }
+
+        private void ShootAtTarget()
+        {
+            if (!_isReadyToShoot) return;
+
+            int damageOnUnits = Data.DamagePerShootOnUnits; 
+            int armorPenetration = Data.ArmorPenetration;
+
+            float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
+            float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
+
+            TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
+            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage();
+            
+            _isReadyToShoot = false;
+            StartCoroutine(Reload());
+        }
+        
+        private IEnumerator Reload()
+        {
+            yield return new WaitForSecondsRealtime(Data.RealodTime);
+            _isReadyToShoot = true;
         }
 
         // ReSharper disable once FunctionRecursiveOnAllPaths
@@ -190,17 +254,21 @@ namespace Entity.Buildings
         {
             base.OnMouseEnter();
             
-            if (PlayerIsOwner() && Data.IsFormationBuilding)
-            {
-                SetActiveSelectionCircle(true);
-            }
+            if (PlayerIsOwner()) SetActiveSelectionCircle(true);
         }
         
         protected override void OnMouseExit()
         {
             base.OnMouseExit();
-            
-            if (PlayerIsOwner() && !isOpen) SetActiveSelectionCircle(false);
+
+            if (PlayerIsOwner())
+            {
+                if (Data.IsFormationBuilding)
+                {
+                    if (!isOpen) SetActiveSelectionCircle(false);
+                }
+                else SetActiveSelectionCircle(false);
+            }
         }
     }
 }

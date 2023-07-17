@@ -13,7 +13,6 @@ namespace Entity.Military_Units
     {
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
         
-        [HideInInspector] public BaseEntity targetedEntity;
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
 
@@ -62,11 +61,11 @@ namespace Entity.Military_Units
 
         private void CheckIfTargetInRange()
         {
-            if (targetedEntity != null)
+            if (TargetedEntity != null)
             {
                 var distToTarget = Vector3.Distance(
                     CustomHelper.ReturnPosInTopDown(transform.position),
-                    CustomHelper.ReturnPosInTopDown(targetedEntity.transform.position));
+                    CustomHelper.ReturnPosInTopDown(TargetedEntity.transform.position));
                 
                 targetedUnitIsInRange = distToTarget <= Data.ShootingRange;
             }
@@ -75,7 +74,7 @@ namespace Entity.Military_Units
 
         private void ShootAtEnemy()
         {
-            if (targetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
+            if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
 
             int damageOnUnits = Data.DamagePerShootOnUnits; 
             int armorPenetration = Data.ArmorPenetration;
@@ -83,12 +82,9 @@ namespace Entity.Military_Units
             float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
             float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
-            targetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
-            if (targetedEntity is BaseUnit unit)
-            {
-                unit.ReactToDamage();
-            }
-            
+            TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
+            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage();
+
             _isReadyToShoot = false;
             StartCoroutine(Reload());
         }
