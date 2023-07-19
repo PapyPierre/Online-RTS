@@ -1,3 +1,4 @@
+using System.Collections;
 using Entity.Buildings;
 using Fusion;
 using Player;
@@ -133,10 +134,32 @@ namespace World
                 }
                 else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic);
             }
-
-            _gameManager.thisPlayer.TeleportToStartingIsland(); // Other players teleport themselves later
+            
+            _gameManager.thisPlayer.MakesPlayerReady();
+            
+            StartCoroutine(WaitForEndOfGeneration());
         }
 
+        private IEnumerator WaitForEndOfGeneration()
+        {
+            yield return new WaitForSecondsRealtime(1f);
+            
+            var readyPlayersIndex = 0;
+            
+            foreach (var player in  _gameManager.connectedPlayers)
+            {
+                if (player.IsReadyToPlay)
+                {
+                    readyPlayersIndex++;
+                }
+            }
+
+            if (readyPlayersIndex == _gameManager.expectedNumberOfPlayers)
+            {
+                _gameManager.StartGame();
+            }
+        }
+        
         private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
             NetworkObject islandObject = _gameManager.thisPlayer.Runner.Spawn(
@@ -147,6 +170,11 @@ namespace World
 
             Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
             islandComponent.Init(_worldCenter,owner,type);
+
+            if (owner != null)
+            {
+                owner.RPC_SetStartingIsland(islandComponent);
+            }
             
             _currentlyPlacedIslands++;
         }

@@ -20,7 +20,7 @@ namespace Custom_UI
         
         [Header("Main Menu Variables"), Required()] 
         public GameObject mainMenu;
-        [SerializeField] private GameObject menuCamera;
+        [Required()] public GameObject menuCamera;
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         [Required()] public TextMeshProUGUI connectionInfoTMP;
         private int _fps;
@@ -55,6 +55,11 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI winTMP;
         [SerializeField, Required()] private TextMeshProUGUI loseTMP;
 
+        [Header("Loading Screen")]
+        [Required()] public GameObject loadingScreen;
+        [SerializeField, Required()] private TextMeshProUGUI loadingText;
+        private int _loadingTextDots;
+        
         [Header("Other Variables"), Required()]
         public GameObject floatingText;
         
@@ -153,11 +158,12 @@ namespace Custom_UI
         #region MainMenu Functions
         public void JoinGame()
         {
-            if ( inputFieldRoomName.text.Length > 0)
+            if (inputFieldRoomName.text.Length > 0)
             {
                 playerSpawner.SpawnPlayers(inputFieldRoomName.text);
+                loadingScreen.SetActive(true);
+                UpdateLoadingText(false);
                 mainMenu.SetActive(false);
-                menuCamera.SetActive(false);
                 inGameUI.SetActive(true);
             }
             else
@@ -377,6 +383,31 @@ namespace Custom_UI
         {
             endGamePanel.SetActive(true);
             loseTMP.gameObject.SetActive(true);
+        }
+
+        public void UpdateLoadingText(bool isLoading)
+        {
+            if (_gameManager.gameIsStarted) return;
+           
+            if (!isLoading)
+            {
+                loadingText.text =  "Connected players : " + _gameManager.connectedPlayers.Count + "/" 
+                                    + _gameManager.expectedNumberOfPlayers;
+            }
+            else
+            {
+                loadingText.text = "                    Loading"; // Space is normal
+                for (int i = 0; i < _loadingTextDots; i++) loadingText.text += ".";
+                StartCoroutine(WaitToAddDot());
+            }
+        }
+
+        private IEnumerator WaitToAddDot()
+        {
+            yield return new WaitForSeconds(0.5f);
+            if (_loadingTextDots < 3) _loadingTextDots++;
+            else _loadingTextDots = 0;
+            UpdateLoadingText(true);
         }
 
         public void PopFloatingText(Transform parent, string text, Color color)

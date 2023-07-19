@@ -9,6 +9,7 @@ namespace World
     public class WorldManager : MonoBehaviour
     {
         public static WorldManager Instance;
+        private WorldGenerator _worldGenerator;
         
         [Header("Border Radius")]
         public float innerBorderRadius;
@@ -38,9 +39,14 @@ namespace World
             Instance = this;
         }
 
+        private void Start()
+        {
+            _worldGenerator = GetComponent<WorldGenerator>();
+        }
+
         public void CallWorldGeneration(int numberOfPlayers)
         {
-            GetComponent<WorldGenerator>().GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
+            _worldGenerator.GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
         }
     }
 

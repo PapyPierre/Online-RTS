@@ -19,20 +19,20 @@ namespace Player
         private RectangleSelection _rectangleSelection;
         private BuildingsManager _buildingsManager;
         
-        [Networked] private bool HasBeenTpToStartingIsland{ get; set; }
+        [Networked] public bool IsReadyToPlay{ get; set; }
         
         [Networked] public bool IsOutOfGame { get; set; }
 
         public int myId; // = à index dans ConnectedPlayers + 1 
         public Color myColor;
-        
+        [Networked] public Island MyStartingIsland { get; set; }
+        public Camera myCam;
+
         [HideInInspector] public PlayerRessources ressources;
         
        [SerializeField, ReadOnly] public BaseEntity mouseAboveThisEntity;
         private bool _isMajKeyPressed;
-
-        [Header("Cameras")]
-        public Camera myCam;
+        
 
         [SerializeField, Required()] private GameObject minimapIndicator;
 
@@ -64,8 +64,8 @@ namespace Player
         {
             if (!Object.HasInputAuthority) return;
             
-            if (_gameManager.connectedPlayers[^1].HasBeenTpToStartingIsland
-                && !HasBeenTpToStartingIsland && HasStateAuthority) TeleportToStartingIsland();
+            if (_gameManager.connectedPlayers[^1].IsReadyToPlay
+                && !IsReadyToPlay && HasStateAuthority) MakesPlayerReady();
 
             _isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
@@ -167,22 +167,15 @@ namespace Player
             } 
         }
 
-        public void TeleportToStartingIsland()
+        public void MakesPlayerReady()
         {
-            foreach (var island in _worldManager.allIslands)
-            {
-                if (island.Owner == this)
-                {
-                    var islandPos = island.transform.position;
-                    transform.position = new Vector3(islandPos.x, 10, islandPos.z);
-                    transform.LookAt(Vector3.zero);
+            var islandPos = MyStartingIsland.transform.position;
+            transform.position = new Vector3(islandPos.x, 10, islandPos.z);
+            transform.LookAt(Vector3.zero);
                     
-                    SpawnStartBuilding(island);
+            SpawnStartBuilding(MyStartingIsland);
                     
-                    HasBeenTpToStartingIsland = true;
-                    break;
-                }
-            }   
+            IsReadyToPlay = true;
         }
         
         private void SpawnStartBuilding(Island startingIsland)
@@ -190,6 +183,32 @@ namespace Player
             var startBuilding = _buildingsManager.BuildBuilding(13, startingIsland.transform.position,
                 Quaternion.identity, startingIsland, true);
             startBuilding.transform.parent = startingIsland.transform;
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_SetStartingIsland(Island island)
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+
+            MyStartingIsland = island;
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_DisplayLoadingText()
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+            
+            _uiManager.UpdateLoadingText(true);
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_StartToPlay()
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+
+            _uiManager.loadingScreen.SetActive(false);
+            _uiManager.menuCamera.SetActive(false);
+            _gameManager.gameIsStarted = true;
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
