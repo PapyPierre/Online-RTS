@@ -3622,7 +3622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 2
+  expectedNumberOfPlayers: 1
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0

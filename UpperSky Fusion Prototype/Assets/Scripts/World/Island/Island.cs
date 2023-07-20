@@ -17,6 +17,7 @@ namespace World.Island
 
         [field: Header("Networked Properties")]
         [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
+
         [Networked] public IslandTypesEnum Type { get; set; }
         [Networked] public int BuildingsCount { get; set; }
         

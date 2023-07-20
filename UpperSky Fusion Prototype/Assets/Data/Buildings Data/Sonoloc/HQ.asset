@@ -34,8 +34,7 @@ MonoBehaviour:
   <UnitFormationBonus>k__BackingField: 5
   <BuildingConstructionBonus>k__BackingField: 5
   <TechResearchBonus>k__BackingField: 5
-  <IsDefenseBuilding>k__BackingField: 1
+  <IsDefenseBuilding>k__BackingField: 0
   <DamagePerShootOnUnits>k__BackingField: 10
   <ArmorPenetration>k__BackingField: 10
   <RealodTime>k__BackingField: 1
-  <ShootingRange>k__BackingField: 10

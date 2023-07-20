@@ -17,6 +17,9 @@ namespace Entity.Military_Units
         private bool _isReadyToShoot = true;
 
         [HideInInspector] public UnitGroup currentGroup;
+
+        [SerializeField] private Transform[] canonsPos;
+        [SerializeField] private NetworkPrefabRef shootVfx;
         
         [Header("Status")] 
         public bool isColonizer;
@@ -53,8 +56,10 @@ namespace Entity.Military_Units
             currentParasite = Data.BaseParasite;
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             CheckIfTargetInRange();
             ShootAtEnemy();
         }
@@ -76,6 +81,11 @@ namespace Entity.Military_Units
         {
             if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
 
+            foreach (var t in canonsPos)
+            {
+                Runner.Spawn(shootVfx, t.position, Quaternion.identity);
+            }
+            
             int damageOnUnits = Data.DamagePerShootOnUnits; 
             int armorPenetration = Data.ArmorPenetration;
 

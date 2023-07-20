@@ -5,15 +5,15 @@ namespace Custom_UI.InGame_UI
 {
     public class StatBar : MonoBehaviour
     {
-          private Slider _slider;
+         public Slider Slider { get; private set; }
          [SerializeField] private float updateSpeed = 2;
          private float _targetValue;
 
          public void Init(float maxValue)
          {
-             _slider = GetComponent<Slider>();
-             _slider.maxValue = maxValue;
-             _slider.value = maxValue;
+             Slider = GetComponent<Slider>();
+             Slider.maxValue = maxValue;
+             Slider.value = maxValue;
              UpdateBar(maxValue);
          }
          
@@ -24,7 +24,7 @@ namespace Custom_UI.InGame_UI
 
          private void Update()
          {
-             _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, Time.deltaTime * updateSpeed);
+             Slider.value = Mathf.MoveTowards(Slider.value, _targetValue, Time.deltaTime * updateSpeed);
          }
     }
 }

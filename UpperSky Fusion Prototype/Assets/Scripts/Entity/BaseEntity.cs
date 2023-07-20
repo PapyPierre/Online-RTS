@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Custom_UI.InGame_UI;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace Entity
 {
-    public class BaseEntity : NetworkBehaviour
+    public abstract class BaseEntity : NetworkBehaviour
     {
         protected UnitsManager UnitsManager;
         protected GameManager GameManager;
@@ -18,13 +19,13 @@ namespace Entity
         protected int FogRevealerIndex;
 
         #region Ownership
-        [field: SerializeField] [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
+        [field: SerializeField, Header("Ownership")] [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
         [SerializeField] protected GameObject selectionCircle;
         [SerializeField] private  List<MeshRenderer> meshToColor;
         #endregion
 
         #region Networked Health & Health Bar
-        [field: SerializeField] [Networked(OnChanged = nameof(CurrentHealthChanged))]
+        [field: SerializeField, Header("Health")] [Networked(OnChanged = nameof(CurrentHealthChanged))]
         private float CurrentHealth { get; set; }
         
         [SerializeField] private StatBar healthBar;
@@ -33,17 +34,24 @@ namespace Entity
         #endregion
         
         #region Networked Armor & Armor Bar
-        [field: SerializeField] [Networked(OnChanged = nameof(CurrentArmorChanged))]
+        [field: SerializeField, Header("Armor")] [Networked(OnChanged = nameof(CurrentArmorChanged))]
         private float CurrentArmor { get; set; }
         [SerializeField] private StatBar armorBar;
         private static void CurrentArmorChanged(Changed<BaseEntity> changed) 
             => changed.Behaviour.armorBar.UpdateBar(changed.Behaviour.CurrentArmor);
         #endregion
-        
+
         public BaseEntity TargetedEntity { get; set; }
 
-        [SerializeField] private GameObject graphObject;
-        [SerializeField] private GameObject canvas;
+        [SerializeField, Header("VFX")] private NetworkPrefabRef deathVfx;
+        [SerializeField] private NetworkPrefabRef lowHpVfx;
+        private bool _lowHpVfxSpawned;
+        
+        [SerializeField, Space] private GameObject graphObject;
+        
+        [SerializeField, Space] private GameObject canvas;
+
+        private List<NetworkObject> _objToDestroyOnDeath = new ();
 
         public override void Spawned()
         {
@@ -52,7 +60,15 @@ namespace Entity
             FogOfWar = FogOfWar.Instance;
             GetComponent<FogAgent>().Init(graphObject, canvas);
         }
-        
+
+        protected virtual void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                RPC_TakeDamage(30,10, this);
+            }
+        }
+
         private static void OwnerChanged(Changed<BaseEntity> changed)
         {
             if (changed.Behaviour.Owner == null) return;
@@ -97,6 +113,15 @@ namespace Entity
                 CurrentArmor = 0;
             }
 
+            // Need to access slider max value to avoid doing twice this code in children class to access data
+            if (CurrentHealth < healthBar.Slider.maxValue/2 && !_lowHpVfxSpawned)
+            {
+                _lowHpVfxSpawned = true;
+                var obj = Runner.Spawn(lowHpVfx, transform.position);
+                obj.transform.parent = transform;
+                _objToDestroyOnDeath.Add(obj);
+            }
+
             if (CurrentHealth <= 0)
             {
                 shooter.TargetedEntity = null;
@@ -108,29 +133,38 @@ namespace Entity
         
         public void DestroyEntity()
         {
+            foreach (var obj in _objToDestroyOnDeath) Runner.Despawn(obj);
+
+            graphObject.SetActive(false);
+            Runner.Spawn(deathVfx, transform.position);
+        
             if (MouseAboveThisEntity()) GameManager.thisPlayer.mouseAboveThisEntity = null;
 
-            if (this is BaseUnit unit)
+            switch (this)
             {
-                if (UnitsManager.currentlySelectedUnits.Contains(unit)) UnitsManager.currentlySelectedUnits.Remove(unit);
+                case BaseUnit unit:
+                {
+                    if (UnitsManager.currentlySelectedUnits.Contains(unit)) UnitsManager.currentlySelectedUnits.Remove(unit);
                 
-                if (unit.currentGroup is not null) unit.currentGroup.RemoveUnitFromGroup(unit);
+                    if (unit.currentGroup is not null) unit.currentGroup.RemoveUnitFromGroup(unit);
 
-                GameManager.thisPlayer.ressources.CurrentSupply -= unit.Data.SupplyCost;
-            }
-            else if (this is BaseBuilding building)
-            {
-                building.myIsland.BuildingsCount--; //Possible erreur car pas la state authority, alors faire une RPC
-                building.myIsland.buildingOnThisIsland.Remove(building);
+                    GameManager.thisPlayer.ressources.CurrentSupply -= unit.Data.SupplyCost;
+                    break;
+                }
+                case BaseBuilding building:
+                {
+                    building.myIsland.BuildingsCount--;
+                    building.myIsland.buildingOnThisIsland.Remove(building);
 
-                if (building.isStartBuilding) GameManager.KillPlayer(Owner);
+                    if (building.isStartBuilding) GameManager.KillPlayer(Owner);
+                    break;
+                }
             }
 
             FogOfWar.RemoveFogRevealer(FogRevealerIndex);
-
             Runner.Despawn(Object);
         }
-        
+
         #region Selection
         protected virtual void OnMouseEnter()
         {

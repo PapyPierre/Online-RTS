@@ -194,6 +194,10 @@ MonoBehaviour:
   healthBar: {fileID: 4268833181125381129}
   _CurrentArmor: 0
   armorBar: {fileID: 5982366388792594247}
+  deathVfx:
+    RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
+  lowHpVfx:
+    RawGuidValue: 043176b6a68be2b43b073aaaa4782c7d
   graphObject: {fileID: 8510112358408295226}
   canvas: {fileID: 7791223017978377089}
   <Data>k__BackingField: {fileID: 11400000, guid: d1e579db73ece624e8c1adc55e857c9f,
