@@ -26,7 +26,7 @@ namespace Entity.Military_Units
             
             GameObject tempObj = null;
 
-            foreach (var unit in  unitsToMove)
+            foreach (var unit in unitsToMove)
             {
                 if (unit.transform.parent != null)
                 {

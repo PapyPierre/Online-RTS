@@ -1,5 +1,4 @@
 using System.Collections;
-using AOSFogWar;
 using AOSFogWar.Used_Scripts;
 using Fusion;
 using NaughtyAttributes;
@@ -93,16 +92,13 @@ namespace Entity.Military_Units
             float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
             TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
-            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage();
+            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage(this);
 
             _isReadyToShoot = false;
             StartCoroutine(Reload());
         }
 
-        public void ReactToDamage()
-        {
-            //TODO Réaction, voir gdd
-        }
+        public void ReactToDamage(BaseEntity agressor) => TargetedEntity ??= agressor;
 
         private IEnumerator Reload()
         {

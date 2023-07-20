@@ -151,7 +151,7 @@ namespace Entity.Buildings
             float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
             TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
-            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage();
+            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage(this);
             
             _isReadyToShoot = false;
             StartCoroutine(Reload());
