@@ -142,7 +142,7 @@ namespace Player
                     {
                         foreach (var unit in  _unitsManager.currentlySelectedUnits)
                         {
-                            unit.TargetedEntity = mouseAboveThisEntity;
+                            unit.SetTarget(mouseAboveThisEntity);
                         }
                         
                         _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits,
@@ -153,7 +153,7 @@ namespace Player
                 {
                     foreach (var unit in  _unitsManager.currentlySelectedUnits)
                     {
-                        unit.TargetedEntity = null;
+                        unit.ResetTarget();
                     }
                     
                     Ray ray = myCam.ScreenPointToRay((Input.mousePosition));
@@ -208,6 +208,7 @@ namespace Player
 
             _uiManager.loadingScreen.SetActive(false);
             _uiManager.menuCamera.SetActive(false);
+            _uiManager.playerRessources = GetComponent<PlayerRessources>();
             _gameManager.gameIsStarted = true;
         }
         

@@ -16,11 +16,11 @@ MonoBehaviour:
   <Description>k__BackingField: The Darwin is a light reconnaissance vessel
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
-  <MaterialCost>k__BackingField: 10
+  <MaterialCost>k__BackingField: 30
   <OrichalqueCost>k__BackingField: 0
-  <ProductionTime>k__BackingField: 5
-  <MaxHealthPoints>k__BackingField: 60
-  <MaxArmorPoints>k__BackingField: 0
+  <ProductionTime>k__BackingField: 10
+  <MaxHealthPoints>k__BackingField: 50
+  <MaxArmorPoints>k__BackingField: 2
   <SightRange>k__BackingField: 30
   <SupplyCost>k__BackingField: 1
   <Icon>k__BackingField: {fileID: 21300000, guid: 448073670b41b7b4db7ca0cdb10d8d82,
@@ -30,7 +30,7 @@ MonoBehaviour:
   <WeatherResistance>k__BackingField: 0.1
   <DamagePerShootOnUnits>k__BackingField: 6
   <DamagePerShootOnBuildings>k__BackingField: 2
-  <ArmorPenetration>k__BackingField: 5
+  <ArmorPenetration>k__BackingField: 10
   <RealodTime>k__BackingField: 1
   <ShootingRange>k__BackingField: 10
   <TargetableEntityType>k__BackingField: 2

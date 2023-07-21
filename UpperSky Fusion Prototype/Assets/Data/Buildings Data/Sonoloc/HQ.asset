@@ -22,13 +22,13 @@ MonoBehaviour:
   <MaxHealthPoints>k__BackingField: 500
   <MaxArmorPoints>k__BackingField: 100
   <SightRange>k__BackingField: 50
-  <ThisBuilding>k__BackingField: 13
+  <ThisBuilding>k__BackingField: 12
   <UnlockedBuildings>k__BackingField: 
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
-  <GeneratedMaterialPerSeconds>k__BackingField: 10
-  <GeneratedOrichalquePerSeconds>k__BackingField: 1
+  <GeneratedMaterialPerSeconds>k__BackingField: 4
+  <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
   <HasTimingReduction>k__BackingField: 1
   <UnitFormationBonus>k__BackingField: 5
@@ -38,3 +38,4 @@ MonoBehaviour:
   <DamagePerShootOnUnits>k__BackingField: 10
   <ArmorPenetration>k__BackingField: 10
   <RealodTime>k__BackingField: 1
+  <ShootingRange>k__BackingField: 3

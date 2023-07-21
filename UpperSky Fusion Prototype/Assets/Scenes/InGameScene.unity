@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5020e996fc10f1f4e8746512a35b9554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRessources: {fileID: 0}
   mainMenu: {fileID: 470764768}
   menuCamera: {fileID: 2090124502}
   inputFieldRoomName: {fileID: 258470464}
@@ -3622,7 +3623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -6987,7 +6988,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 65
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 5d6c12ad52d63a0468b26622cbbf9226, type: 2}
   m_TargetDisplay: 1
@@ -7464,14 +7465,14 @@ MonoBehaviour:
     m_RotationOrder: 4
   allIslands: []
   playersColors:
-  - {r: 0.5308582, g: 0.6037736, b: 0.36169454, a: 1}
+  - {r: 0.33187968, g: 0.6226415, b: 0.5291824, a: 1}
   - {r: 0.754717, g: 0.4556782, b: 0.23139909, a: 1}
-  - {r: 0, g: 0.69423604, b: 1, a: 1}
-  - {r: 0.7169812, g: 0, b: 0, a: 1}
-  - {r: 0.05296313, g: 0.49056602, b: 0.030081892, a: 1}
-  - {r: 1, g: 0.97164285, b: 0, a: 1}
-  - {r: 0.7174806, g: 0.023362402, b: 0.990566, a: 1}
-  - {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+  - {r: 0.21026166, g: 0.41855964, b: 0.7075472, a: 1}
+  - {r: 0.5660378, g: 0.09344962, b: 0.09344962, a: 1}
+  - {r: 0.14600503, g: 0.3773585, b: 0.13349947, a: 1}
+  - {r: 0.8207547, g: 0.80662, b: 0.30584726, a: 1}
+  - {r: 0.55977017, g: 0.114542544, b: 0.735849, a: 1}
+  - {r: 0.3207547, g: 0.25569597, b: 0.25569597, a: 1}
 --- !u!1 &1169068555
 GameObject:
   m_ObjectHideFlags: 0

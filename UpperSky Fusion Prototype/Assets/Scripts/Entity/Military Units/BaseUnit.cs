@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Fusion;
 using NaughtyAttributes;
@@ -11,15 +13,14 @@ namespace Entity.Military_Units
     public class BaseUnit : BaseEntity
     {
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
+
+        private Rigidbody _rb;
         
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
-
+        
         [HideInInspector] public UnitGroup currentGroup;
 
-        [SerializeField] private Transform[] canonsPos;
-        [SerializeField] private NetworkPrefabRef shootVfx;
-        
         [Header("Status")] 
         public bool isColonizer;
         public bool isCamouflaged; //TODO
@@ -58,9 +59,21 @@ namespace Entity.Military_Units
         protected override void Update()
         {
             base.Update();
-            
             CheckIfTargetInRange();
             ShootAtEnemy();
+        }
+
+        private void FixedUpdate()
+        {
+            NullifyRbVelocity();
+        }
+
+        private void NullifyRbVelocity()
+        {
+            _rb ??= GetComponent<Rigidbody>();
+            
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
         }
 
         private void CheckIfTargetInRange()
@@ -79,11 +92,8 @@ namespace Entity.Military_Units
         private void ShootAtEnemy()
         {
             if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
-
-            foreach (var t in canonsPos)
-            {
-                Runner.Spawn(shootVfx, t.position, Quaternion.identity);
-            }
+    
+            ShowShootVfx();
             
             int damageOnUnits = Data.DamagePerShootOnUnits; 
             int armorPenetration = Data.ArmorPenetration;
@@ -98,7 +108,13 @@ namespace Entity.Military_Units
             StartCoroutine(Reload());
         }
 
-        public void ReactToDamage(BaseEntity agressor) => TargetedEntity ??= agressor;
+        public void ReactToDamage(BaseEntity agressor)
+        {
+            if (TargetedEntity is null)
+            {
+                SetTarget(agressor);
+            }
+        }
 
         private IEnumerator Reload()
         {

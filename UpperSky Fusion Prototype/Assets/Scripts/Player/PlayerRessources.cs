@@ -13,32 +13,13 @@ namespace Player
         [SerializeField] private int playerMaxSupplyAtStart;
 
         // Those vairables are properties define below
-        private int _currentMaterials;
-        private int _currentOrichalque;
+        
+        public int CurrentMaterials { get; set; }
+
+        public int CurrentOrichalque { get; set; }
+        
         private int _currentSupply;
         private int _currentMaxSupply;
-
-        public int CurrentMaterials   
-        {
-            get => _currentMaterials;
-
-            set
-            {
-                _currentMaterials = value;
-                _uiManager.UpdateMaterialsTMP(value);
-            }
-        }
-        
-        public int CurrentOrichalque
-        {
-            get => _currentOrichalque;
-
-            set
-            {
-                _currentOrichalque = value;
-                _uiManager.UpdateOrichalqueTMP(value);
-            }
-        }
         
         public int CurrentSupply
         {

@@ -17,6 +17,7 @@ namespace Custom_UI
         private UnitsManager _unitsManager;
         private BuildingsManager _buildingsManager;
         private GameManager _gameManager;
+        public PlayerRessources playerRessources;
         
         [Header("Main Menu Variables"), Required()] 
         public GameObject mainMenu;
@@ -94,7 +95,12 @@ namespace Custom_UI
             while (true)
             {
                 DisplayFps();
-                if (_gameManager.gameIsStarted) DisplayPlayerPing();
+                if (_gameManager.gameIsStarted)
+                {
+                    DisplayPlayerPing();
+                    UpdateMaterialsTMP(playerRessources.CurrentMaterials);
+                    UpdateOrichalqueTMP(playerRessources.CurrentOrichalque);
+                }
                 
                 yield return new WaitForSecondsRealtime(0.5f);
             }

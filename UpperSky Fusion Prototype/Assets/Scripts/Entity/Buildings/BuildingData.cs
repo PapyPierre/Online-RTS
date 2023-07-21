@@ -76,6 +76,9 @@ namespace Entity.Buildings
         
         [field: SerializeField, ShowIf("IsDefenseBuilding"), ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float RealodTime { get; private set; }
+        
+        [field: SerializeField, ShowIf("IsDefenseBuilding"), ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
+        public float ShootingRange { get; private set; }
 
         #endregion
         

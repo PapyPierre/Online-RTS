@@ -24,13 +24,13 @@ MonoBehaviour:
   <MaxArmorPoints>k__BackingField: 0
   <SightRange>k__BackingField: 20
   <ThisBuilding>k__BackingField: 2
-  <UnlockedBuildings>k__BackingField: 0100000003000000
+  <UnlockedBuildings>k__BackingField: 010000000300000006000000
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
   <GeneratedMaterialPerSeconds>k__BackingField: 0
   <GeneratedOrichalquePerSeconds>k__BackingField: 0
-  <AditionnalMaxSupplies>k__BackingField: 10
+  <AditionnalMaxSupplies>k__BackingField: 3
   <HasTimingReduction>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0

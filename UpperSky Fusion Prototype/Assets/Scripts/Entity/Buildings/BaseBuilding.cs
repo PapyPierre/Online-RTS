@@ -8,8 +8,10 @@ using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Player;
+using UnityEditor;
 using UnityEngine;
 using World.Island;
+using Random = UnityEngine.Random;
 
 namespace Entity.Buildings
 {
@@ -34,6 +36,8 @@ namespace Entity.Buildings
         [HideInInspector] public float timeLeftToForm;
 
         // Defense
+        [SerializeField] private Transform _canonHead;
+        [SerializeField] private float headAngularSpeed;
         private List<BaseUnit> _enemyInRange = new();
         private bool _isReadyToShoot = true;
 
@@ -101,48 +105,39 @@ namespace Entity.Buildings
                 if (FormationQueue.Count > 0) ManageFormation();
             }
 
-            if (Data.IsDefenseBuilding && TargetedEntity is not null) ShootAtTarget();
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!Data.IsDefenseBuilding) return;
-            
-            if (other.CompareTag("Unit"))
+            if (Data.IsDefenseBuilding)
             {
-                var unit = other.GetComponent<BaseUnit>();
-                if (unit.Owner == Owner) return;
+                if (TargetedEntity is null)
+                {
+                    FindTarget();
+                    return;
+                }
                 
-                _enemyInRange.Add(unit);
-                TargetedEntity ??= unit;
+                AimAtTarget(TargetedEntity.transform, _canonHead);
+                ShootAtTarget();
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        public void FindTarget()
         {
-            if (!Data.IsDefenseBuilding) return;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, Data.ShootingRange, 
+                LayerMask.GetMask("Units"));
 
-            if (other.CompareTag("Unit"))
+            foreach (var col in colliders)
             {
-                var unit = other.GetComponent<BaseUnit>();
+                var unit = col.GetComponent<BaseUnit>();
                 if (unit.Owner == Owner) return;
-
-                if (_enemyInRange.Contains(unit)) _enemyInRange.Remove(unit);
-
-                if (unit == TargetedEntity)
-                {
-                    if (_enemyInRange.Count > 0)
-                    {
-                        TargetedEntity = _enemyInRange[0];
-                    }
-                    else TargetedEntity = null;
-                }
+                
+                SetTarget(unit);
+                break;
             }
         }
 
         private void ShootAtTarget()
         {
             if (!_isReadyToShoot) return;
+            
+            ShowShootVfx();
 
             int damageOnUnits = Data.DamagePerShootOnUnits; 
             int armorPenetration = Data.ArmorPenetration;
@@ -217,7 +212,9 @@ namespace Entity.Buildings
             var prefab = UnitsManager.allUnitsPrefab[(int) FormationQueue.Dequeue()];
             
             Vector3 myPos = transform.position;
-            Vector3 spawnPos = new Vector3(myPos.x, UnitsManager.flyingHeightOfUnits, myPos.z);
+            var randomX = Random.Range(-2f, 2f);
+            var randomZ = Random.Range(-2f, 2f);
+            Vector3 spawnPos = new Vector3(myPos.x + randomX, UnitsManager.flyingHeightOfUnits, myPos.z + randomZ);
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
             obj.GetComponent<BaseUnit>().Init(Owner);
@@ -272,5 +269,12 @@ namespace Entity.Buildings
                 else SetActiveSelectionCircle(false);
             }
         }
+
+        #if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Handles.DrawWireDisc(transform.position,Vector3.up, Data.ShootingRange);
+        }
+        #endif
     }
 }

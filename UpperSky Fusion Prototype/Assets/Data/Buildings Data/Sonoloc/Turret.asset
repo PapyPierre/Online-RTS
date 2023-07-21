@@ -15,14 +15,14 @@ MonoBehaviour:
   <Name>k__BackingField: Turret
   <Description>k__BackingField: The turret  is an effective defense for your island
     despite its low cost
-  <StartAsLocked>k__BackingField: 0
-  <LockedDescription>k__BackingField: The turret requires a foundry in order to be
-    build
-  <MaterialCost>k__BackingField: 40
+  <StartAsLocked>k__BackingField: 1
+  <LockedDescription>k__BackingField: The turret requires a residence in order to
+    be build
+  <MaterialCost>k__BackingField: 80
   <OrichalqueCost>k__BackingField: 0
-  <ProductionTime>k__BackingField: 5
+  <ProductionTime>k__BackingField: 10
   <MaxHealthPoints>k__BackingField: 70
-  <MaxArmorPoints>k__BackingField: 0
+  <MaxArmorPoints>k__BackingField: 15
   <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 6
   <UnlockedBuildings>k__BackingField: 
@@ -38,5 +38,6 @@ MonoBehaviour:
   <TechResearchBonus>k__BackingField: 0
   <IsDefenseBuilding>k__BackingField: 1
   <DamagePerShootOnUnits>k__BackingField: 10
-  <ArmorPenetration>k__BackingField: 10
+  <ArmorPenetration>k__BackingField: 20
   <RealodTime>k__BackingField: 1
+  <ShootingRange>k__BackingField: 12

@@ -38,6 +38,12 @@ namespace World.Island
 
             _worldManager.allIslands.Add(this);
             coloniseBtn.SetActive(false);
+
+            if (transform.rotation.y != 0)
+            {
+                minimapIcon.transform.localRotation = Quaternion.Euler(0,0, 
+                    minimapIcon.transform.localRotation.z + transform.rotation.y * 2);
+            }
             
             GetComponent<FogAgent_Island>().Init(graphObject, canvas);
         }

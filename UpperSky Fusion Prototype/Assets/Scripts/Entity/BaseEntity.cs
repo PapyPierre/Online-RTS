@@ -41,11 +41,18 @@ namespace Entity
             => changed.Behaviour.armorBar.UpdateBar(changed.Behaviour.CurrentArmor);
         #endregion
 
-        public BaseEntity TargetedEntity { get; set; }
+        protected BaseEntity TargetedEntity { get; private set; }
+
+        public bool isDead;
+        
+        [HideInInspector] public List<BaseEntity> currentAgressor;
 
         [SerializeField, Header("VFX")] private NetworkPrefabRef deathVfx;
         [SerializeField] private NetworkPrefabRef lowHpVfx;
         private bool _lowHpVfxSpawned;
+        
+        [SerializeField] protected Transform[] canonsPos;
+        [SerializeField] protected NetworkPrefabRef shootVfx;
         
         [SerializeField, Space] private GameObject graphObject;
         
@@ -63,10 +70,12 @@ namespace Entity
 
         protected virtual void Update()
         {
+            /*
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
                 RPC_TakeDamage(30,10, this);
             }
+            */
         }
 
         private static void OwnerChanged(Changed<BaseEntity> changed)
@@ -124,8 +133,9 @@ namespace Entity
 
             if (CurrentHealth <= 0)
             {
-                shooter.TargetedEntity = null;
+                shooter.ResetTarget();
                 if (shooter is BaseUnit unit) unit.targetedUnitIsInRange = false;
+                else if(shooter is BaseBuilding building) building.FindTarget();
                 
                 DestroyEntity();
             }
@@ -133,12 +143,18 @@ namespace Entity
         
         public void DestroyEntity()
         {
+            isDead = true;
             foreach (var obj in _objToDestroyOnDeath) Runner.Despawn(obj);
 
             graphObject.SetActive(false);
             Runner.Spawn(deathVfx, transform.position);
         
             if (MouseAboveThisEntity()) GameManager.thisPlayer.mouseAboveThisEntity = null;
+
+            foreach (var entity in currentAgressor)
+            {
+                entity.ResetTarget();
+            }
 
             switch (this)
             {
@@ -163,6 +179,48 @@ namespace Entity
 
             FogOfWar.RemoveFogRevealer(FogRevealerIndex);
             Runner.Despawn(Object);
+        }
+
+        public void SetTarget(BaseEntity entity)
+        {
+            TargetedEntity = entity;
+            entity.currentAgressor.Add(this);
+            
+            AimAtTarget(entity.transform, transform);
+        }
+        
+        public void ResetTarget()
+        {
+            if (TargetedEntity is null) return;
+
+            if (TargetedEntity.currentAgressor.Contains(this) && !TargetedEntity.isDead)
+            {
+                TargetedEntity.currentAgressor.Remove(this);
+            }
+            
+            TargetedEntity = null;
+        }
+
+        protected void AimAtTarget(Transform target, Transform objToRotate)
+        {
+            Vector3 directionToTarget = target.position - objToRotate.position;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+
+            float angularSpeed = 0;
+            
+            if (this is BaseUnit unit) angularSpeed = unit.Data.AngularSpeed;
+            else angularSpeed = 2f;
+            
+            objToRotate.rotation = Quaternion.Slerp(
+                objToRotate.rotation, targetRotation, angularSpeed * Time.deltaTime);
+        }
+        
+        protected void ShowShootVfx()
+        {
+            foreach (var t in canonsPos)
+            {
+                Runner.Spawn(shootVfx, t.position, Quaternion.identity);
+            }
         }
 
         #region Selection

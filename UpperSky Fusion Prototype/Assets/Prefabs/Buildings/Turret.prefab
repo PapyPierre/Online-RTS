@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8297680352280606113}
-  - component: {fileID: 8796602833821099993}
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
   - component: {fileID: 3986954249374926806}
+  - component: {fileID: 2341833709318739436}
   m_Layer: 8
   m_Name: Turret
   m_TagString: Building
@@ -38,19 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8796602833821099993
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874426664033387176}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6.51
-  m_Center: {x: 0, y: 8, z: 0}
 --- !u!114 &6298163403965779454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +115,10 @@ MonoBehaviour:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
     RawGuidValue: 043176b6a68be2b43b073aaaa4782c7d
+  canonsPos:
+  - {fileID: 3236204728823635088}
+  shootVfx:
+    RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
   graphObject: {fileID: 8510112358408295226}
   canvas: {fileID: 2580673168563823367}
   <Data>k__BackingField: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4,
@@ -136,6 +127,8 @@ MonoBehaviour:
   isStartBuilding: 0
   isOpen: 0
   timeLeftToForm: 0
+  _canonHead: {fileID: 3240273680404806480}
+  headAngularSpeed: 2
 --- !u!114 &3986954249374926806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +144,19 @@ MonoBehaviour:
   isVisible: 0
   keepVisible: 1
   additionalRadius: 0
+--- !u!65 &2341833709318739436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 5, z: 2}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &2580673168563823367
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.34}
+  m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4806903372188743340
@@ -558,6 +564,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HM_cannon_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1897587484924326, guid: 997eda0f844715845a30121b4553e2fd, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: 4458445124252350, guid: 997eda0f844715845a30121b4553e2fd, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -639,6 +650,18 @@ PrefabInstance:
 --- !u!4 &3236129156419670342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4509344712265162, guid: 997eda0f844715845a30121b4553e2fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 3240638362563075212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3236204728823635088 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4574405651562524, guid: 997eda0f844715845a30121b4553e2fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 3240638362563075212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3240273680404806480 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4165866241402844, guid: 997eda0f844715845a30121b4553e2fd,
     type: 3}
   m_PrefabInstance: {fileID: 3240638362563075212}
   m_PrefabAsset: {fileID: 0}

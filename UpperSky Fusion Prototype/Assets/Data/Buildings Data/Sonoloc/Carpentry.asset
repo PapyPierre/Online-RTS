@@ -18,7 +18,7 @@ MonoBehaviour:
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Carpentry requires a residence in order to
     be build
-  <MaterialCost>k__BackingField: 50
+  <MaterialCost>k__BackingField: 100
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 50
