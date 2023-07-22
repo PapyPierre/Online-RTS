@@ -33,7 +33,10 @@ namespace Entity.Buildings
         public bool DoesGenerateRessources { get; private set; }
         
         [field: SerializeField, ShowIf("DoesGenerateRessources")]
-        public float GeneratedMaterialPerSeconds { get; private set; }
+        public float GeneratedWoodPerSeconds { get; private set; }
+        
+        [field: SerializeField, ShowIf("DoesGenerateRessources")]
+        public float GeneratedMetalsPerSeconds { get; private set; }
         
         [field: SerializeField, ShowIf("DoesGenerateRessources")]
         public float GeneratedOrichalquePerSeconds { get; private set; }

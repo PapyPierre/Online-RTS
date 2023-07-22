@@ -25,7 +25,7 @@ namespace Entity.Buildings
         [SerializeField] private BuildingsManager.AllBuildingsEnum thisBuilding;
         [SerializeField] private Renderer[] renderers;
 
-        [SerializeField] private List<Collider> _propsInRange = new();
+        private List<Collider> _propsInRange = new();
 
         private void Start()
         {        

@@ -27,7 +27,8 @@ namespace Entity.Buildings
         public bool isStartBuilding;
         
         // Génération de ressources
-        private float _tempMatToGenerate;
+        private float _tempWoodToGenerate;
+        private float _tempMetalsToGenerate;
         private float _tempOrichalqueToGenerate;
 
         // Formation d'unités
@@ -179,14 +180,22 @@ namespace Entity.Buildings
         
         private void GenerateRessources()
         {
-            _tempMatToGenerate += Data.GeneratedMaterialPerSeconds;
+            _tempWoodToGenerate += Data.GeneratedWoodPerSeconds;
+            _tempMetalsToGenerate += Data.GeneratedMetalsPerSeconds;
             _tempOrichalqueToGenerate += Data.GeneratedOrichalquePerSeconds;
 
-            if (_tempMatToGenerate >= 1 )
+            if (_tempWoodToGenerate >= 1 )
             {
-                int x = Mathf.FloorToInt(_tempMatToGenerate);
-                Owner.ressources.CurrentMaterials += x;
-                _tempMatToGenerate -= x;
+                int x = Mathf.FloorToInt(_tempWoodToGenerate);
+                Owner.ressources.CurrentWood += x;
+                _tempWoodToGenerate -= x;
+            }
+            
+            if (_tempMetalsToGenerate >= 1 )
+            {
+                int x = Mathf.FloorToInt(_tempMetalsToGenerate);
+                Owner.ressources.CurrentMetals += x;
+                _tempMetalsToGenerate -= x;
             }
 
             if (_tempOrichalqueToGenerate >= 1)

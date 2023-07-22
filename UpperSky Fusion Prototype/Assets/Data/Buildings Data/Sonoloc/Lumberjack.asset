@@ -10,27 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: facb2fb0ab48bda4886fd10b24b85513, type: 3}
-  m_Name: Turret
+  m_Name: Lumberjack
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Turret
-  <Description>k__BackingField: The turret  is an effective defense for your island
-    despite its low cost
-  <StartAsLocked>k__BackingField: 1
-  <LockedDescription>k__BackingField: The turret requires a residence in order to
-    be build
-  <WoodCost>k__BackingField: 60
-  <MetalsCost>k__BackingField: 5
+  <Name>k__BackingField: Lumberjack
+  <Description>k__BackingField: The lumberjack provide wood for your people
+  <StartAsLocked>k__BackingField: 0
+  <LockedDescription>k__BackingField: 
+  <WoodCost>k__BackingField: 10
+  <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
-  <ProductionTime>k__BackingField: 10
-  <MaxHealthPoints>k__BackingField: 70
-  <MaxArmorPoints>k__BackingField: 15
+  <ProductionTime>k__BackingField: 5
+  <MaxHealthPoints>k__BackingField: 60
+  <MaxArmorPoints>k__BackingField: 0
   <SightRange>k__BackingField: 10
-  <ThisBuilding>k__BackingField: 6
-  <UnlockedBuildings>k__BackingField: 
+  <ThisBuilding>k__BackingField: 4
+  <UnlockedBuildings>k__BackingField: 03000000
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
-  <DoesGenerateRessources>k__BackingField: 0
-  <GeneratedWoodPerSeconds>k__BackingField: 0
+  <DoesGenerateRessources>k__BackingField: 1
+  <GeneratedWoodPerSeconds>k__BackingField: 10
   <GeneratedMetalsPerSeconds>k__BackingField: 0
   <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
@@ -38,8 +36,8 @@ MonoBehaviour:
   <UnitFormationBonus>k__BackingField: 0
   <BuildingConstructionBonus>k__BackingField: 0
   <TechResearchBonus>k__BackingField: 0
-  <IsDefenseBuilding>k__BackingField: 1
-  <DamagePerShootOnUnits>k__BackingField: 10
-  <ArmorPenetration>k__BackingField: 20
-  <RealodTime>k__BackingField: 1
-  <ShootingRange>k__BackingField: 12
+  <IsDefenseBuilding>k__BackingField: 0
+  <DamagePerShootOnUnits>k__BackingField: 0
+  <ArmorPenetration>k__BackingField: 0
+  <RealodTime>k__BackingField: 0
+  <ShootingRange>k__BackingField: 0

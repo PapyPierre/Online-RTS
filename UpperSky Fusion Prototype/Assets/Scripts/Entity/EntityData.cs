@@ -22,7 +22,10 @@ namespace Entity
         public string LockedDescription { get; private set; }
         
         [field: SerializeField]
-        public int MaterialCost { get; private set; }
+        public int WoodCost { get; private set; }
+        
+        [field: SerializeField]
+        public int MetalsCost { get; private set; }
         
         [field: SerializeField]
         public int OrichalqueCost { get; private set; }

@@ -7,7 +7,6 @@ namespace Player
     public class RectangleSelection : MonoBehaviour
     {
         public static RectangleSelection Instance;
-        private UnitsManager _unitsManager;
 
         [SerializeField] private Color rectangleColor;
         [SerializeField] private Color borderColor;
@@ -40,15 +39,9 @@ namespace Player
             Instance = this;
         }
 
-        private void Start()
-        {
-            _unitsManager = UnitsManager.Instance;
-        }
-
         public void OnLeftButtonDown_RectSelection()
         {
             p1 = Input.mousePosition;
-
         }
         
         public void OnLeftButtonHold_RectSelection()
@@ -152,7 +145,15 @@ namespace Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Unit")) UnitsManager.Instance.SelectUnit(other.gameObject.GetComponent<BaseUnit>());
+            if (other.CompareTag("Unit"))
+            {
+                BaseUnit unit = other.gameObject.GetComponent<BaseUnit>();
+                
+                if (unit.Owner == GameManager.Instance.thisPlayer)
+                {
+                    UnitsManager.Instance.SelectUnit(unit);
+                }
+            }
         }
     }
 }

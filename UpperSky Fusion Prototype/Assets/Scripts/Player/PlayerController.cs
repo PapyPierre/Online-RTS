@@ -62,7 +62,7 @@ namespace Player
 
         private void Update()
         {
-            if (!Object.HasInputAuthority) return;
+            if (!Object.HasInputAuthority || _gameManager.gameIsFinished) return;
             
             if (_gameManager.connectedPlayers[^1].IsReadyToPlay
                 && !IsReadyToPlay && HasStateAuthority) MakesPlayerReady();
@@ -145,8 +145,7 @@ namespace Player
                             unit.SetTarget(mouseAboveThisEntity);
                         }
                         
-                        _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits,
-                            mouseAboveThisEntity.transform.position);
+                        _unitsManager.OrderSelectedUnitsToMoveTo(mouseAboveThisEntity.transform.position);
                     }
                 }
                 else
@@ -161,7 +160,7 @@ namespace Player
 
                     if (Physics.Raycast(ray, out hit, 5000))
                     {
-                        _unitsManager.OrderToMoveUnitsTo(_unitsManager.currentlySelectedUnits, hit.point);
+                        _unitsManager.OrderSelectedUnitsToMoveTo(hit.point);
                     }
                 }
             } 

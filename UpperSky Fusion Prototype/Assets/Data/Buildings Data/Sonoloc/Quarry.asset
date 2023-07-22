@@ -16,9 +16,10 @@ MonoBehaviour:
   <Description>k__BackingField: "\rOrichalque quarry makes it possible to extract
     natural orichalque and use it"
   <StartAsLocked>k__BackingField: 1
-  <LockedDescription>k__BackingField: Orichalque quarry requires a residence in order
-    to be build
-  <MaterialCost>k__BackingField: 60
+  <LockedDescription>k__BackingField: Orichalque quarry requires a carpentry  in
+    order to be build
+  <WoodCost>k__BackingField: 60
+  <MetalsCost>k__BackingField: 4
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 70
@@ -29,7 +30,8 @@ MonoBehaviour:
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
-  <GeneratedMaterialPerSeconds>k__BackingField: 0
+  <GeneratedWoodPerSeconds>k__BackingField: 0
+  <GeneratedMetalsPerSeconds>k__BackingField: 0
   <GeneratedOrichalquePerSeconds>k__BackingField: 1
   <AditionnalMaxSupplies>k__BackingField: 0
   <HasTimingReduction>k__BackingField: 0

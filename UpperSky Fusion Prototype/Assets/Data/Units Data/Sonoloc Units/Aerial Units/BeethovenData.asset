@@ -17,7 +17,8 @@ MonoBehaviour:
     down defenseless enemy units
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
-  <MaterialCost>k__BackingField: 90
+  <WoodCost>k__BackingField: 120
+  <MetalsCost>k__BackingField: 10
   <OrichalqueCost>k__BackingField: 20
   <ProductionTime>k__BackingField: 20
   <MaxHealthPoints>k__BackingField: 80

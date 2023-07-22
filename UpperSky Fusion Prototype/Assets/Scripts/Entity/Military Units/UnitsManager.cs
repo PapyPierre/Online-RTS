@@ -53,7 +53,6 @@ namespace Entity.Military_Units
             _worldManager = WorldManager.Instance;
         }
         
-
         public void SelectUnit(BaseUnit unit)
         {
             currentlySelectedUnits.Add(unit); 
@@ -79,23 +78,23 @@ namespace Entity.Military_Units
             }
         }
         
-        public void OrderToMoveUnitsTo(List<BaseUnit> unitsToMove, Vector3 positon)
+        public void OrderSelectedUnitsToMoveTo(Vector3 positon)
         {
             Vector3 targetPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
 
-            var selectedUnitsCenter = Vector3.zero;
+            var center = Vector3.zero;
 
-            foreach (var unit in  unitsToMove)
+            foreach (var unit in  currentlySelectedUnits)
             {
-                selectedUnitsCenter += unit.transform.position;
+                center += unit.transform.position;
             }
 
-            selectedUnitsCenter /= unitsToMove.Count;
+            center /= currentlySelectedUnits.Count;
 
-            var netObj = _gameManager.thisPlayer.Runner.Spawn(unitGroupPrefab, selectedUnitsCenter, Quaternion.identity, 
+            var netObj = _gameManager.thisPlayer.Runner.Spawn(unitGroupPrefab, center, Quaternion.identity, 
                 _gameManager.thisPlayer.Object.StateAuthority);
 
-            netObj.GetComponent<UnitGroup>().Init(targetPos, unitsToMove);
+            netObj.GetComponent<UnitGroup>().Init(targetPos);
         }
     }
 }

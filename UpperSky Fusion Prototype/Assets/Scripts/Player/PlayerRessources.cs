@@ -7,14 +7,15 @@ namespace Player
     {
         private UIManager _uiManager;
 
-        [SerializeField] private int playerMaterialsAtStart;
+        [SerializeField] private int playerWoodAtStart;
+        [SerializeField] private int playerMetalsAtStart;
         [SerializeField] private int playerOrichalcAtStart;
         [SerializeField] private int playerSupplyAtStart;
         [SerializeField] private int playerMaxSupplyAtStart;
 
-        // Those vairables are properties define below
+        public int CurrentWood { get; set; }
         
-        public int CurrentMaterials { get; set; }
+        public int CurrentMetals { get; set; }
 
         public int CurrentOrichalque { get; set; }
         
@@ -50,7 +51,8 @@ namespace Player
         private void Start()
         {
             _uiManager = UIManager.Instance;
-            CurrentMaterials = playerMaterialsAtStart;
+            CurrentWood = playerWoodAtStart;
+            CurrentMetals = playerMetalsAtStart;
             CurrentOrichalque = playerOrichalcAtStart;
             CurrentSupply = playerSupplyAtStart;
             CurrentMaxSupply = playerMaxSupplyAtStart;

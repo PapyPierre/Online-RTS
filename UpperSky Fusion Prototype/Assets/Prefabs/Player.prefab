@@ -123,7 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b6d9074a064e340b833b8c3693d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaterialsAtStart: 50
+  playerWoodAtStart: 50
+  playerMetalsAtStart: 5
   playerOrichalcAtStart: 0
   playerSupplyAtStart: 0
   playerMaxSupplyAtStart: 5
@@ -206,10 +207,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: lastTab
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: followingSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
+      propertyPath: useMouseRotation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 777893039752422764, guid: 407bd5cbe8c43334bb1b25c0f3826974,

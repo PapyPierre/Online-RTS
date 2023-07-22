@@ -58,8 +58,6 @@ namespace Entity
         
         [SerializeField, Space] private GameObject canvas;
 
-        private List<NetworkObject> _objToDestroyOnDeath = new ();
-
         public override void Spawned()
         {
             GameManager = GameManager.Instance;
@@ -128,7 +126,6 @@ namespace Entity
                 _lowHpVfxSpawned = true;
                 var obj = Runner.Spawn(lowHpVfx, transform.position);
                 obj.transform.parent = transform;
-                _objToDestroyOnDeath.Add(obj);
             }
 
             if (CurrentHealth <= 0)
@@ -139,14 +136,16 @@ namespace Entity
                 
                 DestroyEntity();
             }
+            else
+            {
+                if (this is BaseUnit unit) unit.ReactToDamage(shooter);
+            }
         }
         
         public void DestroyEntity()
         {
             isDead = true;
-            foreach (var obj in _objToDestroyOnDeath) Runner.Despawn(obj);
-
-            graphObject.SetActive(false);
+            
             Runner.Spawn(deathVfx, transform.position);
         
             if (MouseAboveThisEntity()) GameManager.thisPlayer.mouseAboveThisEntity = null;
@@ -172,7 +171,7 @@ namespace Entity
                     building.myIsland.BuildingsCount--;
                     building.myIsland.buildingOnThisIsland.Remove(building);
 
-                    if (building.isStartBuilding) GameManager.KillPlayer(Owner);
+                    if (building.isStartBuilding) GameManager.DefeatPlayer(Owner);
                     break;
                 }
             }

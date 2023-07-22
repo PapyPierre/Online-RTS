@@ -75,7 +75,9 @@ namespace World.Island
 
             foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
             {
-                if (unit.isColonizer && unit.Owner != Owner)
+                if (unit.isDead) continue;
+
+                if (unit.isCurrentlyColonizer && unit.Owner != Owner)
                 {
                     var distToUnit = Vector3.Distance(
                         CustomHelper.ReturnPosInTopDown(transform.position), 
@@ -92,7 +94,7 @@ namespace World.Island
         {
             if (changed.Behaviour.Owner == null) return;
             
-            changed.Behaviour.meshRenderer.material.color = changed.Behaviour.Owner.myColor;
+            changed.Behaviour.meshRenderer.material.color = changed.Behaviour.Owner.myColor /1.2f; // Divided to make it darker
             changed.Behaviour.minimapIcon.color = changed.Behaviour.Owner.myColor;
         }
         
@@ -114,7 +116,7 @@ namespace World.Island
 
             foreach (BaseUnit unit in _unitsManager.currentlySelectedUnits)
             {
-                if (unit.isColonizer) 
+                if (unit.isCurrentlyColonizer) 
                 {
                     unit.DestroyEntity();
                     break;

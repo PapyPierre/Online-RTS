@@ -33,25 +33,32 @@ namespace Custom_UI
         [Header("In Game Variables"), Required()]
         public GameObject inGameUI;
         
-        [Required(), Space] public TextMeshProUGUI materialsTMP;
+        // Ressources
+        [Required(), Space] public TextMeshProUGUI woodTMP;
+        [Required()] public TextMeshProUGUI metalsTMP;
         [Required()] public TextMeshProUGUI orichalqueTMP;
         [Required()] public TextMeshProUGUI supplyTMP;
 
+        // Menu
         [SerializeField, Required(), Space] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField, Required()] private GameObject formationQueue;
 
+        // Units Formation
         [SerializeField, Space] private UnitsIcon[] unitsIconsInMenu;
         [SerializeField] private Image[] unitsQueueImages;
         [SerializeField] private Slider formationQueueSlider;
         public BaseBuilding CurrentlyOpenBuilding { get; private set; }
 
+        // Infobox
         [SerializeField, Required(), Space] private GameObject infobox;
         [SerializeField, Required()] private TextMeshProUGUI infoboxName;
         [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxMatCost;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxWoodCost;
+        [SerializeField, Required()] private TextMeshProUGUI infoboxMetalsCost;
         [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
 
+        // End Game
         [SerializeField, Required(), Space] private GameObject endGamePanel;
         [SerializeField, Required()] private TextMeshProUGUI winTMP;
         [SerializeField, Required()] private TextMeshProUGUI loseTMP;
@@ -98,7 +105,8 @@ namespace Custom_UI
                 if (_gameManager.gameIsStarted)
                 {
                     DisplayPlayerPing();
-                    UpdateMaterialsTMP(playerRessources.CurrentMaterials);
+                    UpdateWoodTMP(playerRessources.CurrentWood);
+                    UpdateMetalsTMP(playerRessources.CurrentMetals);
                     UpdateOrichalqueTMP(playerRessources.CurrentOrichalque);
                 }
                 
@@ -261,14 +269,16 @@ namespace Custom_UI
             
             PlayerController player = _gameManager.thisPlayer;
                 
-            var playerCurrentMat = player.ressources.CurrentMaterials;
+            var playerCurrentWood = player.ressources.CurrentWood;
+            var playerCurrentMetals = player.ressources.CurrentMetals;
             var playerCurrentOri = player.ressources.CurrentOrichalque;
             var playerCurrentSupply = player.ressources.CurrentSupply;
             var playerCurrentMaxSupply = player.ressources.CurrentMaxSupply;
             
             var unit = CurrentlyOpenBuilding.Data.FormableUnits[buttonIndex];
 
-            var unitMatCost = _unitsManager.allUnitsData[(int) unit].MaterialCost;
+            var unitWoodCost = _unitsManager.allUnitsData[(int) unit].WoodCost;
+            var unitMetalsCost = _unitsManager.allUnitsData[(int) unit].MetalsCost;
             var unitOriCost =_unitsManager.allUnitsData[(int) unit].OrichalqueCost;
             var unitSupplyCost = _unitsManager.allUnitsData[(int) unit].SupplyCost;
 
@@ -279,13 +289,16 @@ namespace Custom_UI
             }
             
             // Check if player have enough ressources to build this building
-            if (playerCurrentMat >= unitMatCost && playerCurrentOri >= unitOriCost)
+            if (playerCurrentWood >= unitWoodCost 
+                && playerCurrentMetals >= unitMetalsCost 
+                && playerCurrentOri >= unitOriCost)
             {
                 int formationQueueCurrentCount = CurrentlyOpenBuilding.FormationQueue.Count;
 
                 if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
                 {
-                    player.ressources.CurrentMaterials -= unitMatCost;
+                    player.ressources.CurrentWood -= unitWoodCost;
+                    player.ressources.CurrentMetals -= unitMetalsCost;
                     player.ressources.CurrentOrichalque -= unitOriCost;
                     player.ressources.CurrentSupply += unitSupplyCost;
                     
@@ -356,12 +369,17 @@ namespace Custom_UI
             infoboxName.text = entityData.Name;
             infoboxDescr.text = isLocked ? entityData.LockedDescription : entityData.Description;
             
-            infoboxMatCost.text = entityData.MaterialCost.ToString();
+            infoboxWoodCost.text = entityData.WoodCost.ToString();
+            infoboxMetalsCost.text = entityData.MetalsCost.ToString();
             infoboxOriCost.text = entityData.OrichalqueCost.ToString();
 
-            infoboxMatCost.color = 
-                _gameManager.thisPlayer.ressources.CurrentMaterials
-                >= entityData.MaterialCost ? Color.white : Color.red;
+            infoboxWoodCost.color = 
+                _gameManager.thisPlayer.ressources.CurrentWood
+                >= entityData.WoodCost ? Color.white : Color.red;
+            
+            infoboxMetalsCost.color = 
+                _gameManager.thisPlayer.ressources.CurrentMetals
+                >= entityData.MetalsCost ? Color.white : Color.red;
 
             infoboxOriCost.color = 
                 _gameManager.thisPlayer.ressources.CurrentOrichalque 
@@ -370,7 +388,9 @@ namespace Custom_UI
 
         public void HideInfobox() => infobox.SetActive(false);
 
-        public void UpdateMaterialsTMP(int newValue) => materialsTMP.text = newValue.ToString();
+        public void UpdateWoodTMP(int newValue) => woodTMP.text = newValue.ToString();
+        
+        public void UpdateMetalsTMP(int newValue) => metalsTMP.text = newValue.ToString();
 
         public void UpdateOrichalqueTMP(int newValue) => orichalqueTMP.text = newValue.ToString();
         

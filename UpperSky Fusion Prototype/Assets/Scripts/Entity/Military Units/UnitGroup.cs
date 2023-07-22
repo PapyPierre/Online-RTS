@@ -20,28 +20,22 @@ namespace Entity.Military_Units
             _unitsManager = UnitsManager.Instance;
         }
 
-        public void Init(Vector3 destination, List<BaseUnit> unitsToMove)
+        public void Init(Vector3 destination)
         {
             targetPos = destination;
-            
-            GameObject tempObj = null;
 
-            foreach (var unit in unitsToMove)
+            foreach (var unit in _unitsManager.currentlySelectedUnits)
             {
-                if (unit.transform.parent != null)
+                if (unit.currentGroup is not null)
                 {
-                    tempObj = unit.transform.parent.gameObject;
+                    unit.currentGroup.RemoveUnitFromGroup(unit);
                 }
 
                 unit.transform.parent = transform;
                 unit.currentGroup = this;
                 unitsInGroup.Add(unit);
-            } 
-            
-            if (tempObj != null) tempObj.SetActive(false);
+            }
 
-            _unitsManager.currentlySelectedUnits = unitsInGroup;
-            
             groupSpeed = 100;
             
             foreach (var unit in unitsInGroup)
@@ -62,9 +56,15 @@ namespace Entity.Military_Units
             // Dosen't call RemoveUnitFromGroup() here to not modify the collection during enumeration 
             foreach (var unit in unitsInGroup)
             {
-                if (unit.targetedUnitIsInRange)
+                if (unit.isDead)
                 {
                     unit.currentGroup = null;
+                    continue;
+                }
+
+                if (unit.targetedUnitIsInRange)
+                {
+                    unit.currentGroup = null; 
                     unit.transform.parent = null;
                 }
             }
@@ -74,7 +74,7 @@ namespace Entity.Military_Units
 
             foreach (var unit in unitsInGroup)
             {
-               unit.transform.rotation = Quaternion.LookRotation(targetPos - transform.position);
+                if (!unit.isDead) unit.transform.rotation = Quaternion.LookRotation(targetPos - transform.position);
             }
 
             if (Vector3.Distance(transform.position,  targetPos) < _unitsManager.distToTargetToStop)
@@ -91,6 +91,7 @@ namespace Entity.Military_Units
                 unit.currentGroup = null;
             }
             
+            unitsInGroup.Clear();
             transform.DetachChildren();
             gameObject.SetActive(false);
         }
@@ -100,6 +101,8 @@ namespace Entity.Military_Units
             unit.currentGroup = null;
             unit.transform.parent = null;
             unitsInGroup.Remove(unit);
+
+            if (unitsInGroup.Count is 0) DestroyGroup();
         }
     }
 }

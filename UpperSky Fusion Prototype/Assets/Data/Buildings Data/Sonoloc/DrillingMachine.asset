@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facb2fb0ab48bda4886fd10b24b85513, type: 3}
   m_Name: DrillingMachine
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Drilling machine
-  <Description>k__BackingField: The drilling machine makes it possible to exploit
-    the mining resources of the island, thus generating materials
-  <StartAsLocked>k__BackingField: 0
-  <LockedDescription>k__BackingField: 
-  <MaterialCost>k__BackingField: 30
+  <Name>k__BackingField: Drill machine
+  <Description>k__BackingField: The dril machine makes it possible to exploit the
+    mining resources of the island, thus generating materials
+  <StartAsLocked>k__BackingField: 1
+  <LockedDescription>k__BackingField: Drilling machine requires a carpentry in order
+    to be build
+  <WoodCost>k__BackingField: 40
+  <MetalsCost>k__BackingField: 3
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 70
@@ -28,7 +30,8 @@ MonoBehaviour:
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
-  <GeneratedMaterialPerSeconds>k__BackingField: 5
+  <GeneratedWoodPerSeconds>k__BackingField: 0
+  <GeneratedMetalsPerSeconds>k__BackingField: 5
   <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
   <HasTimingReduction>k__BackingField: 0
@@ -37,9 +40,6 @@ MonoBehaviour:
   <TechResearchBonus>k__BackingField: 0
   <IsDefenseBuilding>k__BackingField: 0
   <DamagePerShootOnUnits>k__BackingField: 0
-  <DamageRangeOfVariation>k__BackingField: 0
-  <ShootAccuracy>k__BackingField: 0
   <ArmorPenetration>k__BackingField: 0
-  <ShotPerSeconds>k__BackingField: 0
+  <RealodTime>k__BackingField: 0
   <ShootingRange>k__BackingField: 0
-  <TargetableType>k__BackingField: 0

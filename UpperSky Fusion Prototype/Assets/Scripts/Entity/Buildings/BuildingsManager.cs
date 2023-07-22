@@ -36,7 +36,7 @@ namespace Entity.Buildings
             Gisement = 1, 
             Habitation = 2,
             Menuiserie = 3,
-            Tisserand = 4,
+            Lumberjack = 4,
             Fonderie = 5,
             Canon = 6,
             MineOrichalque = 7,
@@ -70,19 +70,23 @@ namespace Entity.Buildings
 
             PlayerController player = _gameManager.thisPlayer;
                 
-            var playerCurrentMat = player.ressources.CurrentMaterials;
+            var playerCurrentWood = player.ressources.CurrentWood;
+            var playerCurrentMetals = player.ressources.CurrentMetals;
             var playerCurrentOri = player.ressources.CurrentOrichalque;
             
-            var buildingMatCost = allBuildingsDatas[buildingIndex].MaterialCost;
+            var buildingWoodCost = allBuildingsDatas[buildingIndex].WoodCost;
+            var buildingMetalsCost = allBuildingsDatas[buildingIndex].MetalsCost;
             var buildingOriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
             
             // Check if player have enough ressources to build this building
-            if (playerCurrentMat >= buildingMatCost && playerCurrentOri >= buildingOriCost)
+            if (playerCurrentWood >= buildingWoodCost 
+                && playerCurrentMetals >= buildingMetalsCost 
+                && playerCurrentOri >= buildingOriCost)
             {
                 Instantiate(allBuildingsBlueprints[buildingIndex]);
                 haveBlueprintInHand = true;
             }
-            else Debug.Log("not enough ressources");
+            else Debug.Log("Not enough ressources");
         }
 
         public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, Island island, 
@@ -90,8 +94,11 @@ namespace Entity.Buildings
         {          
             PlayerController player = _gameManager.thisPlayer;
 
-            var matCost = allBuildingsDatas[buildingIndex].MaterialCost;
-            if (matCost > 0) player.ressources.CurrentMaterials -= matCost;
+            var woodCost = allBuildingsDatas[buildingIndex].WoodCost;
+            if (woodCost > 0) player.ressources.CurrentWood -= woodCost;
+            
+            var metalsCost = allBuildingsDatas[buildingIndex].MetalsCost;
+            if (metalsCost > 0) player.ressources.CurrentMetals -= metalsCost;
 
             var oriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;

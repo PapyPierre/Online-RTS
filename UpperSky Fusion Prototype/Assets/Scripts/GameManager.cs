@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
          }
      }
      
-     public void KillPlayer(PlayerController defeatedPlayer)
+     public void DefeatPlayer(PlayerController defeatedPlayer)
      {
          defeatedPlayer.RPC_OutOfGame();
          _playersStillAlive.Remove(defeatedPlayer);

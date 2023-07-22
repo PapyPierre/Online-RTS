@@ -20,13 +20,12 @@ namespace Entity.Military_Units
         private bool _isReadyToShoot = true;
         
         [HideInInspector] public UnitGroup currentGroup;
-
-        [Header("Status")] 
-        public bool isColonizer;
-        public bool isCamouflaged; //TODO
-        [SerializeField] private float currentRegeneration; //TODO
-        [SerializeField] private float currentAcid; //TODO
-        [SerializeField] private float currentParasite; //TODO
+        
+        [HideInInspector] public bool isCurrentlyColonizer; 
+        [HideInInspector] public bool isCurrentlyCamouflaged; //TODO
+        [HideInInspector] private float currentRegeneration; //TODO
+        [HideInInspector] private float currentAcid; //TODO
+        [HideInInspector] private float currentParasite; //TODO
 
         public override void Spawned()
         {
@@ -49,8 +48,8 @@ namespace Entity.Military_Units
 
         private void SetUpStatus()
         {
-            isColonizer = Data.IsBaseColonizer;
-            isCamouflaged = Data.IsBaseCamouflaged;
+            isCurrentlyColonizer = Data.IsBaseColonizer;
+            isCurrentlyCamouflaged = Data.IsBaseCamouflaged;
             currentRegeneration = Data.BaseRegeneration;
             currentAcid = Data.BaseAcid;
             currentParasite = Data.BaseParasite;
@@ -92,7 +91,7 @@ namespace Entity.Military_Units
         private void ShootAtEnemy()
         {
             if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
-    
+
             ShowShootVfx();
             
             int damageOnUnits = Data.DamagePerShootOnUnits; 
@@ -102,7 +101,6 @@ namespace Entity.Military_Units
             float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
 
             TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
-            if (TargetedEntity is BaseUnit unit) unit.ReactToDamage(this);
 
             _isReadyToShoot = false;
             StartCoroutine(Reload());
@@ -112,7 +110,9 @@ namespace Entity.Military_Units
         {
             if (TargetedEntity is null)
             {
+                _isReadyToShoot = false;
                 SetTarget(agressor);
+                StartCoroutine(Reload());
             }
         }
 
