@@ -21,6 +21,9 @@ namespace Entity
         [field: TextArea(2, 5), SerializeField, ShowIf("StartAsLocked")] 
         public string LockedDescription { get; private set; }
         
+        [field: SerializeField, Required()]
+        public Sprite Icon { get; private set; }
+        
         [field: SerializeField]
         public int WoodCost { get; private set; }
         

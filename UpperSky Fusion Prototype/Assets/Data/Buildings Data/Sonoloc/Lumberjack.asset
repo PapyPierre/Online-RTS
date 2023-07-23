@@ -16,6 +16,8 @@ MonoBehaviour:
   <Description>k__BackingField: The lumberjack provide wood for your people
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 21300000, guid: a253cbbe93da29948ab5d60962c53e95,
+    type: 3}
   <WoodCost>k__BackingField: 10
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0

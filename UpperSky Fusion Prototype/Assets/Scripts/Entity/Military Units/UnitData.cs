@@ -13,9 +13,6 @@ namespace Entity.Military_Units
         [field: Header("Additional Data"), SerializeField, 
                 ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int SupplyCost { get; private set; }
-        
-        [field: SerializeField, Required()]
-        public Sprite Icon { get; private set; }
 
         #endregion
         
@@ -43,10 +40,7 @@ namespace Entity.Military_Units
         #region Combat Data
 
         [field: Header("Combat Data"),  SerializeField]
-        public int DamagePerShootOnUnits { get; private set; }
-        
-        [field: SerializeField] 
-        public int DamagePerShootOnBuildings { get; private set; }
+        public int DamagePerShoot { get; private set; }
 
         [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField]
         public int ArmorPenetration { get; private set; }
@@ -54,12 +48,9 @@ namespace Entity.Military_Units
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float RealodTime { get; private set; }
 
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
-        public float ShootingRange { get; private set; }
-
         [field: SerializeField] 
         public GameManager.EntityType TargetableEntityType { get; private set; }
-
+        
         #endregion
         
         /// Base Status Section -------------------------------------------------------------------------
@@ -68,7 +59,7 @@ namespace Entity.Military_Units
 
         [field: Header("Base Unit Status"),  SerializeField]
         public bool IsBaseColonizer { get; private set; }
-        
+
         [field: SerializeField] 
         public bool IsBaseCamouflaged { get; private set; }
         

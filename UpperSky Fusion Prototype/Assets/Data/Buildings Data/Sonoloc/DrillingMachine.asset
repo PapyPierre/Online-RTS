@@ -18,6 +18,8 @@ MonoBehaviour:
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Drilling machine requires a carpentry in order
     to be build
+  <Icon>k__BackingField: {fileID: 21300000, guid: a4005da0530cb40469318041315c8663,
+    type: 3}
   <WoodCost>k__BackingField: 40
   <MetalsCost>k__BackingField: 3
   <OrichalqueCost>k__BackingField: 0

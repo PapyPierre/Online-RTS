@@ -16,6 +16,8 @@ MonoBehaviour:
   <Description>k__BackingField: 
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
   <WoodCost>k__BackingField: 0
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0

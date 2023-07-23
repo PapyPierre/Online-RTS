@@ -21,7 +21,7 @@ namespace Entity.Military_Units
         
         [HideInInspector] public UnitGroup currentGroup;
         
-        [HideInInspector] public bool isCurrentlyColonizer; 
+        [HideInInspector] public bool isCurrentlyColonizer;
         [HideInInspector] public bool isCurrentlyCamouflaged; //TODO
         [HideInInspector] private float currentRegeneration; //TODO
         [HideInInspector] private float currentAcid; //TODO
@@ -83,7 +83,7 @@ namespace Entity.Military_Units
                     CustomHelper.ReturnPosInTopDown(transform.position),
                     CustomHelper.ReturnPosInTopDown(TargetedEntity.transform.position));
                 
-                targetedUnitIsInRange = distToTarget <= Data.ShootingRange;
+                targetedUnitIsInRange = distToTarget <= Data.SightRange;
             }
             else targetedUnitIsInRange = false;
         }
@@ -94,11 +94,11 @@ namespace Entity.Military_Units
 
             ShowShootVfx();
             
-            int damageOnUnits = Data.DamagePerShootOnUnits; 
+            int damage = Data.DamagePerShoot; 
             int armorPenetration = Data.ArmorPenetration;
 
-            float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
-            float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
+            float damageOnHealth =  armorPenetration / 100f * damage;
+            float damageOnArmor = (100f - armorPenetration) / 100f * damage;
 
             TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
 

@@ -65,10 +65,6 @@ namespace Entity.Buildings
                             break;
                         
                         case 3:
-                            _uiManager.PopFloatingText(transform,"This building has already been built here", Color.red);
-                            break;
-                        
-                        case 4:
                             _uiManager.PopFloatingText(transform,"You can't build on another building !", Color.red);
                             break;
                     }
@@ -121,22 +117,12 @@ namespace Entity.Buildings
                 _unvalidPosIndex = 2;
                 return false;
             }
-            
-            // Check if this building have not already been built on this island
-            foreach (var building in _islandToBuildOn.buildingOnThisIsland)
-            {
-                if (building.Data.ThisBuilding == thisBuilding)
-                {
-                    _unvalidPosIndex = 3;
-                    return false;
-                }
-            }
-            
+
             // Finally check if the raycast doesn't hit a building (to avoid overlaping buildings)
 
             if (Physics.Raycast(ray, out _hit, 5000, _buildingsManager.buildingLayer))
             {
-                _unvalidPosIndex = 4;
+                _unvalidPosIndex = 3;
                 return false;
             }
            
@@ -156,7 +142,7 @@ namespace Entity.Buildings
             productionBar.Init(buildingTime);
             
             _uiManager.ShowOrHideBuildMenu();
-            _uiManager.HideInfobox();
+            _uiManager.HideProdInfobox();
             
             yield return new WaitForSeconds(buildingTime);
             

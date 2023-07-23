@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Custom_UI;
 using Fusion;
 using UnityEngine;
 using World;
@@ -11,6 +12,7 @@ namespace Entity.Military_Units
         public static UnitsManager Instance;
         private GameManager _gameManager;
         private WorldManager _worldManager;
+        private UIManager _uiManager;
 
         public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
@@ -51,6 +53,7 @@ namespace Entity.Military_Units
         {
             _gameManager = GameManager.Instance;
             _worldManager = WorldManager.Instance;
+            _uiManager = UIManager.Instance;
         }
         
         public void SelectUnit(BaseUnit unit)

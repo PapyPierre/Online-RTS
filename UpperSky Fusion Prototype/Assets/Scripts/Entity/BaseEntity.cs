@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
+using Custom_UI;
 using Custom_UI.InGame_UI;
 using Entity.Buildings;
 using Entity.Military_Units;
@@ -15,6 +16,7 @@ namespace Entity
         protected UnitsManager UnitsManager;
         protected GameManager GameManager;
         protected FogOfWar FogOfWar;
+        protected UIManager UIManager;
 
         protected int FogRevealerIndex;
 
@@ -62,18 +64,14 @@ namespace Entity
         {
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
+            UIManager = UIManager.Instance;
             FogOfWar = FogOfWar.Instance;
             GetComponent<FogAgent>().Init(graphObject, canvas);
         }
 
         protected virtual void Update()
         {
-            /*
-            if (Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                RPC_TakeDamage(30,10, this);
-            }
-            */
+          
         }
 
         private static void OwnerChanged(Changed<BaseEntity> changed)
@@ -119,6 +117,8 @@ namespace Entity
                 CurrentHealth -= x;
                 CurrentArmor = 0;
             }
+
+            UIManager.ShowUnderAttackPopUp();
 
             // Need to access slider max value to avoid doing twice this code in children class to access data
             if (CurrentHealth < healthBar.Slider.maxValue/2 && !_lowHpVfxSpawned)
@@ -226,11 +226,21 @@ namespace Entity
         protected virtual void OnMouseEnter()
         {
             GameManager.thisPlayer.mouseAboveThisEntity = this;
+            
+            switch (this)
+            { 
+                case BaseUnit unit: UIManager.ShowInGameInfoBox(unit.Data, unit.Owner);
+                        break;
+                case BaseBuilding building: UIManager.ShowInGameInfoBox(building.Data, building.Owner);
+                        break;
+            }
         }
         
         protected virtual void OnMouseExit()
         {
             GameManager.thisPlayer.mouseAboveThisEntity = null;
+
+            UIManager.HideInGameInfoBox();
         }
         
         public void SetActiveSelectionCircle(bool value)

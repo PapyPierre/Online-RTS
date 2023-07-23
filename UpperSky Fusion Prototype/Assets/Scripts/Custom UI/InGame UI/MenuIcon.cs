@@ -35,12 +35,12 @@ namespace Custom_UI.InGame_UI
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            UIManager.ShowInfobox(data, _isLocked);
+            UIManager.ShowProdInfobox(data, _isLocked);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            UIManager.HideInfobox();
+            UIManager.HideProdInfobox();
         }
     }
 }

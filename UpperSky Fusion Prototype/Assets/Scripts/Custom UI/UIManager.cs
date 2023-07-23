@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using Custom_UI.InGame_UI;
 using Entity;
 using Entity.Buildings;
@@ -17,49 +18,63 @@ namespace Custom_UI
         private UnitsManager _unitsManager;
         private BuildingsManager _buildingsManager;
         private GameManager _gameManager;
-        public PlayerRessources playerRessources;
+        [HideInInspector] public PlayerRessources playerRessources;
         
-        [Header("Main Menu Variables"), Required()] 
+        [Header("Main Menu Variables"), Required()]
         public GameObject mainMenu;
+        
         [Required()] public GameObject menuCamera;
+        
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
+        
         [Required()] public TextMeshProUGUI connectionInfoTMP;
+        
         private int _fps;
         private double _ping;
+        
         [Required()] public TextMeshProUGUI fpsTMP;
         [Required()] public TextMeshProUGUI pingTMP;
+        
         [SerializeField, Required()] private PlayerSpawner playerSpawner;
-
-        [Header("In Game Variables"), Required()]
+        
         public GameObject inGameUI;
         
-        // Ressources
-        [Required(), Space] public TextMeshProUGUI woodTMP;
+        [Header("Ressources TMP")]
+        [Required()] public TextMeshProUGUI woodTMP;
         [Required()] public TextMeshProUGUI metalsTMP;
         [Required()] public TextMeshProUGUI orichalqueTMP;
         [Required()] public TextMeshProUGUI supplyTMP;
 
-        // Menu
-        [SerializeField, Required(), Space] private GameObject buildMenu;
+        [Header("In Game Menu")]
+        [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField, Required()] private GameObject formationQueue;
 
-        // Units Formation
-        [SerializeField, Space] private UnitsIcon[] unitsIconsInMenu;
+        [Header("Units Formation")]
+        [SerializeField] private UnitsIcon[] unitsIconsInMenu;
         [SerializeField] private Image[] unitsQueueImages;
         [SerializeField] private Slider formationQueueSlider;
         public BaseBuilding CurrentlyOpenBuilding { get; private set; }
 
-        // Infobox
-        [SerializeField, Required(), Space] private GameObject infobox;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxName;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxDescr;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxWoodCost;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxMetalsCost;
-        [SerializeField, Required()] private TextMeshProUGUI infoboxOriCost;
+        [Header("Production Infobox")]
+        [SerializeField, Required()] private GameObject prodInfobox;
+        [SerializeField, Required()] private TextMeshProUGUI prodInfoboxName;
+        [SerializeField, Required()] private TextMeshProUGUI prodInfoboxDescr;
+        [SerializeField] private GameObject[] prodInfoboxRessourcesObj;
+        [SerializeField] private TextMeshProUGUI[] prodInfoboxRessourcesCostTMP;
+        
+        [Header("In Game Infobox")]
+        [SerializeField, Required()] private GameObject inGameInfobox;
+        [SerializeField, Required()] private TextMeshProUGUI inGameInfoboxName;
+        [SerializeField, Required()] private TextMeshProUGUI inGameInfoboxDescr;
+        [SerializeField] private GameObject[] inGameInfoboxStatsObj;
+        [SerializeField] private TextMeshProUGUI[] inGameInfoboxStatsTMP;
+        [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
+        [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
+        [SerializeField, Required()] private GameObject inGameInfoboxEntitySkill;
 
-        // End Game
-        [SerializeField, Required(), Space] private GameObject endGamePanel;
+        [Header("End Game")]
+        [SerializeField, Required()] private GameObject endGamePanel;
         [SerializeField, Required()] private TextMeshProUGUI winTMP;
         [SerializeField, Required()] private TextMeshProUGUI loseTMP;
 
@@ -68,8 +83,11 @@ namespace Custom_UI
         [SerializeField, Required()] private TextMeshProUGUI loadingText;
         private int _loadingTextDots;
         
-        [Header("Other Variables"), Required()]
+        [Header("Pop Ups"), Required()]
         public GameObject floatingText;
+        [SerializeField] private GameObject underAttackPopUp;
+        [SerializeField] private float underAttackPopUpLivingTime;
+        private float _underAttackPopUpCurrentTime;
         
         private void Awake()
         {
@@ -95,6 +113,7 @@ namespace Custom_UI
         {
             ComputeFps();
             if (_gameManager.gameIsStarted) ComputePlayerPing();
+            HideUnderAttackPopUp();
         }
         
         private IEnumerator UpdateInfoDisplay()
@@ -196,7 +215,8 @@ namespace Custom_UI
             if (buildMenu.activeSelf) ShowOrHideBuildMenu();
            ShowOrHideFormationMenu(false);
            ShowOrHideFormationQueue(false);
-           HideInfobox();
+           HideProdInfobox();
+           HideInGameInfoBox();
         }
 
         public void ShowOrHideBuildMenu()
@@ -208,7 +228,7 @@ namespace Custom_UI
                 CloseCurrentlyOpenBuilding();
                 ShowOrHideFormationMenu(false);
                 ShowOrHideFormationQueue(false);
-                HideInfobox();
+                HideProdInfobox();
             }
         }
 
@@ -246,7 +266,11 @@ namespace Custom_UI
         private void ShowOrHideFormationQueue(bool active)
         { 
             formationQueue.SetActive(active);
-            if (active) UpdateFormationQueueDisplay();
+            if (active)
+            {
+                HideInGameInfoBox();
+                UpdateFormationQueueDisplay();
+            }
         }
 
         private void CloseCurrentlyOpenBuilding()
@@ -268,13 +292,7 @@ namespace Custom_UI
             }
             
             PlayerController player = _gameManager.thisPlayer;
-                
-            var playerCurrentWood = player.ressources.CurrentWood;
-            var playerCurrentMetals = player.ressources.CurrentMetals;
-            var playerCurrentOri = player.ressources.CurrentOrichalque;
-            var playerCurrentSupply = player.ressources.CurrentSupply;
-            var playerCurrentMaxSupply = player.ressources.CurrentMaxSupply;
-            
+
             var unit = CurrentlyOpenBuilding.Data.FormableUnits[buttonIndex];
 
             var unitWoodCost = _unitsManager.allUnitsData[(int) unit].WoodCost;
@@ -282,16 +300,16 @@ namespace Custom_UI
             var unitOriCost =_unitsManager.allUnitsData[(int) unit].OrichalqueCost;
             var unitSupplyCost = _unitsManager.allUnitsData[(int) unit].SupplyCost;
 
-            if (unitSupplyCost + playerCurrentSupply > playerCurrentMaxSupply)
+            if (unitSupplyCost + player.ressources.CurrentSupply > player.ressources.CurrentMaxSupply)
             {
                 Debug.Log("not enough available supplies");
                 return;
             }
             
             // Check if player have enough ressources to build this building
-            if (playerCurrentWood >= unitWoodCost 
-                && playerCurrentMetals >= unitMetalsCost 
-                && playerCurrentOri >= unitOriCost)
+            if (player.ressources.CurrentWood >= unitWoodCost 
+                && player.ressources.CurrentMetals >= unitMetalsCost 
+                && player.ressources.CurrentOrichalque >= unitOriCost)
             {
                 int formationQueueCurrentCount = CurrentlyOpenBuilding.FormationQueue.Count;
 
@@ -363,30 +381,99 @@ namespace Custom_UI
             }
         }
 
-        public void ShowInfobox(EntityData entityData, bool isLocked)
+        public void ShowProdInfobox(EntityData entityData, bool isLocked)
         {
-            infobox.SetActive(true);
-            infoboxName.text = entityData.Name;
-            infoboxDescr.text = isLocked ? entityData.LockedDescription : entityData.Description;
-            
-            infoboxWoodCost.text = entityData.WoodCost.ToString();
-            infoboxMetalsCost.text = entityData.MetalsCost.ToString();
-            infoboxOriCost.text = entityData.OrichalqueCost.ToString();
+            prodInfobox.SetActive(true);
+            prodInfoboxName.text = entityData.Name;
+            prodInfoboxDescr.text = isLocked ? entityData.LockedDescription : entityData.Description;
 
-            infoboxWoodCost.color = 
-                _gameManager.thisPlayer.ressources.CurrentWood
-                >= entityData.WoodCost ? Color.white : Color.red;
-            
-            infoboxMetalsCost.color = 
-                _gameManager.thisPlayer.ressources.CurrentMetals
-                >= entityData.MetalsCost ? Color.white : Color.red;
+            if (entityData.WoodCost > 0)
+            {
+                prodInfoboxRessourcesObj[0].SetActive(true);
+                prodInfoboxRessourcesCostTMP[0].text = entityData.WoodCost.ToString();
 
-            infoboxOriCost.color = 
-                _gameManager.thisPlayer.ressources.CurrentOrichalque 
-                >= entityData.OrichalqueCost ? Color.white : Color.red;
+                prodInfoboxRessourcesCostTMP[0].color = 
+                    playerRessources.CurrentWood >=  entityData.WoodCost ? Color.white : Color.red;
+            }
+            else prodInfoboxRessourcesObj[0].SetActive(false);
+
+            
+            if (entityData.MetalsCost > 0)
+            {
+                prodInfoboxRessourcesObj[1].SetActive(true);
+                prodInfoboxRessourcesCostTMP[1].text = entityData.MetalsCost.ToString();
+                
+                prodInfoboxRessourcesCostTMP[1].color = 
+                    playerRessources.CurrentMetals >=  entityData.MetalsCost ? Color.white : Color.red;
+            }
+            else prodInfoboxRessourcesObj[1].SetActive(false);
+
+            if (entityData.OrichalqueCost > 0)
+            {
+                prodInfoboxRessourcesObj[2].SetActive(true);
+                prodInfoboxRessourcesCostTMP[2].text = entityData.OrichalqueCost.ToString();
+                
+                prodInfoboxRessourcesCostTMP[2].color = 
+                    playerRessources.CurrentOrichalque >= entityData.OrichalqueCost ? Color.white : Color.red;
+            }
+            else prodInfoboxRessourcesObj[2].SetActive(false);
+
+            if (entityData is UnitData unitData)
+            {
+                prodInfoboxRessourcesObj[3].SetActive(true);
+                prodInfoboxRessourcesCostTMP[3].text = unitData.SupplyCost.ToString();
+                
+                prodInfoboxRessourcesCostTMP[3].color = 
+                    playerRessources.CurrentSupply + unitData.SupplyCost <= playerRessources.CurrentMaxSupply ? 
+                        Color.white : Color.red;
+            }
+            else prodInfoboxRessourcesObj[3].SetActive(false);
         }
 
-        public void HideInfobox() => infobox.SetActive(false);
+        public void HideProdInfobox() => prodInfobox.SetActive(false);
+
+        public void ShowInGameInfoBox(EntityData entityData, PlayerController owner)
+        {
+            if (CurrentlyOpenBuilding is not null) return;
+            
+            inGameInfobox.SetActive(true);
+            inGameInfoboxName.text = entityData.Name;
+            inGameInfoboxDescr.text = entityData.Description;
+
+            inGameInfoboxEntityIcon.sprite = entityData.Icon;
+
+           inGameInfoboxEntityColor.color = owner.myColor;
+           
+            foreach (var go in inGameInfoboxStatsObj)
+            {
+                go.SetActive(true);
+            }
+            
+            inGameInfoboxStatsTMP[0].text = entityData.MaxHealthPoints.ToString();
+            inGameInfoboxStatsTMP[1].text = entityData.MaxArmorPoints.ToString();
+            inGameInfoboxStatsTMP[2].text = entityData.SightRange.ToString();
+            
+            if (entityData is UnitData unitData)
+            {
+                inGameInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
+                inGameInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
+                inGameInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
+                inGameInfoboxStatsTMP[6].text = unitData.ArmorPenetration.ToString();
+                
+               //TODO inGameInfoboxEntitySkill.SetActive(true); 
+            }
+            else if (entityData is BuildingData)
+            {
+                for (var index = 3; index < inGameInfoboxStatsObj.Length; index++)
+                {
+                    inGameInfoboxStatsObj[index].SetActive(false);
+                }
+                
+                inGameInfoboxEntitySkill.SetActive(false);
+            }
+        }
+     
+        public void HideInGameInfoBox() => inGameInfobox.SetActive(false);
 
         public void UpdateWoodTMP(int newValue) => woodTMP.text = newValue.ToString();
         
@@ -444,6 +531,24 @@ namespace Custom_UI
             infoText.text = text;
             infoText.color = color;
         }
+
+        public void ShowUnderAttackPopUp()
+        {
+            underAttackPopUp.SetActive(true);
+            _underAttackPopUpCurrentTime = underAttackPopUpLivingTime;
+        } 
+        
+        private void HideUnderAttackPopUp()
+        {
+            if (_underAttackPopUpCurrentTime < 0)
+            {
+                underAttackPopUp.SetActive(false);
+                return;
+            }
+            
+            _underAttackPopUpCurrentTime -= Time.deltaTime;
+        } 
+        
         #endregion
     }
 }

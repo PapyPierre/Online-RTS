@@ -18,6 +18,8 @@ MonoBehaviour:
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Orichalque quarry requires a carpentry  in
     order to be build
+  <Icon>k__BackingField: {fileID: 21300000, guid: f9ba8d82310efa24da9004a5e11c8d88,
+    type: 3}
   <WoodCost>k__BackingField: 60
   <MetalsCost>k__BackingField: 4
   <OrichalqueCost>k__BackingField: 0

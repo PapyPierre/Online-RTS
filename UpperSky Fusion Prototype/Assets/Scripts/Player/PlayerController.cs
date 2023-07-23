@@ -132,6 +132,7 @@ namespace Player
         private void OnRightButtonClick()
         { 
             _uiManager.HideOpenedUI();
+            _uiManager.HideInGameInfoBox();
 
             if (_unitsManager.currentlySelectedUnits.Count > 0) // Si au moins une unité est sélectionné 
             {
