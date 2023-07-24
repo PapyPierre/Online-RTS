@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Custom_UI;
 using Player;
 using UnityEngine;
+using UserInterface;
 using World;
 
 public class GameManager : MonoBehaviour

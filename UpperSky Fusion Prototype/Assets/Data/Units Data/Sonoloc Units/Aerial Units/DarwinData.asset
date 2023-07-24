@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Darwin
   <Description>k__BackingField: The Darwin is a light reconnaissance vessel
-  <StartAsLocked>k__BackingField: 0
-  <LockedDescription>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 448073670b41b7b4db7ca0cdb10d8d82,
     type: 3}
+  <StartAsLocked>k__BackingField: 0
+  <LockedDescription>k__BackingField: 
   <WoodCost>k__BackingField: 25
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
-  <ProductionTime>k__BackingField: 10
-  <MaxHealthPoints>k__BackingField: 40
+  <ProductionTime>k__BackingField: 15
+  <MaxHealthPoints>k__BackingField: 20
   <MaxArmorPoints>k__BackingField: 2
-  <SightRange>k__BackingField: 35
+  <SightRange>k__BackingField: 40
   <SupplyCost>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 9
+  <MovementSpeed>k__BackingField: 11
   <AngularSpeed>k__BackingField: 3
   <WeatherResistance>k__BackingField: 2
-  <DamagePerShoot>k__BackingField: 8
+  <DamagePerShoot>k__BackingField: 6
   <ArmorPenetration>k__BackingField: 5
   <RealodTime>k__BackingField: 1
   <TargetableEntityType>k__BackingField: 2

@@ -105,12 +105,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
-  selectionCircle: {fileID: 6580781098733035726}
   meshToColor: []
+  graphObject: {fileID: 8510112358408295226}
+  canvas: {fileID: 2580673168563823367}
+  minimapIcon: {fileID: 0}
+  selectionCircle: {fileID: 6580781098733035726}
   _CurrentHealth: 0
   healthBar: {fileID: 7655233838947754540}
   _CurrentArmor: 0
   armorBar: {fileID: 498075204572105222}
+  isDead: 0
+  currentAgressor: []
   deathVfx:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
@@ -119,15 +124,13 @@ MonoBehaviour:
   - {fileID: 3236204728823635088}
   shootVfx:
     RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
-  graphObject: {fileID: 8510112358408295226}
-  canvas: {fileID: 2580673168563823367}
   <Data>k__BackingField: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4,
     type: 2}
   myIsland: {fileID: 0}
   isStartBuilding: 0
   isOpen: 0
   timeLeftToForm: 0
-  _canonHead: {fileID: 3240273680404806480}
+  canonHead: {fileID: 3240273680404806480}
   headAngularSpeed: 2
 --- !u!114 &3986954249374926806
 MonoBehaviour:

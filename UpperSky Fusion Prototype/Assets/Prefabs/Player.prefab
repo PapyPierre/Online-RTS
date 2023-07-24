@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b6d9074a064e340b833b8c3693d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWoodAtStart: 50
+  playerWoodAtStart: 70
   playerMetalsAtStart: 5
   playerOrichalcAtStart: 0
   playerSupplyAtStart: 0

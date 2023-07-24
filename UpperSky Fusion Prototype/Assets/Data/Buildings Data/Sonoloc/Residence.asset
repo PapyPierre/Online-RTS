@@ -15,17 +15,17 @@ MonoBehaviour:
   <Name>k__BackingField: Residence
   <Description>k__BackingField: "\rThe residence offers a roof to your inhabitants,
     thus increasing your max supplies"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 564dab219c8dcdb44af0caf6b0b3f46d,
+    type: 3}
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Residence requires a carpentry in order to
     be build
-  <Icon>k__BackingField: {fileID: 21300000, guid: 564dab219c8dcdb44af0caf6b0b3f46d,
-    type: 3}
-  <WoodCost>k__BackingField: 50
+  <WoodCost>k__BackingField: 70
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
-  <MaxHealthPoints>k__BackingField: 80
-  <MaxArmorPoints>k__BackingField: 0
+  <MaxHealthPoints>k__BackingField: 100
+  <MaxArmorPoints>k__BackingField: 10
   <SightRange>k__BackingField: 20
   <ThisBuilding>k__BackingField: 2
   <UnlockedBuildings>k__BackingField: 06000000

@@ -1,4 +1,6 @@
 using System.Collections;
+using Element.Entity.Buildings;
+using Element.Island;
 using Entity.Buildings;
 using Fusion;
 using Player;
@@ -168,8 +170,8 @@ namespace World
                 Quaternion.identity,
                 owner != null ? owner.Object.StateAuthority : PlayerRef.None);
 
-            Island.Island islandComponent = islandObject.GetComponent<Island.Island>();
-            islandComponent.Init(_worldCenter,owner,type);
+            BaseIsland islandComponent = islandObject.GetComponent<BaseIsland>();
+            islandComponent.Init(_worldCenter,owner);
 
             if (owner != null)
             {

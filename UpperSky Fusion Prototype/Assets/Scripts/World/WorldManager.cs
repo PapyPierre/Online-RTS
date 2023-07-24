@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Element.Island;
 using Fusion;
 using NaughtyAttributes;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace World
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
         
-        [HideInInspector] public List<Island.Island> allIslands = new();
+        [HideInInspector] public List<BaseIsland> allIslands = new();
 
         [Header("Players")] 
         public List<Color> playersColors;

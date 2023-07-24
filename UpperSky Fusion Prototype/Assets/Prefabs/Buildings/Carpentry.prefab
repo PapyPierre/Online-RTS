@@ -118,14 +118,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
-  selectionCircle: {fileID: 5333365628237164671}
   meshToColor:
   - {fileID: 5341231983948614677}
   - {fileID: 392662067782136139}
+  graphObject: {fileID: 8510112358408295226}
+  canvas: {fileID: 6528548632205293204}
+  minimapIcon: {fileID: 0}
+  selectionCircle: {fileID: 5333365628237164671}
   _CurrentHealth: 0
   healthBar: {fileID: 4242306920121722532}
   _CurrentArmor: 0
   armorBar: {fileID: 5760553470207220568}
+  isDead: 0
+  currentAgressor: []
   deathVfx:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
@@ -133,8 +138,6 @@ MonoBehaviour:
   canonsPos: []
   shootVfx:
     RawGuidValue: 00000000000000000000000000000000
-  graphObject: {fileID: 8510112358408295226}
-  canvas: {fileID: 6528548632205293204}
   <Data>k__BackingField: {fileID: 11400000, guid: 3fb1cab906c46404b987140140383948,
     type: 2}
   myIsland: {fileID: 0}
@@ -831,6 +834,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menuiserie
       objectReference: {fileID: 0}
+    - target: {fileID: 929843139268687381, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fbeb8eb487d130447837ecd19bb2ffa4, type: 2}
     - target: {fileID: 1079445093052508559, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

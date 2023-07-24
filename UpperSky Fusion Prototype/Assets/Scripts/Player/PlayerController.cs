@@ -1,10 +1,14 @@
 using Custom_UI;
+using Element.Entity;
+using Element.Entity.Buildings;
+using Element.Island;
 using Entity;
 using Entity.Buildings;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using UnityEngine;
+using UserInterface;
 using World;
 using World.Island;
 
@@ -25,7 +29,7 @@ namespace Player
 
         public int myId; // = à index dans ConnectedPlayers + 1 
         public Color myColor;
-        [Networked] public Island MyStartingIsland { get; set; }
+        [Networked] public BaseIsland MyStartingIsland { get; set; }
         public Camera myCam;
 
         [HideInInspector] public PlayerRessources ressources;
@@ -178,7 +182,7 @@ namespace Player
             IsReadyToPlay = true;
         }
         
-        private void SpawnStartBuilding(Island startingIsland)
+        private void SpawnStartBuilding(BaseIsland startingIsland)
         {
             var startBuilding = _buildingsManager.BuildBuilding(13, startingIsland.transform.position,
                 Quaternion.identity, startingIsland, true);
@@ -186,7 +190,7 @@ namespace Player
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_SetStartingIsland(Island island)
+        public void RPC_SetStartingIsland(BaseIsland island)
         {
             // The code inside here will run on the client which owns this object (has state and input authority).
 

@@ -11,10 +11,11 @@
  * HAVE BEEN MODIFIED BY PIERRE FERRARI
  */
 
+using AOSFogWar.Used_Scripts;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace AOSFogWar.Used_Scripts
+namespace Ressources.AOSFogWar.Used_Scripts
 {
     public class FogAgent : MonoBehaviour
     {
@@ -28,13 +29,18 @@ namespace AOSFogWar.Used_Scripts
 
         private GameObject _graphObject;
         private GameObject _UIcanvas;
-
-        public virtual void Init(GameObject graph, GameObject canvas)
+        private GameObject _UIminimapIcon;
+        
+        public virtual void Init(GameObject graph, GameObject canvas, GameObject minimapIcon = null)
         {
             _fogOfWar = FogOfWar.Instance;
             
             _graphObject = graph;
             _UIcanvas = canvas;
+            if (minimapIcon != null)
+            {
+                _UIminimapIcon = minimapIcon;
+            }
         }
         
         private void Update()
@@ -52,6 +58,7 @@ namespace AOSFogWar.Used_Scripts
                 }
                 _graphObject.SetActive(true);
                 _UIcanvas.SetActive(true);
+                _UIminimapIcon.SetActive(true);
             }
             else
             {
@@ -59,6 +66,7 @@ namespace AOSFogWar.Used_Scripts
                 
                 _graphObject.SetActive(false);
                 _UIcanvas.SetActive(false);
+                _UIminimapIcon.SetActive(false);
             }
         }
 
