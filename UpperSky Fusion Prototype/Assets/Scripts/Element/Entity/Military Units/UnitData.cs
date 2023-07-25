@@ -1,7 +1,8 @@
+using Entity;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Entity.Military_Units
+namespace Element.Entity.Military_Units
 {
     [CreateAssetMenu(fileName = "UnitData", menuName = "Data/UnitData", order = 3)]
     public class UnitData : EntityData
@@ -38,19 +39,24 @@ namespace Entity.Military_Units
         /// Combat Data Section -------------------------------------------------------------------------
 
         #region Combat Data
-
+        
         [field: Header("Combat Data"),  SerializeField]
+        public bool CanShoot { get; private set; }
+
+        [field: SerializeField, ShowIf("CanShoot")]
         public int DamagePerShoot { get; private set; }
 
-        [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField]
+        [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField,
+                ShowIf("CanShoot")]
         public int ArmorPenetration { get; private set; }
         
-        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
+        [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero"),
+                ShowIf("CanShoot")] 
         public float RealodTime { get; private set; }
-
-        [field: SerializeField] 
-        public GameManager.EntityType TargetableEntityType { get; private set; }
         
+        [field: SerializeField] 
+        public UnitsManager.UnitSkillsEnum Skill { get; private set; }
+
         #endregion
         
         /// Base Status Section -------------------------------------------------------------------------

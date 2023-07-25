@@ -3,6 +3,7 @@ using System.Globalization;
 using Custom_UI.InGame_UI;
 using Element;
 using Element.Entity.Buildings;
+using Element.Entity.Military_Units;
 using Element.Island;
 using Entity;
 using Entity.Buildings;
@@ -70,7 +71,7 @@ namespace UserInterface
         [SerializeField] private TextMeshProUGUI[] inGameInfoboxStatsTMP;
         [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
         [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
-        [SerializeField, Required()] private GameObject inGameInfoboxEntitySkill;
+        [SerializeField, Required()] private Image inGameInfoboxEntitySkill;
 
         [Header("End Game")]
         [SerializeField, Required()] private GameObject endGamePanel;
@@ -443,9 +444,11 @@ namespace UserInterface
             inGameInfoboxEntityIcon.sprite = elementData.Icon;
 
             inGameInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
+            
+            inGameInfoboxEntitySkill.gameObject.SetActive(false);
 
             if (elementData is EntityData entityData)
-           {
+            {
                foreach (var go in inGameInfoboxStatsObj)
                {
                    go.SetActive(true);
@@ -462,10 +465,24 @@ namespace UserInterface
                {
                    inGameInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
                    inGameInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
-                   inGameInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
-                   inGameInfoboxStatsTMP[6].text = unitData.ArmorPenetration + "%";
-                
-                   //TODO inGameInfoboxEntitySkill.SetActive(true); 
+
+                   if (unitData.CanShoot)
+                   {
+                       inGameInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
+                       inGameInfoboxStatsTMP[6].text = unitData.ArmorPenetration + "%";
+                   }
+                   else
+                   {
+                       inGameInfoboxStatsObj[5].SetActive(false);
+                       inGameInfoboxStatsObj[6].SetActive(false);
+                   }
+
+                   if (unitData.Skill is not UnitsManager.UnitSkillsEnum.None)
+                   {
+                       inGameInfoboxEntitySkill.gameObject.SetActive(true);
+                       inGameInfoboxEntitySkill.sprite =
+                           _unitsManager.allUnitSkillsData[(int) unitData.Skill].SkillIcon;
+                   }
                }
                else if (entityData is BuildingData)
                {
@@ -473,8 +490,6 @@ namespace UserInterface
                    {
                        inGameInfoboxStatsObj[index].SetActive(false);
                    }
-                
-                   inGameInfoboxEntitySkill.SetActive(false);
                }
            }
            else if (elementData is IslandData islandData)
@@ -498,6 +513,12 @@ namespace UserInterface
             }
             
             inGameInfobox.SetActive(false);
+        }
+
+        // Call from inspector
+        public void CallToUseUnitSkill(int skillIndex)
+        {
+            _unitsManager.UseUnitSkill(skillIndex);
         }
 
         public void UpdateWoodTMP(int newValue) => ressourcesTMP[0].text = newValue.ToString();

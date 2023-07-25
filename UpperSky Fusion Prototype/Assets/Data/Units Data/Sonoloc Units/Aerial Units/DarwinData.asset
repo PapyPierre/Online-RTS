@@ -22,17 +22,18 @@ MonoBehaviour:
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 15
-  <MaxHealthPoints>k__BackingField: 20
-  <MaxArmorPoints>k__BackingField: 2
+  <MaxHealthPoints>k__BackingField: 30
+  <MaxArmorPoints>k__BackingField: 5
   <SightRange>k__BackingField: 40
   <SupplyCost>k__BackingField: 1
   <MovementSpeed>k__BackingField: 11
   <AngularSpeed>k__BackingField: 3
   <WeatherResistance>k__BackingField: 2
+  <CanShoot>k__BackingField: 1
   <DamagePerShoot>k__BackingField: 6
   <ArmorPenetration>k__BackingField: 5
   <RealodTime>k__BackingField: 1
-  <TargetableEntityType>k__BackingField: 2
+  <SkillEnum>k__BackingField: 0
   <IsBaseColonizer>k__BackingField: 1
   <IsBaseCamouflaged>k__BackingField: 0
   <BaseRegeneration>k__BackingField: 0

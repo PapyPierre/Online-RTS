@@ -21,11 +21,11 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: Drilling machine requires a carpentry in order
     to be build
   <WoodCost>k__BackingField: 40
-  <MetalsCost>k__BackingField: 3
+  <MetalsCost>k__BackingField: 10
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 90
-  <MaxArmorPoints>k__BackingField: 10
+  <MaxArmorPoints>k__BackingField: 50
   <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 0
   <UnlockedBuildings>k__BackingField: 

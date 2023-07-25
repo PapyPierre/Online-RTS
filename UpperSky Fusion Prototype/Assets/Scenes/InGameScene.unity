@@ -669,7 +669,7 @@ MonoBehaviour:
   - {fileID: 994926636}
   inGameInfoboxEntityIcon: {fileID: 188411299}
   inGameInfoboxEntityColor: {fileID: 1367753798}
-  inGameInfoboxEntitySkill: {fileID: 275063287}
+  inGameInfoboxEntitySkill: {fileID: 275063289}
   endGamePanel: {fileID: 22602874}
   winTMP: {fileID: 441846697}
   loseTMP: {fileID: 418388878}
@@ -2764,13 +2764,14 @@ GameObject:
   - component: {fileID: 275063288}
   - component: {fileID: 275063290}
   - component: {fileID: 275063289}
+  - component: {fileID: 275063291}
   m_Layer: 5
   m_Name: Skill Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &275063288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2829,6 +2830,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275063287}
   m_CullTransparentMesh: 1
+--- !u!114 &275063291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275063287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 275063289}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &297041664
 GameObject:
   m_ObjectHideFlags: 0
@@ -4725,7 +4782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 2
+  expectedNumberOfPlayers: 1
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -11074,7 +11131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1414079992
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12163,13 +12220,18 @@ MonoBehaviour:
   allUnitsPrefab:
   - RawGuidValue: 77dc00bee5086df42839f6917f398b48
   - RawGuidValue: 1ba7242da4a9c70448ae318fae062075
+  - RawGuidValue: 4d2b029cf9efb6541a43cdcd847ee107
   allUnitsData:
   - {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046, type: 2}
   - {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
+  - {fileID: 11400000, guid: 1a3046a475e833a44a1a7175a6370e33, type: 2}
   unitGroupPrefab:
     RawGuidValue: f79079bdce6629748a8ce903d8692627
   allActiveUnits: []
   currentlySelectedUnits: []
+  allUnitSkillsData:
+  - {fileID: 11400000, guid: a5bccf3b15ff9e74088be11dbc8e91ee, type: 2}
+  - {fileID: 11400000, guid: eb01daf7b18576d4abde1df6511f5c39, type: 2}
   distToTargetToStop: 1
   flyingHeightOfUnits: 10
   distUnitToIslandToColonise: 15

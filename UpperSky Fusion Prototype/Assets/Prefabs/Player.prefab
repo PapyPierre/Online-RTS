@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerWoodAtStart: 150
-  playerMetalsAtStart: 10
+  playerMetalsAtStart: 20
   playerOrichalcAtStart: 0
   playerSupplyAtStart: 0
   playerMaxSupplyAtStart: 5

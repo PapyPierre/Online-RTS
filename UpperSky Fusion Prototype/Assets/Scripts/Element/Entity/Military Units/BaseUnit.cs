@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Element.Entity;
+using Element.Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Player;

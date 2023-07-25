@@ -21,16 +21,16 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: Carpentry requires a lumberjack  in order to
     be build
   <WoodCost>k__BackingField: 120
-  <MetalsCost>k__BackingField: 7
+  <MetalsCost>k__BackingField: 5
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 120
-  <MaxArmorPoints>k__BackingField: 10
+  <MaxArmorPoints>k__BackingField: 40
   <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 3
   <UnlockedBuildings>k__BackingField: 000000000100000002000000
   <IsFormationBuilding>k__BackingField: 1
-  <FormableUnits>k__BackingField: 0000000001000000
+  <FormableUnits>k__BackingField: 000000000100000002000000
   <DoesGenerateRessources>k__BackingField: 0
   <GeneratedWoodPerSeconds>k__BackingField: 0
   <GeneratedMetalsPerSeconds>k__BackingField: 0

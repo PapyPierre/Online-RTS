@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Element.Entity.Buildings;
+using Element.Entity.Military_Units;
 using Element.Island;
 using Entity.Military_Units;
 using Fusion;

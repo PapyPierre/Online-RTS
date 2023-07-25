@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Custom_UI;
+using Element.Entity.Military_Units;
 using Element.Island;
 using Entity.Buildings;
 using Entity.Military_Units;

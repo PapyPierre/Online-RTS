@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using Custom_UI;
 using Element.Island;
+using Entity.Military_Units;
 using Fusion;
 using UnityEngine;
 using UserInterface;
 using World;
-using World.Island;
 
-namespace Entity.Military_Units
+namespace Element.Entity.Military_Units
 {
     public class UnitsManager : MonoBehaviour
     {
@@ -24,6 +23,8 @@ namespace Entity.Military_Units
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
         
+        [Space] public List<UnitSkillData> allUnitSkillsData;
+
         public enum AllUnitsEnum
         {
           Darwin = 0, 
@@ -35,6 +36,12 @@ namespace Entity.Military_Units
           Oppenheimer = 6
         }
         
+        public enum UnitSkillsEnum
+        {
+            None = 0, 
+            GomorrahBomb = 1
+        }
+
         public float distToTargetToStop;
         public float flyingHeightOfUnits;
 
@@ -100,6 +107,11 @@ namespace Entity.Military_Units
                 _gameManager.thisPlayer.Object.StateAuthority);
 
             netObj.GetComponent<UnitGroup>().Init(targetPos);
+        }
+
+        public void UseUnitSkill(int skillIndex)
+        {
+            Debug.Log("call to use skill : " + allUnitSkillsData[skillIndex].Skill);
         }
     }
 }
