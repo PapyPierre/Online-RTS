@@ -59,7 +59,20 @@ namespace Element.Entity
             base.Spawned();
             
             FogOfWar = FogOfWar.Instance;
-            GetComponent<FogAgent>().Init(graphObject, canvas, minimapIcon.gameObject);
+            
+            switch (this)
+            {
+                case BaseUnit unit:
+                {
+                    GetComponent<FogAgentUnit>().Init(graphObject, canvas, minimapIcon.gameObject);
+                    break;
+                }
+                case BaseBuilding building:
+                {
+                    GetComponent<FogAgent>().Init(graphObject, canvas);
+                    break;
+                }
+            }
         }
         
         protected void SetUpHealtAndArmor(EntityData data)

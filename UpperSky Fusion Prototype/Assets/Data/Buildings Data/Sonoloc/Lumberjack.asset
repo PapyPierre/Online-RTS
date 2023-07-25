@@ -30,7 +30,7 @@ MonoBehaviour:
   <IsFormationBuilding>k__BackingField: 0
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
-  <GeneratedWoodPerSeconds>k__BackingField: 8
+  <GeneratedWoodPerSeconds>k__BackingField: 0.7
   <GeneratedMetalsPerSeconds>k__BackingField: 0
   <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0

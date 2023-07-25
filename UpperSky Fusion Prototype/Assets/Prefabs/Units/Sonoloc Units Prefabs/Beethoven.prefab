@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 2645220574719709856}
   - component: {fileID: 7154742858225517015}
   - component: {fileID: -3788620058330907333}
-  - component: {fileID: 1528447591526391597}
+  - component: {fileID: 8511203947404175940}
   m_Layer: 9
   m_Name: Beethoven
   m_TagString: Unit
@@ -1071,7 +1071,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
---- !u!114 &1528447591526391597
+--- !u!114 &8511203947404175940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1080,12 +1080,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6109549920716369441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Script: {fileID: 11500000, guid: 66a5845f86046274b97a469bdf342f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isVisible: 0
   keepVisible: 0
   additionalRadius: 0
+  minimapIcone: {fileID: 2279695912698228912}
 --- !u!1 &6720093931045292201
 GameObject:
   m_ObjectHideFlags: 0

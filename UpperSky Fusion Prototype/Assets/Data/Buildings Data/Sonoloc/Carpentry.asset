@@ -20,8 +20,8 @@ MonoBehaviour:
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Carpentry requires a lumberjack  in order to
     be build
-  <WoodCost>k__BackingField: 100
-  <MetalsCost>k__BackingField: 2
+  <WoodCost>k__BackingField: 120
+  <MetalsCost>k__BackingField: 7
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 120

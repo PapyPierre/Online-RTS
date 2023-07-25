@@ -105,7 +105,7 @@ namespace Element.Entity.Buildings
 
             if (Data.IsDefenseBuilding)
             {
-                if (TargetedEntity is null)
+                if (TargetedEntity == null || TargetedEntity.isDead)
                 {
                     FindTarget();
                     return;

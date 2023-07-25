@@ -562,6 +562,7 @@ namespace UserInterface
             underAttackPopUp.SetActive(true);
             _underAttackPopUpCurrentTime = underAttackPopUpLivingTime;
 
+            // Bug popup non visible
             var obj = Instantiate(attackMinimapPopup, position, Quaternion.identity);
            Destroy(obj, underAttackPopUpLivingTime);
         }

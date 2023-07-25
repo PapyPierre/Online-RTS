@@ -40,7 +40,7 @@ namespace Element.Island
                      minimapIcon.transform.localRotation.z + transform.rotation.y * 2);
             }
             
-            GetComponent<FogAgentIsland>().Init(graphObject, canvas, null);
+            GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);
         }
 
         public void Init(Transform parent, PlayerController owner)
@@ -65,7 +65,7 @@ namespace Element.Island
 
         private bool CheckForColonizerUnits()
         {
-            if (UnitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner is not null) return false;
+            if (UnitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner == GameManager.thisPlayer) return false;
 
             foreach (BaseUnit unit in UnitsManager.currentlySelectedUnits)
             {

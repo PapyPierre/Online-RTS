@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2345883638970076591}
   - component: {fileID: 8354599806769311918}
   - component: {fileID: 3013221348360157050}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Attack Minimap Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

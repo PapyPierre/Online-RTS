@@ -29,18 +29,13 @@ namespace Ressources.AOSFogWar.Used_Scripts
 
         private GameObject _graphObject;
         private GameObject _UIcanvas;
-        private GameObject _UIminimapIcon;
-        
-        public virtual void Init(GameObject graph, GameObject canvas, GameObject minimapIcon = null)
+
+        public virtual void Init(GameObject graph, GameObject canvas)
         {
             _fogOfWar = FogOfWar.Instance;
             
             _graphObject = graph;
             _UIcanvas = canvas;
-            if (minimapIcon != null)
-            {
-                _UIminimapIcon = minimapIcon;
-            }
         }
         
         private void Update()
@@ -56,21 +51,31 @@ namespace Ressources.AOSFogWar.Used_Scripts
                     _haveBeenSeenOnce = true;
                     OnFirstSeenTime();
                 }
-                _graphObject.SetActive(true);
-                _UIcanvas.SetActive(true);
-                _UIminimapIcon.SetActive(true);
+                
+                OnVisible();
             }
             else
             {
                 if (keepVisible && _haveBeenSeenOnce) return;
                 
-                _graphObject.SetActive(false);
-                _UIcanvas.SetActive(false);
-                _UIminimapIcon.SetActive(false);
+                OnHide();
             }
         }
 
         protected virtual void OnFirstSeenTime() { }
+
+        protected virtual void OnVisible()
+        {
+            _graphObject.SetActive(true);
+            _UIcanvas.SetActive(true);
+        }
+
+        protected virtual void OnHide()
+        {
+            _graphObject.SetActive(false);
+            _UIcanvas.SetActive(false);
+        }
+
 
         #if UNITY_EDITOR
         private void OnDrawGizmos()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Ressources.AOSFogWar.Used_Scripts
 {
-    public class FogAgentIsland : FogAgent
+    public class FogAgentUnit : FogAgent
     {
         [SerializeField] private GameObject minimapIcone;
 
@@ -12,10 +12,17 @@ namespace Ressources.AOSFogWar.Used_Scripts
             minimapIcone = minimapIcon;
             minimapIcone.SetActive(false);
         }
-        
-        protected override void OnFirstSeenTime()
+
+        protected override void OnVisible()
         {
+            base.OnVisible();
             minimapIcone.SetActive(true);
+        }
+
+        protected override void OnHide()
+        {
+            base.OnHide();
+            minimapIcone.SetActive(false);
         }
     }
 }

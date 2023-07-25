@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 2645220574719709856}
   - component: {fileID: -787848360031729415}
   - component: {fileID: -3062574406705469871}
-  - component: {fileID: 3414334891509212082}
+  - component: {fileID: 171493172885047524}
   m_Layer: 9
   m_Name: Darwin
   m_TagString: Unit
@@ -463,7 +463,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
---- !u!114 &3414334891509212082
+--- !u!114 &171493172885047524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -472,12 +472,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6109549920716369441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Script: {fileID: 11500000, guid: 66a5845f86046274b97a469bdf342f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isVisible: 0
   keepVisible: 0
   additionalRadius: 0
+  minimapIcone: {fileID: 8094450092423343187}
 --- !u!1 &8094450092423343187
 GameObject:
   m_ObjectHideFlags: 0
