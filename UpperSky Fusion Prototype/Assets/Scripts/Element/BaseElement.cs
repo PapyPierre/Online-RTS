@@ -27,6 +27,14 @@ namespace Element
         [SerializeField] private  List<MeshRenderer> meshToColor;
         #endregion
         
+        public enum ElementType
+        {
+            None,
+            Island,
+            Building,
+            Unit
+        }
+        
         [SerializeField, Space] protected GameObject graphObject;
         [SerializeField, Space] protected GameObject canvas;
         [SerializeField, Space] protected Image minimapIcon;
@@ -56,22 +64,13 @@ namespace Element
         #region Selection
         protected virtual void OnMouseEnter()
         {
-            switch (this)
-            { 
-                case BaseIsland island: UIManager.ShowInGameInfoBox(island.Data, island.Owner, island.BuildingsCount);
-                    break;
-                case BaseUnit unit: UIManager.ShowInGameInfoBox(unit.Data, unit.Owner);
-                    break;
-                case BaseBuilding building: UIManager.ShowInGameInfoBox(building.Data, building.Owner);
-                    break;
-            }
+         
         }
         
         protected virtual void OnMouseExit()
         {
-            UIManager.HideInGameInfoBox();
-        }
         
+        }
         
         #endregion
     }

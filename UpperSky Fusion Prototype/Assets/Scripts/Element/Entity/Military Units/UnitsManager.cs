@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Element.Island;
 using Entity.Military_Units;
@@ -68,6 +69,7 @@ namespace Element.Entity.Military_Units
         public void SelectUnit(BaseUnit unit)
         {
             currentlySelectedUnits.Add(unit); 
+            _uiManager.ShowInGameInfoBox(unit.Data, unit.Owner);
             unit.SetActiveSelectionCircle(true);
         }
       
@@ -111,7 +113,25 @@ namespace Element.Entity.Military_Units
 
         public void UseUnitSkill(int skillIndex)
         {
+            switch (skillIndex)
+            {
+                case 0 : 
+                    throw new ArgumentException();
+                case 1 :
+                    UseGomorrahBomb();
+                    break;
+                case 2 :
+                    break;
+                case 3 :
+                    break;
+            }
+            
             Debug.Log("call to use skill : " + allUnitSkillsData[skillIndex].Skill);
+        }
+
+        private void UseGomorrahBomb()
+        {
+            
         }
     }
 }

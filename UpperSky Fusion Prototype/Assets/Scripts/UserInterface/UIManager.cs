@@ -72,6 +72,7 @@ namespace UserInterface
         [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
         [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
         [SerializeField, Required()] private Image inGameInfoboxEntitySkill;
+        [HideInInspector] private BaseElement.ElementType _shownElementType;
 
         [Header("End Game")]
         [SerializeField, Required()] private GameObject endGamePanel;
@@ -463,6 +464,8 @@ namespace UserInterface
             
                if (entityData is UnitData unitData)
                {
+                   _shownElementType = BaseElement.ElementType.Unit;
+                   
                    inGameInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
                    inGameInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
 
@@ -486,6 +489,8 @@ namespace UserInterface
                }
                else if (entityData is BuildingData)
                {
+                   _shownElementType = BaseElement.ElementType.Building;
+
                    for (var index = 3; index < inGameInfoboxStatsObj.Length; index++)
                    {
                        inGameInfoboxStatsObj[index].SetActive(false);
@@ -494,6 +499,8 @@ namespace UserInterface
            }
            else if (elementData is IslandData islandData)
            {
+               _shownElementType = BaseElement.ElementType.Island;
+
                foreach (var go in inGameInfoboxStatsObj)
                {
                    go.SetActive(false);
@@ -507,6 +514,8 @@ namespace UserInterface
      
         public void HideInGameInfoBox()
         { 
+            _shownElementType = BaseElement.ElementType.None;
+            
             foreach (var go in inGameInfoboxStatsObj)
             {
                 go.SetActive(false);
@@ -516,10 +525,8 @@ namespace UserInterface
         }
 
         // Call from inspector
-        public void CallToUseUnitSkill(int skillIndex)
-        {
-            _unitsManager.UseUnitSkill(skillIndex);
-        }
+        public void CallToUseUnitSkill(int skillIndex) => _unitsManager.UseUnitSkill(skillIndex);
+        
 
         public void UpdateWoodTMP(int newValue) => ressourcesTMP[0].text = newValue.ToString();
         
