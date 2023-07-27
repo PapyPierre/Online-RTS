@@ -27,6 +27,8 @@ namespace Element
         [SerializeField] private  List<MeshRenderer> meshToColor;
         #endregion
         
+        [SerializeField] protected GameObject selectionCircle;
+
         public enum ElementType
         {
             None,
@@ -61,17 +63,37 @@ namespace Element
             UIManager = UIManager.Instance;
         }
         
+        protected bool PlayerIsOwner()
+        {
+            return Owner == GameManager.thisPlayer;
+        }
+        
+        protected bool MouseAboveThisElement()
+        {
+            return GameManager.thisPlayer.mouseAboveThisElement == this;
+        }
+        
         #region Selection
         protected virtual void OnMouseEnter()
         {
-         
+            GameManager.thisPlayer.mouseAboveThisElement = this;
+            if (PlayerIsOwner()) SetActiveSelectionCircle(true);
         }
         
         protected virtual void OnMouseExit()
         {
-        
+            GameManager.thisPlayer.mouseAboveThisElement = null;
+            
+            if (PlayerIsOwner() && !GameManager.thisPlayer.currentlySelectedElements.Contains(this))
+            {
+                SetActiveSelectionCircle(false);
+            }
         }
         
+        public void SetActiveSelectionCircle(bool value)
+        {
+            selectionCircle.SetActive(value);
+        }
         #endregion
     }
 }

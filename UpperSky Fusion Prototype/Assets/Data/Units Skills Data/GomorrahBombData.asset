@@ -9,16 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d12c46657e1bbf46be58444a483e492, type: 3}
-  m_Name: GomorrahBomb
+  m_Script: {fileID: 11500000, guid: ef0a4cb23afe4a9fac39f257973b8474, type: 3}
+  m_Name: GomorrahBombData
   m_EditorClassIdentifier: 
   <Skill>k__BackingField: 1
   <SkillIcon>k__BackingField: {fileID: 21300000, guid: 5f420b0c6164fef488c7cc006d9d25c8,
     type: 3}
+  <ReadyAtStart>k__BackingField: 1
   <NetworkPrefab>k__BackingField:
-    RawGuidValue: 00000000000000000000000000000000
+    RawGuidValue: c0a72495774681b4eb5ddfd2182d6549
   <NumberOfLaunch>k__BackingField: 3
-  <TimeBetweenLaunch>k__BackingField: 0.2
+  <TimeBetweenLaunch>k__BackingField: 1
   <ImpactDamage>k__BackingField: 40
   <ArmorPenetration>k__BackingField: 70
-  <ImpactRange>k__BackingField: 5
+  <ImpactRange>k__BackingField: 10
+  <CooldownDuration>k__BackingField: 10
+  <ExplosionVfx>k__BackingField:
+    RawGuidValue: 2e1e9506f5904a64b81744324fb7cd50

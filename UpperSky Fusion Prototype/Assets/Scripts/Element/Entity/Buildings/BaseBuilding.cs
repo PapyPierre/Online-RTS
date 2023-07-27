@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
-using Custom_UI;
 using Element.Entity.Military_Units;
 using Element.Island;
 using Entity.Buildings;
-using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using UnityEditor;
@@ -32,14 +30,12 @@ namespace Element.Entity.Buildings
         private float _tempOrichalqueToGenerate;
 
         // Formation d'unités
-        [HideInInspector] public bool isOpen;
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
         [HideInInspector] public float timeLeftToForm;
 
         // Defense
         [SerializeField] private Transform canonHead;
         [SerializeField] private float headAngularSpeed;
-        private List<BaseUnit> _enemyInRange = new();
         private bool _isReadyToShoot = true;
 
         public override void Spawned()
@@ -91,16 +87,6 @@ namespace Element.Entity.Buildings
         {
             if (Data.IsFormationBuilding)
             {
-                if (MouseAboveThisEntity() && PlayerIsOwner())
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        isOpen = true;
-                        _uiManager.OpenFormationBuilding(Data.ThisBuilding, this);
-                        UnitsManager.UnSelectAllUnits();
-                    }
-                }
-
                 if (FormationQueue.Count > 0) ManageFormation();
             }
 
@@ -136,14 +122,8 @@ namespace Element.Entity.Buildings
             if (!_isReadyToShoot) return;
             
             ShowShootVfx();
-
-            int damageOnUnits = Data.DamagePerShootOnUnits; 
-            int armorPenetration = Data.ArmorPenetration;
-
-            float damageOnHealth =  armorPenetration / 100f * damageOnUnits;
-            float damageOnArmor = (100f - armorPenetration) / 100f * damageOnUnits;
-
-            TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
+            
+            TargetedEntity.RPC_TakeDamage(Data.DamagePerShootOnUnits, Data.ArmorPenetration, this);
             if (TargetedEntity is BaseUnit unit) unit.ReactToDamage(this);
             
             _isReadyToShoot = false;
@@ -254,29 +234,8 @@ namespace Element.Entity.Buildings
             
             _uiManager.UpdateFormationQueueSlider(timeSpentOnTotalTime);
         }
-        
-        protected override void OnMouseEnter()
-        {
-            base.OnMouseEnter();
-            
-            if (PlayerIsOwner()) SetActiveSelectionCircle(true);
-        }
-        
-        protected override void OnMouseExit()
-        {
-            base.OnMouseExit();
 
-            if (PlayerIsOwner())
-            {
-                if (Data.IsFormationBuilding)
-                {
-                    if (!isOpen) SetActiveSelectionCircle(false);
-                }
-                else SetActiveSelectionCircle(false);
-            }
-        }
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Handles.DrawWireDisc(transform.position,Vector3.up, Data.ShootingRange);

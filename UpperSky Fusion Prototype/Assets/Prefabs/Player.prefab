@@ -109,8 +109,12 @@ MonoBehaviour:
   _MyStartingIsland: {fileID: 0}
   myCam: {fileID: 1824731382511807695}
   ressources: {fileID: 0}
-  mouseAboveThisEntity: {fileID: 0}
+  mouseAboveThisElement: {fileID: 0}
+  currentlySelectedElements: []
   minimapIndicator: {fileID: 8541844832713808961}
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 913
 --- !u!114 &1998333603904257311
 MonoBehaviour:
   m_ObjectHideFlags: 0

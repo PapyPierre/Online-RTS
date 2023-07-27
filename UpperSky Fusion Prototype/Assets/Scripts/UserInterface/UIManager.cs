@@ -71,8 +71,8 @@ namespace UserInterface
         [SerializeField] private TextMeshProUGUI[] inGameInfoboxStatsTMP;
         [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
         [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
-        [SerializeField, Required()] private Image inGameInfoboxEntitySkill;
-        [HideInInspector] private BaseElement.ElementType _shownElementType;
+        [SerializeField, Required()] private GameObject inGameInfoboxEntitySkill;
+        public BaseElement openedElementInInGameInfobox;
 
         [Header("End Game")]
         [SerializeField, Required()] private GameObject endGamePanel;
@@ -279,7 +279,6 @@ namespace UserInterface
         {
             if (CurrentlyOpenBuilding is null) return;
             
-            CurrentlyOpenBuilding.isOpen = false;
             CurrentlyOpenBuilding.SetActiveSelectionCircle(false);
             CurrentlyOpenBuilding = null;
         }
@@ -387,6 +386,7 @@ namespace UserInterface
         {
             prodInfobox.SetActive(true);
             prodInfoboxName.text = entityData.Name;
+            
             prodInfoboxDescr.text = isLocked ? entityData.LockedDescription : entityData.Description;
 
             if (entityData.WoodCost > 0)
@@ -434,11 +434,13 @@ namespace UserInterface
 
         public void HideProdInfobox() => prodInfobox.SetActive(false);
 
-        public void ShowInGameInfoBox(ElementData elementData, PlayerController owner, int numberOfBuildings = 0)
+        public void ShowInGameInfoBox(BaseElement element, ElementData elementData, PlayerController owner)
         {
             if (CurrentlyOpenBuilding is not null) return;
             
             inGameInfobox.SetActive(true);
+            openedElementInInGameInfobox = element;
+            
             inGameInfoboxName.text = elementData.Name;
             inGameInfoboxDescr.text = elementData.Description;
 
@@ -446,7 +448,7 @@ namespace UserInterface
 
             inGameInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
             
-            inGameInfoboxEntitySkill.gameObject.SetActive(false);
+            inGameInfoboxEntitySkill.SetActive(false);
 
             if (elementData is EntityData entityData)
             {
@@ -464,8 +466,6 @@ namespace UserInterface
             
                if (entityData is UnitData unitData)
                {
-                   _shownElementType = BaseElement.ElementType.Unit;
-                   
                    inGameInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
                    inGameInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
 
@@ -480,41 +480,40 @@ namespace UserInterface
                        inGameInfoboxStatsObj[6].SetActive(false);
                    }
 
-                   if (unitData.Skill is not UnitsManager.UnitSkillsEnum.None)
+                   if (unitData.SkillData.Skill is not UnitsManager.UnitSkillsEnum.None)
                    {
-                       inGameInfoboxEntitySkill.gameObject.SetActive(true);
-                       inGameInfoboxEntitySkill.sprite =
-                           _unitsManager.allUnitSkillsData[(int) unitData.Skill].SkillIcon;
+                       inGameInfoboxEntitySkill.SetActive(true);
+                       inGameInfoboxEntitySkill.GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
+                        
+
+                       inGameInfoboxEntitySkill.GetComponent<Button>().interactable  = 
+                           element.GetComponent<BaseUnit>().isSkillReady;
                    }
                }
                else if (entityData is BuildingData)
                {
-                   _shownElementType = BaseElement.ElementType.Building;
-
                    for (var index = 3; index < inGameInfoboxStatsObj.Length; index++)
                    {
                        inGameInfoboxStatsObj[index].SetActive(false);
                    }
                }
-           }
-           else if (elementData is IslandData islandData)
-           {
-               _shownElementType = BaseElement.ElementType.Island;
-
-               foreach (var go in inGameInfoboxStatsObj)
-               {
-                   go.SetActive(false);
-               }
+            }
+            else if (elementData is IslandData islandData)
+            {
+                foreach (var go in inGameInfoboxStatsObj)
+                {
+                    go.SetActive(false);
+                }
                
-               // Nombre de bâtiments, visible que pour les iles
-               inGameInfoboxStatsObj[^1].SetActive(true);
-               inGameInfoboxStatsTMP[^1].text = numberOfBuildings + "/" + islandData.MaxBuildingsOnThisIsland;
-           }
+                // Nombre de bâtiments, visible que pour les iles
+                inGameInfoboxStatsObj[^1].SetActive(true);
+                inGameInfoboxStatsTMP[^1].text = element.GetComponent<BaseIsland>().BuildingsCount + "/" + islandData.MaxBuildingsOnThisIsland;
+            }
         }
-     
+
         public void HideInGameInfoBox()
         { 
-            _shownElementType = BaseElement.ElementType.None;
+            openedElementInInGameInfobox = null;
             
             foreach (var go in inGameInfoboxStatsObj)
             {
@@ -525,14 +524,13 @@ namespace UserInterface
         }
 
         // Call from inspector
-        public void CallToUseUnitSkill(int skillIndex) => _unitsManager.UseUnitSkill(skillIndex);
-        
+        public void UseUnitSkill() => openedElementInInGameInfobox.GetComponent<BaseUnit>().UseSkill();
 
-        public void UpdateWoodTMP(int newValue) => ressourcesTMP[0].text = newValue.ToString();
-        
-        public void UpdateMetalsTMP(int newValue) =>  ressourcesTMP[1].text = newValue.ToString();
+        private void UpdateWoodTMP(int newValue) => ressourcesTMP[0].text = newValue.ToString();
 
-        public void UpdateOrichalqueTMP(int newValue) =>  ressourcesTMP[2].text = newValue.ToString();
+        private void UpdateMetalsTMP(int newValue) =>  ressourcesTMP[1].text = newValue.ToString();
+
+        private void UpdateOrichalqueTMP(int newValue) =>  ressourcesTMP[2].text = newValue.ToString();
         
         public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)
         {

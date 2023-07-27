@@ -1,16 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
-using Element.Entity;
-using Element.Entity.Military_Units;
-using Fusion;
+using Entity.Military_Units;
 using NaughtyAttributes;
 using Player;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entity.Military_Units
+namespace Element.Entity.Military_Units
 {
     public class BaseUnit : BaseEntity
     {
@@ -23,18 +19,13 @@ namespace Entity.Military_Units
         
         [HideInInspector] public UnitGroup currentGroup;
         
-        [HideInInspector] public bool isCurrentlyColonizer;
-        [HideInInspector] public bool isCurrentlyCamouflaged; //TODO
-        [HideInInspector] private float currentRegeneration; //TODO
-        [HideInInspector] private float currentAcid; //TODO
-        [HideInInspector] private float currentParasite; //TODO
+        [HideInInspector] public bool isSkillReady;
 
         public override void Spawned()
         {
             base.Spawned();
             UnitsManager.allActiveUnits.Add(this);
             SetUpHealtAndArmor(Data);
-            SetUpStatus();
         }
 
         public void Init(PlayerController owner)
@@ -46,15 +37,17 @@ namespace Entity.Military_Units
                 var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
                 FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
             }
+
+            if (Data.SkillData.ReadyAtStart)
+            {
+                isSkillReady = true;
+            }
         }
 
-        private void SetUpStatus()
+        public virtual void UseSkill()
         {
-            isCurrentlyColonizer = Data.IsBaseColonizer;
-            isCurrentlyCamouflaged = Data.IsBaseCamouflaged;
-            currentRegeneration = Data.BaseRegeneration;
-            currentAcid = Data.BaseAcid;
-            currentParasite = Data.BaseParasite;
+            isSkillReady = false;
+            UIManager.ShowInGameInfoBox(this, Data, Owner);
         }
 
         private void Update()
@@ -91,17 +84,11 @@ namespace Entity.Military_Units
 
         private void ShootAtEnemy()
         {
-            if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot) return;
+            if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot || !Data.CanShoot) return;
 
             ShowShootVfx();
-            
-            int damage = Data.DamagePerShoot; 
-            int armorPenetration = Data.ArmorPenetration;
 
-            float damageOnHealth =  armorPenetration / 100f * damage;
-            float damageOnArmor = (100f - armorPenetration) / 100f * damage;
-
-            TargetedEntity.RPC_TakeDamage(damageOnHealth, damageOnArmor,  this);
+            TargetedEntity.RPC_TakeDamage(Data.DamagePerShoot, Data.ArmorPenetration, this);
 
             _isReadyToShoot = false;
             StartCoroutine(Reload());
@@ -122,29 +109,6 @@ namespace Entity.Military_Units
             yield return new WaitForSecondsRealtime(Data.RealodTime);
             _isReadyToShoot = true;
         }
-
-        #region Selection
-
-        protected override void OnMouseEnter()
-        {
-            base.OnMouseEnter();
-            
-            if (PlayerIsOwner())
-            {
-                SetActiveSelectionCircle(true);
-            }
-        }
-
-        protected override void OnMouseExit()
-        {
-            base.OnMouseExit();
-
-            if (!UnitsManager.currentlySelectedUnits.Contains(this) && PlayerIsOwner())
-            {
-                SetActiveSelectionCircle(false);
-            }
-        }
-        #endregion
 
         #if UNITY_EDITOR
         private void OnDrawGizmosSelected()

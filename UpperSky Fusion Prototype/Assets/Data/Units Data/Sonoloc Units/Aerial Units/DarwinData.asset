@@ -26,6 +26,8 @@ MonoBehaviour:
   <MaxArmorPoints>k__BackingField: 5
   <SightRange>k__BackingField: 40
   <SupplyCost>k__BackingField: 1
+  <SkillData>k__BackingField: {fileID: 11400000, guid: 42dd197432bce0e4ca884cb462b8efe7,
+    type: 2}
   <MovementSpeed>k__BackingField: 11
   <AngularSpeed>k__BackingField: 3
   <WeatherResistance>k__BackingField: 2
@@ -33,8 +35,6 @@ MonoBehaviour:
   <DamagePerShoot>k__BackingField: 6
   <ArmorPenetration>k__BackingField: 5
   <RealodTime>k__BackingField: 1
-  <SkillEnum>k__BackingField: 0
-  <IsBaseColonizer>k__BackingField: 1
   <IsBaseCamouflaged>k__BackingField: 0
   <BaseRegeneration>k__BackingField: 0
   <BaseAcid>k__BackingField: 0

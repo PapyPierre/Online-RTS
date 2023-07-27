@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Custom_UI;
 using Custom_UI.InGame_UI;
-using Element.Entity.Buildings;
 using Element.Island;
 using UnityEngine;
 using UserInterface;
-using World.Island;
 
-namespace Entity.Buildings
+namespace Element.Entity.Buildings
 {
     public class BuildingsBlueprint : MonoBehaviour
     {
@@ -54,7 +51,6 @@ namespace Entity.Buildings
             // Start construction
             if (Input.GetMouseButtonDown(0))
             {
-                
                 if (_unvalidPosIndex > 0)
                 {
                     switch (_unvalidPosIndex)
@@ -85,7 +81,7 @@ namespace Entity.Buildings
         private void MoveBlueprint(Ray ray)
         {
             // Doesn't hit when above sea of clouds, return to avoid errors
-            if (!Physics.Raycast(ray, out _hit, 5000, _buildingsManager.terrainLayer)) return;
+            if (!Physics.Raycast(ray, out _hit, 5000, _buildingsManager.terrainLayer, QueryTriggerInteraction.Ignore)) return;
 
             if (_hit.point.y > -0.5f)
             {
@@ -140,6 +136,8 @@ namespace Entity.Buildings
             
             foreach (var col in _propsInRange) col.gameObject.SetActive(false);
             
+            _buildingsManager.PayForBuilding((int) thisBuilding);
+
             float buildingTime = _buildingsManager.allBuildingsDatas[(int) thisBuilding].ProductionTime;
             productionBar.gameObject.SetActive(true);
             productionBar.Init(buildingTime);

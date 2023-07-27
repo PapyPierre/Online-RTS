@@ -89,9 +89,8 @@ namespace Element.Entity.Buildings
             else Debug.Log("Not enough ressources");
         }
 
-        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island, 
-            bool isStartBuilding = false)
-        {          
+        public void PayForBuilding(int buildingIndex)
+        {
             PlayerController player = _gameManager.thisPlayer;
 
             var woodCost = allBuildingsDatas[buildingIndex].WoodCost;
@@ -102,9 +101,18 @@ namespace Element.Entity.Buildings
 
             var oriCost = allBuildingsDatas[buildingIndex].OrichalqueCost;
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
+        }
 
-            if (!isStartBuilding) island.BuildingsCount++;
-            
+        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island, 
+            bool isStartBuilding = false)
+        {
+            island.BuildingsCount++;
+
+            if (_uiManager.openedElementInInGameInfobox == island)
+            {
+                _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
+            }
+
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, island.Object.InputAuthority);
 
@@ -112,9 +120,7 @@ namespace Element.Entity.Buildings
             
             building.Init(island, isStartBuilding);
             island.buildingOnThisIsland.Add(building);
-            
-            _uiManager.ShowInGameInfoBox(island.Data, island.Owner, island.BuildingsCount);
-           
+
             haveBlueprintInHand = false;
             
             return obj;

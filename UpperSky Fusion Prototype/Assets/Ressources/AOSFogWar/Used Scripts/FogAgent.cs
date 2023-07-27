@@ -35,7 +35,7 @@ namespace Ressources.AOSFogWar.Used_Scripts
             _fogOfWar = FogOfWar.Instance;
             
             _graphObject = graph;
-            _UIcanvas = canvas;
+             _UIcanvas = canvas;
         }
         
         private void Update()

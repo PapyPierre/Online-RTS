@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Custom_UI;
+using Element;
 using Element.Entity;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
@@ -35,12 +37,14 @@ namespace Player
 
         [HideInInspector] public PlayerRessources ressources;
         
-       [SerializeField, ReadOnly] public BaseEntity mouseAboveThisEntity;
+       [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
         private bool _isMajKeyPressed;
-        
+        public List<BaseElement> currentlySelectedElements;
 
         [SerializeField, Required()] private GameObject minimapIndicator;
 
+        public LayerMask LayerMask;
+        
         public override void Spawned()
         {
             _uiManager = UIManager.Instance;
@@ -81,47 +85,16 @@ namespace Player
             if (Input.GetMouseButtonUp(0)) OnLeftButtonUp();
                 
             if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
-        } 
-        
+        }
+
         private void OnLeftButtonClick()
         {
             _rectangleSelection.OnLeftButtonDown_RectSelection();
+            
+            if (!mouseAboveThisElement) return;
+            if (mouseAboveThisElement.Owner != this) return;
 
-            if (_unitsManager.currentlySelectedUnits.Count is 0) // Si aucune unité n'est sélectionné 
-            {
-                 if (mouseAboveThisEntity)
-                 {
-                     if (mouseAboveThisEntity is BaseUnit unit)
-                     {
-                         if (mouseAboveThisEntity.Owner == this)
-                         {
-                             _unitsManager.SelectUnit(unit);
-                         }
-                     }
-                 }
-            }
-            else // Si au moins une unité est selectionné
-            {
-                if (mouseAboveThisEntity)  // Si la souris hover une unité
-                {
-                    if (mouseAboveThisEntity is BaseUnit unit)
-                    {
-                        if (_isMajKeyPressed && mouseAboveThisEntity.Owner == this)
-                        {
-                            _unitsManager.SelectUnit(unit);
-                        }
-                        else
-                        {
-                            _unitsManager.UnSelectAllUnits();
-      
-                            if (mouseAboveThisEntity.Owner == this)
-                            {
-                                _unitsManager.SelectUnit(unit);
-                            }
-                        }
-                    }
-                }
-            }
+            SelectElement(mouseAboveThisElement);
         }
 
         private void OnLeftButtonHold()
@@ -135,41 +108,93 @@ namespace Player
         }
 
         private void OnRightButtonClick()
-        { 
-            _uiManager.HideOpenedUI();
-            _uiManager.HideInGameInfoBox();
-
+        {
             if (_unitsManager.currentlySelectedUnits.Count > 0) // Si au moins une unité est sélectionné 
             {
-                if (mouseAboveThisEntity)
+                if (mouseAboveThisElement)
                 {
                     //Si l'unité qui est hover est ennemie, l'attaquer
-                    if (mouseAboveThisEntity.Owner != this)
+                    if (mouseAboveThisElement.Owner != this && mouseAboveThisElement is BaseEntity entity)  
                     {
-                        foreach (var unit in  _unitsManager.currentlySelectedUnits)
+                        foreach (var unit in _unitsManager.currentlySelectedUnits)
                         {
-                            unit.SetTarget(mouseAboveThisEntity);
+                            if (unit.Data.CanShoot)
+                            {
+                                unit.SetTarget(entity);
+                            }
                         }
                         
-                        _unitsManager.OrderSelectedUnitsToMoveTo(mouseAboveThisEntity.transform.position);
+                        _unitsManager.OrderSelectedUnitsToMoveTo(mouseAboveThisElement.transform.position);
+                        return;
                     }
                 }
-                else
-                {
-                    foreach (var unit in  _unitsManager.currentlySelectedUnits)
-                    {
-                        unit.ResetTarget();
-                    }
-                    
-                    Ray ray = myCam.ScreenPointToRay((Input.mousePosition));
-                    RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 5000))
-                    {
-                        _unitsManager.OrderSelectedUnitsToMoveTo(hit.point);
-                    }
+                foreach (var unit in _unitsManager.currentlySelectedUnits)
+                {
+                    unit.ResetTarget();
                 }
-            } 
+                    
+                Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 5000, LayerMask, QueryTriggerInteraction.Collide))
+                {
+                    _unitsManager.OrderSelectedUnitsToMoveTo(hit.point);
+                }
+            }
+            else
+            {
+                _uiManager.HideOpenedUI();
+                UnselectAllElements();
+            }
+        }
+
+        public void SelectElement(BaseElement element)
+        {
+            _uiManager.HideOpenedUI();
+
+            switch (element)
+            {
+                case BaseUnit unit :
+                    if (!_isMajKeyPressed) UnselectAllElements();
+                    _unitsManager.SelectUnit(unit);
+                    currentlySelectedElements.Add(element);
+                    _uiManager.ShowInGameInfoBox(unit, unit.Data, unit.Owner);
+                    break;
+                
+                case BaseBuilding building :
+                    if (building.Data.IsFormationBuilding)
+                    {
+                        _uiManager.OpenFormationBuilding(building.Data.ThisBuilding, building);
+                    }
+                    UnselectAllElements();
+                    currentlySelectedElements.Add(element);
+                    _unitsManager.UnSelectAllUnits();
+                    _uiManager.ShowInGameInfoBox(building, building.Data, building.Owner);
+                    break;
+                
+                case BaseIsland island :
+                    UnselectAllElements();
+                    currentlySelectedElements.Add(element);
+                    _unitsManager.UnSelectAllUnits();
+                    _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
+                    break;
+            }
+            
+            element.SetActiveSelectionCircle(true);
+        }
+
+        public void UnselectAllElements()
+        {
+            _unitsManager.UnSelectAllUnits();
+
+            foreach (var element in currentlySelectedElements)
+            {
+                element.SetActiveSelectionCircle(false);
+            }
+            
+            currentlySelectedElements.Clear();
+            _uiManager.HideInGameInfoBox();
         }
 
         public void MakesPlayerReady()

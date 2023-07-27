@@ -3,6 +3,7 @@ using AOSFogWar.Used_Scripts;
 using Custom_UI;
 using Custom_UI.InGame_UI;
 using Element.Entity.Buildings;
+using Element.Entity.Military_Units;
 using Entity;
 using Entity.Military_Units;
 using Fusion;
@@ -19,11 +20,8 @@ namespace Element.Entity
     public abstract class BaseEntity : BaseElement
     {
         protected FogOfWar FogOfWar;
-
         protected int FogRevealerIndex;
-
-        [SerializeField] protected GameObject selectionCircle;
-
+        
         #region Networked Health & Health Bar
         [field: SerializeField, Header("Health")] [Networked(OnChanged = nameof(CurrentHealthChanged))]
         private float CurrentHealth { get; set; }
@@ -83,22 +81,15 @@ namespace Element.Entity
             CurrentArmor = data.MaxArmorPoints;
             armorBar.Init(data.MaxArmorPoints);
         }
-        
-        protected bool PlayerIsOwner()
-        {
-            return Owner == GameManager.thisPlayer;
-        }
-        
-        protected bool MouseAboveThisEntity()
-        {
-            return GameManager.thisPlayer.mouseAboveThisEntity == this;
-        }
-        
+
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_TakeDamage(float damageOnHealth, float damageOnArmor, BaseEntity shooter)
+        public void RPC_TakeDamage(int damage, int armorPenetration, BaseEntity shooter = null)
         {
             // The code inside here will run on the client which owns this object (has state and input authority).
 
+            float damageOnHealth =  armorPenetration / 100f * damage;
+            float damageOnArmor = (100f - armorPenetration) / 100f * damage;
+            
             CurrentHealth -= damageOnHealth;
             
             if (CurrentArmor - damageOnArmor >= 0) CurrentArmor -= damageOnArmor;
@@ -121,9 +112,12 @@ namespace Element.Entity
 
             if (CurrentHealth <= 0)
             {
-                shooter.ResetTarget();
-                if (shooter is BaseUnit unit) unit.targetedUnitIsInRange = false;
-                else if(shooter is BaseBuilding building) building.FindTarget();
+                if (shooter != null)
+                {
+                    shooter.ResetTarget();
+                    if (shooter is BaseUnit unit) unit.targetedUnitIsInRange = false;
+                    else if(shooter is BaseBuilding building) building.FindTarget();
+                }
                 
                 DestroyEntity();
             }
@@ -139,7 +133,7 @@ namespace Element.Entity
             
             Runner.Spawn(deathVfx, transform.position);
         
-            if (MouseAboveThisEntity()) GameManager.thisPlayer.mouseAboveThisEntity = null;
+            if (MouseAboveThisElement()) GameManager.thisPlayer.mouseAboveThisElement = null;
 
             foreach (var entity in currentAgressor)
             {
@@ -193,16 +187,21 @@ namespace Element.Entity
 
         protected void AimAtTarget(Transform target, Transform objToRotate)
         {
-            Vector3 directionToTarget = target.position - objToRotate.position;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+            float rotSpeed = 2;
 
-            float angularSpeed = 0;
-            
-            if (this is BaseUnit unit) angularSpeed = unit.Data.AngularSpeed;
-            else angularSpeed = 2f;
-            
-            objToRotate.rotation = Quaternion.Slerp(
-                objToRotate.rotation, targetRotation, angularSpeed * Time.deltaTime);
+            if (this is BaseUnit unit)
+            {
+                if (unit.Data.AngularSpeed > 0)
+                {
+                    rotSpeed = unit.Data.AngularSpeed;
+                }
+                else return;
+            }
+
+            Vector3 directionToTarget = target.position - objToRotate.position;
+            Quaternion targetRot = Quaternion.LookRotation(directionToTarget, Vector3.up);
+
+            objToRotate.rotation = Quaternion.Slerp(objToRotate.rotation, targetRot, rotSpeed * Time.deltaTime);
         }
         
         protected void ShowShootVfx()
@@ -212,26 +211,5 @@ namespace Element.Entity
                 Runner.Spawn(shootVfx, t.position, Quaternion.identity);
             }
         }
-
-        #region Selection
-        protected override void OnMouseEnter()
-        {
-            base.OnMouseEnter();
-
-            GameManager.thisPlayer.mouseAboveThisEntity = this;
-        }
-        
-        protected override void OnMouseExit()
-        {
-            base.OnMouseExit();
-            
-            GameManager.thisPlayer.mouseAboveThisEntity = null;
-        }
-        
-        public void SetActiveSelectionCircle(bool value)
-        {
-            selectionCircle.SetActive(value);
-        }
-        #endregion
     }
 }

@@ -1,3 +1,4 @@
+using Element.Entity.Military_Units.Units_Skills;
 using Entity;
 using NaughtyAttributes;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Element.Entity.Military_Units
         [field: Header("Additional Unit Data"), SerializeField, 
                 ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int SupplyCost { get; private set; }
+        
+        [field: SerializeField, Expandable] public UnitSkillData SkillData { get; private set; }
 
         #endregion
         
@@ -27,7 +30,7 @@ namespace Element.Entity.Military_Units
         public float MovementSpeed { get; private set; }
         
         [field: SerializeField, 
-                ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
+                ValidateInput("FloatIsGreaterThanZero")] 
         public float AngularSpeed { get; private set; }
 
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
@@ -53,9 +56,6 @@ namespace Element.Entity.Military_Units
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero"),
                 ShowIf("CanShoot")] 
         public float RealodTime { get; private set; }
-        
-        [field: SerializeField] 
-        public UnitsManager.UnitSkillsEnum Skill { get; private set; }
 
         #endregion
         
@@ -64,9 +64,6 @@ namespace Element.Entity.Military_Units
         #region Base Status
 
         [field: Header("Base Unit Status"),  SerializeField]
-        public bool IsBaseColonizer { get; private set; }
-
-        [field: SerializeField] 
         public bool IsBaseCamouflaged { get; private set; }
         
         [field: SerializeField] 

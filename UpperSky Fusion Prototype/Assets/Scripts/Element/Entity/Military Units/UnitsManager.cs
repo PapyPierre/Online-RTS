@@ -23,8 +23,6 @@ namespace Element.Entity.Military_Units
 
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
-        
-        [Space] public List<UnitSkillData> allUnitSkillsData;
 
         public enum AllUnitsEnum
         {
@@ -40,7 +38,8 @@ namespace Element.Entity.Military_Units
         public enum UnitSkillsEnum
         {
             None = 0, 
-            GomorrahBomb = 1
+            GomorrahBomb = 1,
+            Colonisation = 2
         }
 
         public float distToTargetToStop;
@@ -68,9 +67,7 @@ namespace Element.Entity.Military_Units
         
         public void SelectUnit(BaseUnit unit)
         {
-            currentlySelectedUnits.Add(unit); 
-            _uiManager.ShowInGameInfoBox(unit.Data, unit.Owner);
-            unit.SetActiveSelectionCircle(true);
+            currentlySelectedUnits.Add(unit);
         }
       
         public void UnSelectAllUnits()
@@ -81,17 +78,8 @@ namespace Element.Entity.Military_Units
             }
       
             currentlySelectedUnits.Clear();
-            HideIslandsColoniseBtn();
         }
 
-        private void HideIslandsColoniseBtn()
-        {
-            foreach (BaseIsland island in _worldManager.allIslands)
-            {
-                if (island.coloniseBtn.activeSelf) island.coloniseBtn.SetActive(false);
-            }
-        }
-        
         public void OrderSelectedUnitsToMoveTo(Vector3 positon)
         {
             Vector3 targetPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
@@ -109,29 +97,6 @@ namespace Element.Entity.Military_Units
                 _gameManager.thisPlayer.Object.StateAuthority);
 
             netObj.GetComponent<UnitGroup>().Init(targetPos);
-        }
-
-        public void UseUnitSkill(int skillIndex)
-        {
-            switch (skillIndex)
-            {
-                case 0 : 
-                    throw new ArgumentException();
-                case 1 :
-                    UseGomorrahBomb();
-                    break;
-                case 2 :
-                    break;
-                case 3 :
-                    break;
-            }
-            
-            Debug.Log("call to use skill : " + allUnitSkillsData[skillIndex].Skill);
-        }
-
-        private void UseGomorrahBomb()
-        {
-            
         }
     }
 }

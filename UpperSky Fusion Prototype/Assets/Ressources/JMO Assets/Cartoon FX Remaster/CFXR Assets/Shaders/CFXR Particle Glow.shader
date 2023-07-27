@@ -185,6 +185,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 		//====================================================================================================================================
 		// Built-in Rendering Pipeline
 
+		/*
 		SubShader
 		{
 			Pass
@@ -267,6 +268,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				ENDCG
 			}
 		}
+		*/
 	}
 	
 	CustomEditor "CartoonFX.MaterialInspector"

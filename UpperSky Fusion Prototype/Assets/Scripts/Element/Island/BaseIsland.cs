@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Element.Entity.Buildings;
+using Element.Entity.Military_Units;
+using Element.Entity.Military_Units.Units_Specifics;
 using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
@@ -21,9 +23,6 @@ namespace Element.Island
         
         [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
 
-        [Header("Components")]
-        public GameObject coloniseBtn;
-
         public override void Spawned()
         {
             base.Spawned();
@@ -31,9 +30,7 @@ namespace Element.Island
             _worldManager = WorldManager.Instance;
 
             _worldManager.allIslands.Add(this);
-            coloniseBtn.SetActive(false);
 
-            
             if (transform.rotation.y != 0)
             {
                minimapIcon.transform.localRotation = Quaternion.Euler(0,0, 
@@ -60,54 +57,42 @@ namespace Element.Island
         // Fixed for optimisation
         private void FixedUpdate()
         {
-            coloniseBtn.SetActive(CheckForColonizerUnits());
+            CheckForColonizerUnits();
         }
 
-        private bool CheckForColonizerUnits()
+        private void CheckForColonizerUnits()
         {
-            if (UnitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner == GameManager.thisPlayer) return false;
+            if (UnitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner == GameManager.thisPlayer) return;
 
             foreach (BaseUnit unit in UnitsManager.currentlySelectedUnits)
             {
                 if (unit.isDead) continue;
 
-                if (unit.isCurrentlyColonizer && unit.Owner != Owner)
+                if (unit.Data.SkillData.Skill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != Owner)
                 {
                     var distToUnit = Vector3.Distance(
                         CustomHelper.ReturnPosInTopDown(transform.position), 
                         CustomHelper.ReturnPosInTopDown(unit.transform.position));
-                    
-                    if (distToUnit <= UnitsManager.distUnitToIslandToColonise) return true;
+
+                    if (distToUnit <= UnitsManager.distUnitToIslandToColonise)
+                    {
+                        unit.isSkillReady = true;
+                        unit.GetComponent<Darwin>().targetIslandToColonise = this;
+                        UIManager.ShowInGameInfoBox(unit, unit.Data, unit.Owner);
+                    }
                 }
             }
-            
-            return false;
         }
 
-        // Call from inspector
+        // Call from coloniser
         public void CallForColonise()
         {
-            if (Object.HasStateAuthority) Colonise();
+            if (Object.HasStateAuthority) UpdateOwner();
             else Object.RequestStateAuthority();
         }
         
-        public void StateAuthorityChanged()
-        {
-            Colonise();
-        }
-
-        private void Colonise()
-        {
-            Owner = GameManager.thisPlayer;
-
-            foreach (BaseUnit unit in UnitsManager.currentlySelectedUnits)
-            {
-                if (unit.isCurrentlyColonizer) 
-                {
-                    unit.DestroyEntity();
-                    break;
-                }
-            }
-        }
+        public void StateAuthorityChanged() => UpdateOwner();
+        
+        private void UpdateOwner() => Owner = GameManager.thisPlayer;
     }
 }

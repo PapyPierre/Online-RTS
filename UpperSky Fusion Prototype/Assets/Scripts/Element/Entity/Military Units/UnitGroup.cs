@@ -75,7 +75,10 @@ namespace Entity.Military_Units
 
             foreach (var unit in unitsInGroup)
             {
-                if (!unit.isDead) unit.transform.rotation = Quaternion.LookRotation(targetPos - transform.position);
+                if (!unit.isDead && unit.Data.AngularSpeed > 0)
+                {
+                    unit.transform.rotation = Quaternion.LookRotation(targetPos - transform.position);
+                }
             }
 
             if (Vector3.Distance(transform.position,  targetPos) < _unitsManager.distToTargetToStop)

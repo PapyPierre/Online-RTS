@@ -335,7 +335,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 		//====================================================================================================================================
 		// Built-in Rendering Pipeline
-
+/*
 		SubShader
 		{
 			Pass
@@ -442,6 +442,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				ENDCG
 			}
 		}
+		*/
 	}
 	
 	CustomEditor "CartoonFX.MaterialInspector"
