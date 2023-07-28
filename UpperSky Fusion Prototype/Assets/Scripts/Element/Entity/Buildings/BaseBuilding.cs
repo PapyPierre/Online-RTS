@@ -23,15 +23,11 @@ namespace Element.Entity.Buildings
         [HideInInspector] public BaseIsland myIsland;
 
         public bool isStartBuilding;
-        
-        // Génération de ressources
-        private float _tempWoodToGenerate;
-        private float _tempMetalsToGenerate;
-        private float _tempOrichalqueToGenerate;
 
         // Formation d'unités
         public Queue<UnitsManager.AllUnitsEnum> FormationQueue = new ();
         [HideInInspector] public float timeLeftToForm;
+        private bool _NotEnoughSupplies;
 
         // Defense
         [SerializeField] private Transform canonHead;
@@ -64,9 +60,11 @@ namespace Element.Entity.Buildings
             
             if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
-            if (Data.DoesGenerateRessources && Data.AditionnalMaxSupplies > 0)
+            if (Data.DoesGenerateRessources)
             {
-                //TODO eventually add a check for game max supply if there's one
+                Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds;
+                Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds;
+                Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds;
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
             
@@ -140,8 +138,7 @@ namespace Element.Entity.Buildings
         private IEnumerator CallEveryRealTimeSeconds()
         {
             yield return new WaitForSecondsRealtime(1);
-
-            if (Data.DoesGenerateRessources) GenerateRessources();
+            
             if (Data.IsFormationBuilding) UpdateFormation();
             
             StartCoroutine(CallEveryRealTimeSeconds());
@@ -154,42 +151,34 @@ namespace Element.Entity.Buildings
                 _buildingsManager.allBuildingsIcons[(int) building].Unlock();
             }
         }
-        
-        private void GenerateRessources()
-        {
-            _tempWoodToGenerate += Data.GeneratedWoodPerSeconds;
-            _tempMetalsToGenerate += Data.GeneratedMetalsPerSeconds;
-            _tempOrichalqueToGenerate += Data.GeneratedOrichalquePerSeconds;
-
-            if (_tempWoodToGenerate >= 1 )
-            {
-                int x = Mathf.FloorToInt(_tempWoodToGenerate);
-                Owner.ressources.CurrentWood += x;
-                _tempWoodToGenerate -= x;
-            }
-            
-            if (_tempMetalsToGenerate >= 1 )
-            {
-                int x = Mathf.FloorToInt(_tempMetalsToGenerate);
-                Owner.ressources.CurrentMetals += x;
-                _tempMetalsToGenerate -= x;
-            }
-
-            if (_tempOrichalqueToGenerate >= 1)
-            {
-                int y = Mathf.FloorToInt(_tempOrichalqueToGenerate);
-                Owner.ressources.CurrentOrichalque += y;
-                _tempOrichalqueToGenerate -= y;
-            }
-        }
 
         private void ManageFormation()
         {
             if (timeLeftToForm <= 0)
             {
-                timeLeftToForm = 100; // Par sécurité
-                FormFirstUnitInQueue();
+                TryFormFirstUnitInQueue();
             }
+        }
+
+        private void TryFormFirstUnitInQueue()
+        {
+            var unitSupplyCost = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].SupplyCost;
+
+            if (unitSupplyCost + Owner.ressources.CurrentSupply > Owner.ressources.CurrentMaxSupply)
+            {
+                if (!_NotEnoughSupplies)
+                {
+                    Debug.Log("not enough available supplies");
+                    _NotEnoughSupplies = true;
+                }
+                return;
+            }
+            
+            Owner.ressources.CurrentSupply += unitSupplyCost;
+            _NotEnoughSupplies = false;
+                
+            timeLeftToForm = 100; // Par sécurité
+            FormFirstUnitInQueue();
         }
 
         private void FormFirstUnitInQueue()
@@ -219,7 +208,7 @@ namespace Element.Entity.Buildings
 
             if (FormationQueue.Count > 0)
             {
-                if (_uiManager.CurrentlyOpenBuilding == this)
+                if (_uiManager.CurrentlyOpenBuilding == this && !_NotEnoughSupplies)
                 {
                     UpdateFormationQueueSliderWithNewValue();
                 }
@@ -233,6 +222,23 @@ namespace Element.Entity.Buildings
             var timeSpentOnTotalTime = timeSpendAlready / totalTimeToRun;
             
             _uiManager.UpdateFormationQueueSlider(timeSpentOnTotalTime);
+        }
+
+        protected override void DestroyEntity()
+        {
+            myIsland.BuildingsCount--;
+            myIsland.buildingOnThisIsland.Remove(this);
+
+            if (Data.DoesGenerateRessources)
+            {
+                Owner.ressources.CurrentWoodGain -= Data.GeneratedWoodPerSeconds;
+                Owner.ressources.CurrentMetalsGain -= Data.GeneratedMetalsPerSeconds;
+                Owner.ressources.CurrentOrichalqueGain -= Data.GeneratedOrichalquePerSeconds;
+                Owner.ressources.CurrentMaxSupply -= Data.AditionnalMaxSupplies;
+            }
+
+            if (isStartBuilding) GameManager.DefeatPlayer(Owner);
+            base.DestroyEntity();
         }
 
 #if UNITY_EDITOR

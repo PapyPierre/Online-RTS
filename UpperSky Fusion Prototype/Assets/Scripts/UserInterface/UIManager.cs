@@ -8,6 +8,7 @@ using Element.Island;
 using Entity;
 using Entity.Buildings;
 using Entity.Military_Units;
+using Fusion;
 using NaughtyAttributes;
 using Player;
 using TMPro;
@@ -48,7 +49,6 @@ namespace UserInterface
         [Header("In Game Menu")]
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
-        [SerializeField, Required()] private GameObject formationQueue;
 
         [Header("Units Formation")]
         [SerializeField] private UnitsIcon[] unitsIconsInMenu;
@@ -123,23 +123,24 @@ namespace UserInterface
             while (true)
             {
                 DisplayFps();
-                if (_gameManager.gameIsStarted)
-                {
-                    DisplayPlayerPing();
-                    UpdateWoodTMP(playerRessources.CurrentWood);
-                    UpdateMetalsTMP(playerRessources.CurrentMetals);
-                    UpdateOrichalqueTMP(playerRessources.CurrentOrichalque);
-                }
+                if (_gameManager.gameIsStarted) DisplayPlayerPing();
                 
                 yield return new WaitForSecondsRealtime(0.5f);
             }
         }
 
+        public void UpdateRessourcesDisplay()
+        {
+            UpdateRessourceTMP(0, playerRessources.CurrentWood, playerRessources.CurrentWoodGain);
+            UpdateRessourceTMP(1, playerRessources.CurrentMetals, playerRessources.CurrentMetalsGain);
+            UpdateRessourceTMP(2, playerRessources.CurrentOrichalque, playerRessources.CurrentOrichalqueGain);
+        }
+
         private void ComputeFps() => _fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
         
         private void ComputePlayerPing()
-        { 
-            _ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(_gameManager.thisPlayer.Object.StateAuthority);
+        {
+            _ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(PlayerRef.None) * 1000;
         }
 
         private void DisplayFps()
@@ -148,17 +149,11 @@ namespace UserInterface
 
             switch (_fps)
             {
-                case < 15:
+                case < 30:
                     fpsTMP.color = Color.red;
                     break;
-                case >= 15 and < 24:
-                    fpsTMP.color = Color.red + Color.yellow;
-                    break;   
-                case >= 24 and < 30:
-                    fpsTMP.color = Color.yellow;
-                    break;
                 case >= 30 and < 60:
-                    fpsTMP.color = Color.yellow + Color.green;
+                    fpsTMP.color = Color.yellow;
                     break;
                 case >= 60:
                     fpsTMP.color = Color.green;
@@ -172,19 +167,13 @@ namespace UserInterface
 
             switch (_ping)
             {
-                case < 15:
+                case < 60:
                     pingTMP.color = Color.green;
                     break;
-                case >= 15 and < 40:
-                    pingTMP.color = Color.green + Color.yellow;
-                    break;   
-                case >= 40 and < 80:
+                case >= 60 and < 120:
                     pingTMP.color = Color.yellow;
                     break;
-                case >= 80 and < 130:
-                    pingTMP.color = Color.yellow + Color.red;
-                    break;
-                case >= 130:
+                case >= 120:
                     pingTMP.color = Color.red;
                     break;
             }
@@ -267,12 +256,14 @@ namespace UserInterface
         
         private void ShowOrHideFormationQueue(bool active)
         { 
-            formationQueue.SetActive(active);
-            if (active)
+            inGameInfoboxDescr.gameObject.SetActive(!active);
+            
+            foreach (var image in unitsQueueImages)
             {
-                HideInGameInfoBox();
-                UpdateFormationQueueDisplay();
+                image.gameObject.SetActive(active);
             }
+            
+            if (active) UpdateFormationQueueDisplay();
         }
 
         private void CloseCurrentlyOpenBuilding()
@@ -299,14 +290,7 @@ namespace UserInterface
             var unitWoodCost = _unitsManager.allUnitsData[(int) unit].WoodCost;
             var unitMetalsCost = _unitsManager.allUnitsData[(int) unit].MetalsCost;
             var unitOriCost =_unitsManager.allUnitsData[(int) unit].OrichalqueCost;
-            var unitSupplyCost = _unitsManager.allUnitsData[(int) unit].SupplyCost;
 
-            if (unitSupplyCost + player.ressources.CurrentSupply > player.ressources.CurrentMaxSupply)
-            {
-                Debug.Log("not enough available supplies");
-                return;
-            }
-            
             // Check if player have enough ressources to build this building
             if (player.ressources.CurrentWood >= unitWoodCost 
                 && player.ressources.CurrentMetals >= unitMetalsCost 
@@ -319,8 +303,7 @@ namespace UserInterface
                     player.ressources.CurrentWood -= unitWoodCost;
                     player.ressources.CurrentMetals -= unitMetalsCost;
                     player.ressources.CurrentOrichalque -= unitOriCost;
-                    player.ressources.CurrentSupply += unitSupplyCost;
-                    
+
                     CurrentlyOpenBuilding.FormationQueue.Enqueue(unit);
                     if (CurrentlyOpenBuilding.FormationQueue.Count is 1)
                     {
@@ -526,12 +509,14 @@ namespace UserInterface
         // Call from inspector
         public void UseUnitSkill() => openedElementInInGameInfobox.GetComponent<BaseUnit>().UseSkill();
 
-        private void UpdateWoodTMP(int newValue) => ressourcesTMP[0].text = newValue.ToString();
+        private void UpdateRessourceTMP(int ressourceIndex, int currentRessource, float currentRessourceGain)
+        {
+            ressourcesTMP[ressourceIndex].text =
+                currentRessource 
+                + "<color=#EAEAEA><size=65%><voffset=0.185em> +" 
+                + currentRessourceGain;
+        }
 
-        private void UpdateMetalsTMP(int newValue) =>  ressourcesTMP[1].text = newValue.ToString();
-
-        private void UpdateOrichalqueTMP(int newValue) =>  ressourcesTMP[2].text = newValue.ToString();
-        
         public void UpdateSupplyTMP(int newCurrentValue, int newMaxValue)
         {
             ressourcesTMP[3].text = newCurrentValue + "/" + newMaxValue;

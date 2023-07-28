@@ -126,8 +126,8 @@ namespace Element.Entity
                 if (this is BaseUnit unit) unit.ReactToDamage(shooter);
             }
         }
-        
-        public void DestroyEntity()
+
+        protected virtual void DestroyEntity()
         {
             isDead = true;
             
@@ -138,27 +138,6 @@ namespace Element.Entity
             foreach (var entity in currentAgressor)
             {
                 entity.ResetTarget();
-            }
-
-            switch (this)
-            {
-                case BaseUnit unit:
-                {
-                    if (UnitsManager.currentlySelectedUnits.Contains(unit)) UnitsManager.currentlySelectedUnits.Remove(unit);
-                
-                    if (unit.currentGroup is not null) unit.currentGroup.RemoveUnitFromGroup(unit);
-
-                    GameManager.thisPlayer.ressources.CurrentSupply -= unit.Data.SupplyCost;
-                    break;
-                }
-                case BaseBuilding building:
-                {
-                    building.myIsland.BuildingsCount--;
-                    building.myIsland.buildingOnThisIsland.Remove(building);
-
-                    if (building.isStartBuilding) GameManager.DefeatPlayer(Owner);
-                    break;
-                }
             }
 
             FogOfWar.RemoveFogRevealer(FogRevealerIndex);

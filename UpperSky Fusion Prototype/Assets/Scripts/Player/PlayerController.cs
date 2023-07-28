@@ -151,11 +151,10 @@ namespace Player
 
         public void SelectElement(BaseElement element)
         {
-            _uiManager.HideOpenedUI();
-
             switch (element)
             {
                 case BaseUnit unit :
+                    _uiManager.HideOpenedUI();
                     if (!_isMajKeyPressed) UnselectAllElements();
                     _unitsManager.SelectUnit(unit);
                     currentlySelectedElements.Add(element);
@@ -163,20 +162,18 @@ namespace Player
                     break;
                 
                 case BaseBuilding building :
+                    UnselectAllElements();
+                    currentlySelectedElements.Add(element);
+                    _uiManager.ShowInGameInfoBox(building, building.Data, building.Owner);
                     if (building.Data.IsFormationBuilding)
                     {
                         _uiManager.OpenFormationBuilding(building.Data.ThisBuilding, building);
                     }
-                    UnselectAllElements();
-                    currentlySelectedElements.Add(element);
-                    _unitsManager.UnSelectAllUnits();
-                    _uiManager.ShowInGameInfoBox(building, building.Data, building.Owner);
                     break;
                 
                 case BaseIsland island :
                     UnselectAllElements();
                     currentlySelectedElements.Add(element);
-                    _unitsManager.UnSelectAllUnits();
                     _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
                     break;
             }

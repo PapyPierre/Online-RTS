@@ -53,7 +53,6 @@ MonoBehaviour:
   renderers:
   - {fileID: 4930463833605221662}
   - {fileID: 3132581180365009499}
-  _propsInRange: []
 --- !u!65 &-142479513064567699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,7 +110,7 @@ RectTransform:
   m_GameObject: {fileID: 5240361809440843468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.54038, y: 0.54038, z: 0.54038}
+  m_LocalScale: {x: 0.54038, y: 0.28815225, z: 0.54038}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1891292859417665807}
@@ -120,7 +119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.8}
+  m_AnchoredPosition: {x: 0, y: 3.71}
   m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2545826464104402382
@@ -518,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 9137884081872423987, guid: f5540b545b587194f8571c122a7508a8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9137884081872423987, guid: f5540b545b587194f8571c122a7508a8,
         type: 3}

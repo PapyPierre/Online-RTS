@@ -34,7 +34,7 @@ MonoBehaviour:
   <DoesGenerateRessources>k__BackingField: 1
   <GeneratedWoodPerSeconds>k__BackingField: 0
   <GeneratedMetalsPerSeconds>k__BackingField: 0
-  <GeneratedOrichalquePerSeconds>k__BackingField: 0.1
+  <GeneratedOrichalquePerSeconds>k__BackingField: 1
   <AditionnalMaxSupplies>k__BackingField: 0
   <HasTimingReduction>k__BackingField: 0
   <UnitFormationBonus>k__BackingField: 0

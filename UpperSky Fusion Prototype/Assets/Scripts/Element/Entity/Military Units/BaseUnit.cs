@@ -109,6 +109,16 @@ namespace Element.Entity.Military_Units
             yield return new WaitForSecondsRealtime(Data.RealodTime);
             _isReadyToShoot = true;
         }
+        
+        protected override void DestroyEntity()
+        {
+            if (UnitsManager.currentlySelectedUnits.Contains(this)) UnitsManager.currentlySelectedUnits.Remove(this);
+                
+            if (currentGroup is not null) currentGroup.RemoveUnitFromGroup(this);
+
+            GameManager.thisPlayer.ressources.CurrentSupply -= Data.SupplyCost;
+            base.DestroyEntity();
+        }
 
         #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
