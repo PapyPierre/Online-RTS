@@ -224,7 +224,7 @@ namespace Element.Entity.Buildings
             _uiManager.UpdateFormationQueueSlider(timeSpentOnTotalTime);
         }
 
-        protected override void DestroyEntity()
+        public override void DestroyEntity()
         {
             myIsland.BuildingsCount--;
             myIsland.buildingOnThisIsland.Remove(this);

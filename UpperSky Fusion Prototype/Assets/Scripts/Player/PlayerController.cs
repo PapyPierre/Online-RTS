@@ -169,6 +169,7 @@ namespace Player
                     {
                         _uiManager.OpenFormationBuilding(building.Data.ThisBuilding, building);
                     }
+                    else _uiManager.CloseFormationBuilding();
                     break;
                 
                 case BaseIsland island :

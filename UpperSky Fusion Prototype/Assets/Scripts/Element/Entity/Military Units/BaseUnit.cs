@@ -110,7 +110,7 @@ namespace Element.Entity.Military_Units
             _isReadyToShoot = true;
         }
         
-        protected override void DestroyEntity()
+        public override void DestroyEntity()
         {
             if (UnitsManager.currentlySelectedUnits.Contains(this)) UnitsManager.currentlySelectedUnits.Remove(this);
                 

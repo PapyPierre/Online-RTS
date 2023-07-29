@@ -127,7 +127,7 @@ namespace Element.Entity
             }
         }
 
-        protected virtual void DestroyEntity()
+        public virtual void DestroyEntity()
         {
             isDead = true;
             

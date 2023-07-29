@@ -2,6 +2,7 @@ using System.Collections;
 using System.Globalization;
 using Custom_UI.InGame_UI;
 using Element;
+using Element.Entity;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
 using Element.Island;
@@ -49,11 +50,7 @@ namespace UserInterface
         [Header("In Game Menu")]
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
-
-        [Header("Units Formation")]
         [SerializeField] private UnitsIcon[] unitsIconsInMenu;
-        [SerializeField] private Image[] unitsQueueImages;
-        [SerializeField] private Slider formationQueueSlider;
         public BaseBuilding CurrentlyOpenBuilding { get; private set; }
 
         [Header("Production Infobox")]
@@ -72,6 +69,9 @@ namespace UserInterface
         [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
         [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
         [SerializeField, Required()] private GameObject inGameInfoboxEntitySkill;
+        [SerializeField] private Image[] unitsQueueImages;
+        [SerializeField] private Slider formationQueueSlider;
+        [SerializeField, Required()] private GameObject inGameInfoboxDestroyBtn;
         public BaseElement openedElementInInGameInfobox;
 
         [Header("End Game")]
@@ -229,6 +229,12 @@ namespace UserInterface
             CurrentlyOpenBuilding = buildingInstance;
             ShowOrHideFormationMenu(true, formationBuiling);
             ShowOrHideFormationQueue(true);
+        }
+
+        public void CloseFormationBuilding()
+        {
+            ShowOrHideFormationMenu(false);
+            ShowOrHideFormationQueue(false);
         }
         
         private void ShowOrHideFormationMenu(bool active, BuildingsManager.AllBuildingsEnum formationBuiling = 0)
@@ -419,8 +425,6 @@ namespace UserInterface
 
         public void ShowInGameInfoBox(BaseElement element, ElementData elementData, PlayerController owner)
         {
-            if (CurrentlyOpenBuilding is not null) return;
-            
             inGameInfobox.SetActive(true);
             openedElementInInGameInfobox = element;
             
@@ -432,6 +436,7 @@ namespace UserInterface
             inGameInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
             
             inGameInfoboxEntitySkill.SetActive(false);
+            inGameInfoboxDestroyBtn.SetActive(true);
 
             if (elementData is EntityData entityData)
             {
@@ -483,6 +488,8 @@ namespace UserInterface
             }
             else if (elementData is IslandData islandData)
             {
+                inGameInfoboxDestroyBtn.SetActive(false);
+
                 foreach (var go in inGameInfoboxStatsObj)
                 {
                     go.SetActive(false);
@@ -504,6 +511,25 @@ namespace UserInterface
             }
             
             inGameInfobox.SetActive(false);
+        }
+
+        // Call from inspector
+        public void DestroyInboxEntity()
+        {
+            switch (openedElementInInGameInfobox)
+            {
+                case BaseUnit unit:
+                    unit.DestroyEntity();
+                    break;
+                case BaseBuilding building:
+                    building.DestroyEntity();
+                    break;
+                case BaseIsland island:
+                    Debug.LogError("try to destroy island using ingame infobox destroy btn");
+                    break;
+            }
+            
+            HideInGameInfoBox();
         }
 
         // Call from inspector
