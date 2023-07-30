@@ -158,6 +158,7 @@ namespace Player
                     if (!_isMajKeyPressed) UnselectAllElements();
                     _unitsManager.SelectUnit(unit);
                     currentlySelectedElements.Add(element);
+                    _uiManager.CloseFormationBuilding();
                     _uiManager.ShowInGameInfoBox(unit, unit.Data, unit.Owner);
                     break;
                 
@@ -175,6 +176,7 @@ namespace Player
                 case BaseIsland island :
                     UnselectAllElements();
                     currentlySelectedElements.Add(element);
+                    _uiManager.CloseFormationBuilding();
                     _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
                     break;
             }
@@ -202,7 +204,8 @@ namespace Player
             transform.LookAt(Vector3.zero);
                     
             SpawnStartBuilding(MyStartingIsland);
-                    
+            ressources.Init();
+
             IsReadyToPlay = true;
         }
         
@@ -236,7 +239,6 @@ namespace Player
 
             _uiManager.loadingScreen.SetActive(false);
             _uiManager.menuCamera.SetActive(false);
-            _uiManager.playerRessources = GetComponent<PlayerRessources>();
             _gameManager.gameIsStarted = true;
         }
         

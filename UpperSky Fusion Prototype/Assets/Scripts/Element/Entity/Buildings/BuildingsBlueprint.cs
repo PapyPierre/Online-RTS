@@ -142,7 +142,7 @@ namespace Element.Entity.Buildings
             productionBar.gameObject.SetActive(true);
             productionBar.Init(buildingTime);
             
-            _uiManager.ShowOrHideBuildMenu();
+            _uiManager.HideBuildMenu();
             _uiManager.HideProdInfobox();
             
             yield return new WaitForSeconds(buildingTime);

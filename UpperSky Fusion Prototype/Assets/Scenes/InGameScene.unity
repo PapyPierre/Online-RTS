@@ -961,13 +961,6 @@ MonoBehaviour:
   - {fileID: 1821701275}
   - {fileID: 892694868}
   - {fileID: 597259897}
-  unitsQueueImages:
-  - {fileID: 1604373271}
-  - {fileID: 950646708}
-  - {fileID: 1043065250}
-  - {fileID: 1221880270}
-  - {fileID: 156556448}
-  formationQueueSlider: {fileID: 231387850}
   prodInfobox: {fileID: 681439752}
   prodInfoboxName: {fileID: 9158224}
   prodInfoboxDescr: {fileID: 1679743243}
@@ -1005,6 +998,13 @@ MonoBehaviour:
   inGameInfoboxEntityIcon: {fileID: 188411299}
   inGameInfoboxEntityColor: {fileID: 1367753798}
   inGameInfoboxEntitySkill: {fileID: 275063287}
+  unitsQueueImages:
+  - {fileID: 1604373271}
+  - {fileID: 950646708}
+  - {fileID: 1043065250}
+  - {fileID: 1221880270}
+  - {fileID: 156556448}
+  formationQueueSlider: {fileID: 231387850}
   inGameInfoboxDestroyBtn: {fileID: 1725178880}
   openedElementInInGameInfobox: {fileID: 0}
   endGamePanel: {fileID: 22602874}
@@ -7818,7 +7818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -8724,10 +8724,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
 --- !u!114 &656924087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9146,12 +9146,12 @@ PrefabInstance:
     - target: {fileID: 7949882582274797411, guid: 426eefc76e89dd54d8fb8233c8adbdb8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowOrHideBuildMenu
+      value: ShowBuildMenu
       objectReference: {fileID: 0}
     - target: {fileID: 7949882582274797411, guid: 426eefc76e89dd54d8fb8233c8adbdb8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Custom_UI.UIManager, Assembly-CSharp
+      value: UserInterface.UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7949882582274797411, guid: 426eefc76e89dd54d8fb8233c8adbdb8,
         type: 3}

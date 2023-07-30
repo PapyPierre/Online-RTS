@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Element.Entity.Buildings;
@@ -54,36 +55,6 @@ namespace Element.Island
             }
         }
 
-        // Fixed for optimisation
-        private void FixedUpdate()
-        {
-            CheckForColonizerUnits();
-        }
-
-        private void CheckForColonizerUnits()
-        {
-            if (UnitsManager.currentlySelectedUnits.Count is 0 || BuildingsCount > 0 || Owner == GameManager.thisPlayer) return;
-
-            foreach (BaseUnit unit in UnitsManager.currentlySelectedUnits)
-            {
-                if (unit.isDead) continue;
-
-                if (unit.Data.SkillData.Skill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != Owner)
-                {
-                    var distToUnit = Vector3.Distance(
-                        CustomHelper.ReturnPosInTopDown(transform.position), 
-                        CustomHelper.ReturnPosInTopDown(unit.transform.position));
-
-                    if (distToUnit <= UnitsManager.distUnitToIslandToColonise)
-                    {
-                        unit.isSkillReady = true;
-                        unit.GetComponent<Darwin>().targetIslandToColonise = this;
-                        UIManager.ShowInGameInfoBox(unit, unit.Data, unit.Owner);
-                    }
-                }
-            }
-        }
-
         // Call from coloniser
         public void CallForColonise()
         {
@@ -93,6 +64,9 @@ namespace Element.Island
         
         public void StateAuthorityChanged() => UpdateOwner();
         
-        private void UpdateOwner() => Owner = GameManager.thisPlayer;
+        private void UpdateOwner()
+        { 
+            Owner = GameManager.thisPlayer;
+        }
     }
 }

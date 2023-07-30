@@ -29,8 +29,7 @@ namespace Element.Entity.Military_Units
                 ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float MovementSpeed { get; private set; }
         
-        [field: SerializeField, 
-                ValidateInput("FloatIsGreaterThanZero")] 
+        [field: SerializeField] 
         public float AngularSpeed { get; private set; }
 
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]

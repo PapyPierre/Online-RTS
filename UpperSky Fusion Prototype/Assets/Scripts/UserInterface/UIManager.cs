@@ -203,24 +203,26 @@ namespace UserInterface
 
         public void HideOpenedUI()
         { 
-            if (buildMenu.activeSelf) ShowOrHideBuildMenu();
+            HideBuildMenu();
            ShowOrHideFormationMenu(false);
            ShowOrHideFormationQueue(false);
            HideProdInfobox();
            HideInGameInfoBox();
         }
 
-        public void ShowOrHideBuildMenu()
+        public void ShowBuildMenu()
         {
-            buildMenu.SetActive(!buildMenu.activeSelf);
+            buildMenu.SetActive(true);
+        }
 
-            if (buildMenu.activeSelf)
-            {
-                CloseCurrentlyOpenBuilding();
-                ShowOrHideFormationMenu(false);
-                ShowOrHideFormationQueue(false);
-                HideProdInfobox();
-            }
+        public void HideBuildMenu()
+        {
+            buildMenu.SetActive(false);
+            
+            CloseCurrentlyOpenBuilding();
+            ShowOrHideFormationMenu(false);
+            ShowOrHideFormationQueue(false);
+            HideProdInfobox();
         }
 
         public void OpenFormationBuilding(BuildingsManager.AllBuildingsEnum formationBuiling,
@@ -499,6 +501,11 @@ namespace UserInterface
                 inGameInfoboxStatsObj[^1].SetActive(true);
                 inGameInfoboxStatsTMP[^1].text = element.GetComponent<BaseIsland>().BuildingsCount + "/" + islandData.MaxBuildingsOnThisIsland;
             }
+        }
+
+        public void UpdateInGameInfobox(BaseElement element, ElementData elementData, PlayerController owner)
+        {
+            if (openedElementInInGameInfobox != null) ShowInGameInfoBox(element, elementData, owner);
         }
 
         public void HideInGameInfoBox()

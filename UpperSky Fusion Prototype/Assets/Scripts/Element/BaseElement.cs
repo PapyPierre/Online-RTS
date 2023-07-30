@@ -25,6 +25,7 @@ namespace Element
         [field: SerializeField, Header("Ownership")]
         [Networked(OnChanged = nameof(OwnerChanged))] public PlayerController Owner { get; set; }
         [SerializeField] private  List<MeshRenderer> meshToColor;
+        private Color _baseColor;
         #endregion
         
         [SerializeField] protected GameObject selectionCircle;
@@ -47,7 +48,7 @@ namespace Element
 
             foreach (var meshRenderer in changed.Behaviour.meshToColor)
             {
-                meshRenderer.material.color *= changed.Behaviour.Owner.myColor;
+                meshRenderer.material.color = changed.Behaviour._baseColor * changed.Behaviour.Owner.myColor;
             }
 
             if (changed.Behaviour.minimapIcon != null)
@@ -61,6 +62,7 @@ namespace Element
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
             UIManager = UIManager.Instance;
+            if (meshToColor.Count > 0) _baseColor = meshToColor[0].material.color;
         }
         
         protected bool PlayerIsOwner()
@@ -92,7 +94,7 @@ namespace Element
         
         public void SetActiveSelectionCircle(bool value)
         {
-            selectionCircle.SetActive(value);
+            if (selectionCircle != null) selectionCircle.SetActive(value);
         }
         #endregion
     }

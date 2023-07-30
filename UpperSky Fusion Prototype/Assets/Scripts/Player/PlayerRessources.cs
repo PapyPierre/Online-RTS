@@ -63,9 +63,10 @@ namespace Player
         }
         #endregion
 
-        private void Start()
+        public void Init()
         {
             _uiManager = UIManager.Instance;
+            _uiManager.playerRessources = this;
             CurrentWood = playerWoodAtStart;
             CurrentMetals = playerMetalsAtStart;
             CurrentOrichalque = playerOrichalcAtStart;
