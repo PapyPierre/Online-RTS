@@ -106,6 +106,7 @@ MonoBehaviour:
   graphObject: {fileID: 4398207178959155001}
   canvas: {fileID: 5463506310514315935}
   minimapIcon: {fileID: 4895237130567280332}
+  minimapCanvas: {fileID: 5020976661194018258}
   <Data>k__BackingField: {fileID: 11400000, guid: ba12fe371fa5de84c84de03305c6e0ae,
     type: 2}
   _BuildingsCount: 0

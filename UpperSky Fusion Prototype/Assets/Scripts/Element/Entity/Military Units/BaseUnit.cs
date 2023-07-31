@@ -96,6 +96,8 @@ namespace Element.Entity.Military_Units
 
         public void ReactToDamage(BaseEntity agressor)
         {
+            if (currentGroup != null) return;
+
             if (TargetedEntity is null)
             {
                 _isReadyToShoot = false;

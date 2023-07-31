@@ -23,8 +23,8 @@ MonoBehaviour:
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 15
   <MaxHealthPoints>k__BackingField: 30
-  <MaxArmorPoints>k__BackingField: 5
-  <SightRange>k__BackingField: 60
+  <MaxArmorPoints>k__BackingField: 0
+  <SightRange>k__BackingField: 55
   <SupplyCost>k__BackingField: 1
   <SkillData>k__BackingField: {fileID: 11400000, guid: 42dd197432bce0e4ca884cb462b8efe7,
     type: 2}
@@ -32,9 +32,9 @@ MonoBehaviour:
   <AngularSpeed>k__BackingField: 3
   <WeatherResistance>k__BackingField: 2
   <CanShoot>k__BackingField: 1
-  <DamagePerShoot>k__BackingField: 6
+  <DamagePerShoot>k__BackingField: 4
   <ArmorPenetration>k__BackingField: 5
-  <RealodTime>k__BackingField: 1
+  <RealodTime>k__BackingField: 2
   <IsBaseCamouflaged>k__BackingField: 0
   <BaseRegeneration>k__BackingField: 0
   <BaseAcid>k__BackingField: 0

@@ -21,7 +21,7 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: Drilling machine requires a carpentry in order
     to be build
   <WoodCost>k__BackingField: 40
-  <MetalsCost>k__BackingField: 10
+  <MetalsCost>k__BackingField: 5
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 90
@@ -33,7 +33,7 @@ MonoBehaviour:
   <FormableUnits>k__BackingField: 
   <DoesGenerateRessources>k__BackingField: 1
   <GeneratedWoodPerSeconds>k__BackingField: 0
-  <GeneratedMetalsPerSeconds>k__BackingField: 3
+  <GeneratedMetalsPerSeconds>k__BackingField: 0.4
   <GeneratedOrichalquePerSeconds>k__BackingField: 0
   <AditionnalMaxSupplies>k__BackingField: 0
   <HasTimingReduction>k__BackingField: 0

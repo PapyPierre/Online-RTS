@@ -1,3 +1,4 @@
+using System.Collections;
 using Element.Island;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace Element.Entity.Military_Units.Units_Specifics
         public override void UseSkill()
         {
             base.UseSkill();
-            targetIslandToColonise.CallForColonise();
             DestroyEntity();
+            targetIslandToColonise.CallForColonise();
         }
     }
 }

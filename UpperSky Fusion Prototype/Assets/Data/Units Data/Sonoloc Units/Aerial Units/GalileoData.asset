@@ -25,7 +25,7 @@ MonoBehaviour:
   <ProductionTime>k__BackingField: 10
   <MaxHealthPoints>k__BackingField: 20
   <MaxArmorPoints>k__BackingField: 0
-  <SightRange>k__BackingField: 50
+  <SightRange>k__BackingField: 45
   <SupplyCost>k__BackingField: 2
   <SkillData>k__BackingField: {fileID: 11400000, guid: 6c10707a8086c9a498b8720e5b3e8791,
     type: 2}

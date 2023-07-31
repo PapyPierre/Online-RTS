@@ -41,6 +41,7 @@ namespace Element
         [SerializeField, Space] protected GameObject graphObject;
         [SerializeField, Space] protected GameObject canvas;
         [SerializeField, Space] protected Image minimapIcon;
+        [SerializeField, Space] public Transform minimapCanvas;
 
         private static void OwnerChanged(Changed<BaseElement> changed)
         {
@@ -65,7 +66,7 @@ namespace Element
             if (meshToColor.Count > 0) _baseColor = meshToColor[0].material.color;
         }
         
-        protected bool PlayerIsOwner()
+        public bool PlayerIsOwner()
         {
             return Owner == GameManager.thisPlayer;
         }

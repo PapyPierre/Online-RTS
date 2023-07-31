@@ -212,6 +212,7 @@ namespace UserInterface
 
         public void ShowBuildMenu()
         {
+            CloseFormationBuilding();
             buildMenu.SetActive(true);
         }
 
@@ -601,14 +602,13 @@ namespace UserInterface
             infoText.color = color;
         }
 
-        public void ShowUnderAttackPopUp(Vector3 position)
+        public void ShowUnderAttackPopUp(Vector3 position, BaseEntity entity)
         {
             underAttackPopUp.SetActive(true);
             _underAttackPopUpCurrentTime = underAttackPopUpLivingTime;
-
-            // Bug popup non visible
-            var obj = Instantiate(attackMinimapPopup, position, Quaternion.identity);
-           Destroy(obj, underAttackPopUpLivingTime);
+            
+            var obj = Instantiate(attackMinimapPopup, position, Quaternion.Euler(90,0,0), entity.minimapCanvas);
+            Destroy(obj, underAttackPopUpLivingTime);
         }
 
         private void HideUnderAttackPopUp()

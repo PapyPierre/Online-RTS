@@ -100,7 +100,7 @@ namespace Element.Entity
                 CurrentArmor = 0;
             }
 
-            UIManager.ShowUnderAttackPopUp(transform.position);
+            UIManager.ShowUnderAttackPopUp(transform.position, this);
 
             // Need to access slider max value to avoid doing twice this code in children class to access data
             if (CurrentHealth < healthBar.Slider.maxValue/2 && !_lowHpVfxSpawned)
@@ -130,6 +130,11 @@ namespace Element.Entity
         public virtual void DestroyEntity()
         {
             isDead = true;
+
+            if (UIManager.openedElementInInGameInfobox == this)
+            {
+                UIManager.HideInGameInfoBox();
+            }
             
             Runner.Spawn(deathVfx, transform.position);
         

@@ -165,6 +165,7 @@ namespace Player
                 case BaseBuilding building :
                     UnselectAllElements();
                     currentlySelectedElements.Add(element);
+                    _uiManager.HideBuildMenu();
                     _uiManager.ShowInGameInfoBox(building, building.Data, building.Owner);
                     if (building.Data.IsFormationBuilding)
                     {

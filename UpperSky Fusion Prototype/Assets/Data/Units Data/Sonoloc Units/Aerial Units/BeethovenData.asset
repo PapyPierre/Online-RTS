@@ -21,7 +21,7 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: 
   <WoodCost>k__BackingField: 120
   <MetalsCost>k__BackingField: 10
-  <OrichalqueCost>k__BackingField: 20
+  <OrichalqueCost>k__BackingField: 14
   <ProductionTime>k__BackingField: 30
   <MaxHealthPoints>k__BackingField: 80
   <MaxArmorPoints>k__BackingField: 20
