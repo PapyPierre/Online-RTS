@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: HQ
   m_EditorClassIdentifier: 
   <Name>k__BackingField: HQ
-  <Description>k__BackingField: 
-  <StartAsLocked>k__BackingField: 0
-  <LockedDescription>k__BackingField: 
+  <Description>k__BackingField: The HQ is your main building, if it get destroyed,
+    you will lose the game !
   <Icon>k__BackingField: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
+  <StartAsLocked>k__BackingField: 0
+  <LockedDescription>k__BackingField: 
   <WoodCost>k__BackingField: 0
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 500
-  <MaxArmorPoints>k__BackingField: 100
+  <MaxArmorPoints>k__BackingField: 200
   <SightRange>k__BackingField: 50
   <ThisBuilding>k__BackingField: 12
   <UnlockedBuildings>k__BackingField: 

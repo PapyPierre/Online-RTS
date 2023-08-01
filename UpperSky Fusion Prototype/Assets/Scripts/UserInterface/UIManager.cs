@@ -541,7 +541,17 @@ namespace UserInterface
         }
 
         // Call from inspector
-        public void UseUnitSkill() => openedElementInInGameInfobox.GetComponent<BaseUnit>().UseSkill();
+        public void UseUnitSkill()
+        {
+            if (openedElementInInGameInfobox != null)
+            {
+                openedElementInInGameInfobox.GetComponent<BaseUnit>().UseSkill();
+            }
+            else
+            {
+                Debug.LogError("openedElementInInGameInfobox return null in UseUnitSkill()");
+            }
+        }
 
         private void UpdateRessourceTMP(int ressourceIndex, int currentRessource, float currentRessourceGain)
         {

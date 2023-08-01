@@ -25,7 +25,7 @@ MonoBehaviour:
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 120
-  <MaxArmorPoints>k__BackingField: 40
+  <MaxArmorPoints>k__BackingField: 70
   <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 3
   <UnlockedBuildings>k__BackingField: 000000000100000002000000
