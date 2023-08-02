@@ -199,7 +199,7 @@ namespace Element.Entity.Buildings
                 timeLeftToForm = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
             }
             
-            _uiManager.UpdateFormationQueueDisplay();
+            _uiManager.UpdateFormationQueueDisplay(this);
         }
         
         private void UpdateFormation()
@@ -208,7 +208,7 @@ namespace Element.Entity.Buildings
 
             if (FormationQueue.Count > 0)
             {
-                if (_uiManager.CurrentlyOpenBuilding == this && !_NotEnoughSupplies)
+                if (GameManager.thisPlayer.lastSelectedElement == this && !_NotEnoughSupplies)
                 {
                     UpdateFormationQueueSliderWithNewValue();
                 }

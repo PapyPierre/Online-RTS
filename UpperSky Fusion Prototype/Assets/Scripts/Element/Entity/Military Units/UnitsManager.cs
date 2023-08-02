@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Element.Island;
-using Entity.Military_Units;
 using Fusion;
 using UnityEngine;
 using UserInterface;
@@ -19,11 +16,11 @@ namespace Element.Entity.Military_Units
         public NetworkPrefabRef[] allUnitsPrefab;
         public List<UnitData> allUnitsData;
 
-        [SerializeField] private NetworkPrefabRef unitGroupPrefab;
-
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
 
+        [SerializeField] private GameObject unitMoveIndicator;
+        
         public enum AllUnitsEnum
         {
           Darwin = 0, 
@@ -33,6 +30,13 @@ namespace Element.Entity.Military_Units
           Magellan = 4,
           Wagner = 5,
           Oppenheimer = 6
+        }
+
+        public enum UnitStates
+        {
+            Static,
+            Moving,
+            Attacking
         }
         
         public enum UnitSkillsEnum
@@ -44,6 +48,7 @@ namespace Element.Entity.Military_Units
 
         public float distToTargetToStop;
         public float flyingHeightOfUnits;
+        [SerializeField] private float maxDistToTargetCenter;
 
         public float distUnitToIslandToColonise;
 
@@ -82,21 +87,50 @@ namespace Element.Entity.Military_Units
 
         public void OrderSelectedUnitsToMoveTo(Vector3 positon)
         {
-            Vector3 targetPos = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
+            Vector3 groupTarget = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
 
-            var center = Vector3.zero;
+            var groupCenter = Vector3.zero;
 
-            foreach (var unit in  currentlySelectedUnits)
+            foreach (var unit in  currentlySelectedUnits) groupCenter += unit.transform.position;
+            
+            groupCenter /= currentlySelectedUnits.Count;
+
+            Vector3 centerToTarget = groupTarget - groupCenter;
+
+            foreach (var unit in currentlySelectedUnits)
             {
-                center += unit.transform.position;
+                if (unit.isDead) return;
+
+                if (unit.myMoveIndicator != null) unit.myMoveIndicator.SetActive(false);
+                
+                Vector3 unitPos = unit.transform.position;
+
+                Vector3 unitTarget = unitPos + centerToTarget;
+
+                if (Vector3.Distance(unitTarget, groupTarget) > maxDistToTargetCenter)
+                {
+                    unitTarget = groupTarget;
+                }
+                
+                unit.myMoveIndicator = Instantiate(unitMoveIndicator, groupTarget, unitMoveIndicator.transform.rotation);
+
+                unit.targetPosToMoveTo = unitTarget;
+                
+                unit.myState = UnitStates.Moving;
             }
-
-            center /= currentlySelectedUnits.Count;
-
-            var netObj = _gameManager.thisPlayer.Runner.Spawn(unitGroupPrefab, center, Quaternion.identity, 
-                _gameManager.thisPlayer.Object.StateAuthority);
-
-            netObj.GetComponent<UnitGroup>().Init(targetPos);
+        }
+        
+        // Call from inspector
+        public void UseUnitSkill()
+        {
+            if (_gameManager.thisPlayer.lastSelectedElement != null)
+            {
+                _gameManager.thisPlayer.lastSelectedElement.GetComponent<BaseUnit>().UseSkill();
+            }
+            else
+            {
+                Debug.LogError("openedElementInInGameInfobox return null in UseUnitSkill()");
+            }
         }
     }
 }

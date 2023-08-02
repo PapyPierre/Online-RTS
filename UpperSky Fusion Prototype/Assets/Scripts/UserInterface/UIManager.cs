@@ -8,7 +8,6 @@ using Element.Entity.Military_Units;
 using Element.Island;
 using Entity;
 using Entity.Buildings;
-using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using Player;
@@ -51,7 +50,6 @@ namespace UserInterface
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField] private UnitsIcon[] unitsIconsInMenu;
-        public BaseBuilding CurrentlyOpenBuilding { get; private set; }
 
         [Header("Production Infobox")]
         [SerializeField, Required()] private GameObject prodInfobox;
@@ -60,19 +58,18 @@ namespace UserInterface
         [SerializeField] private GameObject[] prodInfoboxRessourcesObj;
         [SerializeField] private TextMeshProUGUI[] prodInfoboxRessourcesCostTMP;
         
-        [Header("In Game Infobox")]
-        [SerializeField, Required()] private GameObject inGameInfobox;
-        [SerializeField, Required()] private TextMeshProUGUI inGameInfoboxName;
-        [SerializeField, Required()] private TextMeshProUGUI inGameInfoboxDescr;
-        [SerializeField] private GameObject[] inGameInfoboxStatsObj;
-        [SerializeField] private TextMeshProUGUI[] inGameInfoboxStatsTMP;
-        [SerializeField, Required()] private Image inGameInfoboxEntityIcon;
-        [SerializeField, Required()] private Image inGameInfoboxEntityColor; // Color of owner
-        [SerializeField, Required()] private GameObject inGameInfoboxEntitySkill;
+        [Header("Selection Infobox")]
+        [SerializeField, Required()] private GameObject selectionInfobox;
+        [SerializeField, Required()] private TextMeshProUGUI selectionInfoboxName;
+        [SerializeField, Required()] private TextMeshProUGUI selectionInfoboxDescr;
+        [SerializeField] private GameObject[] selectionInfoboxStatsObj;
+        [SerializeField] private TextMeshProUGUI[] selectionInfoboxStatsTMP;
+        [SerializeField, Required()] private Image selectionInfoboxEntityIcon;
+        [SerializeField, Required()] private Image selectionInfoboxEntityColor; // Color of owner
+        [SerializeField, Required()] private GameObject selectionInfoboxEntitySkill;
         [SerializeField] private Image[] unitsQueueImages;
         [SerializeField] private Slider formationQueueSlider;
-        [SerializeField, Required()] private GameObject inGameInfoboxDestroyBtn;
-        public BaseElement openedElementInInGameInfobox;
+        [SerializeField, Required()] private GameObject selectionInfoboxDestroyBtn;
 
         [Header("End Game")]
         [SerializeField, Required()] private GameObject endGamePanel;
@@ -138,10 +135,7 @@ namespace UserInterface
 
         private void ComputeFps() => _fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
         
-        private void ComputePlayerPing()
-        {
-            _ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(PlayerRef.None) * 1000;
-        }
+        private void ComputePlayerPing() => _ping = _gameManager.thisPlayer.Runner.GetPlayerRtt(PlayerRef.None) * 1000;
 
         private void DisplayFps()
         {
@@ -204,10 +198,10 @@ namespace UserInterface
         public void HideOpenedUI()
         { 
             HideBuildMenu();
-           ShowOrHideFormationMenu(false);
-           ShowOrHideFormationQueue(false);
-           HideProdInfobox();
-           HideInGameInfoBox();
+            ShowOrHideFormationMenu(false);
+            ShowOrHideFormationQueue(false);
+            HideProdInfobox();
+            HideSelectionInfoBox();
         }
 
         public void ShowBuildMenu()
@@ -220,18 +214,15 @@ namespace UserInterface
         {
             buildMenu.SetActive(false);
             
-            CloseCurrentlyOpenBuilding();
             ShowOrHideFormationMenu(false);
             ShowOrHideFormationQueue(false);
             HideProdInfobox();
         }
 
-        public void OpenFormationBuilding(BuildingsManager.AllBuildingsEnum formationBuiling,
-            BaseBuilding buildingInstance)
+        public void OpenFormationBuilding(BaseBuilding formationBuiling)
         {
-            CurrentlyOpenBuilding = buildingInstance;
-            ShowOrHideFormationMenu(true, formationBuiling);
-            ShowOrHideFormationQueue(true);
+            ShowOrHideFormationMenu(true, formationBuiling.Data.ThisBuilding);
+            ShowOrHideFormationQueue(true, formationBuiling);
         }
 
         public void CloseFormationBuilding()
@@ -243,12 +234,6 @@ namespace UserInterface
         private void ShowOrHideFormationMenu(bool active, BuildingsManager.AllBuildingsEnum formationBuiling = 0)
         {
             formationMenu.SetActive(active);
-
-            if (!active)
-            {
-                CloseCurrentlyOpenBuilding();
-                return;
-            }
 
             foreach (var unitsIcon in unitsIconsInMenu) unitsIcon.gameObject.SetActive(false);
             
@@ -263,38 +248,40 @@ namespace UserInterface
             }
         }
         
-        private void ShowOrHideFormationQueue(bool active)
+        private void ShowOrHideFormationQueue(bool active, BaseBuilding building = null)
         { 
-            inGameInfoboxDescr.gameObject.SetActive(!active);
+            selectionInfoboxDescr.gameObject.SetActive(!active);
             
             foreach (var image in unitsQueueImages)
             {
                 image.gameObject.SetActive(active);
             }
             
-            if (active) UpdateFormationQueueDisplay();
+            if (active) UpdateFormationQueueDisplay(building);
         }
 
-        private void CloseCurrentlyOpenBuilding()
-        {
-            if (CurrentlyOpenBuilding is null) return;
-            
-            CurrentlyOpenBuilding.SetActiveSelectionCircle(false);
-            CurrentlyOpenBuilding = null;
-        }
-        
         // Call from inspector
         public void AddUnitToFormationQueue(int buttonIndex)
         {
-            if (CurrentlyOpenBuilding is null)
+            if (_gameManager.thisPlayer.lastSelectedElement is BaseBuilding building)
+            { 
+                if (!building.Data.IsFormationBuilding)
+                {
+                    Debug.LogError("Building is not formation building");
+                    return;
+                }
+            }
+            else
             {
-                Debug.LogError("didn't find building to form unit");
+                Debug.LogError("Element is not a building");
                 return;
             }
-            
+
+
+            BaseBuilding formationBuilding = _gameManager.thisPlayer.lastSelectedElement.GetComponent<BaseBuilding>();
             PlayerController player = _gameManager.thisPlayer;
 
-            var unit = CurrentlyOpenBuilding.Data.FormableUnits[buttonIndex];
+            var unit = formationBuilding.Data.FormableUnits[buttonIndex];
 
             var unitWoodCost = _unitsManager.allUnitsData[(int) unit].WoodCost;
             var unitMetalsCost = _unitsManager.allUnitsData[(int) unit].MetalsCost;
@@ -305,7 +292,7 @@ namespace UserInterface
                 && player.ressources.CurrentMetals >= unitMetalsCost 
                 && player.ressources.CurrentOrichalque >= unitOriCost)
             {
-                int formationQueueCurrentCount = CurrentlyOpenBuilding.FormationQueue.Count;
+                int formationQueueCurrentCount = formationBuilding.FormationQueue.Count;
 
                 if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
                 {
@@ -313,41 +300,39 @@ namespace UserInterface
                     player.ressources.CurrentMetals -= unitMetalsCost;
                     player.ressources.CurrentOrichalque -= unitOriCost;
 
-                    CurrentlyOpenBuilding.FormationQueue.Enqueue(unit);
-                    if (CurrentlyOpenBuilding.FormationQueue.Count is 1)
+                    formationBuilding.FormationQueue.Enqueue(unit);
+                    if (formationBuilding.FormationQueue.Count is 1)
                     {
-                        CurrentlyOpenBuilding.timeLeftToForm =
+                        formationBuilding.timeLeftToForm =
                             _unitsManager.allUnitsData[(int) unit].ProductionTime;
 
                     }
-                    UpdateFormationQueueDisplay();
+                    UpdateFormationQueueDisplay(formationBuilding);
                 }
                 else Debug.Log("Queue is full");
             }
             else Debug.Log("not enough ressources");
         }
 
-        public void UpdateFormationQueueDisplay()
+        public void UpdateFormationQueueDisplay(BaseBuilding formationBuilding)
         {
-            if (CurrentlyOpenBuilding is null) return;
-            
             foreach (var image in unitsQueueImages)
             {
                 image.sprite = null; //TODO mettre un sprite par default
             }
             
-            for (int i = 0; i < CurrentlyOpenBuilding.FormationQueue.Count; i++)
+            for (int i = 0; i < formationBuilding.FormationQueue.Count; i++)
             {
-                var queueCopy = CurrentlyOpenBuilding.FormationQueue.ToArray();
+                var queueCopy = formationBuilding.FormationQueue.ToArray();
                 
                 unitsQueueImages[i].sprite = _unitsManager.allUnitsData[(int) queueCopy[i]].Icon;
                 
                 //TODO faire une class custom "FormationQueue" pour éviter de devoir faire une array temporaire ici (conseil de jacques)
             }
             
-            if (CurrentlyOpenBuilding.FormationQueue.Count > 0)
+            if (formationBuilding.FormationQueue.Count > 0)
             {
-                CurrentlyOpenBuilding.UpdateFormationQueueSliderWithNewValue();
+                formationBuilding.UpdateFormationQueueSliderWithNewValue();
             }
             else
             {
@@ -426,105 +411,102 @@ namespace UserInterface
 
         public void HideProdInfobox() => prodInfobox.SetActive(false);
 
-        public void ShowInGameInfoBox(BaseElement element, ElementData elementData, PlayerController owner)
+        public void ShowSelectionInfoBox(BaseElement element, ElementData elementData, PlayerController owner)
         {
-            inGameInfobox.SetActive(true);
-            openedElementInInGameInfobox = element;
-            
-            inGameInfoboxName.text = elementData.Name;
-            inGameInfoboxDescr.text = elementData.Description;
+            selectionInfobox.SetActive(true);
 
-            inGameInfoboxEntityIcon.sprite = elementData.Icon;
+            selectionInfoboxName.text = elementData.Name;
+            selectionInfoboxDescr.text = elementData.Description;
 
-            inGameInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
+            selectionInfoboxEntityIcon.sprite = elementData.Icon;
+
+            selectionInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
             
-            inGameInfoboxEntitySkill.SetActive(false);
-            inGameInfoboxDestroyBtn.SetActive(true);
+            selectionInfoboxEntitySkill.SetActive(false);
+            selectionInfoboxDestroyBtn.SetActive(true);
 
             if (elementData is EntityData entityData)
             {
-               foreach (var go in inGameInfoboxStatsObj)
+               foreach (var go in selectionInfoboxStatsObj)
                {
                    go.SetActive(true);
                }
                
                // Nombre de bâtiments, visible que pour les iles
-               inGameInfoboxStatsObj[^1].SetActive(false);
+               selectionInfoboxStatsObj[^1].SetActive(false);
             
-               inGameInfoboxStatsTMP[0].text = entityData.MaxHealthPoints.ToString();
-               inGameInfoboxStatsTMP[1].text = entityData.MaxArmorPoints.ToString();
-               inGameInfoboxStatsTMP[2].text = entityData.SightRange.ToString();
+               selectionInfoboxStatsTMP[0].text = entityData.MaxHealthPoints.ToString();
+               selectionInfoboxStatsTMP[1].text = entityData.MaxArmorPoints.ToString();
+               selectionInfoboxStatsTMP[2].text = entityData.SightRange.ToString();
             
                if (entityData is UnitData unitData)
                {
-                   inGameInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
-                   inGameInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
+                   selectionInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
+                   selectionInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
 
                    if (unitData.CanShoot)
                    {
-                       inGameInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
-                       inGameInfoboxStatsTMP[6].text = unitData.ArmorPenetration + "%";
+                       selectionInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
+                       selectionInfoboxStatsTMP[6].text = unitData.ArmorPenetration + "%";
                    }
                    else
                    {
-                       inGameInfoboxStatsObj[5].SetActive(false);
-                       inGameInfoboxStatsObj[6].SetActive(false);
+                       selectionInfoboxStatsObj[5].SetActive(false);
+                       selectionInfoboxStatsObj[6].SetActive(false);
                    }
 
                    if (unitData.SkillData.Skill is not UnitsManager.UnitSkillsEnum.None)
                    {
-                       inGameInfoboxEntitySkill.SetActive(true);
-                       inGameInfoboxEntitySkill.GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
+                       selectionInfoboxEntitySkill.SetActive(true);
+                       selectionInfoboxEntitySkill.GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
                         
 
-                       inGameInfoboxEntitySkill.GetComponent<Button>().interactable  = 
+                       selectionInfoboxEntitySkill.GetComponent<Button>().interactable  = 
                            element.GetComponent<BaseUnit>().isSkillReady;
                    }
                }
                else if (entityData is BuildingData)
                {
-                   for (var index = 3; index < inGameInfoboxStatsObj.Length; index++)
+                   for (var index = 3; index < selectionInfoboxStatsObj.Length; index++)
                    {
-                       inGameInfoboxStatsObj[index].SetActive(false);
+                       selectionInfoboxStatsObj[index].SetActive(false);
                    }
                }
             }
             else if (elementData is IslandData islandData)
             {
-                inGameInfoboxDestroyBtn.SetActive(false);
+                selectionInfoboxDestroyBtn.SetActive(false);
 
-                foreach (var go in inGameInfoboxStatsObj)
+                foreach (var go in selectionInfoboxStatsObj)
                 {
                     go.SetActive(false);
                 }
                
                 // Nombre de bâtiments, visible que pour les iles
-                inGameInfoboxStatsObj[^1].SetActive(true);
-                inGameInfoboxStatsTMP[^1].text = element.GetComponent<BaseIsland>().BuildingsCount + "/" + islandData.MaxBuildingsOnThisIsland;
+                selectionInfoboxStatsObj[^1].SetActive(true);
+                selectionInfoboxStatsTMP[^1].text = element.GetComponent<BaseIsland>().BuildingsCount + "/" + islandData.MaxBuildingsOnThisIsland;
             }
         }
 
-        public void UpdateInGameInfobox(BaseElement element, ElementData elementData, PlayerController owner)
+        public void UpdateSelectionInfobox(BaseElement element, ElementData elementData, PlayerController owner)
         {
-            if (openedElementInInGameInfobox != null) ShowInGameInfoBox(element, elementData, owner);
+            if (_gameManager.thisPlayer.lastSelectedElement == element) ShowSelectionInfoBox(element, elementData, owner);
         }
 
-        public void HideInGameInfoBox()
-        { 
-            openedElementInInGameInfobox = null;
-            
-            foreach (var go in inGameInfoboxStatsObj)
+        public void HideSelectionInfoBox()
+        {
+            foreach (var go in selectionInfoboxStatsObj)
             {
                 go.SetActive(false);
             }
             
-            inGameInfobox.SetActive(false);
+            selectionInfobox.SetActive(false);
         }
 
         // Call from inspector
-        public void DestroyInboxEntity()
+        public void DestroySelectionInfoboxEntity()
         {
-            switch (openedElementInInGameInfobox)
+            switch (_gameManager.thisPlayer.lastSelectedElement)
             {
                 case BaseUnit unit:
                     unit.DestroyEntity();
@@ -533,24 +515,11 @@ namespace UserInterface
                     building.DestroyEntity();
                     break;
                 case BaseIsland island:
-                    Debug.LogError("try to destroy island using ingame infobox destroy btn");
+                    Debug.LogError("try to destroy island using selection infobox destroy btn");
                     break;
             }
             
-            HideInGameInfoBox();
-        }
-
-        // Call from inspector
-        public void UseUnitSkill()
-        {
-            if (openedElementInInGameInfobox != null)
-            {
-                openedElementInInGameInfobox.GetComponent<BaseUnit>().UseSkill();
-            }
-            else
-            {
-                Debug.LogError("openedElementInInGameInfobox return null in UseUnitSkill()");
-            }
+            HideSelectionInfoBox();
         }
 
         private void UpdateRessourceTMP(int ressourceIndex, int currentRessource, float currentRessourceGain)

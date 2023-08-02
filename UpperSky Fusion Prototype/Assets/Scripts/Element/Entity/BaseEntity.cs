@@ -5,7 +5,6 @@ using Custom_UI.InGame_UI;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
 using Entity;
-using Entity.Military_Units;
 using Fusion;
 using Ressources.AOSFogWar.Used_Scripts;
 using UnityEngine;
@@ -131,9 +130,9 @@ namespace Element.Entity
         {
             isDead = true;
 
-            if (UIManager.openedElementInInGameInfobox == this)
+            if (GameManager.thisPlayer.lastSelectedElement == this)
             {
-                UIManager.HideInGameInfoBox();
+                UIManager.HideSelectionInfoBox();
             }
             
             Runner.Spawn(deathVfx, transform.position);

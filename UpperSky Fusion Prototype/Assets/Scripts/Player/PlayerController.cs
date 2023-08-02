@@ -7,7 +7,6 @@ using Element.Entity.Military_Units;
 using Element.Island;
 using Entity;
 using Entity.Buildings;
-using Entity.Military_Units;
 using Fusion;
 using NaughtyAttributes;
 using UnityEngine;
@@ -25,7 +24,7 @@ namespace Player
         private WorldManager _worldManager;
         private RectangleSelection _rectangleSelection;
         private BuildingsManager _buildingsManager;
-        
+
         [Networked] public bool IsReadyToPlay{ get; set; }
         
         [Networked] public bool IsOutOfGame { get; set; }
@@ -40,6 +39,7 @@ namespace Player
        [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
         private bool _isMajKeyPressed;
         public List<BaseElement> currentlySelectedElements;
+        public BaseElement lastSelectedElement;
 
         [SerializeField, Required()] private GameObject minimapIndicator;
 
@@ -157,28 +157,31 @@ namespace Player
                     _uiManager.HideOpenedUI();
                     if (!_isMajKeyPressed) UnselectAllElements();
                     _unitsManager.SelectUnit(unit);
+                    lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
                     _uiManager.CloseFormationBuilding();
-                    _uiManager.ShowInGameInfoBox(unit, unit.Data, unit.Owner);
+                    _uiManager.ShowSelectionInfoBox(unit, unit.Data, unit.Owner);
                     break;
                 
                 case BaseBuilding building :
                     UnselectAllElements();
+                    lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
                     _uiManager.HideBuildMenu();
-                    _uiManager.ShowInGameInfoBox(building, building.Data, building.Owner);
+                    _uiManager.ShowSelectionInfoBox(building, building.Data, building.Owner);
                     if (building.Data.IsFormationBuilding)
                     {
-                        _uiManager.OpenFormationBuilding(building.Data.ThisBuilding, building);
+                        _uiManager.OpenFormationBuilding(building);
                     }
                     else _uiManager.CloseFormationBuilding();
                     break;
                 
                 case BaseIsland island :
                     UnselectAllElements();
+                    lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
                     _uiManager.CloseFormationBuilding();
-                    _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
+                    _uiManager.ShowSelectionInfoBox(island, island.Data, island.Owner);
                     break;
             }
             
@@ -193,9 +196,10 @@ namespace Player
             {
                 element.SetActiveSelectionCircle(false);
             }
-            
+
+            lastSelectedElement = null;
             currentlySelectedElements.Clear();
-            _uiManager.HideInGameInfoBox();
+            _uiManager.HideSelectionInfoBox();
         }
 
         public void MakesPlayerReady()

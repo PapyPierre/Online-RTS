@@ -1,6 +1,5 @@
 using System;
 using Element.Entity.Military_Units;
-using Entity.Military_Units;
 using UnityEngine;
 
 namespace Player

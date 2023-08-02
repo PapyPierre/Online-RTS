@@ -25,7 +25,7 @@ namespace Element.Island
             {
                unit.isSkillReady = true;
                unit.GetComponent<Darwin>().targetIslandToColonise = myIsland;
-               UIManager.Instance.UpdateInGameInfobox(unit, unit.Data, unit.Owner);
+               UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
             }
          }
       }
@@ -42,7 +42,7 @@ namespace Element.Island
             {
                unit.isSkillReady = false;
                unit.GetComponent<Darwin>().targetIslandToColonise = null;
-               UIManager.Instance.UpdateInGameInfobox(unit, unit.Data, unit.Owner);
+               UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
             }
          }
       }

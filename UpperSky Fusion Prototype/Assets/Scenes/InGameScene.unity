@@ -638,10 +638,10 @@ MonoBehaviour:
   - {fileID: 624356223}
   - {fileID: 630578320}
   - {fileID: 146967868}
-  inGameInfobox: {fileID: 1414079991}
-  inGameInfoboxName: {fileID: 1901646314}
-  inGameInfoboxDescr: {fileID: 561725051}
-  inGameInfoboxStatsObj:
+  selectionInfobox: {fileID: 1414079991}
+  selectionInfoboxName: {fileID: 1901646314}
+  selectionInfoboxDescr: {fileID: 561725051}
+  selectionInfoboxStatsObj:
   - {fileID: 1639327910}
   - {fileID: 942755660}
   - {fileID: 78277889}
@@ -650,7 +650,7 @@ MonoBehaviour:
   - {fileID: 216056220}
   - {fileID: 1458894328}
   - {fileID: 853160756}
-  inGameInfoboxStatsTMP:
+  selectionInfoboxStatsTMP:
   - {fileID: 908298504}
   - {fileID: 1876356991}
   - {fileID: 750011651}
@@ -659,9 +659,9 @@ MonoBehaviour:
   - {fileID: 1873218634}
   - {fileID: 968354364}
   - {fileID: 994926636}
-  inGameInfoboxEntityIcon: {fileID: 188411299}
-  inGameInfoboxEntityColor: {fileID: 1367753798}
-  inGameInfoboxEntitySkill: {fileID: 275063287}
+  selectionInfoboxEntityIcon: {fileID: 188411299}
+  selectionInfoboxEntityColor: {fileID: 1367753798}
+  selectionInfoboxEntitySkill: {fileID: 275063287}
   unitsQueueImages:
   - {fileID: 1604373271}
   - {fileID: 950646708}
@@ -669,8 +669,7 @@ MonoBehaviour:
   - {fileID: 1221880270}
   - {fileID: 156556448}
   formationQueueSlider: {fileID: 231387850}
-  inGameInfoboxDestroyBtn: {fileID: 1725178880}
-  openedElementInInGameInfobox: {fileID: 0}
+  selectionInfoboxDestroyBtn: {fileID: 1725178880}
   endGamePanel: {fileID: 22602874}
   winTMP: {fileID: 441846697}
   loseTMP: {fileID: 418388878}
@@ -2879,8 +2878,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 49968402}
-        m_TargetAssemblyTypeName: UserInterface.UIManager, Assembly-CSharp
+      - m_Target: {fileID: 1678241269}
+        m_TargetAssemblyTypeName: Element.Entity.Military_Units.UnitsManager, Assembly-CSharp
         m_MethodName: UseUnitSkill
         m_Mode: 1
         m_Arguments:
@@ -4652,7 +4651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 2
+  expectedNumberOfPlayers: 1
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -10366,7 +10365,7 @@ GameObject:
   - component: {fileID: 1414079994}
   - component: {fileID: 1414079993}
   m_Layer: 5
-  m_Name: InGame Infobox
+  m_Name: Selection Infobox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11465,12 +11464,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046, type: 2}
   - {fileID: 11400000, guid: 9d47502595b037347910470d19334975, type: 2}
   - {fileID: 11400000, guid: 1a3046a475e833a44a1a7175a6370e33, type: 2}
-  unitGroupPrefab:
-    RawGuidValue: f79079bdce6629748a8ce903d8692627
   allActiveUnits: []
   currentlySelectedUnits: []
-  distToTargetToStop: 1
+  unitMoveIndicator: {fileID: 8799234255385966939, guid: ac3dd5b393a016a4982ae873c82e168a,
+    type: 3}
+  distToTargetToStop: 2
   flyingHeightOfUnits: 10
+  maxDistToTargetCenter: 8
   distUnitToIslandToColonise: 15
 --- !u!1 &1679743240
 GameObject:
@@ -11830,7 +11830,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 49968402}
         m_TargetAssemblyTypeName: UserInterface.UIManager, Assembly-CSharp
-        m_MethodName: DestroyInboxEntity
+        m_MethodName: DestroySelectionInfoboxEntity
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

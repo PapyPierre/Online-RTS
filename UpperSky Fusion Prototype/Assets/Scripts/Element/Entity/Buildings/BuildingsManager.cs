@@ -107,12 +107,9 @@ namespace Element.Entity.Buildings
             bool isStartBuilding = false)
         {
             island.BuildingsCount++;
-
-            if (_uiManager.openedElementInInGameInfobox == island)
-            {
-                _uiManager.ShowInGameInfoBox(island, island.Data, island.Owner);
-            }
-
+            
+            _uiManager.UpdateSelectionInfobox(island, island.Data, island.Owner);
+            
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, island.Object.InputAuthority);
 

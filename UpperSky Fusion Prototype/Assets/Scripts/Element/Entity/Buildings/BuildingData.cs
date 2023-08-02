@@ -1,6 +1,5 @@
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
-using Entity.Military_Units;
 using NaughtyAttributes;
 using UnityEngine;
 

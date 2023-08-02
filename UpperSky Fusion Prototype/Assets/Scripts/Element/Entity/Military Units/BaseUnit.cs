@@ -1,6 +1,5 @@
 using System.Collections;
 using AOSFogWar.Used_Scripts;
-using Entity.Military_Units;
 using NaughtyAttributes;
 using Player;
 using UnityEditor;
@@ -12,12 +11,15 @@ namespace Element.Entity.Military_Units
     {
         [field: SerializeField, Expandable] public UnitData Data { get; private set; }
 
+        [HideInInspector] public UnitsManager.UnitStates myState;
+
         private Rigidbody _rb;
         
         [HideInInspector] public bool targetedUnitIsInRange;
         private bool _isReadyToShoot = true;
         
-        [HideInInspector] public UnitGroup currentGroup;
+        [HideInInspector] public Vector3 targetPosToMoveTo;
+        [HideInInspector] public GameObject myMoveIndicator;
         
         [HideInInspector] public bool isSkillReady;
 
@@ -47,7 +49,7 @@ namespace Element.Entity.Military_Units
         public virtual void UseSkill()
         {
             isSkillReady = false;
-            UIManager.ShowInGameInfoBox(this, Data, Owner);
+            UIManager.ShowSelectionInfoBox(this, Data, Owner);
         }
 
         private void Update()
@@ -56,9 +58,29 @@ namespace Element.Entity.Military_Units
             ShootAtEnemy();
         }
 
-        private void FixedUpdate()
+        public override void FixedUpdateNetwork()
         {
+            if (isDead) return;
+            
             NullifyRbVelocity();
+
+            if (myState == UnitsManager.UnitStates.Moving)
+            {
+                var step = Data.MovementSpeed * Runner.DeltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
+                
+                if (Data.AngularSpeed > 0)
+                {
+                    transform.rotation = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
+                }
+                
+                if (Vector3.Distance(transform.position,  targetPosToMoveTo) < UnitsManager.distToTargetToStop)
+                {
+                    // Stop
+                    myMoveIndicator.SetActive(false);
+                    myState = UnitsManager.UnitStates.Static;
+                }
+            }
         }
 
         private void NullifyRbVelocity()
@@ -73,10 +95,9 @@ namespace Element.Entity.Military_Units
         {
             if (TargetedEntity != null)
             {
-                var distToTarget = Vector3.Distance(
-                    CustomHelper.ReturnPosInTopDown(transform.position),
-                    CustomHelper.ReturnPosInTopDown(TargetedEntity.transform.position));
-                
+                var distToTarget =
+                    CustomHelper.ReturnDistanceInTopDown(transform.position, TargetedEntity.transform.position);
+
                 targetedUnitIsInRange = distToTarget <= Data.SightRange;
             }
             else targetedUnitIsInRange = false;
@@ -96,7 +117,7 @@ namespace Element.Entity.Military_Units
 
         public void ReactToDamage(BaseEntity agressor)
         {
-            if (currentGroup != null) return;
+            if (myState == UnitsManager.UnitStates.Moving) return;
 
             if (TargetedEntity is null)
             {
@@ -114,9 +135,9 @@ namespace Element.Entity.Military_Units
         
         public override void DestroyEntity()
         {
+            myMoveIndicator.SetActive(false);
+
             if (UnitsManager.currentlySelectedUnits.Contains(this)) UnitsManager.currentlySelectedUnits.Remove(this);
-                
-            if (currentGroup is not null) currentGroup.RemoveUnitFromGroup(this);
 
             GameManager.thisPlayer.ressources.CurrentSupply -= Data.SupplyCost;
             base.DestroyEntity();
