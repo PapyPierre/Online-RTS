@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
-  <WoodCost>k__BackingField: 35
+  <WoodCost>k__BackingField: 30
   <MetalsCost>k__BackingField: 0
   <OrichalqueCost>k__BackingField: 0
   <ProductionTime>k__BackingField: 15

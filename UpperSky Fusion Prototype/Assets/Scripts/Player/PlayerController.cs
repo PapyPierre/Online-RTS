@@ -37,13 +37,13 @@ namespace Player
         [HideInInspector] public PlayerRessources ressources;
         
        [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
-        private bool _isMajKeyPressed;
+        [HideInInspector] public bool isMajKeyPressed;
         public List<BaseElement> currentlySelectedElements;
         public BaseElement lastSelectedElement;
 
         [SerializeField, Required()] private GameObject minimapIndicator;
 
-        public LayerMask LayerMask;
+        public LayerMask unitMovementClickLayer;
         
         public override void Spawned()
         {
@@ -76,7 +76,7 @@ namespace Player
             if (_gameManager.connectedPlayers[^1].IsReadyToPlay
                 && !IsReadyToPlay && HasStateAuthority) MakesPlayerReady();
 
-            _isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
             if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
             
@@ -137,7 +137,7 @@ namespace Player
                 Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 5000, LayerMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(ray, out hit, 5000, unitMovementClickLayer, QueryTriggerInteraction.Collide))
                 {
                     _unitsManager.OrderSelectedUnitsToMoveTo(hit.point);
                 }
@@ -155,7 +155,7 @@ namespace Player
             {
                 case BaseUnit unit :
                     _uiManager.HideOpenedUI();
-                    if (!_isMajKeyPressed) UnselectAllElements();
+                    if (!isMajKeyPressed && !_rectangleSelection.dragSelection) UnselectAllElements();
                     _unitsManager.SelectUnit(unit);
                     lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
@@ -169,9 +169,9 @@ namespace Player
                     currentlySelectedElements.Add(element);
                     _uiManager.HideBuildMenu();
                     _uiManager.ShowSelectionInfoBox(building, building.Data, building.Owner);
-                    if (building.Data.IsFormationBuilding)
+                    if (building is FormationBuilding formationBuilding)
                     {
-                        _uiManager.OpenFormationBuilding(building);
+                        _uiManager.OpenFormationBuilding(formationBuilding);
                     }
                     else _uiManager.CloseFormationBuilding();
                     break;

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8743517668235262842}
   - component: {fileID: 6298163403965779454}
   - component: {fileID: 2318281010202773554}
-  - component: {fileID: 2708547821528635465}
   - component: {fileID: 7945781902971484224}
+  - component: {fileID: 435624360700004346}
   m_Layer: 8
   m_Name: Carpentry
   m_TagString: Building
@@ -75,7 +75,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2318281010202773554}
-  - {fileID: 2708547821528635465}
+  - {fileID: 435624360700004346}
   SimulationBehaviours: []
 --- !u!114 &2318281010202773554
 MonoBehaviour:
@@ -105,7 +105,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
---- !u!114 &2708547821528635465
+--- !u!114 &7945781902971484224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,14 +114,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 874426664033387176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ddee19683894c14f96082c8722ec1c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
+  keepVisible: 1
+  additionalRadius: 0
+--- !u!114 &435624360700004346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9ae0212c3e6ea4daf6ee97c16d2729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
-  meshToColor:
-  - {fileID: 5341231983948614677}
-  - {fileID: 392662067782136139}
+  meshToColor: []
   selectionCircle: {fileID: 4353154455468515013}
   graphObject: {fileID: 8510112358408295226}
   canvas: {fileID: 6528548632205293204}
@@ -144,24 +157,8 @@ MonoBehaviour:
     type: 2}
   myIsland: {fileID: 0}
   isStartBuilding: 0
-  timeLeftToForm: 0
   canonHead: {fileID: 0}
-  headAngularSpeed: 0
---- !u!114 &7945781902971484224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874426664033387176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isVisible: 0
-  keepVisible: 1
-  additionalRadius: 0
+  timeLeftToForm: 0
 --- !u!1 &6246872401608401974
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,21 +3002,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55ff7b2b2a547f644a790c8e4cc9be34, type: 3}
---- !u!23 &392662067782136139 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -4356197681812780213, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
-    type: 3}
-  m_PrefabInstance: {fileID: 5114023572952054272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4715849512394595819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
-    type: 3}
-  m_PrefabInstance: {fileID: 5114023572952054272}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &5341231983948614677 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 929843139268687381, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
     type: 3}
   m_PrefabInstance: {fileID: 5114023572952054272}
   m_PrefabAsset: {fileID: 0}

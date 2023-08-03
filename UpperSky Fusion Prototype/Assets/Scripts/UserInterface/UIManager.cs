@@ -198,8 +198,7 @@ namespace UserInterface
         public void HideOpenedUI()
         { 
             HideBuildMenu();
-            ShowOrHideFormationMenu(false);
-            ShowOrHideFormationQueue(false);
+            CloseFormationBuilding();
             HideProdInfobox();
             HideSelectionInfoBox();
         }
@@ -215,20 +214,20 @@ namespace UserInterface
             buildMenu.SetActive(false);
             
             ShowOrHideFormationMenu(false);
-            ShowOrHideFormationQueue(false);
+            HideFormationQueue();
             HideProdInfobox();
         }
 
-        public void OpenFormationBuilding(BaseBuilding formationBuiling)
+        public void OpenFormationBuilding(FormationBuilding formationBuiling)
         {
             ShowOrHideFormationMenu(true, formationBuiling.Data.ThisBuilding);
-            ShowOrHideFormationQueue(true, formationBuiling);
+            ShowFormationQueue(formationBuiling);
         }
 
         public void CloseFormationBuilding()
         {
             ShowOrHideFormationMenu(false);
-            ShowOrHideFormationQueue(false);
+            HideFormationQueue();
         }
         
         private void ShowOrHideFormationMenu(bool active, BuildingsManager.AllBuildingsEnum formationBuiling = 0)
@@ -248,89 +247,60 @@ namespace UserInterface
             }
         }
         
-        private void ShowOrHideFormationQueue(bool active, BaseBuilding building = null)
+        private void ShowFormationQueue(FormationBuilding building = null)
         { 
-            selectionInfoboxDescr.gameObject.SetActive(!active);
+            selectionInfoboxDescr.gameObject.SetActive(false);
             
             foreach (var image in unitsQueueImages)
             {
-                image.gameObject.SetActive(active);
+                image.gameObject.SetActive(true);
             }
             
-            if (active) UpdateFormationQueueDisplay(building);
+            UpdateFormationQueueDisplay(building);
+        }
+
+        private void HideFormationQueue()
+        {
+            selectionInfoboxDescr.gameObject.SetActive(true);
+            
+            foreach (var image in unitsQueueImages)
+            {
+                image.gameObject.SetActive(false);
+            }
         }
 
         // Call from inspector
-        public void AddUnitToFormationQueue(int buttonIndex)
+        public void CallToAddUnitToFormationQueue(int buttonIndex)
         {
-            if (_gameManager.thisPlayer.lastSelectedElement is BaseBuilding building)
-            { 
-                if (!building.Data.IsFormationBuilding)
-                {
-                    Debug.LogError("Building is not formation building");
-                    return;
-                }
-            }
-            else
+            if (_gameManager.thisPlayer.lastSelectedElement is FormationBuilding formationBuilding)
             {
-                Debug.LogError("Element is not a building");
-                return;
+                formationBuilding.AddUnitToFormationQueue(formationBuilding.Data.FormableUnits[buttonIndex]);
             }
-
-
-            BaseBuilding formationBuilding = _gameManager.thisPlayer.lastSelectedElement.GetComponent<BaseBuilding>();
-            PlayerController player = _gameManager.thisPlayer;
-
-            var unit = formationBuilding.Data.FormableUnits[buttonIndex];
-
-            var unitWoodCost = _unitsManager.allUnitsData[(int) unit].WoodCost;
-            var unitMetalsCost = _unitsManager.allUnitsData[(int) unit].MetalsCost;
-            var unitOriCost =_unitsManager.allUnitsData[(int) unit].OrichalqueCost;
-
-            // Check if player have enough ressources to build this building
-            if (player.ressources.CurrentWood >= unitWoodCost 
-                && player.ressources.CurrentMetals >= unitMetalsCost 
-                && player.ressources.CurrentOrichalque >= unitOriCost)
+        }
+        
+        // Call from inspector
+        public void CallToRemoveUnitFromFormationQueue(int buttonIndex)
+        {
+            if (_gameManager.thisPlayer.lastSelectedElement is FormationBuilding formationBuilding)
             {
-                int formationQueueCurrentCount = formationBuilding.FormationQueue.Count;
-
-                if (formationQueueCurrentCount < 5) // 5 because there is 5 slots in a formation queue
-                {
-                    player.ressources.CurrentWood -= unitWoodCost;
-                    player.ressources.CurrentMetals -= unitMetalsCost;
-                    player.ressources.CurrentOrichalque -= unitOriCost;
-
-                    formationBuilding.FormationQueue.Enqueue(unit);
-                    if (formationBuilding.FormationQueue.Count is 1)
-                    {
-                        formationBuilding.timeLeftToForm =
-                            _unitsManager.allUnitsData[(int) unit].ProductionTime;
-
-                    }
-                    UpdateFormationQueueDisplay(formationBuilding);
-                }
-                else Debug.Log("Queue is full");
+                formationBuilding.RemoveUnitFromFormationQueue(buttonIndex);
             }
-            else Debug.Log("not enough ressources");
         }
 
-        public void UpdateFormationQueueDisplay(BaseBuilding formationBuilding)
+        public void UpdateFormationQueueDisplay(FormationBuilding formationBuilding)
         {
             foreach (var image in unitsQueueImages)
             {
                 image.sprite = null; //TODO mettre un sprite par default
             }
             
-            for (int i = 0; i < formationBuilding.FormationQueue.Count; i++)
+            for (int i = 0; i < formationBuilding.FormationQueue.Count(); i++)
             {
-                var queueCopy = formationBuilding.FormationQueue.ToArray();
-                
-                unitsQueueImages[i].sprite = _unitsManager.allUnitsData[(int) queueCopy[i]].Icon;
-                
-                //TODO faire une class custom "FormationQueue" pour éviter de devoir faire une array temporaire ici (conseil de jacques)
+                unitsQueueImages[i].sprite = 
+                    _unitsManager.allUnitsData[(int) formationBuilding.FormationQueue.PeekAtGivenIndex(i)].Icon;
             }
             
-            if (formationBuilding.FormationQueue.Count > 0)
+            if (formationBuilding.FormationQueue.IsNotEmpty())
             {
                 formationBuilding.UpdateFormationQueueSliderWithNewValue();
             }
@@ -344,8 +314,7 @@ namespace UserInterface
         {
             switch (newValue)
             {
-                case < 0 or > 1:
-                    Debug.LogError(newValue + "is not in range of " + formationQueueSlider.name);
+                case < 0 or > 1: 
                     return;
                 case 0:
                     formationQueueSlider.value = 0;

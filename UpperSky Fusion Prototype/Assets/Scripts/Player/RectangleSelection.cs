@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Element.Entity.Military_Units;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Player
         [SerializeField] private Color rectangleColor;
         [SerializeField] private Color borderColor;
 
-        private bool _dragSelection;
+        public bool dragSelection;
         
         private RaycastHit hitRectangle;
         
@@ -56,13 +57,13 @@ namespace Player
         {
             if((p1 - Input.mousePosition).magnitude > 20)
             {
-                _dragSelection = true;
+                dragSelection = true;
             }
         }
         
         public void OnLeftButtonUp_RectSelection(Camera cam)
         {
-            if (_dragSelection) // Selection en rectangle
+            if (dragSelection) // Selection en rectangle
             {
                 verts = new Vector3[4];
                 vecs = new Vector3[4]; 
@@ -93,16 +94,17 @@ namespace Player
                 selectionBox.sharedMesh = selectionMesh;
                 selectionBox.convex = true;
                 selectionBox.isTrigger = true;
-                if (!Input.GetKey(KeyCode.LeftShift)) UnitsManager.Instance.UnSelectAllUnits();
+                if (!_gameManager.thisPlayer.isMajKeyPressed) UnitsManager.Instance.UnSelectAllUnits();
 
-                Destroy(selectionBox, 0.05f);
-                if (_unitsManager.currentlySelectedUnits.Count < 1)
-                {
-                    _gameManager.thisPlayer.UnselectAllElements();
-                }
+                StartCoroutine(WaitToDestroy());
             }
+        }
 
-            _dragSelection = false;
+        private IEnumerator WaitToDestroy()
+        {
+            yield return new WaitForSeconds(0.05f);
+            Destroy(selectionBox);
+            dragSelection = false;
         }
         
         Vector2[] GetBoundingBox(Vector2 p1,Vector2 p2)
@@ -147,7 +149,7 @@ namespace Player
         
         private void OnGUI()
         {
-            if(_dragSelection)
+            if(dragSelection)
             {
                 var rect = Utils.GetScreenRect(p1, Input.mousePosition);
                 Utils.DrawScreenRect(rect, rectangleColor);

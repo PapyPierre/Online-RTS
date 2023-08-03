@@ -111,10 +111,11 @@ MonoBehaviour:
   ressources: {fileID: 0}
   mouseAboveThisElement: {fileID: 0}
   currentlySelectedElements: []
+  lastSelectedElement: {fileID: 0}
   minimapIndicator: {fileID: 8541844832713808961}
-  LayerMask:
+  unitMovementClickLayer:
     serializedVersion: 2
-    m_Bits: 913
+    m_Bits: 8
 --- !u!114 &1998333603904257311
 MonoBehaviour:
   m_ObjectHideFlags: 0
