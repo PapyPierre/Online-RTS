@@ -9764,8 +9764,9 @@ MonoBehaviour:
     rarity: {x: 0, y: 0}
   - type: 6
     rarity: {x: 0, y: 0}
-  islandPrefab:
-    RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
+  islandPrefabs:
+  - RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
+  - RawGuidValue: 2bf52d9ef4406094ab8eebc566e05c88
   minDistBetweenIslands: 60
   islandDistFormCenterRepartition:
     serializedVersion: 2
@@ -14480,6 +14481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectangleColor: {r: 0.49270204, g: 0.6037736, b: 0.5311593, a: 0.09411765}
   borderColor: {r: 0.6314525, g: 0.8113208, b: 0.63806444, a: 0.78431374}
+  dragSelection: 0
 --- !u!33 &1990487185
 MeshFilter:
   m_ObjectHideFlags: 0

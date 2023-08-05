@@ -64,7 +64,7 @@ namespace Element.Entity.Buildings
         [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
         public void RPC_StartBuildingInit()
         {
-            // The code inside here will run on the client which has input authority.
+            // The code inside here will run on the client which has input authority
 
             var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
             FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);

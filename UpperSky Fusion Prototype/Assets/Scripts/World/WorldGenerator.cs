@@ -74,7 +74,7 @@ namespace World
             // Calcule de l'angle en radian avec cette distance sur le périmètre du cercle
             float radianAngle = (distancePerPlayer / innerBorderPerimeter) * 2 * Mathf.PI;
             
-            // Conversion en degré
+            // Conversion en degrée
             float degreeAngle = radianAngle * 180 / Mathf.PI;
             
             SpawnPlayerPosAtEachAngle(degreeAngle);
@@ -83,18 +83,18 @@ namespace World
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
            SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-               IslandTypesEnum.Basic, _gameManager.connectedPlayers[0]);
+               IslandTypesEnum.Home, _gameManager.connectedPlayers[0]);
            
            for (int i = 0; i < _numberOfPlayers -1; i++) 
            {
-                _worldCenter.Rotate(Vector3.up, angle);
+               _worldCenter.Rotate(Vector3.up, angle);
                 
               SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                  IslandTypesEnum.Basic, _gameManager.connectedPlayers[i + 1]);
+                  IslandTypesEnum.Home, _gameManager.connectedPlayers[i + 1]);
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
-            transform.Rotate(Vector3.up, Random.Range(0,359));
+            transform.Rotate(Vector3.up, Random.Range(0f,359f));
             
             SpawnSecondsIslands();
         }
@@ -165,19 +165,13 @@ namespace World
         private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
             NetworkObject islandObject = _gameManager.thisPlayer.Runner.Spawn(
-                _worldManager.islandPrefab, 
+               _worldManager.islandPrefabs[owner != null ? 1 : 0], 
                 position, 
                 Quaternion.identity,
                 owner != null ? owner.Object.StateAuthority : PlayerRef.None);
-
-            BaseIsland islandComponent = islandObject.GetComponent<BaseIsland>();
-            islandComponent.Init(_worldCenter,owner);
-
-            if (owner != null)
-            {
-                owner.RPC_SetStartingIsland(islandComponent);
-            }
             
+            islandObject.GetComponent<BaseIsland>().Init(_worldCenter, owner);
+
             _currentlyPlacedIslands++;
         }
 

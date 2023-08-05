@@ -18,7 +18,7 @@ namespace Player
         {
             if (player == Runner.LocalPlayer)
             { 
-                Runner.Spawn(playerPrefab, new Vector3(0, 1, 0), Quaternion.identity, player);
+                Runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
             }
         }
     }

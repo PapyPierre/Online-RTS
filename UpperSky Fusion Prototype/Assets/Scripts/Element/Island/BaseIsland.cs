@@ -9,7 +9,7 @@ using World;
 
 namespace Element.Island
 {
-    public class BaseIsland : BaseElement, IStateAuthorityChanged
+    public class BaseIsland : BaseElement
     {
         private WorldManager _worldManager;
 
@@ -36,22 +36,15 @@ namespace Element.Island
             GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);
         }
 
-        public void Init(Transform parent, PlayerController owner)
+        public virtual void Init(Transform parent, PlayerController owner)
         {
             transform.parent = parent;
             Owner = owner;
-
-            if (Owner is not null)
-            {
-                if (Owner == GameManager.thisPlayer)
-                {
-                    Object.RequestStateAuthority();
-                }
-            }
         }
-
+        
+        
         // Call from coloniser
-        public void CallForColonise()
+        public void CallToColonise()
         {
             if (Object.HasStateAuthority) UpdateOwner();
             else Object.RequestStateAuthority();

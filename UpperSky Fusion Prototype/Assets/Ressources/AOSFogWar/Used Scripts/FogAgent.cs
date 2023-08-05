@@ -35,12 +35,16 @@ namespace Ressources.AOSFogWar.Used_Scripts
             _fogOfWar = FogOfWar.Instance;
             
             _graphObject = graph;
-             _UIcanvas = canvas;
+            _UIcanvas = canvas;
         }
         
         private void Update()
         {
-            if (_fogOfWar is null || _fogOfWar.CheckWorldGridRange(transform.position) == false) return;
+            if (_fogOfWar is null || _fogOfWar.CheckWorldGridRange(transform.position) == false)
+            {
+                Debug.Log(0);
+                return;
+            }
 
             isVisible = _fogOfWar.CheckVisibility(transform.position, additionalRadius);
 
@@ -75,7 +79,6 @@ namespace Ressources.AOSFogWar.Used_Scripts
             _graphObject.SetActive(false);
             _UIcanvas.SetActive(false);
         }
-
 
         #if UNITY_EDITOR
         private void OnDrawGizmos()

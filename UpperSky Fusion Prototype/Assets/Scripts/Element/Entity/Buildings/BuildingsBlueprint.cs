@@ -71,7 +71,7 @@ namespace Element.Entity.Buildings
                     return;
                 }
 
-                StartCoroutine(StartBuilding());
+                StartCoroutine(BeginBuilding());
             }
 
             // Cancel construction
@@ -130,7 +130,7 @@ namespace Element.Entity.Buildings
             return true;
         }
         
-        private IEnumerator StartBuilding()
+        private IEnumerator BeginBuilding()
         {
             _isBuilding = true;
             

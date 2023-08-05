@@ -134,7 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Owner: {fileID: 0}
-  meshToColor: []
+  meshToColor:
+  - {fileID: 5341231983948614677}
   selectionCircle: {fileID: 4353154455468515013}
   graphObject: {fileID: 8510112358408295226}
   canvas: {fileID: 6528548632205293204}
@@ -3005,6 +3006,12 @@ PrefabInstance:
 --- !u!4 &4715849512394595819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
+    type: 3}
+  m_PrefabInstance: {fileID: 5114023572952054272}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5341231983948614677 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 929843139268687381, guid: 55ff7b2b2a547f644a790c8e4cc9be34,
     type: 3}
   m_PrefabInstance: {fileID: 5114023572952054272}
   m_PrefabAsset: {fileID: 0}

@@ -85,17 +85,5 @@ namespace Entity.Buildings
         public float ShootingRange { get; private set; }
 
         #endregion
-        
-        /// Function For Inspector Purpose -----------------------------------------------------------------------------
-
-        private bool IntIsGreaterThanZero(int value)
-        {
-            return value > 0;
-        }
-        
-        private bool FloatIsGreaterThanZero(float value)
-        {
-            return value > 0f;
-        }
     }
 }

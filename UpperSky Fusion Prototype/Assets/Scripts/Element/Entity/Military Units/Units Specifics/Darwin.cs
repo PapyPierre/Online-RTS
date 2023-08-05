@@ -12,7 +12,7 @@ namespace Element.Entity.Military_Units.Units_Specifics
         {
             base.UseSkill();
             DestroyEntity();
-            targetIslandToColonise.CallForColonise();
+            targetIslandToColonise.CallToColonise();
         }
     }
 }

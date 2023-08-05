@@ -55,13 +55,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7061718524731237223}
-  - component: {fileID: 5589878511487592379}
   - component: {fileID: 2788370408579054134}
   - component: {fileID: 3256372751114468513}
   - component: {fileID: 8216872740606725368}
   - component: {fileID: -3147575971330584361}
+  - component: {fileID: -3768771191459615577}
   m_Layer: 7
-  m_Name: Island
+  m_Name: BaseIsland
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,31 +86,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5589878511487592379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717560892313515182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a8471786cbdda4180ffa1423f51390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
-  _Owner: {fileID: 0}
-  meshToColor:
-  - {fileID: 6381564935541004967}
-  selectionCircle: {fileID: 8491868854002707374}
-  graphObject: {fileID: 4398207178959155001}
-  canvas: {fileID: 5463506310514315935}
-  minimapIcon: {fileID: 4895237130567280332}
-  minimapCanvas: {fileID: 5020976661194018258}
-  <Data>k__BackingField: {fileID: 11400000, guid: ba12fe371fa5de84c84de03305c6e0ae,
-    type: 2}
-  _BuildingsCount: 0
-  buildingOnThisIsland: []
 --- !u!114 &2788370408579054134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,8 +108,8 @@ MonoBehaviour:
     RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 5589878511487592379}
   - {fileID: 3256372751114468513}
+  - {fileID: -3768771191459615577}
   SimulationBehaviours: []
 --- !u!114 &3256372751114468513
 MonoBehaviour:
@@ -193,6 +168,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 32.33847, y: 29.742323, z: 33.89183}
   m_Center: {x: 0.058605194, y: -13.341493, z: 0.70329285}
+--- !u!114 &-3768771191459615577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717560892313515182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a8471786cbdda4180ffa1423f51390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 3
+  _Owner: {fileID: 0}
+  meshToColor:
+  - {fileID: 6381564935541004967}
+  selectionCircle: {fileID: 8491868854002707374}
+  graphObject: {fileID: 4398207178959155001}
+  canvas: {fileID: 5463506310514315935}
+  minimapIcon: {fileID: 4895237130567280332}
+  minimapCanvas: {fileID: 5020976661194018258}
+  <Data>k__BackingField: {fileID: 11400000, guid: ba12fe371fa5de84c84de03305c6e0ae,
+    type: 2}
+  _BuildingsCount: 0
+  buildingOnThisIsland: []
 --- !u!1 &3474537947920032703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3989a4211957e224f8aa13f159f4de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myIsland: {fileID: 5589878511487592379}
+  myIsland: {fileID: -3768771191459615577}
 --- !u!1 &9042902420538395097
 GameObject:
   m_ObjectHideFlags: 0

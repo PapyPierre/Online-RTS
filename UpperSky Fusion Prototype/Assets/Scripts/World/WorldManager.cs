@@ -20,7 +20,7 @@ namespace World
         private int numberOfIslandsPerPlayer; 
         [SerializeField] private int maxSpecialIslandsPerPlayer;
         public IslandTypesClass[] islandTypes;
-        public NetworkPrefabRef islandPrefab;
+        public NetworkPrefabRef[] islandPrefabs;
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
         
@@ -54,6 +54,7 @@ namespace World
     public enum IslandTypesEnum
     {
         Uninitialized,
+        Home,
         Basic,
         Living,
         Mythic,

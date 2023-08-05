@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 062597197097d5b418eb64e437ff90fe, type: 3}
-  m_Name: IslandData
+  m_Name: HomeIslandData
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Basic Island
-  <Description>k__BackingField: Basic Island description :)
+  <Name>k__BackingField: Home Island
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: df48403c5e68138438f819b51e0d3625,
     type: 3}
-  <Type>k__BackingField: 2
-  <MaxBuildingsOnThisIsland>k__BackingField: 4
+  <Type>k__BackingField: 1
+  <MaxBuildingsOnThisIsland>k__BackingField: 5

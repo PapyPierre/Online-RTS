@@ -1,18 +1,14 @@
 using System.Collections.Generic;
-using Custom_UI;
 using Element;
 using Element.Entity;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
 using Element.Island;
-using Entity;
-using Entity.Buildings;
 using Fusion;
 using NaughtyAttributes;
 using UnityEngine;
 using UserInterface;
 using World;
-using World.Island;
 
 namespace Player
 {
@@ -31,7 +27,6 @@ namespace Player
 
         public int myId; // = à index dans ConnectedPlayers + 1 
         public Color myColor;
-        [Networked] public BaseIsland MyStartingIsland { get; set; }
         public Camera myCam;
 
         [HideInInspector] public PlayerRessources ressources;
@@ -204,31 +199,22 @@ namespace Player
 
         public void MakesPlayerReady()
         {
-            var islandPos = MyStartingIsland.transform.position;
-            transform.position = new Vector3(islandPos.x, 10, islandPos.z);
-            transform.LookAt(Vector3.zero);
-                    
-            SpawnStartBuilding(MyStartingIsland);
             ressources.Init();
 
             IsReadyToPlay = true;
         }
         
-        private void SpawnStartBuilding(BaseIsland startingIsland)
+        public void SpawnStartBuilding(HomeIsland homeIsland)
         {
-            var startBuilding = _buildingsManager.BuildBuilding(13, startingIsland.transform.position,
-                Quaternion.identity, startingIsland, true);
-            startBuilding.transform.parent = startingIsland.transform;
+            var islandPos = homeIsland.transform.position;
+            transform.position = new Vector3(islandPos.x, 10, islandPos.z);
+            transform.LookAt(Vector3.zero);
+            
+            var startBuilding = _buildingsManager.BuildBuilding(13, islandPos,
+                Quaternion.identity, homeIsland, true);
+            startBuilding.transform.parent = homeIsland.transform;
         }
-        
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_SetStartingIsland(BaseIsland island)
-        {
-            // The code inside here will run on the client which owns this object (has state and input authority).
 
-            MyStartingIsland = island;
-        }
-        
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_DisplayLoadingText()
         {
