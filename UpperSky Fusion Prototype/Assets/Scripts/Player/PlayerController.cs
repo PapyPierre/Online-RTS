@@ -36,8 +36,6 @@ namespace Player
         public List<BaseElement> currentlySelectedElements;
         public BaseElement lastSelectedElement;
 
-        [SerializeField, Required()] private GameObject minimapIndicator;
-
         public LayerMask unitMovementClickLayer;
         
         public override void Spawned()
@@ -58,8 +56,6 @@ namespace Player
             {        
                 _uiManager.connectionInfoTMP.text = 
                     "Player " + myId + " connected in " + Runner.GameMode + " Mode";
-                
-                minimapIndicator.SetActive(true);
             }
             else myCam.gameObject.SetActive(false);
         }
@@ -134,6 +130,7 @@ namespace Player
 
                 if (Physics.Raycast(ray, out hit, 5000, unitMovementClickLayer, QueryTriggerInteraction.Collide))
                 {
+                    _uiManager.HideBuildMenu();
                     _unitsManager.OrderSelectedUnitsToMoveTo(hit.point);
                 }
             }

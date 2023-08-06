@@ -32,9 +32,9 @@ MonoBehaviour:
   <AngularSpeed>k__BackingField: 3
   <WeatherResistance>k__BackingField: 2
   <CanShoot>k__BackingField: 1
-  <DamagePerShoot>k__BackingField: 4
-  <ArmorPenetration>k__BackingField: 5
-  <RealodTime>k__BackingField: 2
+  <DamagePerShoot>k__BackingField: 7
+  <ArmorPenetration>k__BackingField: 3
+  <RealodTime>k__BackingField: 1
   <IsBaseCamouflaged>k__BackingField: 0
   <BaseRegeneration>k__BackingField: 0
   <BaseAcid>k__BackingField: 0
