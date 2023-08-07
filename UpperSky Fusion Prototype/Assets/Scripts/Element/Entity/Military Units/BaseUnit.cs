@@ -98,7 +98,7 @@ namespace Element.Entity.Military_Units
                 var distToTarget =
                     CustomHelper.ReturnDistanceInTopDown(transform.position, TargetedEntity.transform.position);
 
-                targetedUnitIsInRange = distToTarget <= Data.SightRange;
+                targetedUnitIsInRange = distToTarget <= Data.ShootingRange;
             }
             else targetedUnitIsInRange = false;
         }

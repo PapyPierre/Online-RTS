@@ -62,11 +62,29 @@ namespace UserInterface
         [SerializeField, Required()] private GameObject selectionInfobox;
         [SerializeField, Required()] private TextMeshProUGUI selectionInfoboxName;
         [SerializeField, Required()] private TextMeshProUGUI selectionInfoboxDescr;
+        [SerializeField, Required()] private Animator selectionInfoboxStatsPanelAnimator;
+        private static readonly int Open = Animator.StringToHash("open");
+        private bool _isStatsPanelOpen;
+        private bool IsStatsPanelOpen
+        {
+            get => _isStatsPanelOpen;
+            
+            set
+            {
+                _isStatsPanelOpen = value;
+                if (value)
+                {
+                    selectionInfoboxStatsPanelAnimator.gameObject.SetActive(true);
+                }
+                selectionInfoboxStatsPanelAnimator.SetBool(Open, value);
+            }
+        }
+
         [SerializeField] private GameObject[] selectionInfoboxStatsObj;
         [SerializeField] private TextMeshProUGUI[] selectionInfoboxStatsTMP;
         [SerializeField, Required()] private Image selectionInfoboxEntityIcon;
-        [SerializeField, Required()] private Image selectionInfoboxEntityColor; // Color of owner
-        [SerializeField, Required()] private GameObject selectionInfoboxEntitySkill;
+        [SerializeField] private Image[] selectionInfoboxOwnerColorElements; 
+        [SerializeField] private GameObject[] selectionInfoboxEntitySkills;
         [SerializeField] private Image[] unitsQueueImages;
         [SerializeField] private Slider formationQueueSlider;
         [SerializeField, Required()] private GameObject selectionInfoboxDestroyBtn;
@@ -87,7 +105,7 @@ namespace UserInterface
         [SerializeField] private float underAttackPopUpLivingTime;
         private float _underAttackPopUpCurrentTime;
         [SerializeField] private GameObject attackMinimapPopup;
-        
+
         private void Awake()
         {
             if (Instance != null)
@@ -383,77 +401,38 @@ namespace UserInterface
         public void ShowSelectionInfoBox(BaseElement element, ElementData elementData, PlayerController owner)
         {
             selectionInfobox.SetActive(true);
+            selectionInfoboxStatsPanelAnimator.gameObject.SetActive(false);
 
             selectionInfoboxName.text = elementData.Name;
             selectionInfoboxDescr.text = elementData.Description;
 
             selectionInfoboxEntityIcon.sprite = elementData.Icon;
 
-            selectionInfoboxEntityColor.color = owner is null ? Color.white : owner.myColor;
+            foreach (var image in selectionInfoboxOwnerColorElements)
+            {
+               image.color = owner is null ? Color.white : owner.myColor;
+            }
+
+            foreach (var go in selectionInfoboxEntitySkills)
+            {
+                go.SetActive(false);
+            }
             
-            selectionInfoboxEntitySkill.SetActive(false);
             selectionInfoboxDestroyBtn.SetActive(true);
 
-            if (elementData is EntityData entityData)
+            if (elementData is UnitData unitData)
             {
-               foreach (var go in selectionInfoboxStatsObj)
-               {
-                   go.SetActive(true);
-               }
-               
-               // Nombre de bâtiments, visible que pour les iles
-               selectionInfoboxStatsObj[^1].SetActive(false);
-            
-               selectionInfoboxStatsTMP[0].text = entityData.MaxHealthPoints.ToString();
-               selectionInfoboxStatsTMP[1].text = entityData.MaxArmorPoints.ToString();
-               selectionInfoboxStatsTMP[2].text = entityData.SightRange.ToString();
-            
-               if (entityData is UnitData unitData)
-               {
-                   selectionInfoboxStatsTMP[3].text = unitData.MovementSpeed.ToString(CultureInfo.CurrentCulture);
-                   selectionInfoboxStatsTMP[4].text = unitData.WeatherResistance.ToString(CultureInfo.CurrentCulture);
-
-                   if (unitData.CanShoot)
-                   {
-                       selectionInfoboxStatsTMP[5].text = unitData.DamagePerShoot.ToString();
-                       selectionInfoboxStatsTMP[6].text = unitData.ArmorPenetration + "%";
-                   }
-                   else
-                   {
-                       selectionInfoboxStatsObj[5].SetActive(false);
-                       selectionInfoboxStatsObj[6].SetActive(false);
-                   }
-
-                   if (unitData.SkillData.Skill is not UnitsManager.UnitSkillsEnum.None)
-                   {
-                       selectionInfoboxEntitySkill.SetActive(true);
-                       selectionInfoboxEntitySkill.GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
-                        
-
-                       selectionInfoboxEntitySkill.GetComponent<Button>().interactable  = 
-                           element.GetComponent<BaseUnit>().isSkillReady;
-                   }
-               }
-               else if (entityData is BuildingData)
-               {
-                   for (var index = 3; index < selectionInfoboxStatsObj.Length; index++)
-                   {
-                       selectionInfoboxStatsObj[index].SetActive(false);
-                   }
-               }
+                if (unitData.SkillData.Skill is not UnitsManager.UnitSkillsEnum.None)
+                {
+                    selectionInfoboxEntitySkills[0].SetActive(true); 
+                    selectionInfoboxEntitySkills[0].GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
+                    selectionInfoboxEntitySkills[0].GetComponent<Button>().interactable  = 
+                        element.GetComponent<BaseUnit>().isSkillReady;
+                }
             }
-            else if (elementData is IslandData islandData)
+            else if (elementData is IslandData)
             {
                 selectionInfoboxDestroyBtn.SetActive(false);
-
-                foreach (var go in selectionInfoboxStatsObj)
-                {
-                    go.SetActive(false);
-                }
-               
-                // Nombre de bâtiments, visible que pour les iles
-                selectionInfoboxStatsObj[^1].SetActive(true);
-                selectionInfoboxStatsTMP[^1].text = element.GetComponent<BaseIsland>().BuildingsCount + "/" + islandData.MaxBuildingsOnThisIsland;
             }
         }
 
@@ -470,8 +449,93 @@ namespace UserInterface
             }
             
             selectionInfobox.SetActive(false);
+            
+            HideStatsPanel();
         }
 
+        // Call from inspector
+        public void InteractWithStatsPanel()
+        {
+            if (IsStatsPanelOpen) HideStatsPanel();
+            else ShowStatsPanel();
+        }
+        
+        private void ShowStatsPanel()
+        {
+            IsStatsPanelOpen = true;
+            
+            switch (_gameManager.thisPlayer.lastSelectedElement)
+            {
+                case BaseEntity entity:
+                {
+                    foreach (var go in selectionInfoboxStatsObj)
+                    {
+                        go.SetActive(true);
+                    }
+               
+                    // Nombre de bâtiments, visible que pour les iles
+                    selectionInfoboxStatsObj[^1].SetActive(false);
+               
+                    switch (entity)
+                    {
+                        case BaseUnit unit:
+                        {
+                            selectionInfoboxStatsTMP[0].text = unit.Data.MaxHealthPoints.ToString();
+                            selectionInfoboxStatsTMP[1].text = unit.Data.MaxArmorPoints.ToString();
+                            selectionInfoboxStatsTMP[2].text = unit.Data.SightRange.ToString();
+                            selectionInfoboxStatsTMP[3].text = unit.Data.MovementSpeed.ToString(CultureInfo.CurrentCulture);
+                            selectionInfoboxStatsTMP[4].text = unit.Data.WeatherResistance.ToString(CultureInfo.CurrentCulture);
+
+                            if (unit.Data.CanShoot)
+                            {
+                                selectionInfoboxStatsTMP[5].text = unit.Data.DamagePerShoot.ToString();
+                                selectionInfoboxStatsTMP[6].text = unit.Data.ArmorPenetration + "%";
+                                selectionInfoboxStatsTMP[7].text = Mathf.RoundToInt(unit.Data.ShootingRange).ToString();
+
+                            }
+                            else
+                            {
+                                selectionInfoboxStatsObj[5].SetActive(false);
+                                selectionInfoboxStatsObj[6].SetActive(false);
+                            }
+
+                            break;
+                        }
+                        case BaseBuilding building:
+                        {
+                            selectionInfoboxStatsTMP[0].text = building.Data.MaxHealthPoints.ToString();
+                            selectionInfoboxStatsTMP[1].text = building.Data.MaxArmorPoints.ToString();
+                            selectionInfoboxStatsTMP[2].text = building.Data.SightRange.ToString();
+                   
+                            for (var index = 3; index < selectionInfoboxStatsObj.Length; index++)
+                            {
+                                selectionInfoboxStatsObj[index].SetActive(false);
+                            }
+
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+                case BaseIsland island:
+                {
+                    foreach (var go in selectionInfoboxStatsObj)
+                    {
+                        go.SetActive(false);
+                    }
+               
+                    // Nombre de bâtiments, visible que pour les iles
+                    selectionInfoboxStatsObj[^1].SetActive(true);
+                    selectionInfoboxStatsTMP[^1].text = island.BuildingsCount + "/" + 
+                                                        island.Data.MaxBuildingsOnThisIsland;
+                    break;
+                }
+            }
+        }
+
+        private void HideStatsPanel() => IsStatsPanelOpen = false;
+        
         // Call from inspector
         public void DestroySelectionInfoboxEntity()
         {

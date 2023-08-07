@@ -52,6 +52,10 @@ namespace Element.Entity.Military_Units
                 ShowIf("CanShoot")]
         public int ArmorPenetration { get; private set; }
         
+        [field: SerializeField, ShowIf("CanShoot"), ValidateInput("FloatIsGreaterThanZero", 
+                    "Must be greater than zero")]
+        public float ShootingRange { get; private set; }
+        
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero"),
                 ShowIf("CanShoot")] 
         public float RealodTime { get; private set; }

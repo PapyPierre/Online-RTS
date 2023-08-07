@@ -35,7 +35,8 @@ MonoBehaviour:
   <CanShoot>k__BackingField: 1
   <DamagePerShoot>k__BackingField: 15
   <ArmorPenetration>k__BackingField: 30
-  <RealodTime>k__BackingField: 1
+  <ShootingRange>k__BackingField: 20
+  <RealodTime>k__BackingField: 2
   <IsBaseCamouflaged>k__BackingField: 0
   <BaseRegeneration>k__BackingField: 0
   <BaseAcid>k__BackingField: 0

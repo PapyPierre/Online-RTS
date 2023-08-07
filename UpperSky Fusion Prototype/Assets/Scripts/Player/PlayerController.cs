@@ -82,7 +82,9 @@ namespace Player
         {
             _rectangleSelection.OnLeftButtonDown_RectSelection();
             
-            if (!mouseAboveThisElement) return;
+            bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            
+            if (!mouseAboveThisElement || isOverUI) return;
             if (mouseAboveThisElement.Owner != this) return;
 
             SelectElement(mouseAboveThisElement);
