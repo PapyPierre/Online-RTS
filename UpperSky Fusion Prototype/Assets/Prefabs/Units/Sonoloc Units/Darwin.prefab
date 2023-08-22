@@ -473,11 +473,16 @@ MonoBehaviour:
   canonsPos: []
   shootVfx:
     RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
+  skills:
+  - isReady: 0
+    <Data>k__BackingField: {fileID: 11400000, guid: 42dd197432bce0e4ca884cb462b8efe7,
+      type: 2}
   <Data>k__BackingField: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046,
     type: 2}
+  myState: 0
   targetedUnitIsInRange: 0
-  currentGroup: {fileID: 0}
-  isSkillReady: 0
+  targetPosToMoveTo: {x: 0, y: 0, z: 0}
+  myMoveIndicator: {fileID: 0}
   targetIslandToColonise: {fileID: 0}
 --- !u!1 &8094450092423343187
 GameObject:

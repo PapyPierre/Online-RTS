@@ -36,7 +36,7 @@ TextureImporter:
       213: -8706662380335870506
     second: Steampunk_UI_Loading_Bars_0
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -96,6 +96,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -145,6 +146,30 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -157,7 +182,7 @@ TextureImporter:
         width: 1040
         height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,12 +198,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_1
       rect:
         serializedVersion: 2
-        x: 1123
-        y: 823
-        width: 734
-        height: 55
+        x: 1122
+        y: 822
+        width: 736
+        height: 57
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,12 +219,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_2
       rect:
         serializedVersion: 2
-        x: 161
-        y: 661
-        width: 728
-        height: 55
+        x: 1122
+        y: 738
+        width: 736
+        height: 57
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,12 +240,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_3
       rect:
         serializedVersion: 2
-        x: 1302
-        y: 354
-        width: 499
-        height: 336
+        x: 159
+        y: 659
+        width: 731
+        height: 58
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,12 +261,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_4
       rect:
         serializedVersion: 2
-        x: 107
-        y: 405
-        width: 988
-        height: 190
+        x: 1302
+        y: 353
+        width: 499
+        height: 336
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,12 +282,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_5
       rect:
         serializedVersion: 2
-        x: 122
-        y: 246
-        width: 563
-        height: 96
+        x: 107
+        y: 405
+        width: 988
+        height: 190
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -278,12 +303,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_6
       rect:
         serializedVersion: 2
-        x: 730
-        y: 248
+        x: 122
+        y: 234
         width: 563
-        height: 96
+        height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -299,12 +324,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_7
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 111
-        width: 170
-        height: 150
+        x: 730
+        y: 236
+        width: 563
+        height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -320,12 +345,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_8
       rect:
         serializedVersion: 2
-        x: 119
-        y: 96
-        width: 560
-        height: 97
+        x: 1303
+        y: 111
+        width: 170
+        height: 150
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -341,12 +366,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_9
       rect:
         serializedVersion: 2
-        x: 1571
-        y: 137
-        width: 70
-        height: 99
+        x: 119
+        y: 96
+        width: 560
+        height: 97
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -362,12 +387,12 @@ TextureImporter:
       name: Steampunk_UI_Loading_Bars_10
       rect:
         serializedVersion: 2
-        x: 1739
-        y: 143
-        width: 32
-        height: 84
+        x: 1571
+        y: 137
+        width: 70
+        height: 99
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -375,6 +400,27 @@ TextureImporter:
       bones: []
       spriteID: 92c45e0520e181b10800000000000000
       internalID: 1952343433761082409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Loading_Bars_11
+      rect:
+        serializedVersion: 2
+        x: 1739
+        y: 143
+        width: 32
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab2edcb2b0e3a74eb679631e61fb4c6
+      internalID: 97778285
       vertices: []
       indices: 
       edges: []
@@ -395,6 +441,7 @@ TextureImporter:
       Steampunk_UI_Loading_Bars_6: -8688575788626425756
       Steampunk_UI_Loading_Bars_2: -2043666936774967533
       Steampunk_UI_Loading_Bars_4: 8895644708304838847
+      Steampunk_UI_Loading_Bars_11: 97778285
       Steampunk_UI_Loading_Bars_1: -483322954633082500
       Steampunk_UI_Loading_Bars_8: 1842958952090477906
       Steampunk_UI_Loading_Bars_7: 1027427055973983239

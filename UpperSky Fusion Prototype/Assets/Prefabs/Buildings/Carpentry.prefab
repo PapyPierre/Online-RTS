@@ -151,13 +151,13 @@ MonoBehaviour:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
     RawGuidValue: 043176b6a68be2b43b073aaaa4782c7d
-  canonsPos: []
   shootVfx:
     RawGuidValue: 00000000000000000000000000000000
+  canonsPos: []
+  isStartBuilding: 0
   <Data>k__BackingField: {fileID: 11400000, guid: 3fb1cab906c46404b987140140383948,
     type: 2}
   myIsland: {fileID: 0}
-  isStartBuilding: 0
   canonHead: {fileID: 0}
   timeLeftToForm: 0
 --- !u!1 &6246872401608401974
@@ -407,6 +407,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1000930114409830242, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.13725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000930114409830242, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.83137256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000930114409830242, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.09019608
+      objectReference: {fileID: 0}
     - target: {fileID: 1595042162969622894, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -603,7 +618,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: e06e7973fae97da47931c6ffb2b23468, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1595042162969622894, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_AnchorMax.x

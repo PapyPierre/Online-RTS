@@ -1,4 +1,5 @@
 using System.Collections;
+using Element.Entity.Military_Units.Units_Skills;
 using Element.Island;
 using UnityEngine;
 
@@ -8,10 +9,10 @@ namespace Element.Entity.Military_Units.Units_Specifics
     {
        [HideInInspector] public BaseIsland targetIslandToColonise;
 
-        public override void UseSkill()
+        public override void UseSkill(UnitSkill skill)
         {
-            base.UseSkill();
-            DestroyEntity();
+            base.UseSkill(skill);
+            StartSkillCooldown(skill);
             targetIslandToColonise.CallToColonise();
         }
     }

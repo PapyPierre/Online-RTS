@@ -16,15 +16,14 @@ namespace Element.Entity.Buildings
     public class BaseBuilding : BaseEntity
     {
         private BuildingsManager _buildingsManager;
-
-        [field: SerializeField, Expandable] public BuildingData Data { get; private set; }
+        
+        public bool isStartBuilding;
+        
+        [field: SerializeField, Expandable, Space] public BuildingData Data { get; private set; }
 
         [HideInInspector] public BaseIsland myIsland;
-
-        public bool isStartBuilding;
-
-        // Defense
-        [SerializeField] private Transform canonHead;
+        
+        [SerializeField, Header("Defense")] private Transform canonHead;
         private bool _isReadyToShoot = true;
 
         public override void Spawned()

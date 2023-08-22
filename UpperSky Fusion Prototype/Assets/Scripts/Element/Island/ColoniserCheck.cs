@@ -1,7 +1,5 @@
-using System;
 using Element.Entity.Military_Units;
 using Element.Entity.Military_Units.Units_Specifics;
-using Player;
 using UnityEngine;
 using UserInterface;
 
@@ -19,13 +17,19 @@ namespace Element.Island
          {
             BaseUnit unit = other.GetComponent<BaseUnit>();
             
-            if (unit.isDead || unit.isSkillReady) return;
+            if (unit.isDead) return;
 
-            if (unit.Data.SkillData.Skill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
+            foreach (var skill in unit.skills)
             {
-               unit.isSkillReady = true;
-               unit.GetComponent<Darwin>().targetIslandToColonise = myIsland;
-               UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
+               if (skill.Data.ThisSkill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
+               {
+                  if (skill.timeLeftOnCd <= 0)
+                  {
+                     skill.isReady = true;
+                     unit.GetComponent<Darwin>().targetIslandToColonise = myIsland;
+                     UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
+                  }
+               }
             }
          }
       }
@@ -37,12 +41,15 @@ namespace Element.Island
             BaseUnit unit = other.GetComponent<BaseUnit>();
 
             if (unit.isDead || unit.Object == null) return;
-
-            if (unit.Data.SkillData.Skill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
+            
+            foreach (var skill in unit.skills)
             {
-               unit.isSkillReady = false;
-               unit.GetComponent<Darwin>().targetIslandToColonise = null;
-               UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
+               if (skill.Data.ThisSkill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
+               {
+                  skill.isReady = false;
+                  unit.GetComponent<Darwin>().targetIslandToColonise = null;
+                  UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
+               }
             }
          }
       }

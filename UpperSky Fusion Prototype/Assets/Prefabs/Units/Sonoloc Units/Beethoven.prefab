@@ -1009,11 +1009,13 @@ MonoBehaviour:
   - {fileID: 7832695866775460653}
   shootVfx:
     RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
+  skills: []
   <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
     type: 2}
+  myState: 0
   targetedUnitIsInRange: 0
-  currentGroup: {fileID: 0}
-  isSkillReady: 0
+  targetPosToMoveTo: {x: 0, y: 0, z: 0}
+  myMoveIndicator: {fileID: 0}
 --- !u!135 &2645220574719709856
 SphereCollider:
   m_ObjectHideFlags: 0

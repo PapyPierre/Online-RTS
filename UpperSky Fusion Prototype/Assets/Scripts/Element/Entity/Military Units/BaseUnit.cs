@@ -1,5 +1,6 @@
 using System.Collections;
 using AOSFogWar.Used_Scripts;
+using Element.Entity.Military_Units.Units_Skills;
 using NaughtyAttributes;
 using Player;
 using UnityEditor;
@@ -9,7 +10,8 @@ namespace Element.Entity.Military_Units
 {
     public class BaseUnit : BaseEntity
     {
-        [field: SerializeField, Expandable] public UnitData Data { get; private set; }
+        [Space] public UnitSkill[] skills;
+        [field: SerializeField, Expandable, Space] public UnitData Data { get; private set; }
 
         [HideInInspector] public UnitsManager.UnitStates myState;
 
@@ -21,8 +23,6 @@ namespace Element.Entity.Military_Units
         [HideInInspector] public Vector3 targetPosToMoveTo;
         [HideInInspector] public GameObject myMoveIndicator;
         
-        [HideInInspector] public bool isSkillReady;
-
         public override void Spawned()
         {
             base.Spawned();
@@ -40,22 +40,46 @@ namespace Element.Entity.Military_Units
                 FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
             }
 
-            if (Data.SkillData.ReadyAtStart)
+            foreach (UnitSkill skill in skills)
             {
-                isSkillReady = true;
+                if (skill.Data.ReadyAtStart) skill.isReady = true;
             }
         }
 
-        public virtual void UseSkill()
+        public virtual void UseSkill(UnitSkill skill)
         {
-            isSkillReady = false;
+            skill.isReady = false;
             UIManager.ShowSelectionInfoBox(this, Data, Owner);
+        }
+
+        private void ManageSkillsCooldowns()
+        {
+            foreach (var skill in skills)
+            {
+                if (skill.timeLeftOnCd > 0)
+                {
+                    skill.timeLeftOnCd -= Time.deltaTime;
+                    int cdDuration = skill.Data.CooldownDuration;
+                    skill.cdCompletion = (cdDuration - skill.timeLeftOnCd) / cdDuration;
+
+                    if (skill.timeLeftOnCd <= 0 && skill.Data.ReadyAtStart) skill.isReady = true;
+
+                    UIManager.UpdateSelectionInfobox(this, Data, Owner);
+                }
+            }
+        }
+        
+        protected void StartSkillCooldown(UnitSkill skill)
+        {
+            skill.isActive = false;
+            skill.timeLeftOnCd = skill.Data.CooldownDuration;
         }
 
         private void Update()
         {
             CheckIfTargetInRange();
             ShootAtEnemy();
+            ManageSkillsCooldowns();
         }
 
         public override void FixedUpdateNetwork()

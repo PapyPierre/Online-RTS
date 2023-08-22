@@ -7,15 +7,17 @@ namespace Element.Entity.Military_Units.Units_Specifics
 {
     public class Galileo : BaseUnit
     {
-        public override void UseSkill()
+        public override void UseSkill(UnitSkill skill)
         {
-            base.UseSkill();
-            StartCoroutine(LaunchBombs());
+            base.UseSkill(skill);
+            StartCoroutine(LaunchBombs(skill));
         }
 
-        private IEnumerator LaunchBombs()
+        private IEnumerator LaunchBombs(UnitSkill skill)
         {
-            if (Data.SkillData is GomorrahBombData data)
+            skill.isActive = true;
+            
+            if (skill.Data is GomorrahBombData data)
             {
                 for (int i = 0; i < data.NumberOfLaunch; i++)
                 {
@@ -29,16 +31,9 @@ namespace Element.Entity.Military_Units.Units_Specifics
                     
                     yield return new WaitForSeconds(data.TimeBetweenLaunch);
                 }
-
-                StartCoroutine(SkillCooldown(data.CooldownDuration));
             }
-        }
-
-        private IEnumerator SkillCooldown(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            isSkillReady = true;
-            //TODO affiché le cd et réactiver le btn dans la ui à la fin
+            
+            StartSkillCooldown(skill);
         }
     }
 }

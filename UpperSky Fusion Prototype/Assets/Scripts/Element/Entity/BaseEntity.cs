@@ -47,9 +47,9 @@ namespace Element.Entity
         [SerializeField, Header("VFX")] private NetworkPrefabRef deathVfx;
         [SerializeField] private NetworkPrefabRef lowHpVfx;
         private bool _lowHpVfxSpawned;
-        
-        [SerializeField] protected Transform[] canonsPos;
         [SerializeField] protected NetworkPrefabRef shootVfx;
+
+        [SerializeField, Header("Other")] protected Transform[] canonsPos;
 
         public override void Spawned()
         {

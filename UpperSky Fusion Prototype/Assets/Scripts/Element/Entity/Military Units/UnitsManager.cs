@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Element.Entity.Military_Units.Units_Skills;
 using Fusion;
 using UnityEngine;
 using UserInterface;
@@ -14,7 +15,7 @@ namespace Element.Entity.Military_Units
         private UIManager _uiManager;
 
         public NetworkPrefabRef[] allUnitsPrefab;
-        public List<UnitData> allUnitsData;
+        public UnitData[] allUnitsData;
 
         [Space] public List<BaseUnit> allActiveUnits;
         public List<BaseUnit> currentlySelectedUnits;
@@ -41,9 +42,10 @@ namespace Element.Entity.Military_Units
         
         public enum UnitSkillsEnum
         {
-            None = 0, 
-            GomorrahBomb = 1,
-            Colonisation = 2
+            GomorrahBomb = 0,
+            Colonisation = 1,
+            SpeedBoost = 2,
+            Scouting = 3
         }
 
         public float distToTargetToStop;
@@ -121,11 +123,12 @@ namespace Element.Entity.Military_Units
         }
         
         // Call from inspector
-        public void UseUnitSkill()
+        public void UseUnitSkill(int index)
         {
             if (_gameManager.thisPlayer.lastSelectedElement != null)
             {
-                _gameManager.thisPlayer.lastSelectedElement.GetComponent<BaseUnit>().UseSkill();
+                BaseUnit unit = _gameManager.thisPlayer.lastSelectedElement.GetComponent<BaseUnit>();
+                unit.UseSkill(unit.skills[index]);
             }
             else
             {

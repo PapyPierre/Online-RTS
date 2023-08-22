@@ -5,6 +5,7 @@ using Element;
 using Element.Entity;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
+using Element.Entity.Military_Units.Units_Skills;
 using Element.Island;
 using Entity;
 using Entity.Buildings;
@@ -84,7 +85,8 @@ namespace UserInterface
         [SerializeField] private TextMeshProUGUI[] selectionInfoboxStatsTMP;
         [SerializeField, Required()] private Image selectionInfoboxEntityIcon;
         [SerializeField] private Image[] selectionInfoboxOwnerColorElements; 
-        [SerializeField] private GameObject[] selectionInfoboxEntitySkills;
+        [SerializeField] private GameObject[] selectionInfoboxUnitSkillsBG;
+        [SerializeField] private Button[] selectionInfoboxUnitsSkillsBtn;
         [SerializeField] private Image[] unitsQueueImages;
         [SerializeField] private Slider formationQueueSlider;
         [SerializeField, Required()] private GameObject selectionInfoboxDestroyBtn;
@@ -413,21 +415,33 @@ namespace UserInterface
                image.color = owner is null ? Color.white : owner.myColor;
             }
 
-            foreach (var go in selectionInfoboxEntitySkills)
+            foreach (var go in selectionInfoboxUnitSkillsBG)
             {
                 go.SetActive(false);
             }
             
             selectionInfoboxDestroyBtn.SetActive(true);
 
-            if (elementData is UnitData unitData)
+            if (element is BaseUnit unit)
             {
-                if (unitData.SkillData.Skill is not UnitsManager.UnitSkillsEnum.None)
+                var skills = unit.skills;
+                for (var index = 0; index < skills.Length; index++)
                 {
-                    selectionInfoboxEntitySkills[0].SetActive(true); 
-                    selectionInfoboxEntitySkills[0].GetComponent<Image>().sprite = unitData.SkillData.SkillIcon;
-                    selectionInfoboxEntitySkills[0].GetComponent<Button>().interactable  = 
-                        element.GetComponent<BaseUnit>().isSkillReady;
+                    var skill = skills[index];
+                    selectionInfoboxUnitSkillsBG[index].SetActive(true); 
+                    selectionInfoboxUnitSkillsBG[index].GetComponent<Image>().sprite =  skill.Data.SkillIcon;
+                    var skillImage = selectionInfoboxUnitsSkillsBtn[index].GetComponent<Image>();
+                    skillImage.sprite = skill.Data.SkillIcon;
+                    if (skill.isReady)
+                    {
+                        selectionInfoboxUnitsSkillsBtn[index].interactable = true;
+                        skillImage.fillAmount = 1;
+                    }
+                    else
+                    {
+                        selectionInfoboxUnitsSkillsBtn[index].interactable = false;
+                        skillImage.fillAmount = skill.cdCompletion;
+                    }
                 }
             }
             else if (elementData is IslandData)

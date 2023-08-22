@@ -1,3 +1,4 @@
+using Element.Entity.Military_Units.Units_Skills.Skills_Data;
 using Fusion;
 using UnityEngine;
 
@@ -23,10 +24,7 @@ namespace Element.Entity.Military_Units.Units_Skills
         
         [field: SerializeField]
         public float ImpactRange  { get; private set; }
-        
-        [field: SerializeField]
-        public float CooldownDuration  { get; private set; }
-        
+
         [field: SerializeField]
         public NetworkPrefabRef ExplosionVfx  { get; private set; }
     }

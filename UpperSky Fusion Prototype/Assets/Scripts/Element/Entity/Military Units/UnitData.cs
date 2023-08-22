@@ -16,7 +16,7 @@ namespace Element.Entity.Military_Units
                 ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")]
         public int SupplyCost { get; private set; }
         
-        [field: SerializeField, Expandable] public UnitSkillData SkillData { get; private set; }
+       // [field: SerializeField, Expandable] public UnitsManager.UnitSkillsEnum[] Skills { get; private set; }
 
         #endregion
         
@@ -59,24 +59,6 @@ namespace Element.Entity.Military_Units
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero"),
                 ShowIf("CanShoot")] 
         public float RealodTime { get; private set; }
-
-        #endregion
-        
-        /// Base Status Section -------------------------------------------------------------------------
-
-        #region Base Status
-
-        [field: Header("Base Unit Status"),  SerializeField]
-        public bool IsBaseCamouflaged { get; private set; }
-        
-        [field: SerializeField] 
-        public float BaseRegeneration { get; private set; }
-       
-        [field: SerializeField] 
-        public float BaseAcid { get; private set; }
-        
-        [field: SerializeField] 
-        public float BaseParasite { get; private set; }
 
         #endregion
 

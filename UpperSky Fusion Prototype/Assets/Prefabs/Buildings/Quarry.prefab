@@ -135,16 +135,14 @@ MonoBehaviour:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
     RawGuidValue: 043176b6a68be2b43b073aaaa4782c7d
-  canonsPos: []
   shootVfx:
     RawGuidValue: 00000000000000000000000000000000
+  canonsPos: []
+  isStartBuilding: 0
   <Data>k__BackingField: {fileID: 11400000, guid: f437ab40b73e22945a4d7a2c19e27f04,
     type: 2}
   myIsland: {fileID: 0}
-  isStartBuilding: 0
-  timeLeftToForm: 0
   canonHead: {fileID: 0}
-  headAngularSpeed: 0
 --- !u!114 &7072893243073000247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,7 +616,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: e06e7973fae97da47931c6ffb2b23468, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1595042162969622894, guid: 94d1b43d42a9cee4f8464a84c5f5cc7e,
         type: 3}
       propertyPath: m_AnchorMax.x

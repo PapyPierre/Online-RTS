@@ -26,21 +26,14 @@ namespace Element
         [SerializeField] private  List<MeshRenderer> meshToColor;
         private Color _baseColor;
         #endregion
-        
-        [SerializeField] protected GameObject selectionCircle;
 
-        public enum ElementType
-        {
-            None,
-            Island,
-            Building,
-            Unit
-        }
+        [SerializeField, Header("Graph")] protected GameObject selectionCircle;
+        [SerializeField] protected GameObject graphObject;
         
-        [SerializeField, Space] protected GameObject graphObject;
-        [SerializeField, Space] protected GameObject canvas;
-        [SerializeField, Space] protected Image minimapIcon;
-        [SerializeField, Space] public Transform minimapCanvas;
+        [SerializeField, Header("UI")] protected GameObject canvas;
+        
+        [SerializeField, Header("Minimap")] protected Image minimapIcon;
+        [SerializeField] public Transform minimapCanvas;
 
         private static void OwnerChanged(Changed<BaseElement> changed)
         {
