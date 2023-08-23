@@ -73,7 +73,7 @@ namespace Element.Entity.Buildings
         {
             if (Data.IsDefenseBuilding)
             {
-                if (TargetedEntity == null || TargetedEntity.isDead)
+                if (TargetedEntity == null || TargetedEntity.IsDead)
                 {
                     FindTarget();
                     return;
@@ -92,7 +92,7 @@ namespace Element.Entity.Buildings
             foreach (var col in colliders)
             {
                 var unit = col.GetComponent<BaseUnit>();
-                if (unit.Owner == Owner || unit.isDead) continue;
+                if (unit.Owner == Owner || unit.IsDead) continue;
                 SetTarget(unit);
                 break;
             }

@@ -17,7 +17,7 @@ namespace Element.Island
          {
             BaseUnit unit = other.GetComponent<BaseUnit>();
             
-            if (unit.isDead) return;
+            if (!unit.Object) return;
 
             foreach (var skill in unit.skills)
             {
@@ -40,8 +40,8 @@ namespace Element.Island
          {
             BaseUnit unit = other.GetComponent<BaseUnit>();
 
-            if (unit.isDead || unit.Object == null) return;
-            
+            if (!unit.Object) return;
+      
             foreach (var skill in unit.skills)
             {
                if (skill.Data.ThisSkill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)

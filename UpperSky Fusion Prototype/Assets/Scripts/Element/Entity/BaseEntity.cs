@@ -40,7 +40,7 @@ namespace Element.Entity
 
         protected BaseEntity TargetedEntity { get; private set; }
 
-        public bool isDead;
+        [Networked] public bool IsDead { get; private set; }
         
         [HideInInspector] public List<BaseEntity> currentAgressor;
 
@@ -128,7 +128,7 @@ namespace Element.Entity
 
         public virtual void DestroyEntity()
         {
-            isDead = true;
+            IsDead = true;
 
             if (GameManager.thisPlayer.lastSelectedElement == this)
             {
@@ -148,7 +148,7 @@ namespace Element.Entity
             Runner.Despawn(Object);
         }
 
-        public void SetTarget(BaseEntity entity)
+        public virtual void SetTarget(BaseEntity entity)
         {
             TargetedEntity = entity;
             entity.currentAgressor.Add(this);
@@ -156,11 +156,11 @@ namespace Element.Entity
             AimAtTarget(entity.transform, transform);
         }
         
-        public void ResetTarget()
+        public virtual void ResetTarget()
         {
             if (TargetedEntity is null) return;
 
-            if (TargetedEntity.currentAgressor.Contains(this) && !TargetedEntity.isDead)
+            if (TargetedEntity.currentAgressor.Contains(this) && !TargetedEntity.IsDead)
             {
                 TargetedEntity.currentAgressor.Remove(this);
             }

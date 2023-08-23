@@ -5,10 +5,8 @@ using Element;
 using Element.Entity;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
-using Element.Entity.Military_Units.Units_Skills;
 using Element.Island;
 using Entity;
-using Entity.Buildings;
 using Fusion;
 using NaughtyAttributes;
 using Player;
@@ -88,6 +86,7 @@ namespace UserInterface
         [SerializeField] private GameObject[] selectionInfoboxUnitSkillsBG;
         [SerializeField] private Button[] selectionInfoboxUnitsSkillsBtn;
         [SerializeField] private Image[] unitsQueueImages;
+        [SerializeField] private Sprite defaultUnitQueueSprite;
         [SerializeField] private Slider formationQueueSlider;
         [SerializeField, Required()] private GameObject selectionInfoboxDestroyBtn;
 
@@ -311,7 +310,7 @@ namespace UserInterface
         {
             foreach (var image in unitsQueueImages)
             {
-                image.sprite = null; //TODO mettre un sprite par default
+                image.sprite = defaultUnitQueueSprite; 
             }
             
             for (int i = 0; i < formationBuilding.FormationQueue.Count(); i++)

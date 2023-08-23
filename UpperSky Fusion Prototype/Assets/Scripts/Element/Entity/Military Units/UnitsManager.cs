@@ -37,7 +37,8 @@ namespace Element.Entity.Military_Units
         {
             Static,
             Moving,
-            Attacking
+            Targeting,
+            Shooting
         }
         
         public enum UnitSkillsEnum
@@ -101,7 +102,7 @@ namespace Element.Entity.Military_Units
 
             foreach (var unit in currentlySelectedUnits)
             {
-                if (unit.isDead) return;
+                if (unit.IsDead) return;
 
                 if (unit.myMoveIndicator != null) unit.myMoveIndicator.SetActive(false);
                 

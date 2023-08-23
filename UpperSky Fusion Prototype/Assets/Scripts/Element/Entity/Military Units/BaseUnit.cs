@@ -84,7 +84,7 @@ namespace Element.Entity.Military_Units
 
         public override void FixedUpdateNetwork()
         {
-            if (isDead) return;
+            if (IsDead) return;
             
             NullifyRbVelocity();
 
@@ -126,10 +126,24 @@ namespace Element.Entity.Military_Units
             }
             else targetedUnitIsInRange = false;
         }
+        
+        public override void SetTarget(BaseEntity entity)
+        {
+            base.SetTarget(entity);
+            myState = UnitsManager.UnitStates.Targeting;
+        }
+        
+        public override void ResetTarget()
+        {
+           base.ResetTarget();
+           myState = UnitsManager.UnitStates.Static;
+        }
 
         private void ShootAtEnemy()
         {
             if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot || !Data.CanShoot) return;
+
+            myState = UnitsManager.UnitStates.Shooting;
 
             ShowShootVfx();
 

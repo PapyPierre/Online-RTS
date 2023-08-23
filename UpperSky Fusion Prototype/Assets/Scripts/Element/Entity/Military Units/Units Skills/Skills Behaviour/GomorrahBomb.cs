@@ -34,7 +34,7 @@ namespace Element.Entity.Military_Units.Units_Skills.Skills_Behaviour
             foreach (var col in colliders)
             {
                 var building = col.GetComponent<BaseBuilding>();
-                if (building.Owner == Owner || building.isDead) continue;
+                if (building.Owner == Owner || building.IsDead) continue;
                building.RPC_TakeDamage(data.ImpactDamage, data.ArmorPenetration);
                break;
             }
