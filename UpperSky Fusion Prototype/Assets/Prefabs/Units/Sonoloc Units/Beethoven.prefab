@@ -998,17 +998,19 @@ MonoBehaviour:
   healthBar: {fileID: 217116904214661602}
   _CurrentArmor: 0
   armorBar: {fileID: 531323494689231341}
-  isDead: 0
+  _IsDead: 0
   currentAgressor: []
   deathVfx:
     RawGuidValue: 4bda94453d2ca7444a0fff05b2d425f5
   lowHpVfx:
     RawGuidValue: c4ed38c72957f2241ad144a1614956d9
+  shootVfx:
+    RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
   canonsPos:
   - {fileID: 3408496480565642235}
   - {fileID: 7832695866775460653}
-  shootVfx:
-    RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
+  shootProjectile:
+    RawGuidValue: 4297fe4a72b631a4380b15a885aa4b22
   skills: []
   <Data>k__BackingField: {fileID: 11400000, guid: 9d47502595b037347910470d19334975,
     type: 2}

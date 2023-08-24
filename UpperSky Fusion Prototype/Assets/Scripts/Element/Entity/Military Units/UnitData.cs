@@ -24,14 +24,16 @@ namespace Element.Entity.Military_Units
         /// Movement Data Section -------------------------------------------------------------------------
 
         #region Movement Data
-
+        
         [field: Header("Movement Data"), SerializeField, 
                 ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")] 
         public float MovementSpeed { get; private set; }
         
+        
         [field: SerializeField] 
         public float AngularSpeed { get; private set; }
 
+        
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
         public float WeatherResistance { get; private set; }
 
@@ -43,27 +45,46 @@ namespace Element.Entity.Military_Units
         #region Combat Data
         
         [field: Header("Combat Data"),  SerializeField]
-        public bool CanShoot { get; private set; }
+        public UnitsManager.ShootingMode ShootingMode { get; private set; }
 
-        [field: SerializeField, ShowIf("CanShoot")]
-        public int DamagePerShoot { get; private set; }
-
-        [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField,
-                ShowIf("CanShoot")]
-        public int ArmorPenetration { get; private set; }
         
-        [field: SerializeField, ShowIf("CanShoot"), ValidateInput("FloatIsGreaterThanZero", 
-                    "Must be greater than zero")]
-        public float ShootingRange { get; private set; }
+        [field: SerializeField, ShowIf("Automatic")]
+        public int ContinuiousDamage { get; private set; }
+        
+        
+        [field: SerializeField, ShowIf("ShotByShot")]
+        public int DamagePerShoot { get; private set; }
+        
         
         [field: SerializeField, ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero"),
-                ShowIf("CanShoot")] 
+                ShowIf("ShotByShot")] 
         public float RealodTime { get; private set; }
+
+        
+        [field: Tooltip("% des dégâts infligé qui vont ignoré l’armure"), Range(0,100), SerializeField,
+                ShowIf(EConditionOperator.Or, "ShotByShot", "Automatic")]
+        public int ArmorPenetration { get; private set; }
+        
+        
+        [field: SerializeField, ShowIf(EConditionOperator.Or, "ShotByShot", "Automatic"),
+                ValidateInput("FloatIsGreaterThanZero", "Must be greater than zero")]
+        public float ShootingRange { get; private set; }
+        
 
         #endregion
 
         /// Callback Function For Inspector Purpose -------------------------------------------------------------------------
 
+        private bool ShotByShot()
+        {
+            return ShootingMode == UnitsManager.ShootingMode.ShotByShot;
+        }
+
+        private bool Automatic()
+        {
+            return ShootingMode == UnitsManager.ShootingMode.Automatic;
+        }
+        
         private bool IntIsGreaterThanZero(int value)
         {
             return value > 0;

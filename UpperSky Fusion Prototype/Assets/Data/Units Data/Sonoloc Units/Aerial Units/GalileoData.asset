@@ -21,23 +21,18 @@ MonoBehaviour:
   <LockedDescription>k__BackingField: 
   <WoodCost>k__BackingField: 30
   <MetalsCost>k__BackingField: 0
-  <OrichalqueCost>k__BackingField: 8
+  <OrichalqueCost>k__BackingField: 3
   <ProductionTime>k__BackingField: 30
-  <MaxHealthPoints>k__BackingField: 20
+  <MaxHealthPoints>k__BackingField: 25
   <MaxArmorPoints>k__BackingField: 0
   <SightRange>k__BackingField: 45
   <SupplyCost>k__BackingField: 2
-  <SkillData>k__BackingField: {fileID: 11400000, guid: 6c10707a8086c9a498b8720e5b3e8791,
-    type: 2}
   <MovementSpeed>k__BackingField: 5
   <AngularSpeed>k__BackingField: 0
   <WeatherResistance>k__BackingField: 1
-  <CanShoot>k__BackingField: 0
+  <ShootingMode>k__BackingField: 0
+  <ContinuiousDamage>k__BackingField: 0
   <DamagePerShoot>k__BackingField: 0
+  <RealodTime>k__BackingField: 0
   <ArmorPenetration>k__BackingField: 0
   <ShootingRange>k__BackingField: 0
-  <RealodTime>k__BackingField: 0
-  <IsBaseCamouflaged>k__BackingField: 0
-  <BaseRegeneration>k__BackingField: 0
-  <BaseAcid>k__BackingField: 0
-  <BaseParasite>k__BackingField: 0

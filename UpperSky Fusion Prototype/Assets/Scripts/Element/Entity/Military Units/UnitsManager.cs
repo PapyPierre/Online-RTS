@@ -37,8 +37,14 @@ namespace Element.Entity.Military_Units
         {
             Static,
             Moving,
-            Targeting,
             Shooting
+        }
+        
+        public enum ShootingMode
+        {
+            None,
+            ShotByShot,
+            Automatic
         }
         
         public enum UnitSkillsEnum
@@ -119,7 +125,7 @@ namespace Element.Entity.Military_Units
 
                 unit.targetPosToMoveTo = unitTarget;
                 
-                unit.myState = UnitStates.Moving;
+                unit.MyState = UnitStates.Moving;
             }
         }
         

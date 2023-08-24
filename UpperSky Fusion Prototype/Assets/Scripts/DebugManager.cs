@@ -1,11 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Application = UnityEngine.Device.Application;
 
 public class DebugManager : MonoBehaviour
 {
-#if UNITY_EDITOR
+    public static DebugManager Instance;
+
+    public bool showUnitsStateDebugText;
+    
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError(name);
+            return;
+        }
+        
+        Instance = this;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad0))
@@ -16,6 +27,8 @@ public class DebugManager : MonoBehaviour
 
     private void DebugMouseHoverObjectName()
     {
+        if (!Application.isEditor) return;
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
@@ -26,5 +39,4 @@ public class DebugManager : MonoBehaviour
             Debug.Log("Objet survolé par la souris : " + hitTransform.name); 
         }
     }
-#endif
 }

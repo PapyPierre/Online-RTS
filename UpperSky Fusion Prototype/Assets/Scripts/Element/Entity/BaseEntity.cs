@@ -50,6 +50,7 @@ namespace Element.Entity
         [SerializeField] protected NetworkPrefabRef shootVfx;
 
         [SerializeField, Header("Other")] protected Transform[] canonsPos;
+        [SerializeField] private NetworkPrefabRef shootProjectile;
 
         public override void Spawned()
         {
@@ -59,12 +60,12 @@ namespace Element.Entity
             
             switch (this)
             {
-                case BaseUnit unit:
+                case BaseUnit:
                 {
                     GetComponent<FogAgentUnit>().Init(graphObject, canvas, minimapIcon.gameObject);
                     break;
                 }
-                case BaseBuilding building:
+                case BaseBuilding:
                 {
                     GetComponent<FogAgent>().Init(graphObject, canvas);
                     break;
@@ -125,7 +126,7 @@ namespace Element.Entity
                 if (this is BaseUnit unit) unit.ReactToDamage(shooter);
             }
         }
-
+        
         public virtual void DestroyEntity()
         {
             IsDead = true;
@@ -148,11 +149,9 @@ namespace Element.Entity
             Runner.Despawn(Object);
         }
 
-        public virtual void SetTarget(BaseEntity entity)
+        public void SetTarget(BaseEntity entity)
         {
             TargetedEntity = entity;
-            entity.currentAgressor.Add(this);
-            
             AimAtTarget(entity.transform, transform);
         }
         
@@ -170,21 +169,18 @@ namespace Element.Entity
 
         protected void AimAtTarget(Transform target, Transform objToRotate)
         {
-            float rotSpeed = 2;
-
-            if (this is BaseUnit unit)
-            {
-                if (unit.Data.AngularSpeed > 0)
-                {
-                    rotSpeed = unit.Data.AngularSpeed;
-                }
-                else return;
-            }
-
             Vector3 directionToTarget = target.position - objToRotate.position;
-            Quaternion targetRot = Quaternion.LookRotation(directionToTarget, Vector3.up);
+            objToRotate.rotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+        }
 
-            objToRotate.rotation = Quaternion.Slerp(objToRotate.rotation, targetRot, rotSpeed * Time.deltaTime);
+        protected void ShootProjectile( int damage, int armorPen, BaseEntity shooter)
+        {
+            GameManager.thisPlayer.Runner.Spawn(shootProjectile, canonsPos[0].position, Quaternion.identity, 
+               Object.InputAuthority, (runner, obj) => 
+            {
+                // Initialize before synchronizing it
+                obj.GetComponent<ShootProjectile>().Init(TargetedEntity, damage, armorPen, shooter);
+            });
         }
         
         protected void ShowShootVfx()

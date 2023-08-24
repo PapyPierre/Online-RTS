@@ -499,7 +499,7 @@ namespace UserInterface
                             selectionInfoboxStatsTMP[3].text = unit.Data.MovementSpeed.ToString(CultureInfo.CurrentCulture);
                             selectionInfoboxStatsTMP[4].text = unit.Data.WeatherResistance.ToString(CultureInfo.CurrentCulture);
 
-                            if (unit.Data.CanShoot)
+                            if (unit.Data.ShootingMode == UnitsManager.ShootingMode.ShotByShot)
                             {
                                 selectionInfoboxStatsTMP[5].text = unit.Data.DamagePerShoot.ToString();
                                 selectionInfoboxStatsTMP[6].text = unit.Data.ArmorPenetration + "%";

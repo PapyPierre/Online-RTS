@@ -111,7 +111,7 @@ namespace Player
                     {
                         foreach (var unit in _unitsManager.currentlySelectedUnits)
                         {
-                            if (unit.Data.CanShoot)
+                            if (unit.Data.ShootingMode != UnitsManager.ShootingMode.None)
                             {
                                 unit.SetTarget(entity);
                             }

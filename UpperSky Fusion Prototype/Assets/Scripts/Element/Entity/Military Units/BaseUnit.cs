@@ -1,8 +1,10 @@
 using System.Collections;
 using AOSFogWar.Used_Scripts;
 using Element.Entity.Military_Units.Units_Skills;
+using Fusion;
 using NaughtyAttributes;
 using Player;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +15,8 @@ namespace Element.Entity.Military_Units
         [Space] public UnitSkill[] skills;
         [field: SerializeField, Expandable, Space] public UnitData Data { get; private set; }
 
-        [HideInInspector] public UnitsManager.UnitStates myState;
+        [Networked] public UnitsManager.UnitStates MyState { get; set; }
+        [SerializeField] private TextMeshProUGUI stateDebugTMP;
 
         private Rigidbody _rb;
         
@@ -22,6 +25,7 @@ namespace Element.Entity.Military_Units
         
         [HideInInspector] public Vector3 targetPosToMoveTo;
         [HideInInspector] public GameObject myMoveIndicator;
+        
         
         public override void Spawned()
         {
@@ -80,6 +84,9 @@ namespace Element.Entity.Military_Units
             CheckIfTargetInRange();
             ShootAtEnemy();
             ManageSkillsCooldowns();
+
+            if (DebugManager.Instance.showUnitsStateDebugText) stateDebugTMP.text = MyState.ToString();
+            else stateDebugTMP.gameObject.SetActive(false);
         }
 
         public override void FixedUpdateNetwork()
@@ -88,22 +95,27 @@ namespace Element.Entity.Military_Units
             
             NullifyRbVelocity();
 
-            if (myState == UnitsManager.UnitStates.Moving)
+            if (MyState == UnitsManager.UnitStates.Moving)
             {
-                var step = Data.MovementSpeed * Runner.DeltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
+              ManageMovement();
+            }
+        }
+
+        private void ManageMovement()
+        {
+            var step = Data.MovementSpeed * Runner.DeltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
                 
-                if (Data.AngularSpeed > 0)
-                {
-                    transform.rotation = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
-                }
+            if (Data.AngularSpeed > 0)
+            {
+                transform.rotation = Quaternion.LookRotation(targetPosToMoveTo - transform.position);
+            }
                 
-                if (Vector3.Distance(transform.position,  targetPosToMoveTo) < UnitsManager.distToTargetToStop)
-                {
-                    // Stop
-                    myMoveIndicator.SetActive(false);
-                    myState = UnitsManager.UnitStates.Static;
-                }
+            if (Vector3.Distance(transform.position,  targetPosToMoveTo) < UnitsManager.distToTargetToStop)
+            {
+                // Stop
+                myMoveIndicator.SetActive(false);
+                MyState = UnitsManager.UnitStates.Static;
             }
         }
 
@@ -126,42 +138,53 @@ namespace Element.Entity.Military_Units
             }
             else targetedUnitIsInRange = false;
         }
-        
-        public override void SetTarget(BaseEntity entity)
-        {
-            base.SetTarget(entity);
-            myState = UnitsManager.UnitStates.Targeting;
-        }
-        
+
         public override void ResetTarget()
         {
            base.ResetTarget();
-           myState = UnitsManager.UnitStates.Static;
+           MyState = UnitsManager.UnitStates.Static;
         }
 
         private void ShootAtEnemy()
         {
-            if (TargetedEntity is null || !targetedUnitIsInRange || !_isReadyToShoot || !Data.CanShoot) return;
+            if (TargetedEntity is null || !targetedUnitIsInRange || Data.ShootingMode == UnitsManager.ShootingMode.None)
+            {
+                return;
+            }
 
-            myState = UnitsManager.UnitStates.Shooting;
+            if (Data.ShootingMode == UnitsManager.ShootingMode.ShotByShot)
+            {
+                AimAtTarget(TargetedEntity.transform, transform);
 
-            ShowShootVfx();
+                if (!_isReadyToShoot) return;
 
-            TargetedEntity.RPC_TakeDamage(Data.DamagePerShoot, Data.ArmorPenetration, this);
+                ShootProjectile(Data.DamagePerShoot, Data.ArmorPenetration, this);
 
-            _isReadyToShoot = false;
-            StartCoroutine(Reload());
+                _isReadyToShoot = false;
+                StartCoroutine(Reload());
+            }
+            else if (Data.ShootingMode == UnitsManager.ShootingMode.Automatic)
+            {
+                ShowShootVfx();
+                TargetedEntity.RPC_TakeDamage(Data.ContinuiousDamage, Data.ArmorPenetration, this);
+            }
+            
+            MyState = UnitsManager.UnitStates.Shooting;
         }
 
         public void ReactToDamage(BaseEntity agressor)
         {
-            if (myState == UnitsManager.UnitStates.Moving) return;
+            if (MyState == UnitsManager.UnitStates.Moving) return;
 
             if (TargetedEntity is null)
             {
                 _isReadyToShoot = false;
                 SetTarget(agressor);
                 StartCoroutine(Reload());
+            }
+            else if (TargetedEntity == agressor)
+            {
+                AimAtTarget(agressor.transform, transform);
             }
         }
 
