@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 using World;
@@ -10,7 +10,7 @@ namespace UserInterface.MiniMap
     public class MiniMap : MonoBehaviour
     {
         private GameManager _gameManager;
-        private WorldManager _worldManager;
+        [SerializeField, Required()] private WorldManager worldManager;
         private Camera _minimapCam;
         private Camera _playerCam;
 
@@ -29,7 +29,6 @@ namespace UserInterface.MiniMap
         private void Start()
         {
             _gameManager = GameManager.Instance;
-            _worldManager = WorldManager.Instance;
             _minimapCam = GetComponent<Camera>();
         }
         
@@ -71,20 +70,18 @@ namespace UserInterface.MiniMap
         #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying) return;
-            
             Handles.color = innerBorderColor;
             Handles.DrawWireDisc(
                 transform.position, 
                 Vector3.up, 
-                _worldManager.innerBorderRadius, 
+                worldManager.innerBorderRadius, 
                 innerBorderThickness);
             
             Handles.color = outerBorderColor;
             Handles.DrawWireDisc(
                 transform.position, 
                 Vector3.up,
-                _worldManager.outerBorderRadius, 
+                worldManager.outerBorderRadius, 
                 outerBorderThickness);
         }
         #endif

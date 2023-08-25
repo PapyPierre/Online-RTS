@@ -94,7 +94,7 @@ namespace Element.Entity.Military_Units
             currentlySelectedUnits.Clear();
         }
 
-        public void OrderSelectedUnitsToMoveTo(Vector3 positon)
+        public void OrderSelectedUnitsToMoveTo(Vector3 positon, bool moveToAttack = false)
         {
             Vector3 groupTarget = new Vector3(positon.x, flyingHeightOfUnits, positon.z);
 
@@ -120,8 +120,13 @@ namespace Element.Entity.Military_Units
                 {
                     unitTarget = groupTarget;
                 }
-                
-                unit.myMoveIndicator = Instantiate(unitMoveIndicator, groupTarget, unitMoveIndicator.transform.rotation);
+
+                if (!moveToAttack)
+                {
+                    unit.myMoveIndicator = Instantiate(unitMoveIndicator, groupTarget, unitMoveIndicator.transform.rotation);
+                }
+               
+
 
                 unit.targetPosToMoveTo = unitTarget;
                 

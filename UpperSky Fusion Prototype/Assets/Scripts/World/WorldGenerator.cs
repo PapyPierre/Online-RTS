@@ -94,7 +94,7 @@ namespace World
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
-            transform.Rotate(Vector3.up, Random.Range(0f,359f));
+            _worldCenter.Rotate(Vector3.up, Random.Range(0f,179f));
             
             SpawnSecondsIslands();
         }

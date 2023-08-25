@@ -25,8 +25,7 @@ namespace Element.Entity.Military_Units
         
         [HideInInspector] public Vector3 targetPosToMoveTo;
         [HideInInspector] public GameObject myMoveIndicator;
-        
-        
+
         public override void Spawned()
         {
             base.Spawned();
@@ -114,7 +113,7 @@ namespace Element.Entity.Military_Units
             if (Vector3.Distance(transform.position,  targetPosToMoveTo) < UnitsManager.distToTargetToStop)
             {
                 // Stop
-                myMoveIndicator.SetActive(false);
+                if (myMoveIndicator != null) myMoveIndicator.SetActive(false);
                 MyState = UnitsManager.UnitStates.Static;
             }
         }
@@ -196,8 +195,8 @@ namespace Element.Entity.Military_Units
         
         public override void DestroyEntity()
         {
-            myMoveIndicator.SetActive(false);
-
+            if (myMoveIndicator != null) myMoveIndicator.SetActive(false);
+            
             if (UnitsManager.currentlySelectedUnits.Contains(this)) UnitsManager.currentlySelectedUnits.Remove(this);
 
             GameManager.thisPlayer.ressources.CurrentSupply -= Data.SupplyCost;

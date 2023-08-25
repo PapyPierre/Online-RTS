@@ -1276,7 +1276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -118.9, y: 0.1}
+  m_AnchoredPosition: {x: -118.9, y: 0.099998474}
   m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &138759190
@@ -10055,11 +10055,11 @@ RectTransform:
   m_Father: {fileID: 1973493650}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 920, y: 450}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -38, y: 0}
+  m_SizeDelta: {x: 171.9139, y: 100}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &1087384069
 GameObject:
   m_ObjectHideFlags: 0
@@ -10183,6 +10183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d762ead05004a61479c2534f334369fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldManager: {fileID: 1155935957}
   lineRenderer: {fileID: 1087384075}
   fovDisplayRaycastHitLayer:
     serializedVersion: 2
@@ -11073,13 +11074,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   innerBorderRadius: 120
-  outerBorderRadius: 250
-  numberOfIslandsPerPlayer: 4
-  maxSpecialIslandsPerPlayer: 1
+  outerBorderRadius: 240
+  numberOfIslandsPerPlayer: 6
+  maxSpecialIslandsPerPlayer: 2
   islandTypes:
   - type: 0
     rarity: {x: 0, y: 0}
-  - type: 1
+  - type: 2
     rarity: {x: 1, y: 100}
   - type: 4
     rarity: {x: 0, y: 0}
@@ -14276,7 +14277,7 @@ Transform:
   m_GameObject: {fileID: 1799386818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -15, z: 0}
-  m_LocalScale: {x: 0.56689, y: 0.56689, z: 0.56689}
+  m_LocalScale: {x: 0.43531835, y: 0.43531835, z: 0.43531835}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -14542,7 +14543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 628, y: 490}
+  m_AnchoredPosition: {x: -287, y: 0}
   m_SizeDelta: {x: 1143.6768, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1817552799
@@ -16342,11 +16343,11 @@ RectTransform:
   m_Father: {fileID: 843633205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &1990487180
 GameObject:
   m_ObjectHideFlags: 0
