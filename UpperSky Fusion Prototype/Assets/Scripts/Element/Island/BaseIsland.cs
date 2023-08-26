@@ -29,7 +29,7 @@ namespace Element.Island
 
             if (transform.rotation.y != 0)
             {
-               minimapIcon.transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.up);
+               minimapIcon.transform.localRotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
             }
             
             GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);

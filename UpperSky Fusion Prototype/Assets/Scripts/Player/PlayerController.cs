@@ -29,6 +29,8 @@ namespace Player
         public Color myColor;
         public Camera myCam;
 
+        private HomeIsland _homeIsland;
+
         [HideInInspector] public PlayerRessources ressources;
         
        [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
@@ -199,19 +201,18 @@ namespace Player
         public void MakesPlayerReady()
         {
             ressources.Init();
+            var islandPos = _homeIsland.transform.position;
+            transform.position = new Vector3(islandPos.x, 10, islandPos.z);
 
             IsReadyToPlay = true;
         }
         
         public void SpawnStartBuilding(HomeIsland homeIsland)
         {
-            var islandPos = homeIsland.transform.position;
-            transform.position = new Vector3(islandPos.x, 10, islandPos.z);
-            transform.LookAt(Vector3.zero);
-            
-            var startBuilding = _buildingsManager.BuildBuilding(13, islandPos,
-                Quaternion.identity, homeIsland, true);
-            startBuilding.transform.parent = homeIsland.transform;
+            _homeIsland = homeIsland;
+            var startBuilding = _buildingsManager.BuildBuilding(13, _homeIsland.transform.position,
+                Quaternion.identity, _homeIsland, true);
+            startBuilding.transform.parent = _homeIsland.transform;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
