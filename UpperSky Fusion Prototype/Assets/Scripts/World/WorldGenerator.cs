@@ -1,7 +1,6 @@
 using System.Collections;
 using Element.Entity.Buildings;
 using Element.Island;
-using Entity.Buildings;
 using Fusion;
 using Player;
 using UnityEngine;
@@ -106,7 +105,7 @@ namespace World
                 var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
-                SpawnIsland(pos, IslandTypesEnum.Basic);
+                SpawnIsland(pos, IslandTypesEnum.Home);
             }
             
             SpawnOtherIslands();
@@ -129,12 +128,12 @@ namespace World
 
                     foreach (var islandTypes in  _worldManager.islandTypes)
                     {
-                        if (!(r >= islandTypes.rarity.x) || !(r <= islandTypes.rarity.y)) continue;
+                        if (!(r >= islandTypes.data.Rarity.x) || !(r <= islandTypes.data.Rarity.y)) continue;
                         SpawnIsland(NewIslandPos(), islandTypes.type);
-                        if (islandTypes.type != IslandTypesEnum.Basic) _currentlyPlacedSpecialIslands++;
+                        if (islandTypes.type != IslandTypesEnum.Home) _currentlyPlacedSpecialIslands++;
                     }
                 }
-                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Basic);
+                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Home);
             }
             
             _gameManager.thisPlayer.MakesPlayerReady();

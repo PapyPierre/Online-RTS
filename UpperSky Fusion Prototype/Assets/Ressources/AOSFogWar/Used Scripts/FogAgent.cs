@@ -40,11 +40,7 @@ namespace Ressources.AOSFogWar.Used_Scripts
         
         private void Update()
         {
-            if (_fogOfWar is null || _fogOfWar.CheckWorldGridRange(transform.position) == false)
-            {
-                Debug.Log(0);
-                return;
-            }
+            if (_fogOfWar is null || _fogOfWar.CheckWorldGridRange(transform.position) == false) return;
 
             isVisible = _fogOfWar.CheckVisibility(transform.position, additionalRadius);
 

@@ -15,6 +15,8 @@ namespace Element.Island
 
         [field: SerializeField, Expandable] public IslandData Data { get; private set; }
 
+        public MeshRenderer ground;
+
         [field: HideInInspector] [Networked] public int BuildingsCount { get; set; }
         
         [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();

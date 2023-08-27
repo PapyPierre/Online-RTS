@@ -11,6 +11,7 @@ namespace World
     {
         public static WorldManager Instance;
         private WorldGenerator _worldGenerator;
+        private IslandGenerator _islandGenerator;
         
         [Header("Border Radius")]
         public float innerBorderRadius;
@@ -43,30 +44,42 @@ namespace World
         private void Start()
         {
             _worldGenerator = GetComponent<WorldGenerator>();
+            _islandGenerator = GetComponent<IslandGenerator>();
         }
 
         public void CallWorldGeneration(int numberOfPlayers)
         {
             _worldGenerator.GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
         }
+
+
+        #region Test
+        [SerializeField] private IslandTypesEnum typeToGenerate;
+        
+        [Button()]
+        public void CallToGenerateIsland()
+        {
+            _islandGenerator.GenerateIsland(Vector3.zero, typeToGenerate);
+        }
+        #endregion
+       
     }
 
     public enum IslandTypesEnum
     {
-        Uninitialized,
         Home,
-        Basic,
-        Living,
+        Forest,
+        Tropical,
+        Winter,
+        Cursed,
         Mythic,
-        JungleSanctuary,
-        DesertSanctuary,
-        MontainSanctuary
+        Living
     }
     
     [Serializable]
     public class IslandTypesClass
     {
         public IslandTypesEnum type;
-        [MinMaxSlider(0,100)] public Vector2 rarity;
+        [Expandable] public IslandTypeData data;
     }
 }

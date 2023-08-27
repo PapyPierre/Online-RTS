@@ -5484,7 +5484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 2
+  expectedNumberOfPlayers: 1
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -10079,7 +10079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1087384070
 Transform:
   m_ObjectHideFlags: 0
@@ -11025,6 +11025,7 @@ GameObject:
   - component: {fileID: 1155935953}
   - component: {fileID: 1155935957}
   - component: {fileID: 1155935956}
+  - component: {fileID: 1155935958}
   m_Layer: 0
   m_Name: World Manager
   m_TagString: Untagged
@@ -11079,15 +11080,9 @@ MonoBehaviour:
   maxSpecialIslandsPerPlayer: 2
   islandTypes:
   - type: 0
-    rarity: {x: 0, y: 0}
-  - type: 2
-    rarity: {x: 1, y: 100}
-  - type: 4
-    rarity: {x: 0, y: 0}
-  - type: 5
-    rarity: {x: 0, y: 0}
-  - type: 6
-    rarity: {x: 0, y: 0}
+    data: {fileID: 0}
+  - type: 1
+    data: {fileID: 11400000, guid: 4f933eaa632f6184eb88e921ca40ac3c, type: 2}
   islandPrefabs:
   - RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
   - RawGuidValue: 2bf52d9ef4406094ab8eebc566e05c88
@@ -11126,6 +11121,27 @@ MonoBehaviour:
   - {r: 0.8207547, g: 0.80662, b: 0.30584726, a: 1}
   - {r: 0.55977017, g: 0.114542544, b: 0.735849, a: 1}
   - {r: 0.3207547, g: 0.25569597, b: 0.25569597, a: 1}
+  typeToGenerate: 1
+--- !u!114 &1155935958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155935952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25e42fc57798ce40a214089497aaac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  baseIslandsMesh:
+  - {fileID: 2838049572198108382, guid: 193c4dd1caa66f24c80e5e472439b5d8, type: 3}
+  - {fileID: 9097975084292540765, guid: d64db4e8501a12747a8596535e82a5cb, type: 3}
+  - {fileID: 6867662657538483449, guid: 2acbdf2164d8b934099ad3ba3774bf74, type: 3}
+  - {fileID: 8308020558147696148, guid: c9f43f9812022df4a8e69fd84ad71a94, type: 3}
 --- !u!1 &1169068555
 GameObject:
   m_ObjectHideFlags: 0

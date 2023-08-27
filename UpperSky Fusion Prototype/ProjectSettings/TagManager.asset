@@ -7,6 +7,7 @@ TagManager:
   - Building
   - Unit
   - Props
+  - Island
   layers:
   - Default
   - TransparentFX
