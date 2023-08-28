@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ForestIslandData
   m_EditorClassIdentifier: 
   <Rarity>k__BackingField: {x: 0, y: 0}
-  <TopColor>k__BackingField: {r: 0.63336504, g: 0.7830189, b: 0, a: 1}
-  <GroundColor>k__BackingField: {r: 0.106532566, g: 0.3962264, b: 0.21660176, a: 1}
+  <TopColor>k__BackingField: {r: 1, g: 0.84147394, b: 0, a: 1}
+  <GroundColor>k__BackingField: {r: 0.063456744, g: 0.4339623, b: 0.20364803, a: 1}
   <Rocks>k__BackingField:
   - {fileID: 8867977494856218435, guid: a7b742fd86d3f2848847d764fb7809fb, type: 3}
   - {fileID: 2927069621948640310, guid: a9ab14d5374952440ae21e29d0c19fba, type: 3}
@@ -27,12 +27,9 @@ MonoBehaviour:
   - {fileID: 2788334266509097226, guid: a17cee2020228784a9ce5d6d10a0cfe5, type: 3}
   - {fileID: 8464594113590423803, guid: 5407aa8c6a616714fa881279ffc4cb2b, type: 3}
   - {fileID: 4240558444088619926, guid: d98a11f8f6b923845871672a18cbcccb, type: 3}
-  - {fileID: 919132149155446097, guid: de9138bae31cca74ba4049df73d229be, type: 3}
   - {fileID: 936558993754377247, guid: 366c7ad17a4d0f44eb9858a27e20b477, type: 3}
-  - {fileID: 919132149155446097, guid: 3d4bd339f93726e40b00dc4fc63f7585, type: 3}
   - {fileID: 8539020422982759807, guid: 71498f77b518050429c6a7d16ee56907, type: 3}
   - {fileID: 5361347363736573932, guid: 624d2fdd561843b4ea0c8ef50fe82ac2, type: 3}
-  - {fileID: 2973365450275641447, guid: d34e452db5e9c8141ab96a97f0e585a1, type: 3}
   - {fileID: 9223216791123271897, guid: 1b885d39634cfd044827eed679e99d68, type: 3}
   - {fileID: 756153216284106842, guid: 65eddab050cd38f4ca43c80b8aa31458, type: 3}
   - {fileID: 768529240187309210, guid: 1872d8873338c3246b3acbc3793550cb, type: 3}
@@ -159,4 +156,4 @@ MonoBehaviour:
   <NumberOfTrees>k__BackingField: {x: 8, y: 13}
   <NumberOfMediumStuff>k__BackingField: {x: 6, y: 9}
   <NumberOfPlants>k__BackingField: {x: 40, y: 70}
-  <NumberOfGrass>k__BackingField: {x: 100, y: 150}
+  <SpawnGrass>k__BackingField: 1

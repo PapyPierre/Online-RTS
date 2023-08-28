@@ -52,14 +52,15 @@ namespace World
             _worldGenerator.GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
         }
 
-
         #region Test
         [SerializeField] private IslandTypesEnum typeToGenerate;
+        [SerializeField] private Vector3 pos;
+
         
         [Button()]
         public void CallToGenerateIsland()
         {
-            _islandGenerator.GenerateIsland(Vector3.zero, typeToGenerate);
+            _islandGenerator.GenerateIsland(pos, typeToGenerate);
         }
         #endregion
        

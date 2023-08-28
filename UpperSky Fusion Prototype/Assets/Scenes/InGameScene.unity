@@ -4407,6 +4407,89 @@ MonoBehaviour:
   playerPrefab: {fileID: 1454646102370662544, guid: d13326297625af545b1cee88d5105995,
     type: 3}
   nds: {fileID: 311756825}
+--- !u!1 &431079342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431079345}
+  - component: {fileID: 431079344}
+  - component: {fileID: 431079343}
+  m_Layer: 0
+  m_Name: Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!23 &431079343
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431079342}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4daace3e566a8d64189b8d88d591d771, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &431079344
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431079342}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &431079345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431079342}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 40, y: 40, z: 40}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &435777427
 GameObject:
   m_ObjectHideFlags: 0
@@ -6211,7 +6294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &656924085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10594,7 +10677,7 @@ MonoBehaviour:
   fogPlaneHeight: 16
   updateFogPlaneHeightInRealTime: 0
   fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
-  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0.78431374}
+  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0}
   fogPlaneAlpha: 0.9
   fogLerpSpeed: 1
   fogPlaneTextureLerpTarget: {fileID: 0}
@@ -11122,6 +11205,7 @@ MonoBehaviour:
   - {r: 0.55977017, g: 0.114542544, b: 0.735849, a: 1}
   - {r: 0.3207547, g: 0.25569597, b: 0.25569597, a: 1}
   typeToGenerate: 1
+  pos: {x: 0, y: 0, z: 0}
 --- !u!114 &1155935958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11142,6 +11226,11 @@ MonoBehaviour:
   - {fileID: 9097975084292540765, guid: d64db4e8501a12747a8596535e82a5cb, type: 3}
   - {fileID: 6867662657538483449, guid: 2acbdf2164d8b934099ad3ba3774bf74, type: 3}
   - {fileID: 8308020558147696148, guid: c9f43f9812022df4a8e69fd84ad71a94, type: 3}
+  perlinNoiseRenderer: {fileID: 431079343}
+  perlinNoiseHeight: 256
+  perlinNoiseWidth: 256
+  perlinNoiseScale: 8
+  perlinNoiseSpawnReduction: 15
 --- !u!1 &1169068555
 GameObject:
   m_ObjectHideFlags: 0
@@ -17306,7 +17395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2090124503
 Transform:
   m_ObjectHideFlags: 0

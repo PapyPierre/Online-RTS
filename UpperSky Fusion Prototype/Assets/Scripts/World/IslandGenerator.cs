@@ -13,8 +13,18 @@ namespace World
         [SerializeField] private GameObject[] baseIslandsMesh;
         private GameObject _lastGeneratedIsland;
         private BoxCollider _islandCollider;
-        private float _xBoxColSize;
-        private float _zBoxColSize;
+        private float _boxColWidth;
+        private float _boxColHeight;
+
+        [SerializeField, Header("Grass Perlin Noise")] private Renderer perlinNoiseRenderer;
+        [SerializeField] private int perlinNoiseHeight;
+        [SerializeField] private int perlinNoiseWidth;
+        [SerializeField] private float perlinNoiseScale;
+        [SerializeField] private float perlinNoiseSpawnReduction;
+        private float _xOffset;
+        private float _yOffset;
+        private static readonly int ShaderTopColor = Shader.PropertyToID("_TopColor");
+        private static readonly int ShaderGroundColor = Shader.PropertyToID("_GroundColor");
 
         public void GenerateIsland(Vector3 position, IslandTypesEnum type)
         {
@@ -38,32 +48,33 @@ namespace World
             int x = Random.Range(0, baseIslandsMesh.Length);
             _lastGeneratedIsland = Instantiate(baseIslandsMesh[x], position, Quaternion.identity);
             _islandCollider = _lastGeneratedIsland.GetComponent<BoxCollider>();
-            _xBoxColSize = _islandCollider.size.x/2;
-            _zBoxColSize = _islandCollider.size.z/2;
 
+            _boxColWidth = _islandCollider.bounds.size.x;
+            _boxColHeight = _islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
+            
             _lastGeneratedIsland.GetComponent<BaseIsland>().ground.material.color
                 = _worldManager.islandTypes[(int) type].data.GroundColor;
 
-            var data = _worldManager.islandTypes[(int) type].data;
+            IslandTypeData data = _worldManager.islandTypes[(int) type].data;
             
             // Rocks
-            GenerateObj(position, type, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks);
+            GenerateObj(position, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
             
             // Trees
-            GenerateObj(position, type, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees);
+            GenerateObj(position, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data);
 
             // Trunk, Log, other medium stuff
-            GenerateObj(position, type, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff);
+            GenerateObj(position, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff, data);
             
             // Plants including mushrooms and bush
-            GenerateObj(position, type, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants);
+            GenerateObj(position, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants, data);
             
             // Grass
-            GenerateObj(position, type, data.NumberOfGrass.x, data.NumberOfGrass.y, data.Grass, true);
+            if (data.SpawnGrass) GenerateGrass(position, data.Grass[0], data);
         }
 
-        private void GenerateObj(Vector3 islandPos, IslandTypesEnum type, int numberOfObjX, int numberOfObjY,
-            GameObject[] obj, bool isGrass = false)
+        private void GenerateObj(Vector3 islandPos, int numberOfObjX, int numberOfObjY,
+            GameObject[] obj, IslandTypeData data)
         {
             int r = Random.Range(numberOfObjX, numberOfObjY);
             
@@ -72,48 +83,128 @@ namespace World
                 int x = Random.Range(0, obj.Length);
                 GameObject selectedObj = obj[x];
                 
-                SpawnObjOnIsland(selectedObj, islandPos, isGrass);
+                SpawnObjOnIsland(selectedObj, islandPos, data);
             }
         }
 
-        private void SpawnObjOnIsland(GameObject obj, Vector3 islandPos, bool isGrass = false)
+        private void GenerateGrass(Vector3 islandPos, GameObject grassObj, IslandTypeData data)
+        {
+            Texture2D texture = GenerateNoiseTexture();
+            perlinNoiseRenderer.material.mainTexture = texture;
+            
+            int width = texture.width;
+            int height = texture.height;
+
+            for (int u = 0; u < width; u++)
+            {
+                for (int v = 0; v < height; v++)
+                {
+                    float perlinValue = texture.GetPixel(u, v).grayscale;
+
+                    float r = Random.Range(0f, perlinNoiseSpawnReduction);
+                    
+                    if (Mathf.Clamp01(perlinValue) >= r)
+                    {
+                        float normalizedU = u / (float) width;
+                        float normalizedV = v / (float) height;
+
+                        float x = normalizedU * _boxColWidth + islandPos.x - _boxColWidth/2;
+                        float y = normalizedV * _boxColHeight + islandPos.z - _boxColHeight/2;
+                        
+                        Vector3 spawnPosition = new Vector3(x , islandPos.y, y);
+
+                        GameObject newGrassObj =
+                            Instantiate(grassObj, spawnPosition, Quaternion.identity, _lastGeneratedIsland.transform);
+                        
+                        if (!Physics.Raycast(newGrassObj.transform.position + new Vector3(0,5,0), Vector3.down, 
+                                Mathf.Infinity, terrainLayer, QueryTriggerInteraction.Ignore))
+                        {
+                            newGrassObj.SetActive(false);
+                        }
+                        else
+                        {
+                            // Change grass color according to island type
+                            MeshRenderer[] grassRenderers = newGrassObj.GetComponentsInChildren<MeshRenderer>();
+
+                            foreach (var renderer in grassRenderers)
+                            {
+                                renderer.material.SetColor(ShaderTopColor, data.TopColor);
+                                renderer.material.SetColor(ShaderGroundColor, data.GroundColor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private Texture2D GenerateNoiseTexture()
+        {
+            Texture2D texture = new Texture2D(perlinNoiseWidth, perlinNoiseHeight);
+            
+            _xOffset = Random.Range(0, 9999f);
+            _yOffset = Random.Range(0, 9999f);
+            
+            for (int x = 0; x < perlinNoiseWidth; x++)
+            {
+                for (int y = 0; y < perlinNoiseHeight; y++)
+                {
+                    Color color = CalculateNoiseColor(x, y);
+                    texture.SetPixel(x,y,color);
+                }
+            }
+            
+            texture.Apply();
+            
+            return texture;
+        }
+
+        private Color CalculateNoiseColor(int x, int y)
+        {
+            float xCoord = (float) x / perlinNoiseWidth * perlinNoiseScale + _xOffset;
+            float yCoord = (float) y / perlinNoiseHeight * perlinNoiseScale + _yOffset;
+            
+            float perlinNoiseValue = Mathf.Clamp01(Mathf.PerlinNoise(xCoord, yCoord));
+
+            return new Color(perlinNoiseValue, perlinNoiseValue, perlinNoiseValue);
+        }
+
+        private void SpawnObjOnIsland(GameObject obj, Vector3 islandPos, IslandTypeData data)
         {
             while (true)
             {
-                Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(_zBoxColSize, _xBoxColSize);
+                Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(new Vector2(islandPos.x, islandPos.z), _boxColHeight, _boxColWidth);
                 Vector3 objPos = new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
 
                 GameObject newObj = Instantiate(obj, objPos, Quaternion.identity, _lastGeneratedIsland.transform);
-                
-                if (!isGrass)
-                {
-                    newObj.GetComponent<IslandProps>().Init(this, islandPos);
+                newObj.GetComponent<IslandProps>().Init(this, islandPos);
                     
-                    if (!IsMeshOverlappingCompletely(newObj.GetComponent<MeshFilter>().mesh, newObj.transform.position))
-                    {
-                        newObj.SetActive(false);
-                        continue;
-                    }
-
-                    break;
+                if (!IsMeshOverlappingCompletely(newObj.GetComponent<MeshFilter>().mesh, newObj.transform.position))
+                {
+                    newObj.SetActive(false); 
+                    continue;
                 }
                 else
                 {
-                    if (!Physics.Raycast(newObj.transform.position + new Vector3(0,5,0), Vector3.down, 
-                            Mathf.Infinity, terrainLayer, QueryTriggerInteraction.Ignore))
+                    
+                    MeshRenderer renderer = newObj.GetComponent<MeshRenderer>();
+                    
+                    foreach (var mat in renderer.materials)
                     {
-                        newObj.SetActive(false);
-                        continue;
+                        if (mat.shader.name == "Polytope Studio/PT_Vegetation_Foliage_Shader")
+                        {
+                            mat.SetColor(ShaderTopColor, data.TopColor);
+                            mat.SetColor(ShaderGroundColor, data.GroundColor);
+                        }
                     }
-
-                    break;
                 }
+
+                break;
             }
         }
         
         public void MoveObjOnIsland(GameObject obj, Vector3 islandPos)
         {
-            Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(_zBoxColSize, _xBoxColSize);
+            Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(new Vector2(islandPos.x, islandPos.z), _boxColHeight, _boxColWidth);
             obj.transform.position = new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
                 
             if (!IsMeshOverlappingCompletely(obj.GetComponent<MeshFilter>().mesh, obj.transform.position))
@@ -122,11 +213,11 @@ namespace World
             }
         }
 
-        private bool IsMeshOverlappingCompletely(Mesh mesh, Vector3 position)
+        private bool IsMeshOverlappingCompletely(Mesh mesh, Vector3 islandPos)
         {
             foreach (Vector3 vertex in mesh.vertices)
             {
-                Vector3 worldVertex = position + vertex;
+                Vector3 worldVertex = islandPos + vertex;
                 
                 if (!Physics.Raycast(worldVertex + new Vector3(0,5,0), Vector3.down, 
                         Mathf.Infinity, terrainLayer, QueryTriggerInteraction.Ignore))
@@ -137,22 +228,6 @@ namespace World
             }
 
             return true; 
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_lastGeneratedIsland == null) return;
-           
-            BoxCollider islandCollider = _lastGeneratedIsland.GetComponent<BoxCollider>();
-            float xBoxColSize = islandCollider.size.x/2;
-            float zBoxColSize = islandCollider.size.z/2;
-            Vector3 center = islandCollider.center;
-            
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(center  + new Vector3(xBoxColSize, 0, -zBoxColSize), center + new Vector3(xBoxColSize, 0, zBoxColSize));
-            Gizmos.DrawLine(center + new Vector3(xBoxColSize, 0, zBoxColSize), center + new Vector3(-xBoxColSize, 0, zBoxColSize));
-            Gizmos.DrawLine(center + new Vector3(-xBoxColSize, 0, zBoxColSize), center + new Vector3(-xBoxColSize, 0, -zBoxColSize));
-            Gizmos.DrawLine(center + new Vector3(-xBoxColSize, 0, -zBoxColSize), center + new Vector3(xBoxColSize, 0, -zBoxColSize));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace World
         [field: SerializeField, MinMaxSlider(0,100)]
         public Vector2Int NumberOfPlants { get; private set; }
 
-        [field: SerializeField, MinMaxSlider(0,200)]
-        public Vector2Int NumberOfGrass { get; private set; }
+        [field: SerializeField]
+        public bool SpawnGrass { get; private set; }
     }
 }

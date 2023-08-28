@@ -12,22 +12,10 @@ public static class CustomHelper
       return Vector3.Distance(ReturnPosInTopDown(pos1), ReturnPosInTopDown(pos2));
    }
    
-   public static Vector2 GenerateRandomPosIn2DArea(Vector2 area)
+   public static Vector2 GenerateRandomPosIn2DArea(Vector2 center, float height, float width) 
    {
       return new Vector2(
-         Random.Range(-area.x,area.x), 
-         Random.Range(-area.y,area.y));
-   }
-   public static Vector3 GenerateRandomPosIn2DArea(Vector3 area)
-   {
-      return new Vector2(
-         Random.Range(-area.z,area.z), 
-         Random.Range(-area.x,area.x));
-   } 
-   public static Vector2 GenerateRandomPosIn2DArea(float height, float width) 
-   {
-      return new Vector2(
-         Random.Range(-width, width),
-         Random.Range(-height, height));
+         center.x + Random.Range(-width/2, width/2),
+         center.y + Random.Range(-height/2, height/2));
    }
 }
