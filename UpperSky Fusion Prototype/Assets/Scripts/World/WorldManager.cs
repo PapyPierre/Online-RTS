@@ -68,13 +68,14 @@ namespace World
 
     public enum IslandTypesEnum
     {
-        Home,
-        Forest,
+        Grassland,
+        Forester,
         Tropical,
         Winter,
         Cursed,
         Mythic,
-        Living
+        Mineral,
+        Random
     }
     
     [Serializable]

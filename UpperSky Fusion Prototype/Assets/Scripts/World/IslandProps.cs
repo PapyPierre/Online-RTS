@@ -1,5 +1,3 @@
-using System;
-using Element.Island;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,7 +17,7 @@ namespace World
             transform.rotation = rotation;
         }
         
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Props"))
             {

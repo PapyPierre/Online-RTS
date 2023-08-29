@@ -14,8 +14,6 @@ public static class CustomHelper
    
    public static Vector2 GenerateRandomPosIn2DArea(Vector2 center, float height, float width) 
    {
-      return new Vector2(
-         center.x + Random.Range(-width/2, width/2),
-         center.y + Random.Range(-height/2, height/2));
+      return new Vector2(center.x + Random.Range(-width/2, width/2), center.y + Random.Range(-height/2, height/2));
    }
 }

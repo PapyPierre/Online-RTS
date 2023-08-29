@@ -3503,7 +3503,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b11d53e31f5afd429221a3f07daf1ae, type: 2}
+  - {fileID: 2100000, guid: 6b0433674572a9146baf34f55ddd0258, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4458,6 +4458,7 @@ MonoBehaviour:
   minimapCanvas: {fileID: 0}
   <Data>k__BackingField: {fileID: 0}
   ground: {fileID: 4432668082921461589}
+  rockMesh: {fileID: 4002515674037484045}
   _BuildingsCount: 0
   buildingOnThisIsland: []
 --- !u!114 &1199567707443297267

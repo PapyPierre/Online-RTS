@@ -124,14 +124,14 @@ Material:
     - _Translucency: 10
     - _UVSec: 0
     - _WINDMASKONOFF: 1
-    - _WindDensity: 3.3
+    - _WindDensity: 2
     - _WindMovement: 0.5
-    - _WindStrength: 0.3
+    - _WindStrength: 0.2
     - _ZWrite: 0
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0.04770903, g: 0.3207547, b: 0.016642934, a: 1}
-    - _TopColor: {r: 0.57954854, g: 0.49416864, b: 0.15006168, a: 1}
+    - _TopColor: {r: 0.382916, g: 0.32599604, b: 0.098316275, a: 1}
   m_BuildTextureStacks: []

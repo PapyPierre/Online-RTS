@@ -92,5 +92,49 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Props
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: d93fdd8f32ecf9248af42226f201e86a,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: d93fdd8f32ecf9248af42226f201e86a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d93fdd8f32ecf9248af42226f201e86a, type: 3}
+--- !u!1 &8065061493198258348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d93fdd8f32ecf9248af42226f201e86a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7146565423466462717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &-6523681768791221917
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8065061493198258348}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4091749671742596833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8065061493198258348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

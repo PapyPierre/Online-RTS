@@ -259,7 +259,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5166544052048882449}
   - component: {fileID: 137746646020217952}
-  - component: {fileID: 2676254408667934582}
   m_Layer: 0
   m_Name: PT_Grass_02
   m_TagString: Untagged
@@ -312,15 +311,3 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4725501143243743987}
   m_Enabled: 1
---- !u!114 &2676254408667934582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5546342222124265899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2fc640250745bd4b8339c28b022fa39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

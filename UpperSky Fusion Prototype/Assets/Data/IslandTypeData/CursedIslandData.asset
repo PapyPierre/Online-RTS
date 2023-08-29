@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
+  m_Name: CursedIslandData
+  m_EditorClassIdentifier: 
+  <Rarity>k__BackingField: {x: 0, y: 0}
+  <TopColor>k__BackingField: {r: 0.13207549, g: 0.04547882, b: 0.09789256, a: 1}
+  <GroundColor>k__BackingField: {r: 0.14819078, g: 0.102794595, b: 0.20754719, a: 1}
+  <RockColor>k__BackingField: {r: 0.3962264, g: 0.3681915, b: 0.3962264, a: 1}
+  <Rocks>k__BackingField:
+  - {fileID: 3593053228829834420, guid: 6b3c8eeb6e2725f44a603535eb17195b, type: 3}
+  - {fileID: 2927069621948640310, guid: a9ab14d5374952440ae21e29d0c19fba, type: 3}
+  - {fileID: 7701346904196860772, guid: 90a5aaf955daaf24487eb8b5bcbad903, type: 3}
+  - {fileID: 919132149155446097, guid: 3eaa98783c6ae4849807ba14144bc3f2, type: 3}
+  - {fileID: 7958974895478944721, guid: e086f9889f6e6084dbc7d7d96b6d0214, type: 3}
+  - {fileID: 9030636465085370365, guid: 24f1d8d96f3dfca48a62a78aed3dc861, type: 3}
+  - {fileID: 862264761555036369, guid: 657dbbe1eadba1344a7c2e930af7d776, type: 3}
+  - {fileID: 1051746718232309461, guid: fef25331776041749a16949438695b64, type: 3}
+  - {fileID: 2788334266509097226, guid: a17cee2020228784a9ce5d6d10a0cfe5, type: 3}
+  - {fileID: 8464594113590423803, guid: 5407aa8c6a616714fa881279ffc4cb2b, type: 3}
+  - {fileID: 4240558444088619926, guid: d98a11f8f6b923845871672a18cbcccb, type: 3}
+  - {fileID: 936558993754377247, guid: 366c7ad17a4d0f44eb9858a27e20b477, type: 3}
+  - {fileID: 8539020422982759807, guid: 71498f77b518050429c6a7d16ee56907, type: 3}
+  - {fileID: 5361347363736573932, guid: 624d2fdd561843b4ea0c8ef50fe82ac2, type: 3}
+  - {fileID: 9223216791123271897, guid: 1b885d39634cfd044827eed679e99d68, type: 3}
+  - {fileID: 756153216284106842, guid: 65eddab050cd38f4ca43c80b8aa31458, type: 3}
+  - {fileID: 768529240187309210, guid: 1872d8873338c3246b3acbc3793550cb, type: 3}
+  - {fileID: 1982833369725903440, guid: 1613433481cacf049881daab2e2278f0, type: 3}
+  - {fileID: 8259216907855707757, guid: efba2ab1d1313534db88068630796ab7, type: 3}
+  - {fileID: 3984806146626160804, guid: 2cad941c835b42f4b9008033da6a1a66, type: 3}
+  - {fileID: 7937293697143769625, guid: b4fbce17dc1f71f4493c1d391a46e23a, type: 3}
+  - {fileID: 6935672849877018171, guid: c5bc801c43899d74cb238a9adc5ee07a, type: 3}
+  - {fileID: 3509356878525795097, guid: 77cbfbde630b08b4799d46fa76a1dcb6, type: 3}
+  - {fileID: 1140741101099621178, guid: 7ba8ace2508fd1744bbf96e4a8e4c25e, type: 3}
+  - {fileID: 6180279387736547809, guid: 74bbe4c8c0db48042a130fe5111a830d, type: 3}
+  - {fileID: 7269314752586442065, guid: c67f32f4d9ae4024786015ebd0afc66b, type: 3}
+  - {fileID: 2162462892243648360, guid: f3cc66f61741fb440b50229faf32210b, type: 3}
+  - {fileID: 1677234106486736816, guid: a00dfc0819a1ba94aa9afba96afe20b9, type: 3}
+  - {fileID: 5428825887719261509, guid: f31534540d6ca7e43b29678dbf793247, type: 3}
+  <Stones>k__BackingField:
+  - {fileID: 6134461703849607729, guid: 8e51cba604fdd674382060a4e92c0ef1, type: 3}
+  - {fileID: 6184621871172748659, guid: cff9faa6b0dcb2e45af6af276a091ce1, type: 3}
+  - {fileID: 8138988858302249073, guid: 37ce7a5e6a0d26c4db66b5b620af7843, type: 3}
+  - {fileID: 5981700776291497529, guid: b9006d41a3c570c459331baaf2c949ed, type: 3}
+  - {fileID: 5854194183274340440, guid: 529deff246b41a14398ee3e12896b8c5, type: 3}
+  - {fileID: 8926412338514706890, guid: b6358e070b50e4948bc59f3a5571d36e, type: 3}
+  - {fileID: 8154140245634753653, guid: 723d3bac79d09244abcf5202f5c3f8ac, type: 3}
+  - {fileID: 4238272381200363702, guid: 1103d46ad0301284c8e4324ea31a8973, type: 3}
+  - {fileID: 2702434414191295729, guid: fbf140e0ee062f84093272e2e3d9a0ff, type: 3}
+  - {fileID: 7111702967106967239, guid: b89e8fc6e680e574c9b3d9cfb2b4b9e7, type: 3}
+  - {fileID: 8860361573911024237, guid: 3fae22ba09ed54647b050aa32c9e2d2a, type: 3}
+  - {fileID: 3713917798653651538, guid: d610ea163e60e134d9a9f8036ae339c4, type: 3}
+  - {fileID: 1996238791754287482, guid: 14172bb64c637c547a06dfb01e5519b5, type: 3}
+  - {fileID: 2935970718359864176, guid: 1022fb549c2e0a14bb42a699b1608dce, type: 3}
+  - {fileID: 2180707156047401488, guid: 973ca5a5f32e1ef4883a5d2629799942, type: 3}
+  - {fileID: 8928578100916540094, guid: 9181a6ce012419b48b15ca8a2488f48f, type: 3}
+  - {fileID: 5082074061877716416, guid: 45cb4e394fca6d5488fea221b2004c35, type: 3}
+  - {fileID: 4739780766048052527, guid: 40831ce863ef27049a3d3592ff22899e, type: 3}
+  - {fileID: 605606040856626049, guid: db5824df30b248a448b3e459bd9b8ecc, type: 3}
+  <Trees>k__BackingField:
+  - {fileID: 2056538523394864422, guid: b16fc985b4bc2e445bcd6a309fa52257, type: 3}
+  - {fileID: 8839474099741920169, guid: 2dfcdb4624fbad048bf02816379d84d7, type: 3}
+  - {fileID: 3331807597596512887, guid: 67f483be4934acb408d2d7cf47feb3a8, type: 3}
+  - {fileID: 671557532754243556, guid: 2a12cb7e2c6021344ad6725d63bd9402, type: 3}
+  - {fileID: 4566072200467791427, guid: 102e2611efdda7d498c63d937f84e823, type: 3}
+  - {fileID: 5501412055503296416, guid: 34d2d226a8f22ca4d85d1939f5a70683, type: 3}
+  - {fileID: 7209107618959228573, guid: ec4bd531959a73a46868ed293e0aff98, type: 3}
+  - {fileID: 2727369184058132555, guid: 00e9c52480f1fd14cb4ce3c18f08dde5, type: 3}
+  - {fileID: 6605310043913557018, guid: 64042b6f3a289d844846344ecad7fba4, type: 3}
+  - {fileID: 755868657085542689, guid: a1699873f14c104468a4a0542c3c70cf, type: 3}
+  <MediumStuff>k__BackingField:
+  - {fileID: 2112287569153720663, guid: 8b9d632a39ccada4baeeb74625f9ba63, type: 3}
+  - {fileID: 2505772041557015552, guid: 76e105cd9a294dd4f9a38a156d83d8c5, type: 3}
+  - {fileID: 6354007121049577249, guid: 55203b71328b338448deed61951bd57b, type: 3}
+  - {fileID: 4654703670471619241, guid: 448e314382eb9664e9641cdd62e6e323, type: 3}
+  - {fileID: 1989942224261351393, guid: 993ed59e5a5e27849ae5a058ab4cce76, type: 3}
+  - {fileID: 1446920111834117080, guid: 2d8d8a306e04c4e4c93ff91e2b5f0678, type: 3}
+  <Plants>k__BackingField:
+  - {fileID: 3174543542180657652, guid: afe90cec8b3a6884dab68a842b698132, type: 3}
+  - {fileID: 7305205193039167119, guid: 02843c33f008a8940b7aabdc2b25e5ae, type: 3}
+  - {fileID: 3907143790486444565, guid: f61f8a1e0159d4041930437452cad883, type: 3}
+  - {fileID: 8396599572082164165, guid: 2b7479577b318e540bbb86a4e0e51ff1, type: 3}
+  - {fileID: 2537018127405121964, guid: 853f763cc5f3ed04e8f0e9f9ab34f08b, type: 3}
+  - {fileID: 261280734055315733, guid: 0df62f35558705c4484e8a566380c4ec, type: 3}
+  - {fileID: 832255476836993167, guid: 76d1987db300b2645be4ac09a2d5eb65, type: 3}
+  - {fileID: 139089680836511048, guid: 97e3744ec9bd4fe4099bcffd14beaac3, type: 3}
+  - {fileID: 2718531232420875393, guid: 4f63b6824cace2c4eb66705082eec851, type: 3}
+  - {fileID: 6404996381249864749, guid: d84f48ecf9695a040a1577c9b17cfa87, type: 3}
+  - {fileID: 8497752950828008705, guid: 5bb840c5ddd3f4a43891385e51182c68, type: 3}
+  - {fileID: 6673145770869208138, guid: 8716039b7a880e04285941f4e0abf2ec, type: 3}
+  - {fileID: 2148574446449235936, guid: 980c8aa9964c8274bbc1dd62d075bb43, type: 3}
+  - {fileID: 8808625645717073795, guid: e1576dbbb7c3ee94ab777658a8cb8e0d, type: 3}
+  - {fileID: 7189938380002973474, guid: 9ea9dbedd28bf494ea1d384617b9bdac, type: 3}
+  - {fileID: 8394610489348109463, guid: ca3a11f289c4e5b42b56066e13a8eedf, type: 3}
+  - {fileID: 2555095388396909059, guid: ba62924d3836f8f448d53de53f41e81c, type: 3}
+  - {fileID: 3157703779488942362, guid: fce05bee4f263924bb28df0a99509f08, type: 3}
+  - {fileID: 52156395484614864, guid: e1c0f8baf12bd444d952c0c20e6523bd, type: 3}
+  - {fileID: 1514086989266216714, guid: 1b9644c9bb4aa4243b6d6c5221d49105, type: 3}
+  <Grass>k__BackingField:
+  - {fileID: 5546342222124265899, guid: 82b2c64f4e2d5264bbf0f909cadda2fa, type: 3}
+  <NumberOfRocks>k__BackingField: {x: 0, y: 0}
+  <NumberOfStones>k__BackingField: {x: 0, y: 0}
+  <NumberOfTrees>k__BackingField: {x: 8, y: 11}
+  <NumberOfMediumStuff>k__BackingField: {x: 0, y: 0}
+  <NumberOfPlants>k__BackingField: {x: 20, y: 40}
+  <SpawnGrass>k__BackingField: 1

@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5155679858865336078}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.106747, y: -0.02, z: -43.054012}
+  m_LocalPosition: {x: -13.106747, y: -0.12, z: -43.054012}
   m_LocalScale: {x: 1.563061, y: 1.563061, z: 1.563061}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2956,7 +2956,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b11d53e31f5afd429221a3f07daf1ae, type: 2}
+  - {fileID: 2100000, guid: 6b0433674572a9146baf34f55ddd0258, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3075,6 +3075,7 @@ MonoBehaviour:
   minimapCanvas: {fileID: 0}
   <Data>k__BackingField: {fileID: 0}
   ground: {fileID: 9066871350183622063}
+  rockMesh: {fileID: 8246553140166218743}
   _BuildingsCount: 0
   buildingOnThisIsland: []
 --- !u!114 &2432141517801233632
@@ -3235,7 +3236,7 @@ PrefabInstance:
     - target: {fileID: 4873935619503376761, guid: 15a816d0926d4674f88ad9283545b20d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.02
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: 4873935619503376766, guid: 15a816d0926d4674f88ad9283545b20d,
         type: 3}

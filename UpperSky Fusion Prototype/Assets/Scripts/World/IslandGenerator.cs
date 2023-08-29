@@ -1,4 +1,3 @@
-using System;
 using Element.Island;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,7 +10,7 @@ namespace World
 
         [SerializeField] private LayerMask terrainLayer;
         [SerializeField] private GameObject[] baseIslandsMesh;
-        private GameObject _lastGeneratedIsland;
+        private BaseIsland _lastGeneratedIsland;
         private BoxCollider _islandCollider;
         private float _boxColWidth;
         private float _boxColHeight;
@@ -35,9 +34,19 @@ namespace World
 
             if (_lastGeneratedIsland != null)
             {
-                _lastGeneratedIsland.SetActive(false);
+                _lastGeneratedIsland.gameObject.SetActive(false);
             }
 
+            if (type is IslandTypesEnum.Random)
+            {
+                int randomTypeIndex = Random.Range(0, _worldManager.islandTypes.Length);
+                type = _worldManager.islandTypes[randomTypeIndex].type;
+                if (type == IslandTypesEnum.Random)
+                {
+                    type = IslandTypesEnum.Grassland;
+                }
+            }
+            
             GenerateBaseMesh(position, type);
 
             Debug.Log("A " + type + " island have been generated at " + position);
@@ -46,19 +55,27 @@ namespace World
         private void GenerateBaseMesh(Vector3 position, IslandTypesEnum type)
         {
             int x = Random.Range(0, baseIslandsMesh.Length);
-            _lastGeneratedIsland = Instantiate(baseIslandsMesh[x], position, Quaternion.identity);
+            _lastGeneratedIsland = Instantiate(baseIslandsMesh[x], position, Quaternion.identity).GetComponent<BaseIsland>();
+            
+            var islandRot = _lastGeneratedIsland.transform.rotation;
+            islandRot = Quaternion.Euler(islandRot.x, Random.Range(0f,179f), islandRot.z);
+            transform.rotation = islandRot;
+            
             _islandCollider = _lastGeneratedIsland.GetComponent<BoxCollider>();
 
             _boxColWidth = _islandCollider.bounds.size.x;
             _boxColHeight = _islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
             
-            _lastGeneratedIsland.GetComponent<BaseIsland>().ground.material.color
-                = _worldManager.islandTypes[(int) type].data.GroundColor;
-
             IslandTypeData data = _worldManager.islandTypes[(int) type].data;
-            
+
+            _lastGeneratedIsland.ground.material.color = data.GroundColor;
+            _lastGeneratedIsland.rockMesh.material.color = data.RockColor;
+
             // Rocks
             GenerateObj(position, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
+            
+            // Stones
+            GenerateObj(position, data.NumberOfStones.x, data.NumberOfStones.y, data.Stones, data);
             
             // Trees
             GenerateObj(position, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data);
@@ -172,8 +189,7 @@ namespace World
         {
             while (true)
             {
-                Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(new Vector2(islandPos.x, islandPos.z), _boxColHeight, _boxColWidth);
-                Vector3 objPos = new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
+                Vector3 objPos = FindPosOnIsland(islandPos);
 
                 GameObject newObj = Instantiate(obj, objPos, Quaternion.identity, _lastGeneratedIsland.transform);
                 newObj.GetComponent<IslandProps>().Init(this, islandPos);
@@ -185,10 +201,9 @@ namespace World
                 }
                 else
                 {
+                    MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
                     
-                    MeshRenderer renderer = newObj.GetComponent<MeshRenderer>();
-                    
-                    foreach (var mat in renderer.materials)
+                    foreach (var mat in meshRenderer.materials)
                     {
                         if (mat.shader.name == "Polytope Studio/PT_Vegetation_Foliage_Shader")
                         {
@@ -201,12 +216,25 @@ namespace World
                 break;
             }
         }
+
+        private Vector3 FindPosOnIsland(Vector3 islandPos)
+        {
+            Vector2 center = new Vector2(islandPos.x, islandPos.z);
+            Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(center, _boxColHeight, _boxColWidth);
+            return new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
+        }
         
         public void MoveObjOnIsland(GameObject obj, Vector3 islandPos)
-        {
+        { 
             Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(new Vector2(islandPos.x, islandPos.z), _boxColHeight, _boxColWidth);
+            
             obj.transform.position = new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
-                
+
+            // To reset collision detection 
+            Collider objCollider = obj.GetComponent<Collider>();
+            objCollider.enabled = false;
+            objCollider.enabled = true;
+            
             if (!IsMeshOverlappingCompletely(obj.GetComponent<MeshFilter>().mesh, obj.transform.position))
             { 
                 MoveObjOnIsland(obj, islandPos);
@@ -224,7 +252,6 @@ namespace World
                 {
                     return false; 
                 }
-               
             }
 
             return true; 

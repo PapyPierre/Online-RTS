@@ -16,8 +16,14 @@ namespace World
         [field: SerializeField]
         public Color GroundColor { get; private set; }
         
+        [field: SerializeField]
+        public Color RockColor { get; private set; }
+        
         [field: SerializeField, Header("Prefabs")]
         public GameObject[] Rocks { get; private set; }
+        
+        [field: SerializeField]
+        public GameObject[] Stones { get; private set; }
         
         [field: SerializeField]
         public GameObject[] Trees { get; private set; }
@@ -31,13 +37,16 @@ namespace World
         [field: SerializeField]
         public GameObject[] Grass { get; private set; }
         
-        [field: SerializeField, Header("NumberOfEach"), MinMaxSlider(0,100)]
+        [field: SerializeField, Header("NumberOfEach"), MinMaxSlider(0,10)]
         public Vector2Int NumberOfRocks { get; private set; }
         
-        [field: SerializeField, MinMaxSlider(0,100)]
+        [field: SerializeField, MinMaxSlider(0,30)]
+        public Vector2Int NumberOfStones { get; private set; }
+        
+        [field: SerializeField, MinMaxSlider(0,20)]
         public Vector2Int NumberOfTrees { get; private set; }
 
-        [field: SerializeField, MinMaxSlider(0,100)]
+        [field: SerializeField, MinMaxSlider(0,50)]
         public Vector2Int NumberOfMediumStuff { get; private set; }
 
         [field: SerializeField, MinMaxSlider(0,100)]

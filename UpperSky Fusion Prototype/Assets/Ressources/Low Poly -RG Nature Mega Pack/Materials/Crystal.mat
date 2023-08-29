@@ -13,10 +13,10 @@ Material:
   - _EMISSION
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
@@ -95,7 +95,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1
-    - _Metallic: 0.267
+    - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -110,9 +110,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.9405583, b: 0.30660376, a: 1}
-    - _Color: {r: 1, g: 0.9405583, b: 0.30660373, a: 1}
-    - _EmissionColor: {r: 0.5943396, g: 0.06811942, b: 0, a: 1}
+    - _BaseColor: {r: 0.5566038, g: 0.034131378, b: 0.09592913, a: 1}
+    - _Color: {r: 0.5566037, g: 0.034131378, b: 0.09592909, a: 1}
+    - _EmissionColor: {r: 0.06092586, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5134995704594829298

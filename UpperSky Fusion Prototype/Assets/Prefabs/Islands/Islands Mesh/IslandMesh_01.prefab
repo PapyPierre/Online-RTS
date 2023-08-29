@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 140
+  m_VersionIndex: 143
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1349,7 +1349,7 @@ Transform:
   m_GameObject: {fileID: 2838049572198108382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1679, y: 1.1679, z: 1.1679}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1680122575048998822}
@@ -1391,6 +1391,7 @@ MonoBehaviour:
   minimapCanvas: {fileID: 0}
   <Data>k__BackingField: {fileID: 0}
   ground: {fileID: 6696980850303057951}
+  rockMesh: {fileID: 5048402177123282842}
   _BuildingsCount: 0
   buildingOnThisIsland: []
 --- !u!114 &7332210343808324521
@@ -7048,7 +7049,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1780
+  m_VersionIndex: 1783
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7109,7 +7110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6b0433674572a9146baf34f55ddd0258, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

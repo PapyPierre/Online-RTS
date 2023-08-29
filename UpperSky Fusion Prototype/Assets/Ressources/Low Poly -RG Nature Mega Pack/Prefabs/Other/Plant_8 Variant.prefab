@@ -126,7 +126,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2791698471362104446, guid: e2924e47cd3b150468b8601932b18fd0, type: 3}
---- !u!114 &4856930206113052000
+--- !u!114 &5869948476464055945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

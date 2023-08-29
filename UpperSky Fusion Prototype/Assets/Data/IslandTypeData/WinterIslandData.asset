@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
+  m_Name: WinterIslandData
+  m_EditorClassIdentifier: 
+  <Rarity>k__BackingField: {x: 0, y: 0}
+  <TopColor>k__BackingField: {r: 0.52674437, g: 0.8396226, b: 0.7660607, a: 1}
+  <GroundColor>k__BackingField: {r: 0.7482645, g: 0.8839042, b: 0.8962264, a: 1}
+  <RockColor>k__BackingField: {r: 0.6553044, g: 0.6981132, b: 0.6976664, a: 1}
+  <Rocks>k__BackingField:
+  - {fileID: 5939026512222507068, guid: ba714c0d585a3104b98daa90f58d8c69, type: 3}
+  - {fileID: 5983615879533442137, guid: 41c95eb0c87a73f4aac9169cb9248b5e, type: 3}
+  - {fileID: 6746424743558028452, guid: 97a7a435ab1e19c4b8eefb72837da90a, type: 3}
+  - {fileID: 1410883168144670107, guid: 9bdaf17288ae8b14bb2105d4bcd88b49, type: 3}
+  - {fileID: 1451214577772002468, guid: e6492b13ca753d34fb619d4db91a743a, type: 3}
+  - {fileID: 7239079640402325456, guid: 50ff18ce59b946345ac2170d5c2d21f5, type: 3}
+  - {fileID: 7495189621980094432, guid: 32e2ccf06f85cfd4b9e3b4735391b2b0, type: 3}
+  - {fileID: 5451502948524003447, guid: edf7ff9b189fe9a488c70a952baecb86, type: 3}
+  - {fileID: 4407169400058499211, guid: 669b2a8196f0f6945a15d78a30e21ef7, type: 3}
+  - {fileID: 645267083939174728, guid: c9168a2610db83f4d827aa0d336b12d1, type: 3}
+  - {fileID: 3434445310922721149, guid: c87a43dd650c4d04d8119db4bb4be78b, type: 3}
+  - {fileID: 3890747982294567099, guid: d70a3e88b5ff1ab41bd691a2f164ccf7, type: 3}
+  - {fileID: 7655576771650154361, guid: 47d9ad42eeec8d74ba98fd8529ba62ea, type: 3}
+  - {fileID: 4784842898895477007, guid: d1310e50b40f17b4ea40753cb324ec73, type: 3}
+  - {fileID: 3331792269531199238, guid: 3706063365618664a88fd6714072573f, type: 3}
+  - {fileID: 4948586330511502768, guid: f2e96c1a5bcd8f2468f62ea826651c92, type: 3}
+  - {fileID: 7584355540773788909, guid: f8da6999d4429cc4a897278182abc4ff, type: 3}
+  - {fileID: 3504667542175912420, guid: 7854e30d530692c4d91365c2ef3d2d56, type: 3}
+  - {fileID: 3032832312134473868, guid: 8cefd24005bac0a4dbe7875b6c22f44e, type: 3}
+  - {fileID: 4981341235363129081, guid: 1a58c00664377d444868848cdc571b0e, type: 3}
+  - {fileID: 7976644554009889470, guid: 8e0edc4c0e01d204d8b671cc6307a7af, type: 3}
+  - {fileID: 989109384537581058, guid: 1b0f2c06e2fd0d24b9e160c3c5cd88f1, type: 3}
+  - {fileID: 6485883719074804931, guid: d8c863e816664fa4da835f7e44691df4, type: 3}
+  - {fileID: 2053250642413644988, guid: aa89a7392b491ae498a55141087ab1a1, type: 3}
+  - {fileID: 6788825411564547147, guid: 835025a4469679643b2d0b9b2598d9a5, type: 3}
+  - {fileID: 5306441512592277431, guid: 88444a5ccd86b4444b1667f936b6098e, type: 3}
+  - {fileID: 2126464236530168631, guid: e9ebd57463ca7aa468a479bb334ab048, type: 3}
+  - {fileID: 8678701008136243611, guid: be4e3bf54c2da4945b29f0f4b34f845e, type: 3}
+  - {fileID: 8637740179103420416, guid: 0e3abe3a6475dfb4b843c9ce248ffe1a, type: 3}
+  - {fileID: 2464483615182491101, guid: 57b86bb70374e4b4a80b02931e1ac695, type: 3}
+  - {fileID: 1202022426982317916, guid: 7d5adb1054638f448a59f2afbff9d90c, type: 3}
+  - {fileID: 7441622235159176672, guid: c7ee0754adff6024e9b3074b1739247b, type: 3}
+  - {fileID: 2509940709231304501, guid: 80d6dfa6f37c5814394569c2dd1c3076, type: 3}
+  - {fileID: 6343641547919916195, guid: 3c341e42036b5d04883c15c04a2e745e, type: 3}
+  <Stones>k__BackingField:
+  - {fileID: 6311022099497682538, guid: 2c70ac1ecdadb0f4f9620b5f04c4337b, type: 3}
+  - {fileID: 7176075923081913074, guid: 06f47c46c347f814784c31006c3978c8, type: 3}
+  - {fileID: 4752559701849615764, guid: 9e4281109bf770242a10258204a6a077, type: 3}
+  - {fileID: 3459366974458044096, guid: 57beb5f6867cf6846968e0f881f4f3ca, type: 3}
+  - {fileID: 3754095049567923893, guid: 8529a24dbf9d72849b7c61bb53d189ec, type: 3}
+  - {fileID: 5206208245487512730, guid: be4436f3ea7459f49aef09f29a672237, type: 3}
+  - {fileID: 6597325383005138562, guid: cdad21dfec1644249bb8c1061da13fa5, type: 3}
+  - {fileID: 2002951672918477486, guid: 326ffc06bfa334a48a6c4c4803d6e38e, type: 3}
+  - {fileID: 9188180242501729655, guid: 32353e91d13649c4682e5bcb75c6f275, type: 3}
+  - {fileID: 4890385310918793487, guid: 3b7de1d27ab7e9941bc32bfd5aed60bd, type: 3}
+  - {fileID: 3569052782492418039, guid: 66bee559ba985e04a8e290bde9d64cd5, type: 3}
+  - {fileID: 7269745128935157423, guid: 7cf838042b096ce48a60103d0a61f02e, type: 3}
+  - {fileID: 3619983624647750192, guid: 86aeded49837b37408a999af141c6024, type: 3}
+  - {fileID: 9139731825492040089, guid: e353873da1035a14db09ec3aa32b443b, type: 3}
+  - {fileID: 2602977656585170147, guid: f5a93884f6eadf94094480ead00ce07a, type: 3}
+  - {fileID: 6034574434960622501, guid: 023cfba61c480cb4395ae49df95104d8, type: 3}
+  - {fileID: 8751454660132203811, guid: 0d2a1c3ad490872449f064227c16903a, type: 3}
+  - {fileID: 5708425406569623429, guid: ae51ca2924349bf4cab7fb5910160c58, type: 3}
+  - {fileID: 3179453120082275963, guid: 310bb3ee910bc0f43a68af70b707a628, type: 3}
+  <Trees>k__BackingField:
+  - {fileID: 5643003441311834214, guid: 137ad87cfbf7efc469be578200d936bf, type: 3}
+  - {fileID: 2590198358175773128, guid: 829883182c298a94d878a73efdd00c81, type: 3}
+  - {fileID: 438010026646432879, guid: a6815c4c2ff680f4d94be1d0d901a51b, type: 3}
+  - {fileID: 6299632577960100001, guid: 4adc616c6c83bb74197589bca32a36ee, type: 3}
+  - {fileID: 2047551245328988859, guid: 35deb5502ab321e49be137abee8d8603, type: 3}
+  - {fileID: 1608749635809989398, guid: 80ddbc61696f259479ac8b255274e126, type: 3}
+  - {fileID: 4194916121238828333, guid: 7ff33e6a6bfb7c4468e3690f9447eb4a, type: 3}
+  - {fileID: 7393750316406095012, guid: 28726c3c3b19cc5418a4dab21dcbf43e, type: 3}
+  - {fileID: 2421008559788129149, guid: 52e8b5139bd1f1446913367e8deefb94, type: 3}
+  - {fileID: 8519726534819686467, guid: 4589b9e5ea4348e4ba73439caba6d428, type: 3}
+  - {fileID: 1171334568109875290, guid: 3e08f11da995725459bee6f8a70071f7, type: 3}
+  - {fileID: 3931611817077318670, guid: 356a6bbd931dd3a488129250f734f0de, type: 3}
+  - {fileID: 9032790282345072212, guid: a4dcaf64d44cf0148ad6f26e32f38121, type: 3}
+  <MediumStuff>k__BackingField:
+  - {fileID: 8065061493198258348, guid: e879e54eaa220504097787d7b67d1af6, type: 3}
+  - {fileID: 9065090697359373905, guid: eeccb2cb9f5b7534fb031e76b142274e, type: 3}
+  - {fileID: 3186015125688731569, guid: bab18648bacccc44bb41d43732a63acf, type: 3}
+  - {fileID: 4840968937369627078, guid: 763cdc93415ed204292ba9dcc7fc557b, type: 3}
+  - {fileID: 9073150693698693129, guid: 80771c81ca95d3d42b57782bae5a96d2, type: 3}
+  - {fileID: 174510018388792049, guid: f25bb17eba978ad4ba02a04179ffd064, type: 3}
+  - {fileID: 5859816661105178403, guid: 808b072c8ca3b014f858781ef53ff678, type: 3}
+  <Plants>k__BackingField:
+  - {fileID: 6215457400884659270, guid: 6806e338ac47687489dd3c0dc3188e3c, type: 3}
+  - {fileID: 4124641923149498076, guid: 628ec88cca3e81e47a7e23f88f4dd299, type: 3}
+  - {fileID: 5202211679255373831, guid: 6b75e6639eb5f184697fb65f71ccdfb0, type: 3}
+  - {fileID: 8788324120931298724, guid: d9783ccc8566bf043b53c4253a39d2a3, type: 3}
+  - {fileID: 85604678055054173, guid: 535bbf4e9365b0c4b9e7e211d43c7dd0, type: 3}
+  - {fileID: 6805099360741381644, guid: 48f2a933f9297694085325e67a8baa13, type: 3}
+  - {fileID: 3515881469493379809, guid: 33f33e01125a8964eae7ca79a1a321e1, type: 3}
+  - {fileID: 1204521571151828309, guid: 3dc5abe2bdef5a04d9a59ae92e9f325a, type: 3}
+  - {fileID: 6304002891823365885, guid: 530ad0e33440a8c42b54fa7d774def8c, type: 3}
+  - {fileID: 3404968999155481605, guid: d3c2fe9324b7eca4996a0f8242e753f1, type: 3}
+  - {fileID: 4706988091586223445, guid: d31bcbbfd2addb449ab78647786e5c11, type: 3}
+  - {fileID: 4018847643311045594, guid: 0dee6dc9af05cf7458346bc741a715ac, type: 3}
+  - {fileID: 8477030133881012071, guid: 810f1f58a60f50b449453bf4da005390, type: 3}
+  - {fileID: 4762844767855045328, guid: c6e7eb0a3b42dd34996304b63167b0fa, type: 3}
+  - {fileID: 2215357860680806384, guid: 6080b1be48d682648b7db6da68905319, type: 3}
+  - {fileID: 7019075145561884779, guid: 87ef9b24bfc79824d8ac5733ce55be7a, type: 3}
+  - {fileID: 4667827883756629210, guid: 4611b28bcbc95ae4bacbce133bf4f94c, type: 3}
+  - {fileID: 7437657518633326727, guid: dde03c852ebe84d41aaca6ccb1fe11f6, type: 3}
+  - {fileID: 8293572868515508087, guid: a417ad51615c6f049bc79fb2d094a41f, type: 3}
+  - {fileID: 877671678236068944, guid: 14d1eb01b7cdaba409afa9978bb040ae, type: 3}
+  - {fileID: 7655490835656247604, guid: e64f13c968cb6a34dab338265c53a59c, type: 3}
+  - {fileID: 2548648885097430091, guid: b8dc598e8fe06594786f3dfcbc778d8c, type: 3}
+  - {fileID: 5175544344614909716, guid: 7352223d6ea76e3408c689d85b400848, type: 3}
+  - {fileID: 2445877161386215344, guid: bae9235f6f40ece468a7f1a82cd866a9, type: 3}
+  - {fileID: 8293838000110300531, guid: b8d0491d732c3fd45a447a5f7ef8e634, type: 3}
+  - {fileID: 5386247048171493238, guid: e10949c2eb3cae542b582b65a8cd8f21, type: 3}
+  - {fileID: 2420269212699316128, guid: 9df14981b32a59848b5d8c272de7d2bc, type: 3}
+  - {fileID: 2724457762543640492, guid: ca5ec29c728bb7040b86f777c8c23200, type: 3}
+  - {fileID: 3496442181953332484, guid: acdfbcd61b3ea234e9d41535091ba1bc, type: 3}
+  - {fileID: 3600766653558963122, guid: ab211f494a9fbfb46941f6c40c9fd91f, type: 3}
+  <Grass>k__BackingField:
+  - {fileID: 5546342222124265899, guid: 82b2c64f4e2d5264bbf0f909cadda2fa, type: 3}
+  <NumberOfRocks>k__BackingField: {x: 0, y: 1}
+  <NumberOfStones>k__BackingField: {x: 2, y: 10}
+  <NumberOfTrees>k__BackingField: {x: 6, y: 8}
+  <NumberOfMediumStuff>k__BackingField: {x: 5, y: 9}
+  <NumberOfPlants>k__BackingField: {x: 30, y: 50}
+  <SpawnGrass>k__BackingField: 1

@@ -82,14 +82,14 @@ namespace World
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
            SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-               IslandTypesEnum.Home, _gameManager.connectedPlayers[0]);
+               IslandTypesEnum.Grassland, _gameManager.connectedPlayers[0]);
            
            for (int i = 0; i < _numberOfPlayers -1; i++) 
            {
                _worldCenter.Rotate(Vector3.up, angle);
                 
               SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                  IslandTypesEnum.Home, _gameManager.connectedPlayers[i + 1]);
+                  IslandTypesEnum.Grassland, _gameManager.connectedPlayers[i + 1]);
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
@@ -105,7 +105,7 @@ namespace World
                 var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
-                SpawnIsland(pos, IslandTypesEnum.Home);
+                SpawnIsland(pos, IslandTypesEnum.Grassland);
             }
             
             SpawnOtherIslands();
@@ -130,10 +130,10 @@ namespace World
                     {
                         if (!(r >= islandTypes.data.Rarity.x) || !(r <= islandTypes.data.Rarity.y)) continue;
                         SpawnIsland(NewIslandPos(), islandTypes.type);
-                        if (islandTypes.type != IslandTypesEnum.Home) _currentlyPlacedSpecialIslands++;
+                        if (islandTypes.type != IslandTypesEnum.Grassland) _currentlyPlacedSpecialIslands++;
                     }
                 }
-                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Home);
+                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Grassland);
             }
             
             _gameManager.thisPlayer.MakesPlayerReady();
