@@ -13,7 +13,7 @@ namespace Element.Island
     {
         private WorldManager _worldManager;
 
-        [field: SerializeField, Expandable] public IslandData Data { get; private set; }
+        [Expandable, HideInInspector] public IslandData data;
 
         public MeshRenderer ground;
         public MeshRenderer rockMesh;
@@ -37,13 +37,6 @@ namespace Element.Island
             
             GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);
         }
-
-        public virtual void Init(Transform parent, PlayerController owner)
-        {
-            transform.parent = parent;
-            Owner = owner;
-        }
-        
         
         // Call from coloniser
         public void CallToColonise()

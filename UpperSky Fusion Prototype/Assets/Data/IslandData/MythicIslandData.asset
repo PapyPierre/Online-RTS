@@ -12,10 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
   m_Name: MythicIslandData
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Mythic Island
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 21300000, guid: ceeb82c57baed1240b8f275b6500663c,
+    type: 3}
+  <SightRange>k__BackingField: 35
+  <Type>k__BackingField: 5
+  <MaxBuildingsOnThisIsland>k__BackingField: 0
   <Rarity>k__BackingField: {x: 0, y: 0}
-  <TopColor>k__BackingField: {r: 0, g: 0.9914336, b: 1, a: 1}
-  <GroundColor>k__BackingField: {r: 0.55998576, g: 0.8301887, b: 0.81399906, a: 1}
-  <RockColor>k__BackingField: {r: 0.876691, g: 0.92974055, b: 0.9339623, a: 1}
+  <TopColor>k__BackingField: {r: 0.32133323, g: 0.7808412, b: 0.7830189, a: 1}
+  <GroundColor>k__BackingField: {r: 0.8584906, g: 0.8229215, b: 0.7491545, a: 1}
+  <RockColor>k__BackingField: {r: 0.7809719, g: 0.84224814, b: 0.8490566, a: 1}
   <Rocks>k__BackingField: []
   <Stones>k__BackingField:
   - {fileID: 6311022099497682538, guid: 2c70ac1ecdadb0f4f9620b5f04c4337b, type: 3}

@@ -1,3 +1,4 @@
+using Element.Island;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,12 +7,12 @@ namespace World
     public class IslandProps : MonoBehaviour
     {
         private IslandGenerator _islandGenerator;
-        private Vector3 _myIslandPos;
+        private BaseIsland _myIsland;
         
-        public void Init(IslandGenerator islandGenerator, Vector3 pos)
+        public void Init(IslandGenerator islandGenerator, BaseIsland island)
         {
             _islandGenerator = islandGenerator;
-            _myIslandPos = pos;
+            _myIsland = island;
             var rotation = transform.rotation;
             rotation = Quaternion.Euler(rotation.x, Random.Range(0f,179f), rotation.z);
             transform.rotation = rotation;
@@ -21,7 +22,7 @@ namespace World
         {
             if (other.CompareTag("Props"))
             {
-                _islandGenerator.MoveObjOnIsland(gameObject, _myIslandPos);
+                _islandGenerator.MoveObjOnIsland(gameObject, _myIsland);
             }
         }
     }

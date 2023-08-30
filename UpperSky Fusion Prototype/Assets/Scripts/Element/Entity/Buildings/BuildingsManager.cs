@@ -103,19 +103,19 @@ namespace Element.Entity.Buildings
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
         }
 
-        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island, 
-            bool isStartBuilding = false)
+        public NetworkObject BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island)
         {
             island.BuildingsCount++;
             
-            _uiManager.UpdateSelectionInfobox(island, island.Data, island.Owner);
+            _uiManager.UpdateSelectionInfobox(island, island.data, island.Owner);
             
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, island.Object.InputAuthority);
 
             BaseBuilding building = obj.GetComponent<BaseBuilding>();
             
-            building.Init(island, isStartBuilding);
+            building.Init(island.Owner, building.Data);
+            building.SetIsland(island);
             island.buildingOnThisIsland.Add(building);
 
             haveBlueprintInHand = false;

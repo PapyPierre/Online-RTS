@@ -6211,7 +6211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &656924085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10079,7 +10079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1087384070
 Transform:
   m_ObjectHideFlags: 0
@@ -10594,7 +10594,7 @@ MonoBehaviour:
   fogPlaneHeight: 16
   updateFogPlaneHeightInRealTime: 0
   fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
-  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0}
+  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 1}
   fogPlaneAlpha: 0.9
   fogLerpSpeed: 1
   fogPlaneTextureLerpTarget: {fileID: 0}
@@ -11063,6 +11063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldCenterPrefab:
     RawGuidValue: 810d71898a64c414bb4968563d2b50f9
+  worldCenter: {fileID: 0}
 --- !u!114 &1155935957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11075,9 +11076,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d15a517670cab458be326f4d9e6a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldGenerator: {fileID: 0}
+  islandGenerator: {fileID: 0}
   innerBorderRadius: 120
   outerBorderRadius: 240
-  numberOfIslandsPerPlayer: 6
+  numberOfIslandsPerPlayer: 9
   maxSpecialIslandsPerPlayer: 2
   islandTypes:
   - type: 0
@@ -11094,9 +11097,6 @@ MonoBehaviour:
     data: {fileID: 11400000, guid: e3130fbf22d56814d8579d5e7b088c3c, type: 2}
   - type: 6
     data: {fileID: 11400000, guid: d78c19464e66b364f8a09251a08a3ac0, type: 2}
-  islandPrefabs:
-  - RawGuidValue: d9d3d4939f0a24142bf0a2d633ec002a
-  - RawGuidValue: 2bf52d9ef4406094ab8eebc566e05c88
   minDistBetweenIslands: 60
   islandDistFormCenterRepartition:
     serializedVersion: 2
@@ -11132,8 +11132,6 @@ MonoBehaviour:
   - {r: 0.8207547, g: 0.80662, b: 0.30584726, a: 1}
   - {r: 0.55977017, g: 0.114542544, b: 0.735849, a: 1}
   - {r: 0.3207547, g: 0.25569597, b: 0.25569597, a: 1}
-  typeToGenerate: 4
-  pos: {x: 0, y: 0, z: 0}
 --- !u!114 &1155935958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11150,10 +11148,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   baseIslandsMesh:
-  - {fileID: 2838049572198108382, guid: 193c4dd1caa66f24c80e5e472439b5d8, type: 3}
-  - {fileID: 9097975084292540765, guid: d64db4e8501a12747a8596535e82a5cb, type: 3}
-  - {fileID: 6867662657538483449, guid: 2acbdf2164d8b934099ad3ba3774bf74, type: 3}
-  - {fileID: 8308020558147696148, guid: c9f43f9812022df4a8e69fd84ad71a94, type: 3}
+  - RawGuidValue: 193c4dd1caa66f24c80e5e472439b5d8
+  - RawGuidValue: d64db4e8501a12747a8596535e82a5cb
+  - RawGuidValue: 2acbdf2164d8b934099ad3ba3774bf74
+  - RawGuidValue: c9f43f9812022df4a8e69fd84ad71a94
+  isGeneratingRocks: 1
+  isGeneratingStones: 1
+  isGeneratingTrees: 1
+  isGeneratingMediumStuff: 1
+  isGeneratingPlants: 1
+  isGeneratingGrass: 1
   perlinNoiseRenderer: {fileID: 1388829716}
   perlinNoiseHeight: 256
   perlinNoiseWidth: 256
@@ -17406,7 +17410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2090124503
 Transform:
   m_ObjectHideFlags: 0

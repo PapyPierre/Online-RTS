@@ -18,9 +18,6 @@ namespace Element.Entity
     
     public abstract class BaseEntity : BaseElement
     {
-        protected FogOfWar FogOfWar;
-        protected int FogRevealerIndex;
-        
         #region Networked Health & Health Bar
         [field: SerializeField, Header("Health")] [Networked(OnChanged = nameof(CurrentHealthChanged))]
         private float CurrentHealth { get; set; }
@@ -56,7 +53,6 @@ namespace Element.Entity
         {
             base.Spawned();
             
-            FogOfWar = FogOfWar.Instance;
             
             switch (this)
             {

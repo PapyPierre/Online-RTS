@@ -17,5 +17,15 @@ namespace Element
     
         [field: SerializeField, Required()]
         public Sprite Icon { get; private set; }
+        
+        [field: SerializeField, ValidateInput("IntIsGreaterThanZero", "Must be greater than zero")] 
+        public int SightRange { get; private set; }
+        
+        /// Function For Inspector Purpose -----------------------------------------------------------------------------
+
+        private bool IntIsGreaterThanZero(int value)
+        {
+            return value > 0;
+        }
     }
 }

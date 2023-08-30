@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9124463248759100345}
   - component: {fileID: 4559817689874915871}
   - component: {fileID: 1958303782995399773}
+  - component: {fileID: -1327499063181379259}
   m_Layer: 0
   m_Name: PT_Fruit_Tree_01_green_cut
   m_TagString: Untagged
@@ -130,6 +131,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1327499063181379259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135811463984137963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 021bfbcf15abb7543a51a487fa1c05ef
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []
 --- !u!1001 &5097743588046705270
 PrefabInstance:
   m_ObjectHideFlags: 0

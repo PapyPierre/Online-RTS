@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Element.Island;
-using Fusion;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ namespace World
     public class WorldManager : MonoBehaviour
     {
         public static WorldManager Instance;
-        private WorldGenerator _worldGenerator;
-        private IslandGenerator _islandGenerator;
+        [HideInInspector] public WorldGenerator worldGenerator;
+        [HideInInspector] public IslandGenerator islandGenerator;
         
         [Header("Border Radius")]
         public float innerBorderRadius;
@@ -21,7 +20,6 @@ namespace World
         private int numberOfIslandsPerPlayer; 
         [SerializeField] private int maxSpecialIslandsPerPlayer;
         public IslandTypesClass[] islandTypes;
-        public NetworkPrefabRef[] islandPrefabs;
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
         
@@ -43,45 +41,31 @@ namespace World
 
         private void Start()
         {
-            _worldGenerator = GetComponent<WorldGenerator>();
-            _islandGenerator = GetComponent<IslandGenerator>();
+            worldGenerator = GetComponent<WorldGenerator>();
+            islandGenerator = GetComponent<IslandGenerator>();
         }
 
         public void CallWorldGeneration(int numberOfPlayers)
         {
-            _worldGenerator.GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
+            worldGenerator.GenerateWorld(numberOfPlayers, numberOfIslandsPerPlayer, maxSpecialIslandsPerPlayer);
         }
-
-        #region Test
-        [SerializeField] private IslandTypesEnum typeToGenerate;
-        [SerializeField] private Vector3 pos;
-
-        
-        [Button()]
-        public void CallToGenerateIsland()
-        {
-            _islandGenerator.GenerateIsland(pos, typeToGenerate);
-        }
-        #endregion
-       
     }
 
     public enum IslandTypesEnum
     {
-        Grassland,
+        Meadow,
         Forester,
         Tropical,
         Winter,
         Cursed,
         Mythic,
-        Mineral,
-        Random
+        Mineral
     }
     
     [Serializable]
     public class IslandTypesClass
     {
         public IslandTypesEnum type;
-        [Expandable] public IslandTypeData data;
+        [Expandable] public IslandData data;
     }
 }

@@ -6,6 +6,7 @@ using Element.Island;
 using Entity.Buildings;
 using Fusion;
 using NaughtyAttributes;
+using Player;
 using UnityEditor;
 using UnityEngine;
 using UserInterface;
@@ -16,9 +17,7 @@ namespace Element.Entity.Buildings
     public class BaseBuilding : BaseEntity
     {
         private BuildingsManager _buildingsManager;
-        
-        public bool isStartBuilding;
-        
+
         [field: SerializeField, Expandable, Space] public BuildingData Data { get; private set; }
 
         [HideInInspector] public BaseIsland myIsland;
@@ -35,19 +34,9 @@ namespace Element.Entity.Buildings
             _buildingsManager = BuildingsManager.Instance;
         }
 
-        public void Init(BaseIsland buildOnThisIsland, bool startBuilding = false)
+        public override void Init(PlayerController owner, ElementData data)
         {
-            Owner = buildOnThisIsland.Owner;
-            myIsland = buildOnThisIsland;
-            isStartBuilding = startBuilding;
-            
-            if (PlayerIsOwner())
-            {
-                if (!HasStateAuthority) Object.RequestStateAuthority();
-                var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
-                FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
-            }
-            else if (isStartBuilding) RPC_StartBuildingInit();
+            base.Init(owner, data);
             
             if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
@@ -59,14 +48,10 @@ namespace Element.Entity.Buildings
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
         }
-        
-        [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
-        public void RPC_StartBuildingInit()
-        {
-            // The code inside here will run on the client which has input authority
 
-            var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
-            FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
+        public void SetIsland(BaseIsland buildOnThisIsland)
+        {
+            myIsland = buildOnThisIsland;
         }
 
         protected virtual void Update()
@@ -137,8 +122,7 @@ namespace Element.Entity.Buildings
                 Owner.ressources.CurrentOrichalqueGain -= Data.GeneratedOrichalquePerSeconds;
                 Owner.ressources.CurrentMaxSupply -= Data.AditionnalMaxSupplies;
             }
-
-            if (isStartBuilding) GameManager.DefeatPlayer(Owner);
+            
             base.DestroyEntity();
         }
 

@@ -259,6 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5166544052048882449}
   - component: {fileID: 137746646020217952}
+  - component: {fileID: -7041781163294880685}
   m_Layer: 0
   m_Name: PT_Grass_02
   m_TagString: Untagged
@@ -298,11 +299,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.25
+  - screenRelativeHeight: 0.15
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2045047452767312774}
-  - screenRelativeHeight: 0.125
+  - screenRelativeHeight: 0.06
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 242584036077982306}
@@ -311,3 +312,26 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4725501143243743987}
   m_Enabled: 1
+--- !u!114 &-7041781163294880685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546342222124265899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 82b2c64f4e2d5264bbf0f909cadda2fa
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []

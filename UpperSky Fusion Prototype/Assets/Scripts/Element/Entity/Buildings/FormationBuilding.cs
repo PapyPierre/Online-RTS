@@ -111,7 +111,8 @@ namespace Element.Entity.Buildings
             Vector3 spawnPos = new Vector3(myPos.x + randomX, UnitsManager.flyingHeightOfUnits, myPos.z + randomZ);
             NetworkObject obj = Runner.Spawn(prefab, spawnPos, Quaternion.identity, Object.StateAuthority);
 
-            obj.GetComponent<BaseUnit>().Init(Owner);
+            BaseUnit unit = obj.GetComponent<BaseUnit>();
+            unit.Init(Owner, unit.Data);
             
             if (FormationQueue.IsNotEmpty())
             {

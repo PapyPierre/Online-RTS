@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
   m_Name: MineralIslandData
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Mineral Island
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 21300000, guid: c95ffc257883e9b4eacfe76c57072666,
+    type: 3}
+  <SightRange>k__BackingField: 35
+  <Type>k__BackingField: 6
+  <MaxBuildingsOnThisIsland>k__BackingField: 0
   <Rarity>k__BackingField: {x: 0, y: 0}
-  <TopColor>k__BackingField: {r: 0.9528302, g: 0.50258964, b: 0.4449537, a: 1}
-  <GroundColor>k__BackingField: {r: 0.7924528, g: 0.72134614, b: 0.6915272, a: 1}
+  <TopColor>k__BackingField: {r: 0.74509805, g: 0.49569958, b: 0.44705883, a: 1}
+  <GroundColor>k__BackingField: {r: 0.764151, g: 0.60414696, b: 0.5298594, a: 1}
   <RockColor>k__BackingField: {r: 0.53333336, g: 0.54509807, b: 0.6392157, a: 1}
   <Rocks>k__BackingField:
   - {fileID: 3684230560706669323, guid: 44f7ce751e589224aba265b017a3c7ff, type: 3}

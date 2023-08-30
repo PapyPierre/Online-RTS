@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AOSFogWar.Used_Scripts;
 using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
 using Element.Island;
@@ -19,6 +20,9 @@ namespace Element
         protected UnitsManager UnitsManager;
         protected GameManager GameManager;
         protected UIManager UIManager;
+        protected FogOfWar FogOfWar;
+
+        protected int FogRevealerIndex;
 
         #region Ownership
         [field: SerializeField, Header("Ownership")]
@@ -28,7 +32,7 @@ namespace Element
         #endregion
 
         [SerializeField, Header("Graph")] protected GameObject selectionCircle;
-        [SerializeField] protected GameObject graphObject;
+        public GameObject graphObject;
         
         [SerializeField, Header("UI")] protected GameObject canvas;
         
@@ -55,7 +59,21 @@ namespace Element
             GameManager = GameManager.Instance;
             UnitsManager = UnitsManager.Instance;
             UIManager = UIManager.Instance;
+            FogOfWar = FogOfWar.Instance;
+
             if (meshToColor.Count > 0) _baseColor = meshToColor[0].material.color;
+        }
+
+        public virtual void Init(PlayerController owner, ElementData data)
+        {
+            Owner = owner;
+            
+            if (PlayerIsOwner())
+            {
+                if (!HasStateAuthority) Object.RequestStateAuthority();
+                var fogRevealer = new FogOfWar.FogRevealer(transform, data.SightRange, true);
+                FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
+            }
         }
         
         public bool PlayerIsOwner()

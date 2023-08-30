@@ -541,7 +541,7 @@ namespace UserInterface
                     // Nombre de bâtiments, visible que pour les iles
                     selectionInfoboxStatsObj[^1].SetActive(true);
                     selectionInfoboxStatsTMP[^1].text = island.BuildingsCount + "/" + 
-                                                        island.Data.MaxBuildingsOnThisIsland;
+                                                        island.data.MaxBuildingsOnThisIsland;
                     break;
                 }
             }

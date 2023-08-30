@@ -33,15 +33,9 @@ namespace Element.Entity.Military_Units
             SetUpHealtAndArmor(Data);
         }
 
-        public void Init(PlayerController owner)
+        public override void Init(PlayerController owner, ElementData data)
         {
-            Owner = owner;
-            
-            if (PlayerIsOwner())
-            {
-                var fogRevealer = new FogOfWar.FogRevealer(transform, Data.SightRange, true);
-                FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
-            }
+            base.Init(owner, data);
 
             foreach (UnitSkill skill in skills)
             {

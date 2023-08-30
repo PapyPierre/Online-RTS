@@ -10,12 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
-  m_Name: GrasslandIslandData
+  m_Name: TropicalIslandData
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Tropical Island
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 21300000, guid: ec5024ba62c89fb4ab5c0e6672ad23ca,
+    type: 3}
+  <SightRange>k__BackingField: 35
+  <Type>k__BackingField: 2
+  <MaxBuildingsOnThisIsland>k__BackingField: 0
   <Rarity>k__BackingField: {x: 0, y: 0}
-  <TopColor>k__BackingField: {r: 0.9150943, g: 0.8507988, b: 0.12517802, a: 1}
-  <GroundColor>k__BackingField: {r: 0.5127211, g: 0.6415094, b: 0.34193662, a: 1}
-  <RockColor>k__BackingField: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  <TopColor>k__BackingField: {r: 0.78342324, g: 0.8666667, b: 0.47058824, a: 1}
+  <GroundColor>k__BackingField: {r: 0.7264151, g: 0.7050947, b: 0.46257564, a: 1}
+  <RockColor>k__BackingField: {r: 0.6509434, g: 0.6437797, b: 0.62944996, a: 1}
   <Rocks>k__BackingField:
   - {fileID: 8867977494856218435, guid: a7b742fd86d3f2848847d764fb7809fb, type: 3}
   - {fileID: 2927069621948640310, guid: a9ab14d5374952440ae21e29d0c19fba, type: 3}
@@ -67,13 +74,25 @@ MonoBehaviour:
   - {fileID: 4739780766048052527, guid: 40831ce863ef27049a3d3592ff22899e, type: 3}
   - {fileID: 605606040856626049, guid: db5824df30b248a448b3e459bd9b8ecc, type: 3}
   <Trees>k__BackingField:
-  - {fileID: 7950664141686086124, guid: 98e2d541a347b9440af6a40221ac0f2a, type: 3}
-  - {fileID: 1743245561626875593, guid: 5f58c727f962521479cb56355eec8515, type: 3}
-  - {fileID: 1727808243536092649, guid: afbd1d9de63c51041ad97fad62e1fe5b, type: 3}
-  - {fileID: 1962854913648678130, guid: c8b4ec38e3b17f84ca8204727c40850f, type: 3}
-  - {fileID: 2717434145421501090, guid: 45573d21c97dcaa4e91b6b78feb50c59, type: 3}
-  - {fileID: 2199238772060376317, guid: b97d42844ab38c041a29e91e1e43ed98, type: 3}
-  - {fileID: 7662154634821720522, guid: f102d6a1afdf05b4d8e24a060327f302, type: 3}
+  - {fileID: 4278754651871942210, guid: 417833d7d71557e4694f623ceda48d8b, type: 3}
+  - {fileID: 5349312166273851740, guid: 52a50380dc82e7f4a819939d603671bb, type: 3}
+  - {fileID: 1495679567809991014, guid: 0b2ec72963b54c247ab473867544be89, type: 3}
+  - {fileID: 536602586832601484, guid: fa18e15e188dc0a4fb44517331b2d652, type: 3}
+  - {fileID: 5028684695015355913, guid: 43a755ce6ce5e4b48ae3ab600e4a46fb, type: 3}
+  - {fileID: 3314320830808075767, guid: 2135bf3033a6eeb42ab27a1151399a9b, type: 3}
+  - {fileID: 6225756292152918760, guid: 10e91276f94f2b14497205ee4973337e, type: 3}
+  - {fileID: 3461283696632366422, guid: fccd39fc43722504a86651e5bd9de16c, type: 3}
+  - {fileID: 5225641955498355723, guid: 3f40d70d938aecf499caae2e741eabab, type: 3}
+  - {fileID: 8848325038825295662, guid: 4c977277579fa0e4c9d2cbc235f3d504, type: 3}
+  - {fileID: 6411366429879513066, guid: 402901859cf40aa4494a0e829d8065ec, type: 3}
+  - {fileID: 2292450484359730120, guid: f1ae426d4d50b2f42ba5efb691cce2ed, type: 3}
+  - {fileID: 877577269054492480, guid: c1b6838ab22ce2f448f96c55a9d6819d, type: 3}
+  - {fileID: 7870273899353899983, guid: 5ff4fb46856d57c4f99405abfcbb4d5c, type: 3}
+  - {fileID: 1590274714564224764, guid: de690bc661736a949ad3fa9ae1ac487e, type: 3}
+  - {fileID: 8561729703176552772, guid: a9ede06beb0222e4ea6fc32d7d6a460d, type: 3}
+  - {fileID: 7932067508713436174, guid: 4b2595b126660a44fa0a89d44ff7e67d, type: 3}
+  - {fileID: 6433872440993842595, guid: ecb1c121b5065524d8cb65c9fc54f0c5, type: 3}
+  - {fileID: 6427263402276435771, guid: abef22caa25fb144b829d6c7f50420e8, type: 3}
   <MediumStuff>k__BackingField:
   - {fileID: 4592859893789137049, guid: 61f1a0d1b591cc446bfc504c396fa41b, type: 3}
   - {fileID: 6502373955711636515, guid: c8f5721c4a49a754388c5b2427c43398, type: 3}
@@ -89,28 +108,48 @@ MonoBehaviour:
   - {fileID: 1027462965800582598, guid: ad2e4b63e3bda9744b07bf0467b84904, type: 3}
   - {fileID: 1446920111834117080, guid: 2d8d8a306e04c4e4c93ff91e2b5f0678, type: 3}
   - {fileID: 848887197782571234, guid: 83fa58b726020ca4c998276edce285ad, type: 3}
+  - {fileID: 8798309288705833794, guid: f3fce2cf8eb86704f88459ca262e5716, type: 3}
+  - {fileID: 3805228122091813444, guid: 499518207a749a149b2e04e71a300835, type: 3}
+  - {fileID: 8734699866050413962, guid: 53d8d2f0f811c6c4e8e14eba37b095b0, type: 3}
+  - {fileID: 8483361426459453683, guid: f5530dc8002d0d940853059c9f69b646, type: 3}
+  - {fileID: 2285620581067740124, guid: e9e062cf414f6fe4187ed2e6514cac36, type: 3}
+  - {fileID: 467036305819987939, guid: b1e9fed65d966744e859c3f0f30a2999, type: 3}
+  - {fileID: 8713788332241088635, guid: efecf3f871aa41a469675fb2198107a0, type: 3}
+  - {fileID: 3985307783467522171, guid: 4243f4754c6839942aee11e19ee9d9e4, type: 3}
+  - {fileID: 254362459072857848, guid: f0889252297f6c14ea8dbbf97fdeb0d2, type: 3}
+  - {fileID: 8901171996289955502, guid: e45c30b385745ce4badd174104e6da7c, type: 3}
+  - {fileID: 6623793373982966634, guid: b8b6bd56a259ae5448335b54a9118438, type: 3}
   <Plants>k__BackingField:
-  - {fileID: 5694614447486090273, guid: c138436a710965c439650c5944677c4d, type: 3}
-  - {fileID: 6901469090474774408, guid: d1483a65ee4885f4db897e9bad46f414, type: 3}
-  - {fileID: 3698866052822488154, guid: 1105961bf21f2684093d2cd027e756d8, type: 3}
-  - {fileID: 5976026533413707937, guid: 82c23745cf4f5f342afac8dee6104fbc, type: 3}
-  - {fileID: 641210191883168693, guid: 5e42287c94e040046a047300ef12563f, type: 3}
-  - {fileID: 4753237667502810001, guid: ef3f79cfbf2f9fb4fb0045a90e12c525, type: 3}
-  - {fileID: 6607742840896938676, guid: ebf76d3ffac0b6a4f975b99923a07a57, type: 3}
   - {fileID: 5906910190905126736, guid: 800ded4ff8fb6334ab239f18020bd922, type: 3}
   - {fileID: 5629344586725194565, guid: 84e4fda2f41879542a2d8bec658c2b44, type: 3}
-  - {fileID: 6919307234281287842, guid: 7c1046af36b8aaf46ac3af4fba161dee, type: 3}
-  - {fileID: 8802989708039566029, guid: 27581dfd3184c2f49aed8ed78c1b744f, type: 3}
-  - {fileID: 7411756968964314562, guid: 9f06c528fbf4c4649bf11b3e88fd9f29, type: 3}
-  - {fileID: 8952435312282130261, guid: 0ba9404907e7c2e4c8142a7e17da96f3, type: 3}
   - {fileID: 6262533172519911947, guid: f02e36b6e4e3fa4429861629be2ca7de, type: 3}
   - {fileID: 2100847594948990415, guid: 4c2a5258e219db043ad08cc41fc2cc7c, type: 3}
-  - {fileID: 4112493231350525596, guid: 8f475ef81a1dcc74cbbe381694a6d44a, type: 3}
+  - {fileID: 5107469245525071162, guid: 0372034f18ea7bd40976494bb5f16f6d, type: 3}
+  - {fileID: 3977886282332543356, guid: 4f9f8e5c97a76384dbaa27c6b2910064, type: 3}
+  - {fileID: 9039468207800393503, guid: 8200d7010bb84664bb2dec7570d1a83a, type: 3}
+  - {fileID: 8310684563359695287, guid: 20d4eb3b4aaf4bf4babf1647e8dac01e, type: 3}
+  - {fileID: 2606181077876237644, guid: 290facfd3f8b85f4880d8a0f335808a4, type: 3}
+  - {fileID: 1440243155855163034, guid: 1dc91bee01de8e04785203501276df38, type: 3}
+  - {fileID: 7854112899773484983, guid: d63ae5e31f3095e4bb05a4dd52384f1b, type: 3}
+  - {fileID: 4761042892812935882, guid: 9616055803d7af74b9e3bc35963f3292, type: 3}
+  - {fileID: 5970526736109602857, guid: 3a362e3910236c0468400fcff2cbf679, type: 3}
+  - {fileID: 2858847283781042996, guid: dd806fbad18e54147a705ff8c9dc995f, type: 3}
+  - {fileID: 3227064571004933013, guid: 32c4663df54bee940be125b91244c520, type: 3}
+  - {fileID: 9098587676036440866, guid: 4f989e985fcbcbc4e94fc65811b52c74, type: 3}
+  - {fileID: 3211110794385230184, guid: e8e367e66d0eda84fab17c8d4b3a1b83, type: 3}
+  - {fileID: 7385087540283818590, guid: 8096eb7387de46240a270d59ce4c571e, type: 3}
+  - {fileID: 4006614289000520397, guid: 0b876a2e7c03c6b4090a24dfc596004a, type: 3}
+  - {fileID: 1939565546266441906, guid: 89df684b909edc74f84e8bb94cc40587, type: 3}
+  - {fileID: 5293038907608712747, guid: c2394897a4c32d843a99d885cf3e2078, type: 3}
+  - {fileID: 352252654938358670, guid: e3bb4740805d7144898a59b3fb3811cb, type: 3}
+  - {fileID: 7547957468408824458, guid: 58f05f3217fe91d40b965b003259968b, type: 3}
+  - {fileID: 6116416693479668271, guid: 71b04cbec8329ab429ca8cddf8329779, type: 3}
+  - {fileID: 6511513520925767267, guid: d4914e88c670c7248bbe834a57008701, type: 3}
   <Grass>k__BackingField:
   - {fileID: 5546342222124265899, guid: 82b2c64f4e2d5264bbf0f909cadda2fa, type: 3}
-  <NumberOfRocks>k__BackingField: {x: 1, y: 2}
-  <NumberOfStones>k__BackingField: {x: 0, y: 6}
-  <NumberOfTrees>k__BackingField: {x: 1, y: 5}
+  <NumberOfRocks>k__BackingField: {x: 0, y: 1}
+  <NumberOfStones>k__BackingField: {x: 5, y: 12}
+  <NumberOfTrees>k__BackingField: {x: 3, y: 6}
   <NumberOfMediumStuff>k__BackingField: {x: 0, y: 2}
-  <NumberOfPlants>k__BackingField: {x: 70, y: 100}
+  <NumberOfPlants>k__BackingField: {x: 50, y: 80}
   <SpawnGrass>k__BackingField: 1

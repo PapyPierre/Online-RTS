@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1b2ab3dbffc1244b6eb7447149d8a7, type: 3}
+  m_Name: MeadowIslandData
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Meadow Island
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 21300000, guid: bf0014d7189233d4d95b4d298e6f44ff,
+    type: 3}
+  <SightRange>k__BackingField: 35
+  <Type>k__BackingField: 3
+  <MaxBuildingsOnThisIsland>k__BackingField: 5
+  <Rarity>k__BackingField: {x: 0, y: 0}
+  <TopColor>k__BackingField: {r: 0.8679245, g: 0.81154567, b: 0.15966538, a: 1}
+  <GroundColor>k__BackingField: {r: 0.5127211, g: 0.6415094, b: 0.34193662, a: 1}
+  <RockColor>k__BackingField: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  <Rocks>k__BackingField: []
+  <Stones>k__BackingField:
+  - {fileID: 6134461703849607729, guid: 8e51cba604fdd674382060a4e92c0ef1, type: 3}
+  - {fileID: 6184621871172748659, guid: cff9faa6b0dcb2e45af6af276a091ce1, type: 3}
+  - {fileID: 8138988858302249073, guid: 37ce7a5e6a0d26c4db66b5b620af7843, type: 3}
+  - {fileID: 5981700776291497529, guid: b9006d41a3c570c459331baaf2c949ed, type: 3}
+  - {fileID: 5854194183274340440, guid: 529deff246b41a14398ee3e12896b8c5, type: 3}
+  - {fileID: 8926412338514706890, guid: b6358e070b50e4948bc59f3a5571d36e, type: 3}
+  - {fileID: 8154140245634753653, guid: 723d3bac79d09244abcf5202f5c3f8ac, type: 3}
+  - {fileID: 4238272381200363702, guid: 1103d46ad0301284c8e4324ea31a8973, type: 3}
+  - {fileID: 2702434414191295729, guid: fbf140e0ee062f84093272e2e3d9a0ff, type: 3}
+  - {fileID: 7111702967106967239, guid: b89e8fc6e680e574c9b3d9cfb2b4b9e7, type: 3}
+  - {fileID: 8860361573911024237, guid: 3fae22ba09ed54647b050aa32c9e2d2a, type: 3}
+  - {fileID: 3713917798653651538, guid: d610ea163e60e134d9a9f8036ae339c4, type: 3}
+  - {fileID: 1996238791754287482, guid: 14172bb64c637c547a06dfb01e5519b5, type: 3}
+  - {fileID: 2935970718359864176, guid: 1022fb549c2e0a14bb42a699b1608dce, type: 3}
+  - {fileID: 2180707156047401488, guid: 973ca5a5f32e1ef4883a5d2629799942, type: 3}
+  - {fileID: 8928578100916540094, guid: 9181a6ce012419b48b15ca8a2488f48f, type: 3}
+  - {fileID: 5082074061877716416, guid: 45cb4e394fca6d5488fea221b2004c35, type: 3}
+  - {fileID: 4739780766048052527, guid: 40831ce863ef27049a3d3592ff22899e, type: 3}
+  - {fileID: 605606040856626049, guid: db5824df30b248a448b3e459bd9b8ecc, type: 3}
+  <Trees>k__BackingField:
+  - {fileID: 7950664141686086124, guid: 98e2d541a347b9440af6a40221ac0f2a, type: 3}
+  - {fileID: 1743245561626875593, guid: 5f58c727f962521479cb56355eec8515, type: 3}
+  - {fileID: 1727808243536092649, guid: afbd1d9de63c51041ad97fad62e1fe5b, type: 3}
+  - {fileID: 1962854913648678130, guid: c8b4ec38e3b17f84ca8204727c40850f, type: 3}
+  - {fileID: 2717434145421501090, guid: 45573d21c97dcaa4e91b6b78feb50c59, type: 3}
+  - {fileID: 2199238772060376317, guid: b97d42844ab38c041a29e91e1e43ed98, type: 3}
+  - {fileID: 7662154634821720522, guid: f102d6a1afdf05b4d8e24a060327f302, type: 3}
+  <MediumStuff>k__BackingField:
+  - {fileID: 4592859893789137049, guid: 61f1a0d1b591cc446bfc504c396fa41b, type: 3}
+  - {fileID: 6502373955711636515, guid: c8f5721c4a49a754388c5b2427c43398, type: 3}
+  - {fileID: 2112287569153720663, guid: 8b9d632a39ccada4baeeb74625f9ba63, type: 3}
+  - {fileID: 3091506490033420431, guid: e04b1da446a4c6e4e96ee278e0e48b0d, type: 3}
+  - {fileID: 2505772041557015552, guid: 76e105cd9a294dd4f9a38a156d83d8c5, type: 3}
+  - {fileID: 7114942697713474012, guid: 9489f075669646a429a5475adb27c617, type: 3}
+  - {fileID: 6354007121049577249, guid: 55203b71328b338448deed61951bd57b, type: 3}
+  - {fileID: 9157866508413177376, guid: d9c058965b7b43848b2662bcc459d64c, type: 3}
+  - {fileID: 4654703670471619241, guid: 448e314382eb9664e9641cdd62e6e323, type: 3}
+  - {fileID: 2403457964596263903, guid: 21c3edac775d19c40976e12a23abf03e, type: 3}
+  - {fileID: 1989942224261351393, guid: 993ed59e5a5e27849ae5a058ab4cce76, type: 3}
+  - {fileID: 1027462965800582598, guid: ad2e4b63e3bda9744b07bf0467b84904, type: 3}
+  - {fileID: 1446920111834117080, guid: 2d8d8a306e04c4e4c93ff91e2b5f0678, type: 3}
+  - {fileID: 848887197782571234, guid: 83fa58b726020ca4c998276edce285ad, type: 3}
+  <Plants>k__BackingField:
+  - {fileID: 5694614447486090273, guid: c138436a710965c439650c5944677c4d, type: 3}
+  - {fileID: 6901469090474774408, guid: d1483a65ee4885f4db897e9bad46f414, type: 3}
+  - {fileID: 3698866052822488154, guid: 1105961bf21f2684093d2cd027e756d8, type: 3}
+  - {fileID: 5976026533413707937, guid: 82c23745cf4f5f342afac8dee6104fbc, type: 3}
+  - {fileID: 641210191883168693, guid: 5e42287c94e040046a047300ef12563f, type: 3}
+  - {fileID: 4753237667502810001, guid: ef3f79cfbf2f9fb4fb0045a90e12c525, type: 3}
+  - {fileID: 6607742840896938676, guid: ebf76d3ffac0b6a4f975b99923a07a57, type: 3}
+  - {fileID: 5906910190905126736, guid: 800ded4ff8fb6334ab239f18020bd922, type: 3}
+  - {fileID: 5629344586725194565, guid: 84e4fda2f41879542a2d8bec658c2b44, type: 3}
+  - {fileID: 6919307234281287842, guid: 7c1046af36b8aaf46ac3af4fba161dee, type: 3}
+  - {fileID: 8802989708039566029, guid: 27581dfd3184c2f49aed8ed78c1b744f, type: 3}
+  - {fileID: 7411756968964314562, guid: 9f06c528fbf4c4649bf11b3e88fd9f29, type: 3}
+  - {fileID: 8952435312282130261, guid: 0ba9404907e7c2e4c8142a7e17da96f3, type: 3}
+  - {fileID: 6262533172519911947, guid: f02e36b6e4e3fa4429861629be2ca7de, type: 3}
+  - {fileID: 2100847594948990415, guid: 4c2a5258e219db043ad08cc41fc2cc7c, type: 3}
+  - {fileID: 4112493231350525596, guid: 8f475ef81a1dcc74cbbe381694a6d44a, type: 3}
+  <Grass>k__BackingField:
+  - {fileID: 5546342222124265899, guid: 82b2c64f4e2d5264bbf0f909cadda2fa, type: 3}
+  <NumberOfRocks>k__BackingField: {x: 0, y: 0}
+  <NumberOfStones>k__BackingField: {x: 1, y: 6}
+  <NumberOfTrees>k__BackingField: {x: 1, y: 4}
+  <NumberOfMediumStuff>k__BackingField: {x: 0, y: 2}
+  <NumberOfPlants>k__BackingField: {x: 20, y: 50}
+  <SpawnGrass>k__BackingField: 1
