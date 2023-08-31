@@ -33,9 +33,9 @@ namespace Element.Entity.Military_Units
             SetUpHealtAndArmor(Data);
         }
 
-        public override void Init(PlayerController owner, ElementData data)
+        public override void Init(PlayerController owner, ElementData elementData)
         {
-            base.Init(owner, data);
+            base.Init(owner, elementData);
 
             foreach (UnitSkill skill in skills)
             {

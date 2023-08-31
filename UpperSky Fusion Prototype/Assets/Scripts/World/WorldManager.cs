@@ -19,7 +19,7 @@ namespace World
         [Header("Islands"), SerializeField]
         private int numberOfIslandsPerPlayer; 
         [SerializeField] private int maxSpecialIslandsPerPlayer;
-        public IslandTypesClass[] islandTypes;
+        public IslandData[] allIslandsData;
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
         
@@ -55,17 +55,10 @@ namespace World
     {
         Meadow,
         Forester,
+        Mineral,
         Tropical,
         Winter,
         Cursed,
-        Mythic,
-        Mineral
-    }
-    
-    [Serializable]
-    public class IslandTypesClass
-    {
-        public IslandTypesEnum type;
-        [Expandable] public IslandData data;
+        Mythic
     }
 }

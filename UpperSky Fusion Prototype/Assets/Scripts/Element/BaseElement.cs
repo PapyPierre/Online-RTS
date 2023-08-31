@@ -64,14 +64,14 @@ namespace Element
             if (meshToColor.Count > 0) _baseColor = meshToColor[0].material.color;
         }
 
-        public virtual void Init(PlayerController owner, ElementData data)
+        public virtual void Init(PlayerController owner, ElementData elementData)
         {
             Owner = owner;
             
             if (PlayerIsOwner())
             {
                 if (!HasStateAuthority) Object.RequestStateAuthority();
-                var fogRevealer = new FogOfWar.FogRevealer(transform, data.SightRange, true);
+                var fogRevealer = new FogOfWar.FogRevealer(transform, elementData.SightRange, true);
                 FogRevealerIndex = FogOfWar.AddFogRevealer(fogRevealer);
             }
         }

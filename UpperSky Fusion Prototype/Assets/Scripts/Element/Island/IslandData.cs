@@ -13,8 +13,8 @@ namespace Element.Island
         [field: SerializeField]
         public int MaxBuildingsOnThisIsland { get; private set; }
         
-        [field: SerializeField, MinMaxSlider(0,100)]
-        public Vector2Int Rarity { get; private set; }
+        [field: SerializeField, Range(0f,100f)]
+        public float Rarity { get; private set; }
         
         [field: SerializeField, Header("Colors")]
         public Color TopColor { get; private set; }

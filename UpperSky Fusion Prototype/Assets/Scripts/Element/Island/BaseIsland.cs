@@ -13,12 +13,14 @@ namespace Element.Island
     {
         private WorldManager _worldManager;
 
-        [Expandable, HideInInspector] public IslandData data;
+      //  [field: SerializeField, Expandable]
+       [Networked] public int TypeIndex { get; set; }
+       [HideInInspector] public IslandData Data { get; set; }
 
         public MeshRenderer ground;
         public MeshRenderer rockMesh;
 
-        [field: HideInInspector] [Networked] public int BuildingsCount { get; set; }
+        [Networked] public int BuildingsCount { get; set; }
         
         [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
 
@@ -27,6 +29,11 @@ namespace Element.Island
             base.Spawned();
 
             _worldManager = WorldManager.Instance;
+
+            if (Data == null)
+            {
+                Data = _worldManager.allIslandsData[TypeIndex];
+            }
 
             _worldManager.allIslands.Add(this);
 
@@ -38,6 +45,8 @@ namespace Element.Island
             GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);
         }
         
+      
+
         // Call from coloniser
         public void CallToColonise()
         {

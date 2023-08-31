@@ -5484,7 +5484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -11082,21 +11082,14 @@ MonoBehaviour:
   outerBorderRadius: 240
   numberOfIslandsPerPlayer: 9
   maxSpecialIslandsPerPlayer: 2
-  islandTypes:
-  - type: 0
-    data: {fileID: 11400000, guid: 4f933eaa632f6184eb88e921ca40ac3c, type: 2}
-  - type: 1
-    data: {fileID: 11400000, guid: e8a73f1157c0d43499e6d278fb585403, type: 2}
-  - type: 2
-    data: {fileID: 11400000, guid: 96d216497f0d43f49bd4e0fc45a1a3d0, type: 2}
-  - type: 3
-    data: {fileID: 11400000, guid: f5f79746fe3128442a5067f0ae9343ce, type: 2}
-  - type: 4
-    data: {fileID: 11400000, guid: bcb4773b87509ad4dadc6d0dacb7cac8, type: 2}
-  - type: 5
-    data: {fileID: 11400000, guid: e3130fbf22d56814d8579d5e7b088c3c, type: 2}
-  - type: 6
-    data: {fileID: 11400000, guid: d78c19464e66b364f8a09251a08a3ac0, type: 2}
+  allIslandsData:
+  - {fileID: 11400000, guid: 4f933eaa632f6184eb88e921ca40ac3c, type: 2}
+  - {fileID: 11400000, guid: e8a73f1157c0d43499e6d278fb585403, type: 2}
+  - {fileID: 11400000, guid: d78c19464e66b364f8a09251a08a3ac0, type: 2}
+  - {fileID: 11400000, guid: 96d216497f0d43f49bd4e0fc45a1a3d0, type: 2}
+  - {fileID: 11400000, guid: f5f79746fe3128442a5067f0ae9343ce, type: 2}
+  - {fileID: 11400000, guid: bcb4773b87509ad4dadc6d0dacb7cac8, type: 2}
+  - {fileID: 11400000, guid: e3130fbf22d56814d8579d5e7b088c3c, type: 2}
   minDistBetweenIslands: 60
   islandDistFormCenterRepartition:
     serializedVersion: 2

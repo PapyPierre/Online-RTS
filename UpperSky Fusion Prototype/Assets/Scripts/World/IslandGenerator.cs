@@ -1,3 +1,4 @@
+using System.Collections;
 using Element.Island;
 using Fusion;
 using Player;
@@ -52,16 +53,17 @@ namespace World
             
             BaseIsland generatedIsland  = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x], position, islandRot,
                     owner != null ? owner.Object.StateAuthority : PlayerRef.None).GetComponent<BaseIsland>();
-            
-            generatedIsland.data = _worldManager.islandTypes[(int) type].data;
+
+            generatedIsland.TypeIndex = (int) type;
+            generatedIsland.Data = _worldManager.allIslandsData[(int) type];
 
             generatedIsland.transform.parent = _worldManager.worldGenerator.worldCenter;
-            generatedIsland.Init(owner, generatedIsland.data);
+            generatedIsland.Init(owner, generatedIsland.Data);
 
-            generatedIsland.ground.material.color =  generatedIsland.data.GroundColor;
-            generatedIsland.rockMesh.material.color =  generatedIsland.data.RockColor;
-
-            GeneratePropsOnIsland(generatedIsland, generatedIsland.data);
+            generatedIsland.ground.material.color =  generatedIsland.Data.GroundColor;
+            generatedIsland.rockMesh.material.color =  generatedIsland.Data.RockColor;
+            
+            GeneratePropsOnIsland(generatedIsland, generatedIsland.Data);
         }
 
         private void GeneratePropsOnIsland(BaseIsland island, IslandData data)
@@ -195,9 +197,9 @@ namespace World
                 NetworkObject newObj = _gameManager.thisPlayer.Runner.Spawn(obj, objPos, Quaternion.identity, PlayerRef.None);
                 
                 newObj.GetComponent<IslandProps>().Init(this, island);
+            
                 newObj.transform.parent = island.graphObject.transform;
 
-                
                 if (!IsMeshOverlappingCompletely(newObj.GetComponent<MeshFilter>().mesh, newObj.transform.position))
                 {
                     newObj.gameObject.SetActive(false); 

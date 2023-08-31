@@ -175,7 +175,7 @@ namespace Player
                     lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
                     _uiManager.CloseFormationBuilding();
-                    _uiManager.ShowSelectionInfoBox(island, island.data, island.Owner);
+                    _uiManager.ShowSelectionInfoBox(island, island.Data, island.Owner);
                     break;
             }
             
@@ -199,6 +199,17 @@ namespace Player
         public void MakesPlayerReady()
         {
             ressources.Init();
+
+            foreach (var island in _worldManager.allIslands)
+            {
+                if (island.PlayerIsOwner())
+                {
+                    island.Init(this, island.Data);
+                    transform.position = island.transform.position;
+                    break;
+                }
+            }
+            
             IsReadyToPlay = true;
         }
 

@@ -19,7 +19,7 @@ MonoBehaviour:
   <SightRange>k__BackingField: 35
   <Type>k__BackingField: 4
   <MaxBuildingsOnThisIsland>k__BackingField: 0
-  <Rarity>k__BackingField: {x: 0, y: 0}
+  <Rarity>k__BackingField: 2
   <TopColor>k__BackingField: {r: 0.13207549, g: 0.04547882, b: 0.09789256, a: 1}
   <GroundColor>k__BackingField: {r: 0.14819078, g: 0.102794595, b: 0.20754719, a: 1}
   <RockColor>k__BackingField: {r: 0.3962264, g: 0.3681915, b: 0.3962264, a: 1}

@@ -20,10 +20,8 @@ namespace World
         
         private int _numberOfPlayers;
         private int _numberOfIslandsPerPlayer;
-        private int _maxSpecialIslands;
-        
+
         private int _currentlyPlacedIslands;
-        private int _currentlyPlacedSpecialIslands;
 
         private void Start()
         {
@@ -36,7 +34,6 @@ namespace World
         {
             _numberOfPlayers = nbOfPlayers;
             _numberOfIslandsPerPlayer = nbOfIslandsPerPlayer;
-            _maxSpecialIslands = maxSpecialIslandsPerPlayer * nbOfPlayers;
 
             CheckForReset();
 
@@ -56,7 +53,6 @@ namespace World
                 }
                 
                 _worldManager.allIslands.Clear();
-                _currentlyPlacedSpecialIslands = 0;
             }
         }
 
@@ -94,45 +90,39 @@ namespace World
             // Randomly rotate all the position around the center by moving the parent of the posistions
             worldCenter.Rotate(Vector3.up, Random.Range(0f,179f));
             
-            SpawnSecondsIslands();
+          StartCoroutine( SpawnSecondsIslands());
         }
 
-        private void SpawnSecondsIslands()
+        private IEnumerator SpawnSecondsIslands()
         {
             for (var index = 0; index < _numberOfPlayers; index++)
             {
                 var island = _worldManager.allIslands[index];
                 Vector3 islandPos = island.transform.position;
+                
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
-                SpawnIsland(pos, IslandTypesEnum.Meadow);
+                SpawnIsland(pos, RandomIslandType());
+                
+                yield return new WaitForSecondsRealtime(2);
             }
             
-            SpawnOtherIslands();
+            StartCoroutine( SpawnOtherIslands());
         }
-
+        
         private float RandomMinDist()
         {
             float a = Random.Range(0f, 1f);
             return a >= 0.5f ? -_worldManager.minDistBetweenIslands : _worldManager.minDistBetweenIslands;
         }
         
-        private void SpawnOtherIslands()
+        private IEnumerator SpawnOtherIslands()
         {
             int numberOfIslandToSpawn = _numberOfIslandsPerPlayer * _numberOfPlayers - _currentlyPlacedIslands;
+            
             for (int i = 0; i < numberOfIslandToSpawn; i++)
             {
-                if (_currentlyPlacedSpecialIslands < _maxSpecialIslands)
-                {
-                    int r = Random.Range(1, 101);
-
-                    foreach (var islandTypes in  _worldManager.islandTypes)
-                    {
-                        if (!(r >= islandTypes.data.Rarity.x) || !(r <= islandTypes.data.Rarity.y)) continue;
-                        SpawnIsland(NewIslandPos(), islandTypes.type);
-                        if (islandTypes.type != IslandTypesEnum.Meadow) _currentlyPlacedSpecialIslands++;
-                    }
-                }
-                else SpawnIsland(NewIslandPos(),IslandTypesEnum.Meadow);
+                SpawnIsland(NewIslandPos(), RandomIslandType());
+                yield return new WaitForSecondsRealtime(2);
             }
             
             _gameManager.thisPlayer.MakesPlayerReady();
@@ -142,7 +132,7 @@ namespace World
 
         private IEnumerator WaitForEndOfGeneration()
         {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(2f);
             
             var readyPlayersIndex = 0;
             
@@ -154,10 +144,7 @@ namespace World
                 }
             }
 
-            if (readyPlayersIndex == _gameManager.expectedNumberOfPlayers)
-            {
-                _gameManager.StartGame();
-            }
+            if (readyPlayersIndex == _gameManager.expectedNumberOfPlayers) _gameManager.StartGame();
         }
         
         private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
@@ -180,6 +167,27 @@ namespace World
 
             return possiblePos;
         }
+        
+        private IslandTypesEnum RandomIslandType()
+        {
+            float maxValue = 0;
+            
+            foreach (var data in _worldManager.allIslandsData)
+            {
+                maxValue += data.Rarity;
+            }
+            
+            float randomValue = Random.Range(0f, maxValue);
+            
+            foreach (var data in _worldManager.allIslandsData)
+            {
+                if (randomValue <= data.Rarity) return data.Type;
+                else randomValue -= data.Rarity;
+            }
+
+            return IslandTypesEnum.Meadow;
+        }
+
 
         private Vector3 CalculateNewRandomPos()
         {

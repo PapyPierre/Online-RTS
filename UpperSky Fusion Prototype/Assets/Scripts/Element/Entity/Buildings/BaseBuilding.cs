@@ -34,9 +34,9 @@ namespace Element.Entity.Buildings
             _buildingsManager = BuildingsManager.Instance;
         }
 
-        public override void Init(PlayerController owner, ElementData data)
+        public override void Init(PlayerController owner, ElementData elementData)
         {
-            base.Init(owner, data);
+            base.Init(owner, elementData);
             
             if (Data.UnlockedBuildings.Length > 0) UnlockBuildings();
             
