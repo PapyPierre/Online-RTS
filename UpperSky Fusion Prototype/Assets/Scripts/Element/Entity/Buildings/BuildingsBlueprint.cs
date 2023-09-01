@@ -111,7 +111,7 @@ namespace Element.Entity.Buildings
             }
             
             // Check if the island doesn't have too much buildings on it yet
-            if (_islandToBuildOn.BuildingsCount >= _islandToBuildOn.Data.MaxBuildingsOnThisIsland)
+            if (_islandToBuildOn.BuildingsCount >= _islandToBuildOn.data.MaxBuildingsOnThisIsland)
             {
                 _unvalidPosIndex = 2;
                 return false;

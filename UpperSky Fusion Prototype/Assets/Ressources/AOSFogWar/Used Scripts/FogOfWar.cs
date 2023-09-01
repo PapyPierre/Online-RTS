@@ -272,7 +272,7 @@ namespace AOSFogWar.Used_Scripts
         
         private void Update()
         {
-            UpdateFog();
+            if (GameManager.Instance.gameIsStarted) UpdateFog();
         }
         
         // --- --- ---

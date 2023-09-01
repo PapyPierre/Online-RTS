@@ -137,7 +137,7 @@ MonoBehaviour:
   - {fileID: 5546342222124265899, guid: 82b2c64f4e2d5264bbf0f909cadda2fa, type: 3}
   <NumberOfRocks>k__BackingField: {x: 0, y: 0}
   <NumberOfStones>k__BackingField: {x: 0, y: 10}
-  <NumberOfTrees>k__BackingField: {x: 16, y: 17}
+  <NumberOfTrees>k__BackingField: {x: 12, y: 14}
   <NumberOfMediumStuff>k__BackingField: {x: 4, y: 6}
   <NumberOfPlants>k__BackingField: {x: 30, y: 60}
   <SpawnGrass>k__BackingField: 1

@@ -87,7 +87,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3451118302482216456, guid: 3d4bd339f93726e40b00dc4fc63f7585, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3d4bd339f93726e40b00dc4fc63f7585, type: 3}
 --- !u!1 &4784842898895477007 stripped
 GameObject:
@@ -111,58 +112,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-6679402583843887812
-MonoBehaviour:
+--- !u!65 &-3567159709542203151
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4784842898895477007}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 0}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
---- !u!114 &-2480722950453642628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4784842898895477007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
-  Flags: 2305
-  NetworkGuid:
-    RawGuidValue: d1310e50b40f17b4ea40753cb324ec73
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: -6679402583843887812}
-  SimulationBehaviours: []
+  serializedVersion: 2
+  m_Size: {x: 5.53059, y: 4.2845006, z: 4.636618}
+  m_Center: {x: 0.4616431, y: 2.1195009, z: -0.18976355}
 --- !u!114 &7993017003457562771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +137,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0

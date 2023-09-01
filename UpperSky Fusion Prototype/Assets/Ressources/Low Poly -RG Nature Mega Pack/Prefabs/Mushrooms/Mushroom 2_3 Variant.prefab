@@ -92,7 +92,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3451118302482216456, guid: ed2d22f4e04d5fa43b9f49f5cd3762f6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ed2d22f4e04d5fa43b9f49f5cd3762f6, type: 3}
 --- !u!1 &3907143790486444565 stripped
 GameObject:
@@ -128,55 +129,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-3665805013559454898
-MonoBehaviour:
+  isMoving: 0
+--- !u!65 &2791635067556270602
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3907143790486444565}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 0}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
---- !u!114 &5363483511726496181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3907143790486444565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 0
-  AoiPositionSource: {fileID: 0}
-  Flags: 2305
-  NetworkGuid:
-    RawGuidValue: f61f8a1e0159d4041930437452cad883
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: -3665805013559454898}
-  SimulationBehaviours: []
+  serializedVersion: 2
+  m_Size: {x: 0.3067277, y: 0.5590316, z: 0.32744175}
+  m_Center: {x: -0.0042789653, y: 0.2795158, z: -0.0029907227}

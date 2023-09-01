@@ -107,7 +107,7 @@ namespace Element.Entity.Buildings
         {
             island.BuildingsCount++;
             
-            _uiManager.UpdateSelectionInfobox(island, island.Data, island.Owner);
+            _uiManager.UpdateSelectionInfobox(island, island.data, island.Owner);
             
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn
                 (allBuildingsPrefab[buildingIndex], pos, rot, island.Object.InputAuthority);

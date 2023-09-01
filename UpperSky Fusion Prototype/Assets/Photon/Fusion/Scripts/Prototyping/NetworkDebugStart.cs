@@ -403,7 +403,8 @@ public class NetworkDebugStart : Fusion.Behaviour {
 
   protected IEnumerator StartWithClients(GameMode serverMode, SceneRef sceneRef, int clientCount) {
     // Avoid double clicks or disallow multiple startup calls.
-    if (CurrentStage != Stage.Disconnected) {
+    if (CurrentStage != Stage.Disconnected)
+    { 
       yield break;
     }
 

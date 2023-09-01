@@ -33,9 +33,7 @@ namespace Element
 
         [SerializeField, Header("Graph")] protected GameObject selectionCircle;
         public GameObject graphObject;
-        
-        [SerializeField, Header("UI")] protected GameObject canvas;
-        
+
         [SerializeField, Header("Minimap")] protected Image minimapIcon;
         [SerializeField] public Transform minimapCanvas;
 

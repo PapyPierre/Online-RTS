@@ -12,10 +12,8 @@ namespace Element.Island
     public class BaseIsland : BaseElement
     {
         private WorldManager _worldManager;
-
-      //  [field: SerializeField, Expandable]
-       [Networked] public int TypeIndex { get; set; }
-       [HideInInspector] public IslandData Data { get; set; }
+        
+        [HideInInspector] public IslandData data;
 
         public MeshRenderer ground;
         public MeshRenderer rockMesh;
@@ -30,11 +28,6 @@ namespace Element.Island
 
             _worldManager = WorldManager.Instance;
 
-            if (Data == null)
-            {
-                Data = _worldManager.allIslandsData[TypeIndex];
-            }
-
             _worldManager.allIslands.Add(this);
 
             if (transform.rotation.y != 0)
@@ -42,10 +35,23 @@ namespace Element.Island
                minimapIcon.transform.localRotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
             }
             
-            GetComponent<FogAgentIsland>().Init(graphObject, canvas, minimapIcon.gameObject);
+            GetComponent<FogAgentIsland>().Init(graphObject, null, minimapIcon.gameObject);
         }
         
-      
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        public void RPC_NetworkInit(PlayerController owner, int TypeIndex)
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+
+            data = _worldManager.allIslandsData[TypeIndex];
+            
+            ground.material.color =  data.GroundColor;
+            rockMesh.material.color =  data.RockColor;
+            
+            _worldManager.islandGenerator.GeneratePropsOnIsland(this, data);
+            Debug.Log(data);
+            Init(owner, data);
+        }
 
         // Call from coloniser
         public void CallToColonise()

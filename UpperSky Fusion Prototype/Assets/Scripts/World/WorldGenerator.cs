@@ -76,24 +76,24 @@ namespace World
 
         private void SpawnPlayerPosAtEachAngle(float angle)
         {
-           SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-               IslandTypesEnum.Meadow, _gameManager.connectedPlayers[0]);
+            Vector3 playerIslandsSpawnPos = new Vector3(0, 0, _worldManager.innerBorderRadius);
+            
+           SpawnIsland(playerIslandsSpawnPos, IslandTypesEnum.Meadow, _gameManager.connectedPlayers[0]);
            
            for (int i = 0; i < _numberOfPlayers -1; i++) 
            {
                worldCenter.Rotate(Vector3.up, angle);
                 
-              SpawnIsland(new Vector3(0, 0, _worldManager.innerBorderRadius), 
-                  IslandTypesEnum.Meadow, _gameManager.connectedPlayers[i + 1]);
+              SpawnIsland(playerIslandsSpawnPos, IslandTypesEnum.Meadow, _gameManager.connectedPlayers[i + 1]);
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
             worldCenter.Rotate(Vector3.up, Random.Range(0f,179f));
             
-          StartCoroutine( SpawnSecondsIslands());
+          SpawnSecondsIslands();
         }
 
-        private IEnumerator SpawnSecondsIslands()
+        private void SpawnSecondsIslands()
         {
             for (var index = 0; index < _numberOfPlayers; index++)
             {
@@ -102,11 +102,9 @@ namespace World
                 
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
                 SpawnIsland(pos, RandomIslandType());
-                
-                yield return new WaitForSecondsRealtime(2);
             }
             
-            StartCoroutine( SpawnOtherIslands());
+            SpawnOtherIslands();
         }
         
         private float RandomMinDist()
@@ -115,14 +113,13 @@ namespace World
             return a >= 0.5f ? -_worldManager.minDistBetweenIslands : _worldManager.minDistBetweenIslands;
         }
         
-        private IEnumerator SpawnOtherIslands()
+        private void SpawnOtherIslands()
         {
             int numberOfIslandToSpawn = _numberOfIslandsPerPlayer * _numberOfPlayers - _currentlyPlacedIslands;
             
             for (int i = 0; i < numberOfIslandToSpawn; i++)
             {
                 SpawnIsland(NewIslandPos(), RandomIslandType());
-                yield return new WaitForSecondsRealtime(2);
             }
             
             _gameManager.thisPlayer.MakesPlayerReady();
@@ -132,7 +129,7 @@ namespace World
 
         private IEnumerator WaitForEndOfGeneration()
         {
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(1f);
             
             var readyPlayersIndex = 0;
             

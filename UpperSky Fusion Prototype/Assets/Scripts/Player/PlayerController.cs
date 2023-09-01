@@ -175,7 +175,7 @@ namespace Player
                     lastSelectedElement = element;
                     currentlySelectedElements.Add(element);
                     _uiManager.CloseFormationBuilding();
-                    _uiManager.ShowSelectionInfoBox(island, island.Data, island.Owner);
+                    _uiManager.ShowSelectionInfoBox(island, island.data, island.Owner);
                     break;
             }
             
@@ -204,7 +204,7 @@ namespace Player
             {
                 if (island.PlayerIsOwner())
                 {
-                    island.Init(this, island.Data);
+                    island.Init(this, island.data);
                     transform.position = island.transform.position;
                     break;
                 }

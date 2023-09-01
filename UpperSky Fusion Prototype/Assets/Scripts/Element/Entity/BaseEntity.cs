@@ -40,6 +40,8 @@ namespace Element.Entity
         [Networked] public bool IsDead { get; private set; }
         
         [HideInInspector] public List<BaseEntity> currentAgressor;
+        
+        [SerializeField, Header("UI")] protected GameObject canvas;
 
         [SerializeField, Header("VFX")] private NetworkPrefabRef deathVfx;
         [SerializeField] private NetworkPrefabRef lowHpVfx;

@@ -50,23 +50,16 @@ namespace World
         {
             int x = Random.Range(0, baseIslandsMesh.Length);
             var islandRot = Quaternion.Euler(0, Random.Range(0f,179f), 0);
+
+            BaseIsland generatedIsland = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x],
+                    position, islandRot, owner != null ? owner.Object.StateAuthority : PlayerRef.None)
+                .GetComponent<BaseIsland>();
             
-            BaseIsland generatedIsland  = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x], position, islandRot,
-                    owner != null ? owner.Object.StateAuthority : PlayerRef.None).GetComponent<BaseIsland>();
-
-            generatedIsland.TypeIndex = (int) type;
-            generatedIsland.Data = _worldManager.allIslandsData[(int) type];
-
             generatedIsland.transform.parent = _worldManager.worldGenerator.worldCenter;
-            generatedIsland.Init(owner, generatedIsland.Data);
-
-            generatedIsland.ground.material.color =  generatedIsland.Data.GroundColor;
-            generatedIsland.rockMesh.material.color =  generatedIsland.Data.RockColor;
-            
-            GeneratePropsOnIsland(generatedIsland, generatedIsland.Data);
+            generatedIsland.RPC_NetworkInit(owner, (int) type);
         }
 
-        private void GeneratePropsOnIsland(BaseIsland island, IslandData data)
+        public void GeneratePropsOnIsland(BaseIsland island, IslandData data)
         {
             // Rocks
             if (isGeneratingRocks) GenerateObj(island, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
@@ -108,6 +101,10 @@ namespace World
             
             int width = texture.width;
             int height = texture.height;
+            
+            BoxCollider islandCollider = island.GetComponent<BoxCollider>();
+            float boxColWidth = islandCollider.bounds.size.x;
+            float boxColHeight = islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
 
             for (int u = 0; u < width; u++)
             {
@@ -122,10 +119,6 @@ namespace World
                         float normalizedU = u / (float) width;
                         float normalizedV = v / (float) height;
                         
-                        BoxCollider islandCollider = island.GetComponent<BoxCollider>();
-                        float boxColWidth = islandCollider.bounds.size.x;
-                        float boxColHeight = islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
-
                         Vector3 islandPos = island.transform.position;
 
                         float x = normalizedU * boxColWidth + islandPos.x - boxColWidth/2;
@@ -133,11 +126,11 @@ namespace World
                         
                         Vector3 spawnPosition = new Vector3(x , islandPos.y, y);
 
-                        GameObject newGrassObj =
-                            Instantiate(grassObj, spawnPosition, Quaternion.identity,  island.transform);
-                        
+                        GameObject newGrassObj = Instantiate(grassObj, spawnPosition, Quaternion.identity);
+                        newGrassObj.transform.parent = island.graphObject.transform;
+
                         if (!Physics.Raycast(newGrassObj.transform.position + new Vector3(0,5,0), Vector3.down, 
-                                Mathf.Infinity, terrainLayer, QueryTriggerInteraction.Ignore))
+                                50, terrainLayer, QueryTriggerInteraction.Ignore))
                         {
                             newGrassObj.SetActive(false);
                         }
@@ -190,36 +183,29 @@ namespace World
 
         private void SpawnObjOnIsland(GameObject obj, BaseIsland island, IslandData data)
         {
-            while (true)
-            {
-                Vector3 objPos = FindPosOnIsland(island);
+            Vector3 objPos = FindPosOnIsland(island);
 
-                NetworkObject newObj = _gameManager.thisPlayer.Runner.Spawn(obj, objPos, Quaternion.identity, PlayerRef.None);
+            GameObject newObj = Instantiate(obj, objPos, Quaternion.identity);
+            newObj.transform.parent = island.graphObject.transform;
+            IslandProps props = newObj.GetComponent<IslandProps>();
+            props.Init(this, island);
                 
-                newObj.GetComponent<IslandProps>().Init(this, island);
-            
-                newObj.transform.parent = island.graphObject.transform;
-
-                if (!IsMeshOverlappingCompletely(newObj.GetComponent<MeshFilter>().mesh, newObj.transform.position))
-                {
-                    newObj.gameObject.SetActive(false); 
-                    continue;
-                }
-                else
-                {
-                    MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
+            MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
                     
-                    foreach (var mat in meshRenderer.materials)
-                    {
-                        if (mat.shader.name == "Polytope Studio/PT_Vegetation_Foliage_Shader")
-                        {
-                            mat.SetColor(ShaderTopColor, data.TopColor);
-                            mat.SetColor(ShaderGroundColor, data.GroundColor);
-                        }
-                    }
+            foreach (var mat in meshRenderer.materials)
+            { 
+                if (mat.shader.name == "Polytope Studio/PT_Vegetation_Foliage_Shader") 
+                { 
+                    mat.SetColor(ShaderTopColor, data.TopColor); 
+                    mat.SetColor(ShaderGroundColor, data.GroundColor);
                 }
+            }
 
-                break;
+            MeshFilter newObjMeshFilter = newObj.GetComponent<MeshFilter>();
+
+            if (!IsMeshOverlappingCompletely(newObjMeshFilter.mesh, newObj.transform.position))
+            {
+                MoveObjOnIsland(props, newObj.GetComponent<Collider>(), newObjMeshFilter, island);
             }
         }
 
@@ -238,29 +224,49 @@ namespace World
             return new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
         }
         
-        public void MoveObjOnIsland(GameObject obj, BaseIsland island)
+        public void MoveObjOnIsland(IslandProps props, Collider objCollider, MeshFilter objMeshFilter, BaseIsland island)
         {
-            obj.transform.position = FindPosOnIsland(island);
-
-            // To reset collision detection 
-            Collider objCollider = obj.GetComponent<Collider>();
-            objCollider.enabled = false;
-            objCollider.enabled = true;
+            if (props.isMoving) return;
+            props.isMoving = true;
             
-            if (!IsMeshOverlappingCompletely(obj.GetComponent<MeshFilter>().mesh, obj.transform.position))
-            { 
-                MoveObjOnIsland(obj, island);
+            int i = 0;
+            
+            while (true)
+            {
+                props.transform.position = FindPosOnIsland(island);
+
+                if (i > 5000)
+                {
+                    Debug.LogError("Anti-Crash Stop");
+                    break;
+                }
+
+                if (!IsMeshOverlappingCompletely(objMeshFilter.mesh, props.transform.position))
+                {
+                    i++;
+                    continue;
+                }
+                
+                props.isMoving = false;
+                
+                // To reset collision detection 
+                objCollider.enabled = false;
+                objCollider.enabled = true;
+                
+                break;
             }
         }
 
         private bool IsMeshOverlappingCompletely(Mesh mesh, Vector3 islandPos)
         {
+            Vector3 additionalHeight = new Vector3(0, 5, 0);
+            
             foreach (Vector3 vertex in mesh.vertices)
             {
                 Vector3 worldVertex = islandPos + vertex;
                 
-                if (!Physics.Raycast(worldVertex + new Vector3(0,5,0), Vector3.down, 
-                        Mathf.Infinity, terrainLayer, QueryTriggerInteraction.Ignore))
+                if (!Physics.Raycast(worldVertex + additionalHeight, Vector3.down, 
+                        50, terrainLayer, QueryTriggerInteraction.Ignore))
                 {
                     return false; 
                 }

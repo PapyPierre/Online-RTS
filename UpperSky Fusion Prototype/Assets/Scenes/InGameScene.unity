@@ -11141,16 +11141,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   baseIslandsMesh:
-  - RawGuidValue: 193c4dd1caa66f24c80e5e472439b5d8
   - RawGuidValue: d64db4e8501a12747a8596535e82a5cb
   - RawGuidValue: 2acbdf2164d8b934099ad3ba3774bf74
   - RawGuidValue: c9f43f9812022df4a8e69fd84ad71a94
-  isGeneratingRocks: 1
+  isGeneratingRocks: 0
   isGeneratingStones: 1
-  isGeneratingTrees: 1
-  isGeneratingMediumStuff: 1
-  isGeneratingPlants: 1
-  isGeneratingGrass: 1
+  isGeneratingTrees: 0
+  isGeneratingMediumStuff: 0
+  isGeneratingPlants: 0
+  isGeneratingGrass: 0
   perlinNoiseRenderer: {fileID: 1388829716}
   perlinNoiseHeight: 256
   perlinNoiseWidth: 256
