@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using Custom_UI;
+using Fusion;
 using Player;
 using UnityEngine;
 using UserInterface;
@@ -10,16 +11,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private WorldManager _worldManager;
     private UIManager _uiManager;
-
-    // Seiralized for debug
+    
     public PlayerController thisPlayer;
 
     public int expectedNumberOfPlayers;
 
     public List<PlayerController> connectedPlayers;
     private List<PlayerController> _playersStillAlive = new();
-
-    private int _readyPlayersIndex;
 
     public bool gameIsStarted;
     public bool gameIsFinished;
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
          Building,
          Both
      }
-     
+    
      private void Awake()
      {
         if (Instance != null)
@@ -47,6 +45,22 @@ public class GameManager : MonoBehaviour
          _worldManager = WorldManager.Instance;
          _uiManager = UIManager.Instance;
      }
+
+     private void Update()
+     {
+         if (gameIsStarted || gameIsFinished || connectedPlayers.Count < expectedNumberOfPlayers) return;
+
+         foreach (var player in connectedPlayers)
+         {
+             if (!player.IsReadyToPlay)
+             {
+                 return;
+             }
+         }
+         
+         StartGame();
+     }
+     
 
      public void ConnectPlayer(PlayerController player)
      {
@@ -72,12 +86,9 @@ public class GameManager : MonoBehaviour
          }
      }
 
-     public void StartGame()
+     private void StartGame()
      {
-         foreach (var player in connectedPlayers)
-         {
-             player.RPC_StartToPlay();
-         }
+         gameIsStarted = true;
      }
      
      public void DefeatPlayer(PlayerController defeatedPlayer)

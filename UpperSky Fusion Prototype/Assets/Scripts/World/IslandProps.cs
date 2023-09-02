@@ -32,7 +32,7 @@ namespace World
             transform.rotation = rotation;
             _myCollider.enabled = true;
         }
-        
+        /*
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Props"))
@@ -40,5 +40,6 @@ namespace World
                 _islandGenerator.MoveObjOnIsland(this, _myCollider, _myMeshFilter, _myIsland);
             }
         }
+        */
     }
 }

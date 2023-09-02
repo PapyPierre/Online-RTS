@@ -96,22 +96,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6610502410054370220}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &6759373482578505654
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6304002891823365885}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &-5329448865562775216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -120,21 +104,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6304002891823365885}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.39406878, y: 0.3325572, z: 0.39513254}
   m_Center: {x: 0.0007534027, y: 0.15988624, z: -0.00000040978193}
---- !u!114 &3220562055957450710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6304002891823365885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMoving: 0

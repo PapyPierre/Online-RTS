@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Element.Entity.Buildings;
 using Fusion;
 using Player;
@@ -119,34 +120,13 @@ namespace World
             
             for (int i = 0; i < numberOfIslandToSpawn; i++)
             {
-                SpawnIsland(NewIslandPos(), RandomIslandType());
+                 SpawnIsland(NewIslandPos(), RandomIslandType());
             }
-            
-            _gameManager.thisPlayer.MakesPlayerReady();
-            
-            StartCoroutine(WaitForEndOfGeneration());
         }
 
-        private IEnumerator WaitForEndOfGeneration()
-        {
-            yield return new WaitForSecondsRealtime(1f);
-            
-            var readyPlayersIndex = 0;
-            
-            foreach (var player in  _gameManager.connectedPlayers)
-            {
-                if (player.IsReadyToPlay)
-                {
-                    readyPlayersIndex++;
-                }
-            }
-
-            if (readyPlayersIndex == _gameManager.expectedNumberOfPlayers) _gameManager.StartGame();
-        }
-        
         private void SpawnIsland(Vector3 position, IslandTypesEnum type, PlayerController owner = null)
         {
-            _worldManager.islandGenerator.GenerateIsland(position, type, owner);
+             _worldManager.islandGenerator.GenerateIsland(position, type, owner);
             _currentlyPlacedIslands++;
         }
 

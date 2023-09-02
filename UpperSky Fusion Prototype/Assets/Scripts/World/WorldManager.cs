@@ -9,6 +9,7 @@ namespace World
     public class WorldManager : MonoBehaviour
     {
         public static WorldManager Instance;
+        private GameManager _gameManager;
         [HideInInspector] public WorldGenerator worldGenerator;
         [HideInInspector] public IslandGenerator islandGenerator;
         
@@ -17,7 +18,7 @@ namespace World
         public float outerBorderRadius;
 
         [Header("Islands"), SerializeField]
-        private int numberOfIslandsPerPlayer; 
+        public int numberOfIslandsPerPlayer; 
         [SerializeField] private int maxSpecialIslandsPerPlayer;
         public IslandData[] allIslandsData;
         public float minDistBetweenIslands;
@@ -43,6 +44,7 @@ namespace World
         {
             worldGenerator = GetComponent<WorldGenerator>();
             islandGenerator = GetComponent<IslandGenerator>();
+            _gameManager = GameManager.Instance;
         }
 
         public void CallWorldGeneration(int numberOfPlayers)

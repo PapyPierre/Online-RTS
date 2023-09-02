@@ -1325,7 +1325,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 0
+  m_CookingOptions: -1
   m_Mesh: {fileID: 0}
 --- !u!1 &1790940352911127696
 GameObject:
@@ -1515,7 +1515,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 21, y: 21, z: 33}
-  m_Center: {x: 0.7, y: -10, z: 1}
+  m_Center: {x: -0.66, y: -10, z: 7.02}
 --- !u!114 &986970007669940772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1538,6 +1538,7 @@ MonoBehaviour:
   data: {fileID: 0}
   ground: {fileID: 6696980850303057951}
   rockMesh: {fileID: 5048402177123282842}
+  hasGeneratedProps: 0
   _BuildingsCount: 0
   buildingOnThisIsland: []
 --- !u!114 &7332210343808324521

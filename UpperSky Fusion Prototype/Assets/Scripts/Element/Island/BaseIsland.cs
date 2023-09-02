@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Element.Entity.Buildings;
 using Fusion;
@@ -18,6 +19,8 @@ namespace Element.Island
         public MeshRenderer ground;
         public MeshRenderer rockMesh;
 
+        [ReadOnly] public bool hasGeneratedProps;
+
         [Networked] public int BuildingsCount { get; set; }
         
         [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
@@ -27,30 +30,24 @@ namespace Element.Island
             base.Spawned();
 
             _worldManager = WorldManager.Instance;
-
             _worldManager.allIslands.Add(this);
-
-            if (transform.rotation.y != 0)
-            {
-               minimapIcon.transform.localRotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
-            }
-            
-            GetComponent<FogAgentIsland>().Init(graphObject, null, minimapIcon.gameObject);
         }
-        
-        [Rpc(RpcSources.All, RpcTargets.All)]
-        public void RPC_NetworkInit(PlayerController owner, int TypeIndex)
-        {
-            // The code inside here will run on the client which owns this object (has state and input authority).
 
-            data = _worldManager.allIslandsData[TypeIndex];
+        public void SetUp(PlayerController owner, IslandData islandData)
+        {
+            data = islandData;
+            Init(owner, data);
             
             ground.material.color =  data.GroundColor;
             rockMesh.material.color =  data.RockColor;
             
             _worldManager.islandGenerator.GeneratePropsOnIsland(this, data);
-            Debug.Log(data);
-            Init(owner, data);
+            transform.parent = _worldManager.worldGenerator.worldCenter;
+        }
+
+        public void FogOfWarInit()
+        {
+           GetComponent<FogAgentIsland>().Init(graphObject, null, minimapIcon.gameObject);
         }
 
         // Call from coloniser

@@ -85,7 +85,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f5a9e1b4618ea1a45a25b4b19da2b197,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Props
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: f5a9e1b4618ea1a45a25b4b19da2b197,
         type: 3}
@@ -106,22 +106,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1289960305172293790}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &-8174385125900290064
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100847594948990415}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &3052258380826107231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -130,21 +114,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100847594948990415}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.3347356, y: 0.9598161, z: 1.1780546}
   m_Center: {x: 0.05455327, y: 0.479908, z: 0.08806625}
---- !u!114 &3302310451250349063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100847594948990415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMoving: 0

@@ -20,9 +20,8 @@ namespace Player
         private WorldManager _worldManager;
         private RectangleSelection _rectangleSelection;
         private BuildingsManager _buildingsManager;
-
-        [Networked] public bool IsReadyToPlay{ get; set; }
         
+        [Networked] public bool IsReadyToPlay { get; set; }
         [Networked] public bool IsOutOfGame { get; set; }
 
         public int myId; // = à index dans ConnectedPlayers + 1 
@@ -63,9 +62,26 @@ namespace Player
         private void Update()
         {
             if (!Object.HasInputAuthority || _gameManager.gameIsFinished) return;
-            
-            if (_gameManager.connectedPlayers[^1].IsReadyToPlay
-                && !IsReadyToPlay && HasStateAuthority) MakesPlayerReady();
+
+            if (!IsReadyToPlay && HasStateAuthority)
+            {
+                if (_worldManager.allIslands.Count < 
+                    _worldManager.numberOfIslandsPerPlayer * _gameManager.expectedNumberOfPlayers)
+                {
+                    return;
+                }
+                
+                int i = 0;
+                foreach (var island in _worldManager.allIslands)
+                {
+                    if (island.hasGeneratedProps) i++;
+                }
+
+                if (i == _worldManager.allIslands.Count)
+                {
+                    MakesPlayerReady();
+                }
+            }
 
             isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
@@ -210,6 +226,9 @@ namespace Player
                 }
             }
             
+            _uiManager.loadingScreen.SetActive(false);
+            _uiManager.menuCamera.SetActive(false);
+            
             IsReadyToPlay = true;
         }
 
@@ -220,17 +239,7 @@ namespace Player
             
             _uiManager.UpdateLoadingText(true);
         }
-        
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_StartToPlay()
-        {
-            // The code inside here will run on the client which owns this object (has state and input authority).
 
-            _uiManager.loadingScreen.SetActive(false);
-            _uiManager.menuCamera.SetActive(false);
-            _gameManager.gameIsStarted = true;
-        }
-        
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_OutOfGame()
         {

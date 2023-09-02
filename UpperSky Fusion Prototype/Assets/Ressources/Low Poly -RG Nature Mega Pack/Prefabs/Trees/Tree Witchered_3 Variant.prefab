@@ -85,9 +85,10 @@ PrefabInstance:
     - target: {fileID: 3451118302482216456, guid: 1d05ab7f18b77ca4fab81eadb54601d5,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3451118302482216456, guid: 1d05ab7f18b77ca4fab81eadb54601d5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1d05ab7f18b77ca4fab81eadb54601d5, type: 3}
 --- !u!1 &3331807597596512887 stripped
 GameObject:
@@ -95,31 +96,17 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2521343485579964198}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &-8301799748789329653
-Rigidbody:
+--- !u!64 &7248441518163776628
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3331807597596512887}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &-1960817886867255665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3331807597596512887}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff1d2fdc16d5cc842ad406b70b359a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7549846061417652374, guid: 1d05ab7f18b77ca4fab81eadb54601d5, type: 3}

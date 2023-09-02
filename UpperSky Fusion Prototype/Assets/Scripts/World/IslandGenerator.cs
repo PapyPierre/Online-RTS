@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Element.Island;
 using Fusion;
 using Player;
+using Ressources.AOSFogWar.Used_Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -41,46 +43,42 @@ namespace World
         
         public void GenerateIsland(Vector3 position, IslandTypesEnum type, PlayerController owner)
         {
-            GenerateBaseMesh(position, type, owner);
-
-            Debug.Log("A " + type + " island have been generated at " + position);
-        }
-
-        private void GenerateBaseMesh(Vector3 position, IslandTypesEnum type, PlayerController owner)
-        {
             int x = Random.Range(0, baseIslandsMesh.Length);
             var islandRot = Quaternion.Euler(0, Random.Range(0f,179f), 0);
-
-            BaseIsland generatedIsland = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x],
-                    position, islandRot, owner != null ? owner.Object.StateAuthority : PlayerRef.None)
-                .GetComponent<BaseIsland>();
             
-            generatedIsland.transform.parent = _worldManager.worldGenerator.worldCenter;
-            generatedIsland.RPC_NetworkInit(owner, (int) type);
+            BaseIsland island = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x], position, islandRot,
+                owner != null ? owner.Object.StateAuthority : PlayerRef.None).GetComponent<BaseIsland>();
+            
+            island.SetUp(owner,  _worldManager.allIslandsData[(int) type]);
         }
 
-        public void GeneratePropsOnIsland(BaseIsland island, IslandData data)
+        public async void GeneratePropsOnIsland(BaseIsland island, IslandData data)
         {
             // Rocks
-            if (isGeneratingRocks) GenerateObj(island, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
+            if (isGeneratingRocks) await GenerateObj(island, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
 
-            // Stones
-            if (isGeneratingStones) GenerateObj(island, data.NumberOfStones.x, data.NumberOfStones.y, data.Stones, data);
-            
             // Trees
-            if (isGeneratingTrees) GenerateObj(island, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data);
-
-            // Trunk, Log, other medium stuff
-            if (isGeneratingMediumStuff) GenerateObj(island, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff, data);
+            if (isGeneratingTrees) await GenerateObj(island, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data);
             
-            // Plants including mushrooms,bush and flowers
-            if (isGeneratingPlants) GenerateObj(island, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants, data);
+            // Trunk, Log, other medium stuff
+            if (isGeneratingMediumStuff) await GenerateObj(island, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff, data);
+            
+            // Stones
+            if (isGeneratingStones) await GenerateObj(island, data.NumberOfStones.x, data.NumberOfStones.y, data.Stones, data);
+            
+            // Plants include mushrooms and flowers
+            if (isGeneratingPlants) await GenerateObj(island, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants, data);
             
             // Grass
-            if (data.SpawnGrass && isGeneratingGrass) GenerateGrass(island, data.Grass[0], data);
+            if (data.SpawnGrass && isGeneratingGrass) await GenerateGrass(island, data.Grass[0], data);
+
+            island.hasGeneratedProps = true;
+            Debug.Log("A " + data.Type + " island have been generated at " + island.transform.position);
+            
+            island.FogOfWarInit();
         }
 
-        private void GenerateObj(BaseIsland island, int numberOfObjX, int numberOfObjY,
+        private async Task GenerateObj(BaseIsland island, int numberOfObjX, int numberOfObjY,
             GameObject[] obj, IslandData data)
         {
             int r = Random.Range(numberOfObjX, numberOfObjY);
@@ -90,11 +88,11 @@ namespace World
                 int x = Random.Range(0, obj.Length);
                 GameObject selectedObj = obj[x];
                 
-                SpawnObjOnIsland(selectedObj, island, data);
+               await SpawnObjOnIsland(selectedObj, island, data);
             }
         }
 
-        private void GenerateGrass(BaseIsland island, GameObject grassObj, IslandData data)
+        private Task GenerateGrass(BaseIsland island, GameObject grassObj, IslandData data)
         {
             Texture2D texture = GenerateNoiseTexture();
             perlinNoiseRenderer.material.mainTexture = texture;
@@ -148,6 +146,8 @@ namespace World
                     }
                 }
             }
+            
+            return Task.CompletedTask;
         }
 
         private Texture2D GenerateNoiseTexture()
@@ -181,15 +181,17 @@ namespace World
             return new Color(perlinNoiseValue, perlinNoiseValue, perlinNoiseValue);
         }
 
-        private void SpawnObjOnIsland(GameObject obj, BaseIsland island, IslandData data)
+        private async Task SpawnObjOnIsland(GameObject obj, BaseIsland island, IslandData data)
         {
-            Vector3 objPos = FindPosOnIsland(island);
+            Vector3 objPos = FindPosOverIsland(island);
 
             GameObject newObj = Instantiate(obj, objPos, Quaternion.identity);
             newObj.transform.parent = island.graphObject.transform;
-            IslandProps props = newObj.GetComponent<IslandProps>();
-            props.Init(this, island);
-                
+            
+            var newObjRot = newObj.transform.rotation;
+            newObjRot = Quaternion.Euler(newObjRot.x, Random.Range(0f,179f), newObjRot.z);
+            newObj.transform.rotation = newObjRot;
+
             MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
                     
             foreach (var mat in meshRenderer.materials)
@@ -205,72 +207,76 @@ namespace World
 
             if (!IsMeshOverlappingCompletely(newObjMeshFilter.mesh, newObj.transform.position))
             {
-                MoveObjOnIsland(props, newObj.GetComponent<Collider>(), newObjMeshFilter, island);
+               await MoveObjOverIsland(newObj.transform, newObjMeshFilter, island);
+            }
+            else
+            {
+                var objNewPos = newObj.transform.position;
+                objNewPos = new Vector3(objNewPos.x, island.transform.position.y, objNewPos.z);
+                newObj.transform.position = objNewPos;
             }
         }
 
-        private Vector3 FindPosOnIsland(BaseIsland island)
+        private Vector3 FindPosOverIsland(BaseIsland island)
         {
             BoxCollider islandCollider = island.GetComponent<BoxCollider>();
             float boxColWidth = islandCollider.bounds.size.x;
             float boxColHeight = islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
             
-            Vector3 islandPos = island.transform.position;
+            Vector3 pos = island.graphObject.transform.position;
 
-            Vector2 center = new Vector2(islandPos.x, islandPos.z);
+            Vector2 center = new Vector2(pos.x, pos.z);
             
             Vector2 obj2DPos = CustomHelper.GenerateRandomPosIn2DArea(center, boxColHeight, boxColWidth);
             
-            return new Vector3(obj2DPos.x, islandPos.y, obj2DPos.y);
+            return new Vector3(obj2DPos.x, 20, obj2DPos.y);
         }
-        
-        public void MoveObjOnIsland(IslandProps props, Collider objCollider, MeshFilter objMeshFilter, BaseIsland island)
+
+        private Task MoveObjOverIsland(Transform obj, MeshFilter objMeshFilter, BaseIsland island)
         {
-            if (props.isMoving) return;
-            props.isMoving = true;
-            
             int i = 0;
             
             while (true)
             {
-                props.transform.position = FindPosOnIsland(island);
+                obj.transform.position = FindPosOverIsland(island);
 
-                if (i > 5000)
+                if (i > 500)
                 {
                     Debug.LogError("Anti-Crash Stop");
                     break;
                 }
 
-                if (!IsMeshOverlappingCompletely(objMeshFilter.mesh, props.transform.position))
+                if (!IsMeshOverlappingCompletely(objMeshFilter.mesh, obj.transform.position))
                 {
                     i++;
                     continue;
                 }
                 
-                props.isMoving = false;
-                
-                // To reset collision detection 
-                objCollider.enabled = false;
-                objCollider.enabled = true;
-                
+                var objNewPos = obj.position;
+                objNewPos = new Vector3(objNewPos.x, island.transform.position.y, objNewPos.z);
+                obj.position = objNewPos;
                 break;
             }
+            
+            return Task.CompletedTask;
         }
 
         private bool IsMeshOverlappingCompletely(Mesh mesh, Vector3 islandPos)
         {
-            Vector3 additionalHeight = new Vector3(0, 5, 0);
-            
             foreach (Vector3 vertex in mesh.vertices)
             {
                 Vector3 worldVertex = islandPos + vertex;
                 
-                if (!Physics.Raycast(worldVertex + additionalHeight, Vector3.down, 
-                        50, terrainLayer, QueryTriggerInteraction.Ignore))
+                if (!Physics.Raycast(worldVertex, Vector3.down, 
+                        50,  1 << 7, QueryTriggerInteraction.Ignore))
                 {
+                    Debug.DrawRay(worldVertex, Vector3.down * 50, Color.red, 100);
                     return false; 
                 }
+                
+                Debug.DrawRay(worldVertex, Vector3.down * 50, Color.green, 100);
             }
+
 
             return true; 
         }
