@@ -3206,7 +3206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a8471786cbdda4180ffa1423f51390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   _Owner: {fileID: 0}
   meshToColor: []
   selectionCircle: {fileID: 611706055968922307}
@@ -3256,9 +3256,9 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   InterpolationSpace: 0
-  InterpolationTarget: {fileID: 8987047204532334084}
+  InterpolationTarget: {fileID: 9118775133816589996}
   InterpolateErrorCorrection: 1
   InterpolatedErrorCorrectionSettings:
     MinRate: 3.3

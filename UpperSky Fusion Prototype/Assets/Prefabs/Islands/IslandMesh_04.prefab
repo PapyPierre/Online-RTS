@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3614191088573810274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.81, y: 0, z: 10.99}
+  m_LocalPosition: {x: -10.93, y: 0, z: 10.99}
   m_LocalScale: {x: 0.1428081, y: 0.1428081, z: 0.1428081}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5292,7 +5292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a8471786cbdda4180ffa1423f51390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   _Owner: {fileID: 0}
   meshToColor: []
   selectionCircle: {fileID: 6136559403814856398}
@@ -5358,9 +5358,9 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   InterpolationSpace: 0
-  InterpolationTarget: {fileID: 2575222426345237915}
+  InterpolationTarget: {fileID: 390365029722109525}
   InterpolateErrorCorrection: 1
   InterpolatedErrorCorrectionSettings:
     MinRate: 3.3

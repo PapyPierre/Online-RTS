@@ -5484,7 +5484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -10594,7 +10594,7 @@ MonoBehaviour:
   fogPlaneHeight: 16
   updateFogPlaneHeightInRealTime: 0
   fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
-  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 1}
+  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0.5882353}
   fogPlaneAlpha: 0.9
   fogLerpSpeed: 1
   fogPlaneTextureLerpTarget: {fileID: 0}

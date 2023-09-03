@@ -270,14 +270,10 @@ namespace World
                 if (!Physics.Raycast(worldVertex, Vector3.down, 
                         50,  1 << 7, QueryTriggerInteraction.Ignore))
                 {
-                    Debug.DrawRay(worldVertex, Vector3.down * 50, Color.red, 100);
                     return false; 
                 }
-                
-                Debug.DrawRay(worldVertex, Vector3.down * 50, Color.green, 100);
             }
-
-
+            
             return true; 
         }
     }
