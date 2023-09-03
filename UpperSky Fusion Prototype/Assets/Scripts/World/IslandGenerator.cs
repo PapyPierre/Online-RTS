@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using Element.Island;
 using Fusion;
@@ -18,12 +19,11 @@ namespace World
         [SerializeField] private NetworkPrefabRef[] baseIslandsMesh;
 
         [SerializeField, Header("Generation Check")] private bool isGeneratingRocks;
-        [SerializeField] private bool isGeneratingStones;
         [SerializeField] private bool isGeneratingTrees;
         [SerializeField] private bool isGeneratingMediumStuff;
+        [SerializeField] private bool isGeneratingStones;
         [SerializeField] private bool isGeneratingPlants;
         [SerializeField] private bool isGeneratingGrass;
-
 
         [SerializeField, Header("Grass Perlin Noise")] private Renderer perlinNoiseRenderer;
         [SerializeField] private int perlinNoiseHeight;
@@ -44,65 +44,68 @@ namespace World
         public void GenerateIsland(Vector3 position, IslandTypesEnum type, PlayerController owner)
         {
             int x = Random.Range(0, baseIslandsMesh.Length);
-            var islandRot = Quaternion.Euler(0, Random.Range(0f,179f), 0);
-            
-            BaseIsland island = _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x], position, islandRot,
-                owner != null ? owner.Object.StateAuthority : PlayerRef.None).GetComponent<BaseIsland>();
-            
-            island.SetUp(owner,  _worldManager.allIslandsData[(int) type]);
+        // var islandRot = Quaternion.Euler(0, Random.Range(0f,179f), 0);
+        var islandRot = Quaternion.identity;
+           _gameManager.thisPlayer.Runner.Spawn(baseIslandsMesh[x], position, islandRot,
+                owner != null ? owner.Object.StateAuthority : PlayerRef.None, (runner, obj) =>
+                    obj.GetComponent<BaseIsland>().BeforeSpawnInit(owner,  type));
         }
 
-        public async void GeneratePropsOnIsland(BaseIsland island, IslandData data)
+        public async void GeneratePropsOnIsland(BaseIsland island, IslandData data, BoxCollider islandCol)
         {
             // Rocks
-            if (isGeneratingRocks) await GenerateObj(island, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data);
+            if (isGeneratingRocks) await GenerateObj(island, data.NumberOfRocks.x, data.NumberOfRocks.y, data.Rocks, data,islandCol);
 
             // Trees
-            if (isGeneratingTrees) await GenerateObj(island, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data);
+            if (isGeneratingTrees) await GenerateObj(island, data.NumberOfTrees.x, data.NumberOfTrees.y, data.Trees, data,islandCol);
             
             // Trunk, Log, other medium stuff
-            if (isGeneratingMediumStuff) await GenerateObj(island, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff, data);
+            if (isGeneratingMediumStuff) await GenerateObj(island, data.NumberOfMediumStuff.x, data.NumberOfMediumStuff.y, data.MediumStuff, data,islandCol);
             
             // Stones
-            if (isGeneratingStones) await GenerateObj(island, data.NumberOfStones.x, data.NumberOfStones.y, data.Stones, data);
+            if (isGeneratingStones) await GenerateObj(island, data.NumberOfStones.x, data.NumberOfStones.y, data.Stones, data,islandCol);
             
             // Plants include mushrooms and flowers
-            if (isGeneratingPlants) await GenerateObj(island, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants, data);
+            if (isGeneratingPlants) await GenerateObj(island, data.NumberOfPlants.x, data.NumberOfPlants.y, data.Plants, data,islandCol);
             
             // Grass
-            if (data.SpawnGrass && isGeneratingGrass) await GenerateGrass(island, data.Grass[0], data);
+            if (data.SpawnGrass && isGeneratingGrass) await GenerateGrass(island, data.Grass[0], data, islandCol);
 
             island.hasGeneratedProps = true;
             Debug.Log("A " + data.Type + " island have been generated at " + island.transform.position);
             
             island.FogOfWarInit();
+
+            foreach (var player in _gameManager.connectedPlayers)
+            { 
+                player.CheckIfReadyToPlay();   
+            }
         }
 
         private async Task GenerateObj(BaseIsland island, int numberOfObjX, int numberOfObjY,
-            GameObject[] obj, IslandData data)
+            GameObject[] obj, IslandData data, BoxCollider islandCol)
         {
-            int r = Random.Range(numberOfObjX, numberOfObjY);
+            int r = Random.Range(numberOfObjX, numberOfObjY + 1);
             
             for (int i = 0; i < r; i++)
             {              
                 int x = Random.Range(0, obj.Length);
                 GameObject selectedObj = obj[x];
                 
-               await SpawnObjOnIsland(selectedObj, island, data);
+               await SpawnObjOnIsland(selectedObj, island, data, islandCol);
             }
         }
 
-        private Task GenerateGrass(BaseIsland island, GameObject grassObj, IslandData data)
+        private Task GenerateGrass(BaseIsland island, GameObject grassObj, IslandData data, BoxCollider islandCol)
         {
             Texture2D texture = GenerateNoiseTexture();
             perlinNoiseRenderer.material.mainTexture = texture;
             
             int width = texture.width;
             int height = texture.height;
-            
-            BoxCollider islandCollider = island.GetComponent<BoxCollider>();
-            float boxColWidth = islandCollider.bounds.size.x;
-            float boxColHeight = islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
+
+            float boxColWidth = islandCol.bounds.size.x;
+            float boxColHeight = islandCol.bounds.size.z; // not proper "height", but "height" in top down view
 
             for (int u = 0; u < width; u++)
             {
@@ -181,9 +184,9 @@ namespace World
             return new Color(perlinNoiseValue, perlinNoiseValue, perlinNoiseValue);
         }
 
-        private async Task SpawnObjOnIsland(GameObject obj, BaseIsland island, IslandData data)
+        private async Task SpawnObjOnIsland(GameObject obj, BaseIsland island, IslandData data, BoxCollider islandCol) 
         {
-            Vector3 objPos = FindPosOverIsland(island);
+            Vector3 objPos = FindPosOverIsland(island, islandCol);
 
             GameObject newObj = Instantiate(obj, objPos, Quaternion.identity);
             newObj.transform.parent = island.graphObject.transform;
@@ -207,23 +210,20 @@ namespace World
 
             if (!IsMeshOverlappingCompletely(newObjMeshFilter.mesh, newObj.transform.position))
             {
-               await MoveObjOverIsland(newObj.transform, newObjMeshFilter, island);
+               await MoveObjOverIsland(newObj.transform, newObjMeshFilter, island, islandCol);
             }
             else
             {
-                var objNewPos = newObj.transform.position;
-                objNewPos = new Vector3(objNewPos.x, island.transform.position.y, objNewPos.z);
-                newObj.transform.position = objNewPos;
+                SetObjPosOnIsland(newObj.transform, island.transform);
             }
         }
 
-        private Vector3 FindPosOverIsland(BaseIsland island)
+        private Vector3 FindPosOverIsland(BaseIsland island, BoxCollider islandCol)
         {
-            BoxCollider islandCollider = island.GetComponent<BoxCollider>();
-            float boxColWidth = islandCollider.bounds.size.x;
-            float boxColHeight = islandCollider.bounds.size.z; // not proper "height", but "height" in top down view
+            float boxColWidth = islandCol.bounds.size.x;
+            float boxColHeight = islandCol.bounds.size.z; // not proper "height", but "height" in top down view
             
-            Vector3 pos = island.graphObject.transform.position;
+            Vector3 pos = island.transform.position;
 
             Vector2 center = new Vector2(pos.x, pos.z);
             
@@ -232,17 +232,18 @@ namespace World
             return new Vector3(obj2DPos.x, 20, obj2DPos.y);
         }
 
-        private Task MoveObjOverIsland(Transform obj, MeshFilter objMeshFilter, BaseIsland island)
+        private Task MoveObjOverIsland(Transform obj, MeshFilter objMeshFilter, BaseIsland island, BoxCollider islandCol)
         {
             int i = 0;
             
             while (true)
             {
-                obj.transform.position = FindPosOverIsland(island);
+                obj.transform.position = FindPosOverIsland(island, islandCol);
 
-                if (i > 500)
+                if (i > 1000)
                 {
-                    Debug.LogError("Anti-Crash Stop");
+                    Debug.LogError("Stopped iteration to avoid crashing");
+                    SetObjPosOnIsland(obj, island.transform);
                     break;
                 }
 
@@ -251,14 +252,19 @@ namespace World
                     i++;
                     continue;
                 }
-                
-                var objNewPos = obj.position;
-                objNewPos = new Vector3(objNewPos.x, island.transform.position.y, objNewPos.z);
-                obj.position = objNewPos;
+
+                SetObjPosOnIsland(obj, island.transform);
                 break;
             }
             
             return Task.CompletedTask;
+        }
+
+        private void SetObjPosOnIsland(Transform obj, Transform island)
+        {
+            var objNewPos = obj.position;
+            objNewPos = new Vector3(objNewPos.x, island.position.y, objNewPos.z);
+            obj.position = objNewPos;
         }
 
         private bool IsMeshOverlappingCompletely(Mesh mesh, Vector3 islandPos)

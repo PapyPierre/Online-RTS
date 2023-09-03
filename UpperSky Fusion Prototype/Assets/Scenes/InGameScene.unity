@@ -10594,7 +10594,7 @@ MonoBehaviour:
   fogPlaneHeight: 16
   updateFogPlaneHeightInRealTime: 0
   fogPlaneMaterial: {fileID: 2100000, guid: 36b93ac6fcf129c449491654e397fe4a, type: 2}
-  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0.5882353}
+  fogColor: {r: 0.250979, g: 0.31416875, b: 0.3773585, a: 0.78431374}
   fogPlaneAlpha: 0.9
   fogLerpSpeed: 1
   fogPlaneTextureLerpTarget: {fileID: 0}
@@ -10984,9 +10984,9 @@ MonoBehaviour:
   - RawGuidValue: 2acbdf2164d8b934099ad3ba3774bf74
   - RawGuidValue: c9f43f9812022df4a8e69fd84ad71a94
   isGeneratingRocks: 1
-  isGeneratingStones: 1
   isGeneratingTrees: 1
   isGeneratingMediumStuff: 1
+  isGeneratingStones: 1
   isGeneratingPlants: 1
   isGeneratingGrass: 1
   perlinNoiseRenderer: {fileID: 1388829716}

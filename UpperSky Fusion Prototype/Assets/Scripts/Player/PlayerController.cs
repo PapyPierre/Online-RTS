@@ -19,18 +19,17 @@ namespace Player
         private GameManager _gameManager;
         private WorldManager _worldManager;
         private RectangleSelection _rectangleSelection;
-        private BuildingsManager _buildingsManager;
-        
-        [Networked] public bool IsReadyToPlay { get; set; }
-        [Networked] public bool IsOutOfGame { get; set; }
 
-        public int myId; // = à index dans ConnectedPlayers + 1 
+        [Networked] public bool IsReadyToPlay { get; set; }
+        [Networked] public bool IsOutOfGame  { get; set; }
+
+        public int myId; // = Index in ConnectedPlayers + 1 
         public Color myColor;
         public Camera myCam;
 
         [HideInInspector] public PlayerRessources ressources;
         
-       [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
+        [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
         [HideInInspector] public bool isMajKeyPressed;
         public List<BaseElement> currentlySelectedElements;
         public BaseElement lastSelectedElement;
@@ -44,8 +43,7 @@ namespace Player
             _gameManager = GameManager.Instance;
             _worldManager = WorldManager.Instance;
             _rectangleSelection = RectangleSelection.Instance;
-            _buildingsManager = BuildingsManager.Instance;
-                
+
             ressources = GetComponent<PlayerRessources>();
             
             _gameManager.ConnectPlayer(this);
@@ -63,10 +61,22 @@ namespace Player
         {
             if (!Object.HasInputAuthority || _gameManager.gameIsFinished) return;
 
+            isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            
+            if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
+            
+            if (Input.GetMouseButton(0)) OnLeftButtonHold();
+            
+            if (Input.GetMouseButtonUp(0)) OnLeftButtonUp();
+                
+            if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
+        }
+
+        public void CheckIfReadyToPlay()
+        {
             if (!IsReadyToPlay && HasStateAuthority)
             {
-                if (_worldManager.allIslands.Count < 
-                    _worldManager.numberOfIslandsPerPlayer * _gameManager.expectedNumberOfPlayers)
+                if (_worldManager.allIslands.Count < _worldManager.numberOfIslandsPerPlayer * _gameManager.expectedNumberOfPlayers)
                 {
                     return;
                 }
@@ -82,16 +92,6 @@ namespace Player
                     MakesPlayerReady();
                 }
             }
-
-            isMajKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-            
-            if (Input.GetMouseButtonDown(0)) OnLeftButtonClick();
-            
-            if (Input.GetMouseButton(0)) OnLeftButtonHold();
-            
-            if (Input.GetMouseButtonUp(0)) OnLeftButtonUp();
-                
-            if (Input.GetMouseButtonDown(1)) OnRightButtonClick();
         }
 
         private void OnLeftButtonClick()
@@ -212,7 +212,7 @@ namespace Player
             _uiManager.HideSelectionInfoBox();
         }
 
-        public void MakesPlayerReady()
+        private void MakesPlayerReady()
         {
             ressources.Init();
 
@@ -220,16 +220,20 @@ namespace Player
             {
                 if (island.PlayerIsOwner())
                 {
-                    island.Init(this, island.data);
                     transform.position = island.transform.position;
                     break;
                 }
             }
-            
+
+            IsReadyToPlay = true;
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_OnGameStart()
+        {
             _uiManager.loadingScreen.SetActive(false);
             _uiManager.menuCamera.SetActive(false);
-            
-            IsReadyToPlay = true;
+            _gameManager.gameIsStarted = true;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

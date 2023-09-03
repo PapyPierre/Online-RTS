@@ -1283,7 +1283,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d47c6287d6c7be14782e543a66aea3d6, type: 2}
+  - {fileID: 2100000, guid: dc156789a92e0ee4382fb61a80479e5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1538,6 +1538,7 @@ MonoBehaviour:
   data: {fileID: 0}
   ground: {fileID: 6696980850303057951}
   rockMesh: {fileID: 5048402177123282842}
+  boxCollider: {fileID: 0}
   hasGeneratedProps: 0
   _BuildingsCount: 0
   buildingOnThisIsland: []

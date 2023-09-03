@@ -14,16 +14,26 @@ namespace Element.Island
     {
         private WorldManager _worldManager;
         
+        [Networked] private PlayerController TempOwner { get; set; }
+        [Networked] private IslandTypesEnum Type { get; set; }
         [HideInInspector] public IslandData data;
 
-        public MeshRenderer ground;
-        public MeshRenderer rockMesh;
-
+        [SerializeField] private MeshRenderer ground;
+        [SerializeField] private MeshRenderer rockMesh;
+        [SerializeField] private BoxCollider boxCollider;
+        
         [ReadOnly] public bool hasGeneratedProps;
 
         [Networked] public int BuildingsCount { get; set; }
         
         [HideInInspector] public List<BaseBuilding> buildingOnThisIsland = new();
+        
+        public void BeforeSpawnInit(PlayerController owner, IslandTypesEnum islandType)
+        {
+            // The code inside here will run only on the client that called the spawn of this object
+            TempOwner = owner;
+            Type = islandType;
+        }
 
         public override void Spawned()
         {
@@ -31,20 +41,26 @@ namespace Element.Island
 
             _worldManager = WorldManager.Instance;
             _worldManager.allIslands.Add(this);
-        }
-
-        public void SetUp(PlayerController owner, IslandData islandData)
-        {
-            data = islandData;
-            Init(owner, data);
             
+            transform.parent = _worldManager.worldGenerator.worldCenter;
+
+            data = _worldManager.allIslandsData[(int) Type]; 
+            
+            Init(TempOwner, data);
+
             ground.material.color =  data.GroundColor;
             rockMesh.material.color =  data.RockColor;
-            
-            _worldManager.islandGenerator.GeneratePropsOnIsland(this, data);
-            transform.parent = _worldManager.worldGenerator.worldCenter;
+
+            StartCoroutine(WaitNetworkSync());
         }
 
+        // Wait for network synchronisation before generating props on island
+        private IEnumerator WaitNetworkSync()
+        {
+            yield return new WaitForSeconds(1);
+            _worldManager.islandGenerator.GeneratePropsOnIsland(this, data, boxCollider);
+        }
+        
         public void FogOfWarInit()
         {
            GetComponent<FogAgentIsland>().Init(graphObject, null, minimapIcon.gameObject);

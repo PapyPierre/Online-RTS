@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
 
      private void Update()
      {
+         CheckToStartTheGame();
+     }
+
+     private void CheckToStartTheGame()
+     {
          if (gameIsStarted || gameIsFinished || connectedPlayers.Count < expectedNumberOfPlayers) return;
 
          foreach (var player in connectedPlayers)
@@ -73,6 +78,8 @@ public class GameManager : MonoBehaviour
          if (player.HasInputAuthority) 
          {
              thisPlayer = player;
+             
+             Debug.Log("This player is : Player " +  player.myId);
 
              if (connectedPlayers.Count == expectedNumberOfPlayers)
              {
@@ -88,7 +95,10 @@ public class GameManager : MonoBehaviour
 
      private void StartGame()
      {
-         gameIsStarted = true;
+         foreach (var player in connectedPlayers)
+         {
+             player.RPC_OnGameStart();
+         }
      }
      
      public void DefeatPlayer(PlayerController defeatedPlayer)

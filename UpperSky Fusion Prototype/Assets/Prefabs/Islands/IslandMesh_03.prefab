@@ -4700,6 +4700,7 @@ MonoBehaviour:
   data: {fileID: 0}
   ground: {fileID: 4432668082921461589}
   rockMesh: {fileID: 4002515674037484045}
+  boxCollider: {fileID: 4246229200397698619}
   hasGeneratedProps: 0
   _BuildingsCount: 0
   buildingOnThisIsland: []

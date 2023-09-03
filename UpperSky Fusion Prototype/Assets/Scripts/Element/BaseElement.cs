@@ -76,7 +76,7 @@ namespace Element
         
         public bool PlayerIsOwner()
         {
-            return Owner == GameManager.thisPlayer;
+            return Owner == GameManager.thisPlayer; 
         }
         
         protected bool MouseAboveThisElement()

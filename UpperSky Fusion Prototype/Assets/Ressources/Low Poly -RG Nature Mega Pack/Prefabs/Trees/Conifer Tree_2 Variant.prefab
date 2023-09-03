@@ -106,8 +106,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5958783318971637286}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &-1020531202312472301
-MeshCollider:
+--- !u!65 &8518066248432922294
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,7 +116,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7075177219901126064, guid: 3933aaf2cafc899468b874b028a999f4, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.5672765, y: 5.635467, z: 2.5026696}
+  m_Center: {x: -0.0030114055, y: 2.817733, z: -0.025576115}

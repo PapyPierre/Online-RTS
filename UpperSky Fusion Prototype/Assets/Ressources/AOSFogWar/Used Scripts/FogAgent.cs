@@ -66,13 +66,13 @@ namespace Ressources.AOSFogWar.Used_Scripts
 
         protected virtual void OnVisible()
         {
-            _graphObject.SetActive(true);
+            if (!_graphObject.activeSelf) _graphObject.SetActive(true);
             if (_UIcanvas != null) _UIcanvas.SetActive(true);
         }
 
         protected virtual void OnHide()
         {
-            _graphObject.SetActive(false);
+            if (_graphObject.activeSelf) _graphObject.SetActive(false);
             if (_UIcanvas != null) _UIcanvas.SetActive(false);
         }
 
