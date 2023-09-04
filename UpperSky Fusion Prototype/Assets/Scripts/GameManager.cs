@@ -22,14 +22,7 @@ public class GameManager : MonoBehaviour
     public bool gameIsStarted;
     public bool gameIsFinished;
 
-    public enum EntityType
-     {
-         Unit,
-         Building,
-         Both
-     }
-    
-     private void Awake()
+    private void Awake()
      {
         if (Instance != null)
         {
@@ -109,10 +102,17 @@ public class GameManager : MonoBehaviour
          if (_playersStillAlive.Count is 1) EndGame(_playersStillAlive[0]);
      }
      
-     private void EndGame(PlayerController winner)
+     public void EndGame(PlayerController winner)
      {
          gameIsFinished = true;
          Time.timeScale = 0;
+         _playersStillAlive.Remove(winner);
+
+         foreach (var player in _playersStillAlive)
+         {
+             player.RPC_OutOfGame();
+         }
+         
          winner.RPC_Win();
      }
 }

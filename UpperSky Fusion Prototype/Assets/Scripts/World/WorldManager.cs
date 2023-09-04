@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Element.Island;
 using NaughtyAttributes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace World
 {
     public class WorldManager : MonoBehaviour
     {
         public static WorldManager Instance;
-        private GameManager _gameManager;
         [HideInInspector] public WorldGenerator worldGenerator;
         [HideInInspector] public IslandGenerator islandGenerator;
         
@@ -23,7 +23,7 @@ namespace World
         public IslandData[] allIslandsData;
         public float minDistBetweenIslands;
         public AnimationCurve islandDistFormCenterRepartition;
-        
+        public IslandTypesEnum startIslandType;
         [HideInInspector] public List<BaseIsland> allIslands = new();
 
         [Header("Players")] 
@@ -44,7 +44,6 @@ namespace World
         {
             worldGenerator = GetComponent<WorldGenerator>();
             islandGenerator = GetComponent<IslandGenerator>();
-            _gameManager = GameManager.Instance;
         }
 
         public void CallWorldGeneration(int numberOfPlayers)

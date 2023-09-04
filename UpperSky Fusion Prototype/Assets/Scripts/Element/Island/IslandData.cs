@@ -17,7 +17,10 @@ namespace Element.Island
         public float Rarity { get; private set; }
         
         [field: SerializeField, Header("Colors")]
-        public Color TopColor { get; private set; }
+        public Color TreeColor { get; private set; }
+        
+        [field: SerializeField]
+        public Color GrassColor { get; private set; }
         
         [field: SerializeField]
         public Color GroundColor { get; private set; }

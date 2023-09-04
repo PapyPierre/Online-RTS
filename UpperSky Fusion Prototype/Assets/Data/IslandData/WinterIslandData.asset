@@ -20,7 +20,8 @@ MonoBehaviour:
   <Type>k__BackingField: 3
   <MaxBuildingsOnThisIsland>k__BackingField: 0
   <Rarity>k__BackingField: 10
-  <TopColor>k__BackingField: {r: 0.52674437, g: 0.8396226, b: 0.7660607, a: 1}
+  <TreeColor>k__BackingField: {r: 0.24007656, g: 0.7830189, b: 0.7613012, a: 1}
+  <GrassColor>k__BackingField: {r: 0.508989, g: 0.8113208, b: 0.80816543, a: 1}
   <GroundColor>k__BackingField: {r: 0.7482645, g: 0.8839042, b: 0.8962264, a: 1}
   <RockColor>k__BackingField: {r: 0.6553044, g: 0.6981132, b: 0.6976664, a: 1}
   <Rocks>k__BackingField:

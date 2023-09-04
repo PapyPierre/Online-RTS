@@ -28,14 +28,14 @@ namespace Ressources.AOSFogWar.Used_Scripts
         [SerializeField, Range(0, 2)] private int additionalRadius;
 
         private GameObject _graphObject;
-        private GameObject _UIcanvas;
+        private GameObject _uIcanvas;
 
-        public virtual void Init(GameObject graph, GameObject canvas)
+        public virtual void Init(GameObject graph, GameObject uiCanva)
         {
             _fogOfWar = FogOfWar.Instance;
             
             _graphObject = graph;
-            _UIcanvas = canvas;
+            _uIcanvas = uiCanva;
         }
         
         private void Update()
@@ -67,13 +67,13 @@ namespace Ressources.AOSFogWar.Used_Scripts
         protected virtual void OnVisible()
         {
             if (!_graphObject.activeSelf) _graphObject.SetActive(true);
-            if (_UIcanvas != null) _UIcanvas.SetActive(true);
+            if (_uIcanvas != null) _uIcanvas.SetActive(true);
         }
 
         protected virtual void OnHide()
         {
             if (_graphObject.activeSelf) _graphObject.SetActive(false);
-            if (_UIcanvas != null) _UIcanvas.SetActive(false);
+            if (_uIcanvas != null) _uIcanvas.SetActive(false);
         }
 
         #if UNITY_EDITOR

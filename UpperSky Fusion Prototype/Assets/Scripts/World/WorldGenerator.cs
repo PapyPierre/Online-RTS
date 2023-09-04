@@ -79,13 +79,13 @@ namespace World
         {
             Vector3 playerIslandsSpawnPos = new Vector3(0, 0, _worldManager.innerBorderRadius);
             
-           SpawnIsland(playerIslandsSpawnPos, IslandTypesEnum.Meadow, _gameManager.connectedPlayers[0]);
+           SpawnIsland(playerIslandsSpawnPos, _worldManager.startIslandType, _gameManager.connectedPlayers[0]);
            
            for (int i = 0; i < _numberOfPlayers -1; i++) 
            {
                worldCenter.Rotate(Vector3.up, angle);
                 
-              SpawnIsland(playerIslandsSpawnPos, IslandTypesEnum.Meadow, _gameManager.connectedPlayers[i + 1]);
+              SpawnIsland(playerIslandsSpawnPos, _worldManager.startIslandType, _gameManager.connectedPlayers[i + 1]);
            }
             
             // Randomly rotate all the position around the center by moving the parent of the posistions
@@ -158,8 +158,9 @@ namespace World
             
             foreach (var data in _worldManager.allIslandsData)
             {
-                if (randomValue <= data.Rarity) return data.Type;
-                else randomValue -= data.Rarity;
+                if (randomValue < data.Rarity) return data.Type;
+                
+                randomValue -= data.Rarity;
             }
 
             return IslandTypesEnum.Meadow;

@@ -21,6 +21,7 @@ namespace Player
         private RectangleSelection _rectangleSelection;
 
         [Networked] public bool IsReadyToPlay { get; set; }
+        [Networked] public int NumberOfControlledIslands { get; set; }
         [Networked] public bool IsOutOfGame  { get; set; }
 
         public int myId; // = Index in ConnectedPlayers + 1 
@@ -221,11 +222,37 @@ namespace Player
                 if (island.PlayerIsOwner())
                 {
                     transform.position = island.transform.position;
+                    RPC_GainAnIsland();
                     break;
                 }
             }
 
             IsReadyToPlay = true;
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_LostAnIsland()
+        {
+            NumberOfControlledIslands--;
+
+            if (NumberOfControlledIslands == 0)
+            {
+                _gameManager.DefeatPlayer(this);
+            }
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_GainAnIsland()
+        {
+            NumberOfControlledIslands++;
+
+            // ReSharper disable once PossibleLossOfFraction
+            var requiredNumberOfIslandToWin = Mathf.RoundToInt(_worldManager.allIslands.Count / 1.5f);
+            
+            if (NumberOfControlledIslands >= requiredNumberOfIslandToWin)
+            {
+                _gameManager.EndGame(this);
+            }
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -239,25 +266,19 @@ namespace Player
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_DisplayLoadingText()
         {
-            // The code inside here will run on the client which owns this object (has state and input authority).
-            
             _uiManager.UpdateLoadingText(true);
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_OutOfGame()
         {
-            // The code inside here will run on the client which owns this object (has state and input authority).
             IsOutOfGame = true;
-            
             _uiManager.ShowLoseText();
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_Win()
         {
-            // The code inside here will run on the client which owns this object (has state and input authority).
-
             _uiManager.ShowWinText();
         }
 

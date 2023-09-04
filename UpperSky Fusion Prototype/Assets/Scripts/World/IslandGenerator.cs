@@ -16,7 +16,7 @@ namespace World
         private GameManager _gameManager;
 
         [SerializeField] private LayerMask terrainLayer;
-        [SerializeField] private NetworkPrefabRef[] baseIslandsMesh;
+        public NetworkPrefabRef[] baseIslandsMesh;
 
         [SerializeField, Header("Generation Check")] private bool isGeneratingRocks;
         [SerializeField] private bool isGeneratingTrees;
@@ -142,7 +142,7 @@ namespace World
 
                             foreach (var renderer in grassRenderers)
                             {
-                                renderer.material.SetColor(ShaderTopColor, data.TopColor);
+                                renderer.material.SetColor(ShaderTopColor, data.GrassColor);
                                 renderer.material.SetColor(ShaderGroundColor, data.GroundColor);
                             }
                         }
@@ -201,7 +201,7 @@ namespace World
             { 
                 if (mat.shader.name == "Polytope Studio/PT_Vegetation_Foliage_Shader") 
                 { 
-                    mat.SetColor(ShaderTopColor, data.TopColor); 
+                    mat.SetColor(ShaderTopColor, data.TreeColor); 
                     mat.SetColor(ShaderGroundColor, data.GroundColor);
                 }
             }

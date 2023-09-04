@@ -17,8 +17,8 @@ namespace Element.Island
         [Networked] private PlayerController TempOwner { get; set; }
         [Networked] private IslandTypesEnum Type { get; set; }
         [HideInInspector] public IslandData data;
-
-        [SerializeField] private MeshRenderer ground;
+        
+        [SerializeField, Header("Other")] private MeshRenderer ground;
         [SerializeField] private MeshRenderer rockMesh;
         [SerializeField] private BoxCollider boxCollider;
         
@@ -48,6 +48,8 @@ namespace Element.Island
             
             Init(TempOwner, data);
 
+            minimapIcon.sprite = data.Icon;
+            
             ground.material.color =  data.GroundColor;
             rockMesh.material.color =  data.RockColor;
 
@@ -59,11 +61,14 @@ namespace Element.Island
         {
             yield return new WaitForSeconds(1);
             _worldManager.islandGenerator.GeneratePropsOnIsland(this, data, boxCollider);
+            
+            minimapCanvas.transform.rotation = Quaternion.Euler(90, 180, 
+                -transform.rotation.y -_worldManager.worldGenerator.worldCenter.rotation.y);
         }
         
         public void FogOfWarInit()
         {
-           GetComponent<FogAgentIsland>().Init(graphObject, null, minimapIcon.gameObject);
+           GetComponent<FogAgentIsland>().Init(graphObject, null, minimapCanvas.gameObject);
         }
 
         // Call from coloniser
@@ -76,8 +81,10 @@ namespace Element.Island
         public void StateAuthorityChanged() => UpdateOwner();
         
         private void UpdateOwner()
-        { 
+        {
+            Owner.RPC_LostAnIsland();
             Owner = GameManager.thisPlayer;
+            Owner.RPC_GainAnIsland();
         }
     }
 }

@@ -4,18 +4,18 @@ namespace Ressources.AOSFogWar.Used_Scripts
 {
     public class FogAgentIsland : FogAgent
     {
-        [SerializeField] private GameObject minimapIcone;
+        [SerializeField] private GameObject minimapCanvas;
 
-        public void Init(GameObject graph, GameObject canvas, GameObject minimapIcon)
+        public void Init(GameObject graph, GameObject uiCanvas, GameObject minimapCanva)
         {
-            base.Init(graph, canvas);
-            minimapIcone = minimapIcon;
-            minimapIcone.SetActive(false);
+            base.Init(graph, uiCanvas);
+            minimapCanvas = minimapCanva;
+            minimapCanvas.SetActive(false);
         }
         
         protected override void OnFirstSeenTime()
         {
-            minimapIcone.SetActive(true);
+            minimapCanvas.SetActive(true);
         }
     }
 }
