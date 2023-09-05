@@ -17,9 +17,9 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: ec5024ba62c89fb4ab5c0e6672ad23ca,
     type: 3}
   <SightRange>k__BackingField: 35
-  <Type>k__BackingField: 2
-  <MaxBuildingsOnThisIsland>k__BackingField: 0
-  <Rarity>k__BackingField: 15
+  <Type>k__BackingField: 3
+  <MaxBuildingsOnThisIsland>k__BackingField: 3
+  <Rarity>k__BackingField: 10
   <TreeColor>k__BackingField: {r: 0.32977757, g: 0.6792453, b: 0.23389105, a: 1}
   <GrassColor>k__BackingField: {r: 0.8584906, g: 0.80346227, b: 0.5385814, a: 1}
   <GroundColor>k__BackingField: {r: 0.7264151, g: 0.7050947, b: 0.46257564, a: 1}

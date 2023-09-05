@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: WinterIslandData
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Winter Island
-  <Description>k__BackingField: 
+  <Description>k__BackingField: As long as this island is yours, your units and building
+    will apply the status frozen to ennemies when attacking
   <Icon>k__BackingField: {fileID: 21300000, guid: 54ad7d30d2a9d3940942d34b613e3304,
     type: 3}
   <SightRange>k__BackingField: 35
-  <Type>k__BackingField: 3
-  <MaxBuildingsOnThisIsland>k__BackingField: 0
+  <Type>k__BackingField: 4
+  <MaxBuildingsOnThisIsland>k__BackingField: 3
   <Rarity>k__BackingField: 10
   <TreeColor>k__BackingField: {r: 0.24007656, g: 0.7830189, b: 0.7613012, a: 1}
   <GrassColor>k__BackingField: {r: 0.508989, g: 0.8113208, b: 0.80816543, a: 1}

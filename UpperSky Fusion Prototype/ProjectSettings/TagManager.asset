@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - Props
   - Island
+  - WorldCenter
   layers:
   - Default
   - TransparentFX

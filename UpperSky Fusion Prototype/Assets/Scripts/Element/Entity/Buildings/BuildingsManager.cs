@@ -114,8 +114,8 @@ namespace Element.Entity.Buildings
 
             BaseBuilding building = obj.GetComponent<BaseBuilding>();
             
-            building.Init(island.Owner, building.Data);
             building.SetIsland(island);
+            building.Init(island.Owner, building.Data);
             island.buildingOnThisIsland.Add(building);
 
             haveBlueprintInHand = false;

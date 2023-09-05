@@ -1,7 +1,10 @@
+using System;
 using Element.Entity.Military_Units;
 using Fusion;
 using Player;
 using UnityEngine;
+using World;
+using Random = UnityEngine.Random;
 
 namespace Element.Entity.Buildings
 {
@@ -113,13 +116,28 @@ namespace Element.Entity.Buildings
 
             BaseUnit unit = obj.GetComponent<BaseUnit>();
             unit.Init(Owner, unit.Data);
-            
+
+            ApplyStatusToFormedUnits(unit, myIsland.data.Type);
+
             if (FormationQueue.IsNotEmpty())
             {
                 timeLeftToForm = UnitsManager.allUnitsData[(int) FormationQueue.Peek()].ProductionTime;
             }
             
             UIManager.UpdateFormationQueueDisplay(this);
+        }
+
+        private void ApplyStatusToFormedUnits(BaseUnit unit,IslandTypesEnum  islandTypes)
+        {
+            switch (islandTypes)
+            {
+                case IslandTypesEnum.Tropical:
+                    unit.TryAddStatusToUnit(UnitsManager.UnitStatusEnum.Immune);
+                    break;
+                case IslandTypesEnum.Cursed:
+                    unit.TryAddStatusToUnit(UnitsManager.UnitStatusEnum.Cursed);
+                    break;
+            }
         }
         
         private void UpdateFormation()

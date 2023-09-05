@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: MineralIslandData
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Mineral Island
-  <Description>k__BackingField: 
+  <Description>k__BackingField: +10% of metals and orichalque production on this
+    island
   <Icon>k__BackingField: {fileID: 21300000, guid: c95ffc257883e9b4eacfe76c57072666,
     type: 3}
   <SightRange>k__BackingField: 35
-  <Type>k__BackingField: 6
-  <MaxBuildingsOnThisIsland>k__BackingField: 0
-  <Rarity>k__BackingField: 25
+  <Type>k__BackingField: 2
+  <MaxBuildingsOnThisIsland>k__BackingField: 3
+  <Rarity>k__BackingField: 20
   <TreeColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <GrassColor>k__BackingField: {r: 0.764151, g: 0.63612735, b: 0.34242615, a: 1}
   <GroundColor>k__BackingField: {r: 0.764151, g: 0.60414696, b: 0.5298594, a: 1}

@@ -16,11 +16,19 @@ namespace Element.Entity.Military_Units
 
         public NetworkPrefabRef[] allUnitsPrefab;
         public UnitData[] allUnitsData;
+        
+        public StatusData[] allUnitsStatusData;
 
-        [Space] public List<BaseUnit> allActiveUnits;
-        public List<BaseUnit> currentlySelectedUnits;
+        [HideInInspector] public List<BaseUnit> allActiveUnits;
+        [HideInInspector] public List<BaseUnit> currentlySelectedUnits;
 
         [SerializeField] private GameObject unitMoveIndicator;
+        
+        public float distToTargetToStop;
+        public float flyingHeightOfUnits;
+        [SerializeField] private float maxDistToTargetCenter;
+
+        public float distUnitToIslandToColonise;
         
         public enum AllUnitsEnum
         {
@@ -54,12 +62,15 @@ namespace Element.Entity.Military_Units
             SpeedBoost = 2,
             Scouting = 3
         }
+        
+        public enum UnitStatusEnum
+        {
+            Immune,
+            Frozen,
+            Cursed
+        }
 
-        public float distToTargetToStop;
-        public float flyingHeightOfUnits;
-        [SerializeField] private float maxDistToTargetCenter;
-
-        public float distUnitToIslandToColonise;
+     
 
         private void Awake()
         {

@@ -13,7 +13,7 @@ namespace Element.Entity.Military_Units.Units_Specifics
         {
             base.UseSkill(skill);
             StartSkillCooldown(skill);
-            targetIslandToColonise.CallToColonise();
+            targetIslandToColonise.Colonise();
         }
     }
 }

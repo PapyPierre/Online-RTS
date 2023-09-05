@@ -23,20 +23,21 @@ namespace Player
         [Networked] public bool IsReadyToPlay { get; set; }
         [Networked] public int NumberOfControlledIslands { get; set; }
         [Networked] public bool IsOutOfGame  { get; set; }
+        [Networked] public bool ControlWinterIsland { get; set; }
 
         public int myId; // = Index in ConnectedPlayers + 1 
         public Color myColor;
         public Camera myCam;
 
         [HideInInspector] public PlayerRessources ressources;
+    
         
         [SerializeField, ReadOnly] public BaseElement mouseAboveThisElement;
         [HideInInspector] public bool isMajKeyPressed;
         public List<BaseElement> currentlySelectedElements;
         public BaseElement lastSelectedElement;
-
         public LayerMask unitMovementClickLayer;
-        
+
         public override void Spawned()
         {
             _uiManager = UIManager.Instance;

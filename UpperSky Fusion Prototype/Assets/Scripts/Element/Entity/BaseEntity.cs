@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AOSFogWar.Used_Scripts;
 using Custom_UI;
 using Custom_UI.InGame_UI;
@@ -20,7 +21,7 @@ namespace Element.Entity
     {
         #region Networked Health & Health Bar
         [field: SerializeField, Header("Health")] [Networked(OnChanged = nameof(CurrentHealthChanged))]
-        private float CurrentHealth { get; set; }
+        protected float CurrentHealth { get; set; }
         
         [SerializeField] private StatBar healthBar;
         private static void CurrentHealthChanged(Changed<BaseEntity> changed) 
@@ -55,7 +56,6 @@ namespace Element.Entity
         {
             base.Spawned();
             
-            
             switch (this)
             {
                 case BaseUnit:
@@ -84,6 +84,25 @@ namespace Element.Entity
         public void RPC_TakeDamage(int damage, int armorPenetration, BaseEntity shooter = null)
         {
             // The code inside here will run on the client which owns this object (has state and input authority).
+
+            if (shooter != null)
+            {
+                if (shooter is BaseUnit unit)
+                {
+                    if (unit.currentStatusOnThisUnit.Contains(UnitsManager.UnitStatusEnum.Cursed))
+                    {
+                        var damageModificator = UnitsManager
+                            .allUnitsStatusData[(int) UnitsManager.UnitStatusEnum.Cursed].UnitDamageModificator;
+                        
+                        damage = Mathf.RoundToInt(damage * damageModificator);
+                    }
+                }
+
+                if (shooter.Owner.ControlWinterIsland)
+                {
+                    if (this is BaseUnit thisUnit) thisUnit.TryAddStatusToUnit(UnitsManager.UnitStatusEnum.Frozen);
+                }
+            }
 
             float damageOnHealth =  armorPenetration / 100f * damage;
             float damageOnArmor = (100f - armorPenetration) / 100f * damage;
@@ -124,7 +143,7 @@ namespace Element.Entity
                 if (this is BaseUnit unit) unit.ReactToDamage(shooter);
             }
         }
-        
+
         public virtual void DestroyEntity()
         {
             IsDead = true;

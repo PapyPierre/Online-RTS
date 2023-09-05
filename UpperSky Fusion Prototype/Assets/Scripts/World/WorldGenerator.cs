@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Threading.Tasks;
-using Element.Entity.Buildings;
 using Fusion;
 using Player;
 using UnityEngine;
@@ -14,10 +11,9 @@ namespace World
     {
         private WorldManager _worldManager;
         private GameManager _gameManager;
-        private BuildingsManager _buildingsManager;
-
+        
         [SerializeField] private NetworkPrefabRef worldCenterPrefab;
-        [HideInInspector] public Transform worldCenter;
+        public Transform worldCenter;
         
         private int _numberOfPlayers;
         private int _numberOfIslandsPerPlayer;
@@ -28,7 +24,6 @@ namespace World
         {
             _worldManager = GetComponent<WorldManager>();
             _gameManager = GameManager.Instance;
-            _buildingsManager = BuildingsManager.Instance;
         }
         
         public void GenerateWorld(int nbOfPlayers, int nbOfIslandsPerPlayer, int maxSpecialIslandsPerPlayer)
@@ -37,7 +32,7 @@ namespace World
             _numberOfIslandsPerPlayer = nbOfIslandsPerPlayer;
 
             CheckForReset();
-
+            
             worldCenter = _gameManager.thisPlayer.Runner.Spawn(
                 worldCenterPrefab, Vector3.zero, Quaternion.identity, PlayerRef.None).transform;
 
@@ -102,7 +97,7 @@ namespace World
                 Vector3 islandPos = island.transform.position;
                 
                 Vector3 pos = new Vector3(islandPos.x + RandomMinDist(), islandPos.y, islandPos.z + RandomMinDist());
-                SpawnIsland(pos, RandomIslandType());
+                SpawnIsland(pos, _worldManager.startIslandType);
             }
             
             SpawnOtherIslands();

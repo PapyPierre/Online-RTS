@@ -10,6 +10,7 @@ using Player;
 using UnityEditor;
 using UnityEngine;
 using UserInterface;
+using World;
 using Random = UnityEngine.Random;
 
 namespace Element.Entity.Buildings
@@ -33,6 +34,11 @@ namespace Element.Entity.Buildings
 
             _buildingsManager = BuildingsManager.Instance;
         }
+        
+        public void SetIsland(BaseIsland buildOnThisIsland)
+        {
+            myIsland = buildOnThisIsland;
+        }
 
         public override void Init(PlayerController owner, ElementData elementData)
         {
@@ -42,16 +48,27 @@ namespace Element.Entity.Buildings
             
             if (Data.DoesGenerateRessources)
             {
-                Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds;
-                Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds;
-                Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds;
+                switch (myIsland.data.Type)
+                {
+                    case IslandTypesEnum.Forester:
+                        Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds * 1.1f;
+                        Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds;
+                        Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds;
+                        break;
+                    case IslandTypesEnum.Mineral:
+                        Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds;
+                        Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds * 1.1f;
+                        Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds * 1.1f;
+                        break;
+                    default:
+                        Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds;
+                        Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds;
+                        Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds;
+                        break;
+                }
+
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
-        }
-
-        public void SetIsland(BaseIsland buildOnThisIsland)
-        {
-            myIsland = buildOnThisIsland;
         }
 
         protected virtual void Update()
@@ -117,9 +134,25 @@ namespace Element.Entity.Buildings
 
             if (Data.DoesGenerateRessources)
             {
-                Owner.ressources.CurrentWoodGain -= Data.GeneratedWoodPerSeconds;
-                Owner.ressources.CurrentMetalsGain -= Data.GeneratedMetalsPerSeconds;
-                Owner.ressources.CurrentOrichalqueGain -= Data.GeneratedOrichalquePerSeconds;
+                switch (myIsland.data.Type)
+                {
+                    case IslandTypesEnum.Forester:
+                        Owner.ressources.CurrentWoodGain -= Data.GeneratedWoodPerSeconds * 1.1f;
+                        Owner.ressources.CurrentMetalsGain -= Data.GeneratedMetalsPerSeconds;
+                        Owner.ressources.CurrentOrichalqueGain -= Data.GeneratedOrichalquePerSeconds;
+                        break;
+                    case IslandTypesEnum.Mineral:
+                        Owner.ressources.CurrentWoodGain -= Data.GeneratedWoodPerSeconds;
+                        Owner.ressources.CurrentMetalsGain -= Data.GeneratedMetalsPerSeconds * 1.1f;
+                        Owner.ressources.CurrentOrichalqueGain -= Data.GeneratedOrichalquePerSeconds * 1.1f;
+                        break;
+                    default:
+                        Owner.ressources.CurrentWoodGain += Data.GeneratedWoodPerSeconds;
+                        Owner.ressources.CurrentMetalsGain += Data.GeneratedMetalsPerSeconds;
+                        Owner.ressources.CurrentOrichalqueGain += Data.GeneratedOrichalquePerSeconds;
+                        break;
+                }
+
                 Owner.ressources.CurrentMaxSupply -= Data.AditionnalMaxSupplies;
             }
             

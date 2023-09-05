@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using AOSFogWar.Used_Scripts;
 using Element.Entity.Military_Units.Units_Skills;
 using Fusion;
@@ -26,11 +27,15 @@ namespace Element.Entity.Military_Units
         [HideInInspector] public Vector3 targetPosToMoveTo;
         [HideInInspector] public GameObject myMoveIndicator;
 
+        public List<UnitsManager.UnitStatusEnum> currentStatusOnThisUnit = new ();
+
         public override void Spawned()
         {
             base.Spawned();
             UnitsManager.allActiveUnits.Add(this);
             SetUpHealtAndArmor(Data);
+            
+            stateDebugTMP.gameObject.SetActive(false);
         }
 
         public override void Init(PlayerController owner, ElementData elementData)
@@ -41,6 +46,15 @@ namespace Element.Entity.Military_Units
             {
                 if (skill.Data.ReadyAtStart) skill.isReady = true;
             }
+        }
+
+        public void TryAddStatusToUnit(UnitsManager.UnitStatusEnum status)
+        {
+            if (currentStatusOnThisUnit.Contains(UnitsManager.UnitStatusEnum.Immune)) return;
+
+            currentStatusOnThisUnit.Add(status);
+            UIManager.UpdateSelectionInfobox(this, Data, Owner);
+            //TODO montré feedback que l'unité à ce status (vfx)
         }
 
         public virtual void UseSkill(UnitSkill skill)
@@ -92,11 +106,19 @@ namespace Element.Entity.Military_Units
             {
               ManageMovement();
             }
+            
+            ManageCursed();
         }
 
         private void ManageMovement()
         {
             var step = Data.MovementSpeed * Runner.DeltaTime;
+
+            if (currentStatusOnThisUnit.Contains(UnitsManager.UnitStatusEnum.Frozen))
+            {
+                step *= UnitsManager.allUnitsStatusData[(int) UnitsManager.UnitStatusEnum.Frozen].UnitMoveSpeedModificator;
+            }
+          
             transform.position = Vector3.MoveTowards(transform.position, targetPosToMoveTo, step);
                 
             if (Data.AngularSpeed > 0)
@@ -109,6 +131,14 @@ namespace Element.Entity.Military_Units
                 // Stop
                 if (myMoveIndicator != null) myMoveIndicator.SetActive(false);
                 MyState = UnitsManager.UnitStates.Static;
+            }
+        }
+        
+        private void ManageCursed()
+        {
+            if (currentStatusOnThisUnit.Contains(UnitsManager.UnitStatusEnum.Cursed))
+            {
+                CurrentHealth -= UnitsManager.allUnitsStatusData[(int) UnitsManager.UnitStatusEnum.Cursed].UnitHpModificator * Runner.DeltaTime;
             }
         }
 
@@ -179,6 +209,20 @@ namespace Element.Entity.Military_Units
             {
                 AimAtTarget(agressor.transform, transform);
             }
+        }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_Heal(float heal)
+        {
+            // The code inside here will run on the client which owns this object (has state and input authority).
+            
+            if (CurrentHealth + heal > Data.MaxHealthPoints) CurrentHealth = Data.MaxHealthPoints;
+            else
+            {
+                CurrentHealth += heal;
+            }
+            
+            //TODO VFX de heal
         }
 
         private IEnumerator Reload()

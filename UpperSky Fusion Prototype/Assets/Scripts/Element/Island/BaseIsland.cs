@@ -61,9 +61,16 @@ namespace Element.Island
         {
             yield return new WaitForSeconds(1);
             _worldManager.islandGenerator.GeneratePropsOnIsland(this, data, boxCollider);
+
+            Transform worldCenter = _worldManager.worldGenerator.worldCenter;
+
+            if (worldCenter == null)
+            {
+                worldCenter = GameObject.FindWithTag("WorldCenter").transform;
+            }
             
             minimapCanvas.transform.rotation = Quaternion.Euler(90, 180, 
-                -transform.rotation.y -_worldManager.worldGenerator.worldCenter.rotation.y);
+                -transform.rotation.y -worldCenter.rotation.y);
         }
         
         public void FogOfWarInit()
@@ -72,7 +79,7 @@ namespace Element.Island
         }
 
         // Call from coloniser
-        public void CallToColonise()
+        public void Colonise()
         {
             if (Object.HasStateAuthority) UpdateOwner();
             else Object.RequestStateAuthority();
@@ -82,9 +89,63 @@ namespace Element.Island
         
         private void UpdateOwner()
         {
-            Owner.RPC_LostAnIsland();
+            if (Owner != null)
+            {
+                CheckIfOwnerHaveOtherIslandsOfGivenType(IslandTypesEnum.Winter);
+                Owner.RPC_LostAnIsland();
+            }
+
             Owner = GameManager.thisPlayer;
             Owner.RPC_GainAnIsland();
+            
+            OnColonisationEffect();
+        }
+
+        private void OnColonisationEffect()
+        {
+            switch (data.Type)
+            {
+                case IslandTypesEnum.Winter:
+                    Owner.ControlWinterIsland = true;
+                    break;
+                case IslandTypesEnum.Mythic:
+                    foreach (var unit in UnitsManager.allActiveUnits)
+                    {
+                        if (unit.PlayerIsOwner())
+                        {
+                            unit.currentStatusOnThisUnit.Clear();
+                            unit.RPC_Heal(20);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private void CheckIfOwnerHaveOtherIslandsOfGivenType(IslandTypesEnum type)
+        {
+            if (data.Type == type)
+            {
+                var i = 0;
+                foreach (var island in _worldManager.allIslands)
+                {
+                    if (island.Owner != Owner) continue;
+                    
+                    if (island.data.Type == type)
+                    {
+                        i++;
+                    }
+                }
+                
+                if (i <= 1)
+                {
+                    switch (type)
+                    {
+                        case IslandTypesEnum.Winter:
+                            Owner.ControlWinterIsland = false;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
