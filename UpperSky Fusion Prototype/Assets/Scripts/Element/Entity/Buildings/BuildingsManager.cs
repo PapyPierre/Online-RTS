@@ -103,10 +103,11 @@ namespace Element.Entity.Buildings
             if (oriCost > 0) player.ressources.CurrentOrichalque -= oriCost;
         }
 
-        public void BuildBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island)
+        public void FinishBuilding(int buildingIndex, Vector3 pos, Quaternion rot, BaseIsland island)
         {
             island.BuildingsCount++;
             
+            _uiManager.OnFinishBuilding();
             _uiManager.UpdateSelectionInfobox(island, island.data, island.Owner);
             
             NetworkObject obj = _gameManager.thisPlayer.Runner.Spawn

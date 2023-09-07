@@ -7,6 +7,7 @@ using Element.Entity.Buildings;
 using Element.Entity.Military_Units;
 using Element.Island;
 using Entity;
+using Entity.Buildings;
 using Fusion;
 using NaughtyAttributes;
 using Player;
@@ -31,8 +32,6 @@ namespace UserInterface
         
         [SerializeField, Required()] private TMP_InputField inputFieldRoomName;
         
-        [Required()] public TextMeshProUGUI connectionInfoTMP;
-        
         private int _fps;
         private double _ping;
         
@@ -46,9 +45,18 @@ namespace UserInterface
         [SerializeField, Space] private TextMeshProUGUI[] ressourcesTMP;
          
         [Header("In Game Menu")]
+        [SerializeField, Required()] private GameObject winConditionPanel;
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField] private UnitsIcon[] unitsIconsInMenu;
+        
+        [Header("Build Button")]
+        [SerializeField, Required()] private Image buildButtonImage;
+        [SerializeField, Required()] private Sprite _buildButtonDefaultSprite;
+        [SerializeField, Required()] private GameObject buildButtonFilter;
+        [SerializeField, Required()] private Image buildButtonProgressionBar;
+        private float currentlyBuiltBuildingProductionTime;
+        private float progressionInBuilding;
 
         [Header("Production Infobox")]
         [SerializeField, Required()] private GameObject prodInfobox;
@@ -139,6 +147,19 @@ namespace UserInterface
             ComputeFps();
             if (_gameManager.gameIsStarted) ComputePlayerPing();
             HideUnderAttackPopUp();
+            if (buildButtonFilter.activeSelf) ManageDisplayOnBuildingButton();
+        }
+
+        private void ManageDisplayOnBuildingButton()
+        {
+            progressionInBuilding += Time.deltaTime;
+
+            if (progressionInBuilding > currentlyBuiltBuildingProductionTime)
+            {
+                progressionInBuilding = currentlyBuiltBuildingProductionTime;
+            }
+
+            buildButtonProgressionBar.fillAmount = progressionInBuilding / currentlyBuiltBuildingProductionTime;
         }
         
         private IEnumerator UpdateInfoDisplay()
@@ -150,13 +171,6 @@ namespace UserInterface
                 
                 yield return new WaitForSecondsRealtime(0.5f);
             }
-        }
-
-        public void UpdateRessourcesDisplay()
-        {
-            UpdateRessourceTMP(0, playerRessources.CurrentWood, playerRessources.CurrentWoodGain);
-            UpdateRessourceTMP(1, playerRessources.CurrentMetals, playerRessources.CurrentMetalsGain);
-            UpdateRessourceTMP(2, playerRessources.CurrentOrichalque, playerRessources.CurrentOrichalqueGain);
         }
 
         private void ComputeFps() => _fps = Mathf.RoundToInt(1.0f / Time.deltaTime);
@@ -221,12 +235,47 @@ namespace UserInterface
 
         #region InGame Functions
 
+        public void DisplayOnBuilding(BuildingData currentlyBuiltBuildingData)
+        {
+            buildButtonFilter.SetActive(true);
+            buildButtonImage.sprite = currentlyBuiltBuildingData.Icon;
+            buildButtonProgressionBar.fillAmount = 0;
+            progressionInBuilding = 0;
+            currentlyBuiltBuildingProductionTime = currentlyBuiltBuildingData.ProductionTime;
+        }
+
+        public void OnFinishBuilding()
+        {
+            buildButtonFilter.SetActive(false);
+            buildButtonImage.sprite = _buildButtonDefaultSprite;
+        }
+
+        public void UpdateRessourcesDisplay()
+        {
+            UpdateRessourceTMP(0, playerRessources.CurrentWood, playerRessources.CurrentWoodGain);
+            UpdateRessourceTMP(1, playerRessources.CurrentMetals, playerRessources.CurrentMetalsGain);
+            UpdateRessourceTMP(2, playerRessources.CurrentOrichalque, playerRessources.CurrentOrichalqueGain);
+        }
+
         public void HideOpenedUI()
         { 
             HideBuildMenu();
             CloseFormationBuilding();
             HideProdInfobox();
             HideSelectionInfoBox();
+            HideWinConditionPanel();
+        }
+
+        // Call from inspector
+        public void ShowWinConditionPanel()
+        {
+            if (winConditionPanel.activeSelf) HideWinConditionPanel();
+            else winConditionPanel.SetActive(true);
+        }
+
+        public void HideWinConditionPanel()
+        {
+            winConditionPanel.SetActive(false);
         }
 
         public void ShowBuildMenu()

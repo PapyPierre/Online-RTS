@@ -51,12 +51,10 @@ namespace Player
             _gameManager.ConnectPlayer(this);
             myColor = _worldManager.playersColors[myId -1];
 
-            if (Object.HasInputAuthority)
-            {        
-                _uiManager.connectionInfoTMP.text = 
-                    "Player " + myId + " connected in " + Runner.GameMode + " Mode";
+            if (!Object.HasInputAuthority)
+            { 
+                myCam.gameObject.SetActive(false);
             }
-            else myCam.gameObject.SetActive(false);
         }
 
         private void Update()

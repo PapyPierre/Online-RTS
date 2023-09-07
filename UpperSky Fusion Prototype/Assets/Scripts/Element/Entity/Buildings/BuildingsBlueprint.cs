@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Custom_UI.InGame_UI;
 using Element.Island;
+using Entity.Buildings;
 using UnityEngine;
 using UserInterface;
+using Task = UnityEditor.VersionControl.Task;
 
 namespace Element.Entity.Buildings
 {
@@ -71,7 +75,7 @@ namespace Element.Entity.Buildings
                     return;
                 }
 
-                StartCoroutine(BeginBuilding());
+                StartCoroutine(BuildBuilding());
             }
 
             // Cancel construction
@@ -130,15 +134,19 @@ namespace Element.Entity.Buildings
             return true;
         }
         
-        private IEnumerator BeginBuilding()
+        private IEnumerator BuildBuilding()
         {
             _isBuilding = true;
+
+            BuildingData thisBuildingData = _buildingsManager.allBuildingsDatas[(int) thisBuilding];
+            
+            _uiManager.DisplayOnBuilding(thisBuildingData);
             
             foreach (var col in _propsInRange) col.gameObject.SetActive(false);
             
             _buildingsManager.PayForBuilding((int) thisBuilding);
 
-            float buildingTime = _buildingsManager.allBuildingsDatas[(int) thisBuilding].ProductionTime;
+            float buildingTime = thisBuildingData.ProductionTime;
             productionBar.gameObject.SetActive(true);
             productionBar.Init(buildingTime);
             
@@ -147,7 +155,7 @@ namespace Element.Entity.Buildings
             
             yield return new WaitForSeconds(buildingTime);
             
-            _buildingsManager.BuildBuilding((int) thisBuilding, transform.position, transform.rotation, _islandToBuildOn);
+            _buildingsManager.FinishBuilding((int) thisBuilding, transform.position, transform.rotation, _islandToBuildOn);
             _isBuilding = false;
             
             gameObject.SetActive(false);
