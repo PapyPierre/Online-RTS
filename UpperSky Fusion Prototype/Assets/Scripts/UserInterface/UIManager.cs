@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Globalization;
 using Custom_UI.InGame_UI;
@@ -45,11 +46,22 @@ namespace UserInterface
         [SerializeField, Space] private TextMeshProUGUI[] ressourcesTMP;
          
         [Header("In Game Menu")]
-        [SerializeField, Required()] private GameObject winConditionPanel;
         [SerializeField, Required()] private GameObject buildMenu;
         [SerializeField, Required()] private GameObject formationMenu;
         [SerializeField] private UnitsIcon[] unitsIconsInMenu;
         
+        [Header("Win Conditions Panel")]
+        [SerializeField, Required()] private GameObject winConditionPanel;
+        [SerializeField] private WinCondition[] winConditions;
+        
+        [Serializable]
+        private class WinCondition
+        {
+            public Image[] playersIcons;
+            public Slider[] playersAdvanceSlider;
+            [HideInInspector] public int _sliderMaxValue;
+        }
+
         [Header("Build Button")]
         [SerializeField, Required()] private Image buildButtonImage;
         [SerializeField, Required()] private Sprite _buildButtonDefaultSprite;
@@ -270,7 +282,40 @@ namespace UserInterface
         public void ShowWinConditionPanel()
         {
             if (winConditionPanel.activeSelf) HideWinConditionPanel();
-            else winConditionPanel.SetActive(true);
+            else
+            {
+                winConditionPanel.SetActive(true);
+                
+                foreach (var winCondition in winConditions)
+                {
+                    foreach (var image in winCondition.playersIcons)
+                    {
+                       image.gameObject.SetActive(false);
+                    }
+
+                    foreach (var slider in winCondition.playersAdvanceSlider)
+                    {
+                        slider.gameObject.SetActive(false);
+                    }
+
+                    for (var index = 0; index < _gameManager.connectedPlayers.Count; index++)
+                    {
+                        PlayerController player = _gameManager.connectedPlayers[index];
+                        winCondition.playersIcons[index].gameObject.SetActive(true);
+                        winCondition.playersIcons[index].color = player.myColor;
+                        winCondition.playersAdvanceSlider[index].fillRect.GetComponent<Image>().color = player.myColor;
+                    }
+                }
+
+                winConditions[0]._sliderMaxValue = _gameManager.requiredNumberOfIslandToWin;
+                
+                for (var index = 0; index < _gameManager.connectedPlayers.Count; index++)
+                {
+                    PlayerController player = _gameManager.connectedPlayers[index];
+                    winConditions[0].playersAdvanceSlider[index].gameObject.SetActive(true);
+                    winConditions[0].playersAdvanceSlider[index].value = player.NumberOfControlledIslands;
+                }
+            }
         }
 
         public void HideWinConditionPanel()

@@ -96,9 +96,13 @@ namespace Element.Island
             }
 
             Owner = GameManager.thisPlayer;
-            Owner.RPC_GainAnIsland();
+
+            if (GameManager.gameIsStarted)
+            {
+                Owner.RPC_GainAnIsland();
             
-            OnColonisationEffect();
+                OnColonisationEffect();
+            }
         }
 
         private void OnColonisationEffect()

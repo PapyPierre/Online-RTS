@@ -74,23 +74,22 @@ namespace Player
 
         public void CheckIfReadyToPlay()
         {
-            if (!IsReadyToPlay && HasStateAuthority)
+            if (IsReadyToPlay || !HasStateAuthority) return;
+            
+            if (_worldManager.allIslands.Count < _worldManager.numberOfIslandsPerPlayer * _gameManager.expectedNumberOfPlayers)
             {
-                if (_worldManager.allIslands.Count < _worldManager.numberOfIslandsPerPlayer * _gameManager.expectedNumberOfPlayers)
-                {
-                    return;
-                }
+                return;
+            }
                 
-                int i = 0;
-                foreach (var island in _worldManager.allIslands)
-                {
-                    if (island.hasGeneratedProps) i++;
-                }
+            int i = 0;
+            foreach (var island in _worldManager.allIslands)
+            {
+                if (island.hasGeneratedProps) i++;
+            }
 
-                if (i == _worldManager.allIslands.Count)
-                {
-                    MakesPlayerReady();
-                }
+            if (i == _worldManager.allIslands.Count)
+            {
+                MakesPlayerReady();
             }
         }
 
@@ -215,6 +214,8 @@ namespace Player
         private void MakesPlayerReady()
         {
             ressources.Init();
+            
+            _gameManager.requiredNumberOfIslandToWin = Mathf.RoundToInt(_worldManager.allIslands.Count / 1.5f);
 
             foreach (var island in _worldManager.allIslands)
             {
@@ -244,11 +245,8 @@ namespace Player
         public void RPC_GainAnIsland()
         {
             NumberOfControlledIslands++;
-
-            // ReSharper disable once PossibleLossOfFraction
-            var requiredNumberOfIslandToWin = Mathf.RoundToInt(_worldManager.allIslands.Count / 1.5f);
             
-            if (NumberOfControlledIslands >= requiredNumberOfIslandToWin)
+            if (NumberOfControlledIslands >= _gameManager.requiredNumberOfIslandToWin)
             {
                 _gameManager.EndGame(this);
             }

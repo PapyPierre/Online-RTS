@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     public bool gameIsStarted;
     public bool gameIsFinished;
+    
+    public int requiredNumberOfIslandToWin; 
+
 
     private void Awake()
      {
