@@ -15,8 +15,6 @@ namespace Element.Entity.Military_Units.Units_Specifics
 
         private IEnumerator LaunchBombs(UnitSkill skill)
         {
-            skill.isActive = true;
-            
             if (skill.Data is GomorrahBombData data)
             {
                 for (int i = 0; i < data.NumberOfLaunch; i++)

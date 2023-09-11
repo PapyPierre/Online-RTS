@@ -538,7 +538,7 @@ namespace UserInterface
                     selectionInfobox_UnitSkillsBG[index].GetComponent<Image>().sprite =  skill.Data.SkillIcon;
                     var skillImage = selectionInfobox_UnitsSkillsBtn[index].GetComponent<Image>();
                     skillImage.sprite = skill.Data.SkillIcon;
-                    if (skill.isReady)
+                    if (skill.isInteractable && !skill.isInCd)
                     {
                         selectionInfobox_UnitsSkillsBtn[index].interactable = true;
                         skillImage.fillAmount = 1;

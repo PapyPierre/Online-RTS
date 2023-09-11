@@ -23,12 +23,9 @@ namespace Element.Island
             {
                if (skill.Data.ThisSkill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
                {
-                  if (skill.timeLeftOnCd <= 0)
-                  {
-                     skill.isReady = true;
-                     unit.GetComponent<Darwin>().targetIslandToColonise = myIsland;
-                     UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
-                  }
+                  skill.isInteractable = true;
+                  unit.GetComponent<Darwin>().targetIslandToColonise = myIsland;
+                  UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
                }
             }
          }
@@ -46,7 +43,7 @@ namespace Element.Island
             {
                if (skill.Data.ThisSkill is UnitsManager.UnitSkillsEnum.Colonisation && unit.Owner != myIsland.Owner)
                {
-                  skill.isReady = false;
+                  skill.isInteractable = false;
                   unit.GetComponent<Darwin>().targetIslandToColonise = null;
                   UIManager.Instance.UpdateSelectionInfobox(unit, unit.Data, unit.Owner);
                }

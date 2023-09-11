@@ -44,7 +44,7 @@ namespace Element.Entity.Military_Units
 
             foreach (UnitSkill skill in skills)
             {
-                if (skill.Data.ReadyAtStart) skill.isReady = true;
+                if (skill.Data.IsReadyAtStart) skill.isInteractable = true;
             }
         }
 
@@ -54,12 +54,13 @@ namespace Element.Entity.Military_Units
 
             currentStatusOnThisUnit.Add(status);
             UIManager.UpdateSelectionInfobox(this, Data, Owner);
+            
             //TODO montré feedback que l'unité à ce status (vfx)
         }
 
         public virtual void UseSkill(UnitSkill skill)
         {
-            skill.isReady = false;
+            skill.isInteractable = false;
             UIManager.ShowSelectionInfoBox(this, Data, Owner);
         }
 
@@ -73,7 +74,16 @@ namespace Element.Entity.Military_Units
                     int cdDuration = skill.Data.CooldownDuration;
                     skill.cdCompletion = (cdDuration - skill.timeLeftOnCd) / cdDuration;
 
-                    if (skill.timeLeftOnCd <= 0 && skill.Data.ReadyAtStart) skill.isReady = true;
+                    if (skill.timeLeftOnCd <= 0)
+                    {
+                        skill.isInCd = false;
+                        
+                        if (skill.Data.IsReadyAtStart)
+                        {
+                            skill.isInteractable = true;
+
+                        }
+                    }
 
                     UIManager.UpdateSelectionInfobox(this, Data, Owner);
                 }
@@ -82,7 +92,7 @@ namespace Element.Entity.Military_Units
         
         protected void StartSkillCooldown(UnitSkill skill)
         {
-            skill.isActive = false;
+            skill.isInCd = true;
             skill.timeLeftOnCd = skill.Data.CooldownDuration;
         }
 

@@ -12,7 +12,7 @@ namespace Element.Entity.Military_Units.Units_Skills.Skills_Data
         public Sprite SkillIcon { get; private set; }
         
         [field: SerializeField]
-        public bool ReadyAtStart { get; private set; }
+        public bool IsReadyAtStart { get; private set; }
         
         [field: SerializeField]
         public int CooldownDuration  { get; private set; }
