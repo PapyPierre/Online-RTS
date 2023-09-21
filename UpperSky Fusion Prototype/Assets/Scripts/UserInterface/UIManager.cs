@@ -15,6 +15,7 @@ using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Task = System.Threading.Tasks.Task;
 
 namespace UserInterface
 {
@@ -151,7 +152,7 @@ namespace UserInterface
             _buildingsManager = BuildingsManager.Instance;
             _gameManager = GameManager.Instance;
 
-            StartCoroutine(UpdateInfoDisplay());
+            UpdateInfoDisplay();
         }
 
         private void Update()
@@ -174,14 +175,14 @@ namespace UserInterface
             buildButtonProgressionBar.fillAmount = progressionInBuilding / currentlyBuiltBuildingProductionTime;
         }
         
-        private IEnumerator UpdateInfoDisplay()
+        private async void UpdateInfoDisplay()
         {
             while (true)
             {
                 DisplayFps();
                 if (_gameManager.gameIsStarted) DisplayPlayerPing();
-                
-                yield return new WaitForSecondsRealtime(0.5f);
+
+                await Task.Delay(500);
             }
         }
 

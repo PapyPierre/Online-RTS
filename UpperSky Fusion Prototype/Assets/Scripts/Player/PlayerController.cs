@@ -100,7 +100,11 @@ namespace Player
             bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
             
             if (!mouseAboveThisElement || isOverUI) return;
-            if (mouseAboveThisElement.Owner != this) return;
+
+            if (mouseAboveThisElement is BaseEntity)
+            {
+                if (mouseAboveThisElement.Owner != this) return;
+            }
 
             SelectElement(mouseAboveThisElement);
         }

@@ -17,6 +17,7 @@ MonoBehaviour:
     buildings and form units"
   <Icon>k__BackingField: {fileID: 21300000, guid: 3729069079f4a8d48a2f8672aa8ff491,
     type: 3}
+  <SightRange>k__BackingField: 10
   <StartAsLocked>k__BackingField: 1
   <LockedDescription>k__BackingField: Carpentry requires a lumberjack  in order to
     be build
@@ -26,7 +27,6 @@ MonoBehaviour:
   <ProductionTime>k__BackingField: 5
   <MaxHealthPoints>k__BackingField: 120
   <MaxArmorPoints>k__BackingField: 70
-  <SightRange>k__BackingField: 10
   <ThisBuilding>k__BackingField: 3
   <UnlockedBuildings>k__BackingField: 000000000100000002000000
   <IsFormationBuilding>k__BackingField: 1

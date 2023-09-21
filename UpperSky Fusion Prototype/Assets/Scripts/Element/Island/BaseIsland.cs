@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Element.Entity.Buildings;
@@ -80,8 +81,8 @@ namespace Element.Island
 
         // Call from coloniser
         public void Colonise()
-        {
-            if (Object.HasStateAuthority) UpdateOwner();
+        {            
+            if (Object.HasStateAuthority || Owner == null) UpdateOwner();
             else Object.RequestStateAuthority();
         }
         
