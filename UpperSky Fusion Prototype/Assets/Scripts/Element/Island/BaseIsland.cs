@@ -11,7 +11,7 @@ using World;
 
 namespace Element.Island
 {
-    public class BaseIsland : BaseElement
+    public class BaseIsland : BaseElement, IStateAuthorityChanged
     {
         private WorldManager _worldManager;
         
@@ -82,11 +82,15 @@ namespace Element.Island
         // Call from coloniser
         public void Colonise()
         {            
-            if (Object.HasStateAuthority || Owner == null) UpdateOwner();
+            if (Object.HasStateAuthority) UpdateOwner();
             else Object.RequestStateAuthority();
         }
-        
-        public void StateAuthorityChanged() => UpdateOwner();
+
+        public void StateAuthorityChanged()
+        {
+            if (!GameManager.gameIsStarted) return;
+            UpdateOwner();
+        } 
         
         private void UpdateOwner()
         {
@@ -97,11 +101,10 @@ namespace Element.Island
             }
 
             Owner = GameManager.thisPlayer;
-
+            
             if (GameManager.gameIsStarted)
             {
                 Owner.RPC_GainAnIsland();
-            
                 OnColonisationEffect();
             }
         }

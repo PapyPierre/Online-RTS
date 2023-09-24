@@ -19,6 +19,8 @@ namespace Element.Entity
     
     public abstract class BaseEntity : BaseElement
     {
+        [Networked] public bool IsDead { get; private set; }
+
         #region Networked Health & Health Bar
         [field: SerializeField, Header("Health")] [Networked(OnChanged = nameof(CurrentHealthChanged))]
         protected float CurrentHealth { get; set; }
@@ -37,8 +39,6 @@ namespace Element.Entity
         #endregion
 
         protected BaseEntity TargetedEntity { get; private set; }
-
-        [Networked] public bool IsDead { get; private set; }
         
         [HideInInspector] public List<BaseEntity> currentAgressor;
         

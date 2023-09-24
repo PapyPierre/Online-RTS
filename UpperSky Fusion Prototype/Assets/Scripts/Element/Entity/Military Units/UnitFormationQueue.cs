@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Element.Entity.Military_Units
 {
@@ -19,7 +20,7 @@ namespace Element.Entity.Military_Units
         public UnitsManager.AllUnitsEnum Dequeue()
         {
             var unitToDequeue = queue[0];
-            queue.Remove(0);
+            queue.Remove(unitToDequeue);
             return unitToDequeue;
         }
 

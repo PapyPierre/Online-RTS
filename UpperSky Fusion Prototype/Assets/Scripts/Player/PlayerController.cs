@@ -6,6 +6,7 @@ using Element.Entity.Military_Units;
 using Element.Island;
 using Fusion;
 using NaughtyAttributes;
+using Ressources.AOSFogWar.Used_Scripts;
 using UnityEngine;
 using UserInterface;
 using World;
@@ -100,6 +101,8 @@ namespace Player
             bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
             
             if (!mouseAboveThisElement || isOverUI) return;
+
+            if (!mouseAboveThisElement.GetComponent<FogAgent>().isVisible) return;
 
             if (mouseAboveThisElement is BaseEntity)
             {

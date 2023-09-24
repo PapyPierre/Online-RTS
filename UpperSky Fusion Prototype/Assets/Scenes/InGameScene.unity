@@ -7006,7 +7006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 2
+  expectedNumberOfPlayers: 1
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -15055,7 +15055,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UpperSky Prototype Version - WIP
+  m_text: WIP - Everything is subject to change
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a4a0c89db9414489be1315c76bc9f1, type: 2}
   m_sharedMaterial: {fileID: 4068044055246775935, guid: 34a4a0c89db9414489be1315c76bc9f1,
@@ -15065,8 +15065,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289769648
-  m_fontColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+    rgba: 4293388263
+  m_fontColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

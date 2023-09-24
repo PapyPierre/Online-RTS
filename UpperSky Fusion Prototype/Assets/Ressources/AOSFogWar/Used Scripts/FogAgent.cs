@@ -21,7 +21,7 @@ namespace Ressources.AOSFogWar.Used_Scripts
     {
         private FogOfWar _fogOfWar;
 
-        [SerializeField, ReadOnly] private bool isVisible;
+        [ReadOnly] public bool isVisible;
         private bool _haveBeenSeenOnce;
         [SerializeField] private bool keepVisible;
 

@@ -17,6 +17,7 @@ MonoBehaviour:
     down defenseless enemy units
   <Icon>k__BackingField: {fileID: 21300000, guid: b3fa3af56cf8c424ebca0dce70e3c898,
     type: 3}
+  <SightRange>k__BackingField: 30
   <StartAsLocked>k__BackingField: 0
   <LockedDescription>k__BackingField: 
   <WoodCost>k__BackingField: 60
@@ -25,7 +26,6 @@ MonoBehaviour:
   <ProductionTime>k__BackingField: 30
   <MaxHealthPoints>k__BackingField: 95
   <MaxArmorPoints>k__BackingField: 20
-  <SightRange>k__BackingField: 30
   <SupplyCost>k__BackingField: 2
   <MovementSpeed>k__BackingField: 7
   <AngularSpeed>k__BackingField: 2

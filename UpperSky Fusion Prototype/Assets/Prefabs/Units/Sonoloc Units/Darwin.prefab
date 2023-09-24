@@ -486,7 +486,7 @@ MonoBehaviour:
   ObjectInterest: 1
   DefaultInterestGroups: []
   DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 0
+  AllowStateAuthorityOverride: 1
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
@@ -593,7 +593,6 @@ MonoBehaviour:
   - {fileID: 2232925964333354378}
   selectionCircle: {fileID: 7002027422731997136}
   graphObject: {fileID: 2798725076067583124}
-  canvas: {fileID: 400207877351046348}
   minimapIcon: {fileID: 4701887993221069899}
   minimapCanvas: {fileID: 8975336225628770715}
   _CurrentHealth: 0
@@ -602,6 +601,7 @@ MonoBehaviour:
   armorBar: {fileID: 445083462236351047}
   _IsDead: 0
   currentAgressor: []
+  canvas: {fileID: 400207877351046348}
   deathVfx:
     RawGuidValue: 4bda94453d2ca7444a0fff05b2d425f5
   lowHpVfx:
@@ -613,19 +613,20 @@ MonoBehaviour:
   shootProjectile:
     RawGuidValue: 4297fe4a72b631a4380b15a885aa4b22
   skills:
-  - isReady: 0
-    isActive: 0
+  - isInteractable: 0
+    isInCd: 0
     timeLeftOnCd: 0
     cdCompletion: 0
     <Data>k__BackingField: {fileID: 11400000, guid: 42dd197432bce0e4ca884cb462b8efe7,
       type: 2}
   <Data>k__BackingField: {fileID: 11400000, guid: 7d8f9959aee9ba84bb739135d637e046,
     type: 2}
-  myState: 0
+  _MyState: 0
   stateDebugTMP: {fileID: 273960982646877836}
   targetedUnitIsInRange: 0
   targetPosToMoveTo: {x: 0, y: 0, z: 0}
   myMoveIndicator: {fileID: 0}
+  currentStatusOnThisUnit: 
   targetIslandToColonise: {fileID: 0}
 --- !u!1 &8094450092423343187
 GameObject:
