@@ -60,7 +60,7 @@ namespace Element.Island
         // Wait for network synchronisation before generating props on island
         private IEnumerator WaitNetworkSync()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             _worldManager.islandGenerator.GeneratePropsOnIsland(this, data, boxCollider);
 
             Transform worldCenter = _worldManager.worldGenerator.worldCenter;
@@ -70,8 +70,8 @@ namespace Element.Island
                 worldCenter = GameObject.FindWithTag("WorldCenter").transform;
             }
             
-            minimapCanvas.transform.rotation = Quaternion.Euler(90, 180, 
-                -transform.rotation.y -worldCenter.rotation.y);
+            minimapCanvas.transform.rotation = Quaternion.LookRotation(worldCenter.up, Vector3.up); 
+           // Quaternion.Euler(90, 180, -transform.rotation.y -worldCenter.rotation.y);
         }
         
         public void FogOfWarInit()

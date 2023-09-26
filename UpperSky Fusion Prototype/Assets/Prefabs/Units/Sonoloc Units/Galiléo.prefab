@@ -34,8 +34,8 @@ RectTransform:
   - {fileID: 7928917550059208177}
   - {fileID: 512604552960276419}
   - {fileID: 8281480521834814652}
-  m_Father: {fileID: 8950515510027146334}
-  m_RootOrder: 3
+  m_Father: {fileID: 3917103464985917232}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -125,13 +125,13 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497425923153371458}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00000059849}
-  m_LocalScale: {x: 0.37244, y: 0.37244, z: 0.37244}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.37244, y: 0.37243998, z: 0.37243998}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8597811829394841555}
-  m_Father: {fileID: 8950515510027146334}
-  m_RootOrder: 2
+  m_Father: {fileID: 3917103464985917232}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -222,14 +222,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2183782754696012124}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6011317555858560087}
-  m_Father: {fileID: 8950515510027146334}
-  m_RootOrder: 1
+  m_Father: {fileID: 3917103464985917232}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2798725076067583124
 GameObject:
@@ -262,6 +262,9 @@ Transform:
   - {fileID: 8931580972919833686}
   - {fileID: 8424445041703430386}
   - {fileID: 6496980897823519821}
+  - {fileID: 7753219843626087171}
+  - {fileID: 8975336225628770715}
+  - {fileID: 8134966894401780902}
   m_Father: {fileID: 8950515510027146334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -597,9 +600,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3917103464985917232}
-  - {fileID: 7753219843626087171}
-  - {fileID: 8975336225628770715}
-  - {fileID: 8134966894401780902}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -722,11 +722,11 @@ MonoBehaviour:
   graphObject: {fileID: 2798725076067583124}
   minimapIcon: {fileID: 4701887993221069899}
   minimapCanvas: {fileID: 8975336225628770715}
+  _IsDead: 0
   _CurrentHealth: 0
   healthBar: {fileID: 9172744984567029164}
   _CurrentArmor: 0
   armorBar: {fileID: 1610086716281935774}
-  _IsDead: 0
   currentAgressor: []
   canvas: {fileID: 400207877351046348}
   deathVfx:

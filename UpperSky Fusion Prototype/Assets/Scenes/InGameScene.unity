@@ -566,8 +566,8 @@ RectTransform:
   - {fileID: 1169068556}
   - {fileID: 441846696}
   - {fileID: 418388877}
-  m_Father: {fileID: 843633205}
-  m_RootOrder: 9
+  m_Father: {fileID: 656924085}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7006,7 +7006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
-  expectedNumberOfPlayers: 1
+  expectedNumberOfPlayers: 2
   connectedPlayers: []
   gameIsStarted: 0
   gameIsFinished: 0
@@ -8042,6 +8042,7 @@ RectTransform:
   - {fileID: 37444892}
   - {fileID: 411997881}
   - {fileID: 1349576260}
+  - {fileID: 22602875}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10044,7 +10045,6 @@ RectTransform:
   - {fileID: 1414079992}
   - {fileID: 673634722}
   - {fileID: 1206494100}
-  - {fileID: 22602875}
   - {fileID: 1723117690}
   m_Father: {fileID: 37444892}
   m_RootOrder: 1
@@ -17471,7 +17471,7 @@ PrefabInstance:
     - target: {fileID: 1887928461165278927, guid: 4c430d74725657a4b88e20b42381f558,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1887928461165278927, guid: 4c430d74725657a4b88e20b42381f558,
         type: 3}
