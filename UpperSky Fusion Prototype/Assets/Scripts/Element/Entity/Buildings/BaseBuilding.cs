@@ -69,6 +69,10 @@ namespace Element.Entity.Buildings
 
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
+
+            BoxCollider collider = GetComponent<BoxCollider>();
+            collider.enabled = false;
+            collider.enabled = true;
         }
 
         protected virtual void Update()
@@ -157,6 +161,14 @@ namespace Element.Entity.Buildings
             }
             
             base.DestroyEntity();
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Props"))
+            {
+                other.gameObject.SetActive(false);
+            }
         }
 
 #if UNITY_EDITOR

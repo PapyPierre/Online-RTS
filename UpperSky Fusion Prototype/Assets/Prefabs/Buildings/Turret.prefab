@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2708547821528635465}
   - component: {fileID: 3986954249374926806}
   - component: {fileID: 2341833709318739436}
+  - component: {fileID: 2048556327839339647}
   m_Layer: 8
   m_Name: Turret
   m_TagString: Building
@@ -109,15 +110,15 @@ MonoBehaviour:
   meshToColor: []
   selectionCircle: {fileID: 2622061405976795032}
   graphObject: {fileID: 8510112358408295226}
-  canvas: {fileID: 2580673168563823367}
   minimapIcon: {fileID: 0}
   minimapCanvas: {fileID: 6770147132343650050}
+  _IsDead: 0
   _CurrentHealth: 0
   healthBar: {fileID: 7072759589825538023}
   _CurrentArmor: 0
   armorBar: {fileID: 2966331848555826788}
-  isDead: 0
   currentAgressor: []
+  canvas: {fileID: 2580673168563823367}
   deathVfx:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
@@ -126,7 +127,8 @@ MonoBehaviour:
     RawGuidValue: 5c755f9bc5253ea418e919994537dcc7
   canonsPos:
   - {fileID: 3236204728823635088}
-  isStartBuilding: 0
+  shootProjectile:
+    RawGuidValue: 00000000000000000000000000000000
   <Data>k__BackingField: {fileID: 11400000, guid: 53116c003e8ab0f4ba467fc41fba6ef4,
     type: 2}
   myIsland: {fileID: 0}
@@ -159,6 +161,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 5, z: 2}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!54 &2048556327839339647
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2580673168563823367
 GameObject:
   m_ObjectHideFlags: 0

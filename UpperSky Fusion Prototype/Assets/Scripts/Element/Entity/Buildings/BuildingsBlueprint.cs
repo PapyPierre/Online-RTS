@@ -26,7 +26,6 @@ namespace Element.Entity.Buildings
         [SerializeField] private BuildingsManager.AllBuildingsEnum thisBuilding;
         [SerializeField] private Renderer[] renderers;
 
-        private List<Collider> _propsInRange = new();
 
         private void Start()
         {        
@@ -139,8 +138,6 @@ namespace Element.Entity.Buildings
             
             _uiManager.DisplayOnBuilding(thisBuildingData);
             
-            foreach (var col in _propsInRange) col.gameObject.SetActive(false);
-            
             _buildingsManager.PayForBuilding((int) thisBuilding);
 
             float buildingTime = thisBuildingData.ProductionTime;
@@ -162,19 +159,6 @@ namespace Element.Entity.Buildings
         {
             _buildingsManager.haveBlueprintInHand = false;
             gameObject.SetActive(false);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Props")) _propsInRange.Add(other);
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Props"))
-            {
-                if (_propsInRange.Contains(other)) _propsInRange.Remove(other);
-            }
         }
     }
 }

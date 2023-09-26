@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 2708547821528635465}
   - component: {fileID: -3380950026181699153}
+  - component: {fileID: 4356564981180548390}
   m_Layer: 8
   m_Name: Lumberjack
   m_TagString: Building
@@ -122,15 +123,15 @@ MonoBehaviour:
   meshToColor: []
   selectionCircle: {fileID: 9120238297973691108}
   graphObject: {fileID: 8510112358408295226}
-  canvas: {fileID: 6012755007448821012}
   minimapIcon: {fileID: 0}
   minimapCanvas: {fileID: 2511572867391811657}
+  _IsDead: 0
   _CurrentHealth: 0
   healthBar: {fileID: 8042896441101910549}
   _CurrentArmor: 0
   armorBar: {fileID: 3517080117932464087}
-  isDead: 0
   currentAgressor: []
+  canvas: {fileID: 6012755007448821012}
   deathVfx:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
@@ -138,7 +139,8 @@ MonoBehaviour:
   shootVfx:
     RawGuidValue: 00000000000000000000000000000000
   canonsPos: []
-  isStartBuilding: 0
+  shootProjectile:
+    RawGuidValue: 00000000000000000000000000000000
   <Data>k__BackingField: {fileID: 11400000, guid: 46e2f24790cd5014c86565029d471d24,
     type: 2}
   myIsland: {fileID: 0}
@@ -158,6 +160,22 @@ MonoBehaviour:
   isVisible: 0
   keepVisible: 1
   additionalRadius: 0
+--- !u!54 &4356564981180548390
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3620892488320733153
 GameObject:
   m_ObjectHideFlags: 0

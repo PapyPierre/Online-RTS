@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2318281010202773554}
   - component: {fileID: 7945781902971484224}
   - component: {fileID: 435624360700004346}
+  - component: {fileID: 2385001912570519436}
   m_Layer: 8
   m_Name: Carpentry
   m_TagString: Building
@@ -138,15 +139,15 @@ MonoBehaviour:
   - {fileID: 5341231983948614677}
   selectionCircle: {fileID: 4353154455468515013}
   graphObject: {fileID: 8510112358408295226}
-  canvas: {fileID: 6528548632205293204}
   minimapIcon: {fileID: 0}
   minimapCanvas: {fileID: 3261501212577351302}
+  _IsDead: 0
   _CurrentHealth: 0
   healthBar: {fileID: 8463585733022256444}
   _CurrentArmor: 0
   armorBar: {fileID: 6143222364888515211}
-  isDead: 0
   currentAgressor: []
+  canvas: {fileID: 6528548632205293204}
   deathVfx:
     RawGuidValue: 3ef3ae421f71c5c4e97fe12dc2fc6312
   lowHpVfx:
@@ -154,12 +155,29 @@ MonoBehaviour:
   shootVfx:
     RawGuidValue: 00000000000000000000000000000000
   canonsPos: []
-  isStartBuilding: 0
+  shootProjectile:
+    RawGuidValue: 00000000000000000000000000000000
   <Data>k__BackingField: {fileID: 11400000, guid: 3fb1cab906c46404b987140140383948,
     type: 2}
   myIsland: {fileID: 0}
   canonHead: {fileID: 0}
   timeLeftToForm: 0
+--- !u!54 &2385001912570519436
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874426664033387176}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6246872401608401974
 GameObject:
   m_ObjectHideFlags: 0
