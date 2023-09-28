@@ -32,6 +32,12 @@ namespace Element.Entity
             if (explode) return;
             
             transform.position += _dir * Runner.DeltaTime * speed;
+
+            if (Target is null)
+            {
+                Debug.Log("Target is null");
+                return;
+            }
             
             if (Vector3.Distance(transform.position, Target.transform.position) < 2)
             {

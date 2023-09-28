@@ -70,7 +70,7 @@ namespace Element.Entity.Buildings
                 Owner.ressources.CurrentMaxSupply += Data.AditionnalMaxSupplies;
             }
 
-            BoxCollider collider = GetComponent<BoxCollider>();
+            Collider collider = GetComponent<Collider>();
             collider.enabled = false;
             collider.enabled = true;
         }
